@@ -1,0 +1,303 @@
+{
+  "version": "0.2.1",
+  "passed": true,
+  "checks": {
+    "baseline_geometry": true,
+    "baseline_overall_status": true,
+    "payload_450_geometry": true,
+    "payload_450_overall_status": true,
+    "range_1200km_geometry": true,
+    "range_1200km_overall_status": true,
+    "endurance_4h_geometry": true,
+    "endurance_4h_overall_status": true,
+    "endurance_5h_geometry": true,
+    "endurance_5h_overall_status": true,
+    "loiter_1h_geometry": true,
+    "loiter_1h_overall_status": true,
+    "loiter_2h_geometry": true,
+    "loiter_2h_overall_status": true,
+    "aspect_ratio_9_geometry": true,
+    "aspect_ratio_9_overall_status": true,
+    "fixed_1400_geometry": true,
+    "fixed_1400_overall_status": true,
+    "upper_1000_infeasible_geometry": true,
+    "upper_1000_infeasible_overall_status": true,
+    "payload_450_positive_transmission": true,
+    "range_1200km_positive_transmission": true,
+    "endurance_5h_positive_transmission": true,
+    "loiter_2h_positive_transmission": true,
+    "aspect_ratio_transmission": true,
+    "legacy_overall_unchanged": true,
+    "tessellation_geometry_area_2pct": true,
+    "tessellation_reference_invariant": true,
+    "portable_geometry_exact": true,
+    "installed_api_examples": true
+  },
+  "cases": {
+    "baseline": {
+      "mtow_kg": 1229.4159528684945,
+      "fuel_kg": 109.41544853610884,
+      "power_kw": 138.27258903943496,
+      "area_m2": 13.948414959273704,
+      "span_m": 10.228055152107501,
+      "mac_m": 1.3921519512590756,
+      "cg_x_m": 2.6863648801077433,
+      "geometry_check_count": 92
+    },
+    "payload_450": {
+      "mtow_kg": 1460.9384296555422,
+      "fuel_kg": 130.0204647511183,
+      "power_kw": 164.31195530231273,
+      "area_m2": 16.575167582004628,
+      "span_m": 11.14960792427405,
+      "mac_m": 1.5175855230261899,
+      "cg_x_m": 2.6760787591690702,
+      "geometry_check_count": 92
+    },
+    "range_1200km": {
+      "mtow_kg": 1340.1345986205001,
+      "fuel_kg": 167.2244972688345,
+      "power_kw": 150.72513105123315,
+      "area_m2": 15.204580223010927,
+      "span_m": 10.678686795321884,
+      "mac_m": 1.4534879249188117,
+      "cg_x_m": 2.680971316472156,
+      "geometry_check_count": 92
+    },
+    "endurance_4h": {
+      "mtow_kg": 1239.6569955818084,
+      "fuel_kg": 114.77576473000437,
+      "power_kw": 139.42440058631573,
+      "area_m2": 14.064605344673907,
+      "span_m": 10.270566687629962,
+      "mac_m": 1.3979382435940781,
+      "cg_x_m": 2.6858237855813774,
+      "geometry_check_count": 92
+    },
+    "endurance_5h": {
+      "mtow_kg": 1298.1747173937017,
+      "fuel_kg": 145.3391809143088,
+      "power_kw": 146.00589717479008,
+      "area_m2": 14.728521787598849,
+      "span_m": 10.510181416464293,
+      "mac_m": 1.4305524705743062,
+      "cg_x_m": 2.68289955517033,
+      "geometry_check_count": 92
+    },
+    "loiter_1h": {
+      "mtow_kg": 1163.9921633245895,
+      "fuel_kg": 75.17859559179034,
+      "power_kw": 130.9143660198785,
+      "area_m2": 13.206145296481887,
+      "span_m": 9.952190197319089,
+      "mac_m": 1.3546036657462086,
+      "cg_x_m": 2.690068551776788,
+      "geometry_check_count": 92
+    },
+    "loiter_2h": {
+      "mtow_kg": 1194.8592485854801,
+      "fuel_kg": 91.34708909657272,
+      "power_kw": 134.38599153861853,
+      "area_m2": 13.556349727128506,
+      "span_m": 10.083284333661517,
+      "mac_m": 1.3724470343039286,
+      "cg_x_m": 2.6882694023154654,
+      "geometry_check_count": 92
+    },
+    "aspect_ratio_9": {
+      "mtow_kg": 1219.2637895367386,
+      "fuel_kg": 103.6658068629117,
+      "power_kw": 130.86888440848918,
+      "area_m2": 13.833232960410541,
+      "span_m": 11.157916321773294,
+      "mac_m": 1.2655969902011373,
+      "cg_x_m": 2.7092713363827947,
+      "geometry_check_count": 92
+    },
+    "fixed_1400": {
+      "mtow_kg": 1400.0,
+      "fuel_kg": 124.59707196181338,
+      "power_kw": 157.45820135450575,
+      "area_m2": 15.883786848072559,
+      "span_m": 10.914595794647834,
+      "mac_m": 1.4855977609381772,
+      "cg_x_m": 2.664715855529633,
+      "geometry_check_count": 92
+    },
+    "upper_1000_infeasible": {
+      "mtow_kg": 1229.4159528684945,
+      "fuel_kg": 109.41544853610884,
+      "power_kw": 138.27258903943496,
+      "area_m2": 13.948414959273704,
+      "span_m": 10.228055152107501,
+      "mac_m": 1.3921519512590756,
+      "cg_x_m": 2.6863648801077433,
+      "geometry_check_count": 92
+    }
+  },
+  "runs": {
+    "baseline": {
+      "overall": "0c934bc5d7144ed8918b76c22f672cae",
+      "geometry": "13b3e7a6c4f843e684cc59da2a060fc3"
+    },
+    "payload_450": {
+      "overall": "c0bb353ebddb47bab81b1cd2b6bded8b",
+      "geometry": "590600cc923c42bc86cf47accf82157f"
+    },
+    "range_1200km": {
+      "overall": "bbfeaaae064c4f5d9b9ec42337ecbe53",
+      "geometry": "6a22cde9349f4f03a3c9909009e89dfc"
+    },
+    "endurance_4h": {
+      "overall": "66a44870fb224ce8abcc77efb3fa5254",
+      "geometry": "654945a25a6943fd81510ef34a32e301"
+    },
+    "endurance_5h": {
+      "overall": "faca6b89205b4e9b8783724883ab37d7",
+      "geometry": "cdba896d77004b5697d71a7ce72372ba"
+    },
+    "loiter_1h": {
+      "overall": "7c824bb328bc497aad58ff5a60081245",
+      "geometry": "b73ccdf76373463fa714f55c230ecd43"
+    },
+    "loiter_2h": {
+      "overall": "9588fc3cc7d64432a69c80314089b3d3",
+      "geometry": "92556c2e615f4da8bb8a024497730e99"
+    },
+    "aspect_ratio_9": {
+      "overall": "1e30fb844f584bee919e21a696d7df51",
+      "geometry": "9081bd8a7a5443cab2d321a1e90259e4"
+    },
+    "fixed_1400": {
+      "overall": "da5cd90983114f8a9b9041f04688fbba",
+      "geometry": "6d151fe7a7f54cbbae8b90cb489811c2"
+    },
+    "upper_1000_infeasible": {
+      "overall": "1e1121068c124393b40e850aa1104228",
+      "geometry": "e5de7a1758c8459380e1184797c2006c"
+    }
+  },
+  "refined_run": "9a9c4d5b63c44529b5f2e466776e1a40",
+  "geometric_surface_area_sensitivity": {
+    "MainWing": 0.0007108575664298566,
+    "HorizontalTail": 0.0007841058512836341,
+    "VerticalTail": 0.0008265929752804269,
+    "Fuselage": 0.001308207214848034
+  },
+  "geometry_area_note": "triangulated component surface areas before intersections; not wetted area or aerodynamic convergence",
+  "installed_examples": {
+    "passed": true,
+    "tests_run": 8,
+    "methods": [
+      "test_SetDriverGroup",
+      "test_SetXSecWidthHeight",
+      "test_GetVSPAERORefWingID",
+      "test_ComputeDegenGeom",
+      "test_CompPnt01",
+      "test_SetSetFlag",
+      "test_WriteVSPFile",
+      "test_ReadVSPFile"
+    ],
+    "source_sha256": "1c94726e637e190f158086637eacbe5f813f211083225911c96214d06c7e7125",
+    "source": "OpenVSP 3.56.0 installed python/openvsp/openvsp/tests/test_vsp_api.py"
+  },
+  "physical_validation_passed": false,
+  "aerodynamics_run": false,
+  "data_role": "synthetic software/numerical verification; no calibration or independent physical dataset",
+  "script_sha256": "3ea2a688141ff447131d7560cbec2df105b943790d5c5fbddccf3b62a0830db6",
+  "evidence_hashes": {
+    "aspect_ratio_9.json": "e1b8b008108bc74c1b35a5d776baa79b7709ec85b7695f60b9e5cc0e7ba7e34e",
+    "baseline.json": "208dcaaf83a77b141e63224757ae14c1a371ebb59a93ff70b80cc0b2e060f5ba",
+    "complete-aircraft.wdh": "59b3ab604a1ae9e86dbc9e11e0114f13b869348b5db201e49a83dd4596052f4e",
+    "endurance_4h.json": "1dabd0eed29f1672a12dd809f3f42a25b4403b593773ab1e3fba3aa7f2680f78",
+    "endurance_5h.json": "54a74dad8f42904572324c0ed0ca753ba19aa7e8fdc76752aaab8e21a9979712",
+    "fixed_1400.json": "acb06a38d45a3d064698281873cd9768e76951bd79a40b7cfaf98d06377c431f",
+    "loiter_1h.json": "e7795c3c3d5b2d4ece00f364747a275fcb472f1b5f58645e6f8ed87149160f20",
+    "loiter_2h.json": "17b83f4e5b3411e3c081da8229b2b00c4acfbe2f7ae785b34a24e18d457bff0d",
+    "payload_450.json": "e962f626af08729f5fce890f145dc22bc8f7907658b24fefe9dcb66288e2fe11",
+    "range_1200km.json": "827d620af37bbcb206a037cdef1708b800c5c06d11a5c0f003507cc6e5558a71",
+    "refined.json": "0e0ee0aec15b40e5c2131c4c44c4ad95d6e397139bdda0035e015903190c9b67",
+    "upper_1000_infeasible.json": "cc2e20779b32a2bc340d79897a227f6baec89b8bb7e3c66de97bb02181cd4800",
+    "upstream/command.json": "3c2cc188881e0f075b68e074a7b60b13090decb02bd1c46f5dfd2366b25dddee",
+    "upstream/example_fuse.vsp3": "582709106cb911c004f69e1a6554c4c92a97f64ff8fda99aa0a495498d14d8f8",
+    "upstream/stdin.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "upstream/stdout.log": "020e07e99b52fa644955c62fd2106b250a876ebe34e686c615505891ba109080",
+    "upstream/TestDegenScript.csv": "9e0aa2d1c3484ae59bc3224daec3598873edf4a1743c3b6949a6040b86e20ed7",
+    "upstream/upstream_summary.json": "2f9a5b77cca57552dd79add2dd98b3a89c5b5daf1dd9f84104be3fe9b31a2728"
+  },
+  "numerical_error_summary": {
+    "maximum_absolute_native_difference": 3.552713678800501e-15,
+    "maximum_degen_section_error_m": 1.9984014443252818e-15
+  },
+  "regression": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "241",
+    "time": "267.805",
+    "timestamp": "2026-11-16T07:39:29.000883+08:00"
+  },
+  "source_hashes": {
+    "adapters.py": "b72ca7effe5311328a85bdc8b06ad583b9cabed91751094fa5019c2b2f6a29d5",
+    "aircraft_geometry.py": "0413b68a7a27f1e2dd1d59838037e2b0b0be4a9dcc6fc0f11a1c7398fcfcd064",
+    "aircraft_vsp_worker.py": "b906dffd66ac67688c99edcf85e01bd5ec2ec046d891014618295408f44fc438",
+    "box_comparison.py": "bf8e8a4c19e59c24e53a9cbbcc2add9ef42ece3343f902663795c52a44e783b5",
+    "buckling.py": "a473b5d91d835f3f100473e11aad1185f6597854e8cdd87960a4b22658399720",
+    "calculix_benchmark.py": "f3bab4818455864f4324f62a96f1fff25cdaf42f08e8b42b6d548c8e20a630ec",
+    "cli.py": "96d0fae3c5a174c56b82abaa42c7948684872f408c5058783e367b8baa3c1508",
+    "comparison_service.py": "f8570e21dab2b69910159ced9d5bd56687c6749dcbcdfd20b30ab58eab48d766",
+    "comparison_ui.py": "6c52ae50f238f74410b5a315034456b8c0780664f18cf06b9cf12131f1e74729",
+    "design_cards.py": "252e80effbf34623f2d6bec7451adb9977ff45db48a5c4c2d74378d57da01dba",
+    "design_comparison.py": "0f057f8d30f0452bd65d564748cd9c048d92eddbb6b7fe5f2384b7df3cb287dd",
+    "design_report.py": "b89ba1f627deea0bb2e3264e8e8faa5fbcfb94bcf9f0d19505f229c8f965641a",
+    "design_service.py": "45abc8b6ac761c6c489fd27b0119b7e9258563f4548d6e86bae1d1bd2ad22c88",
+    "design_ui.py": "7b42e515ccf91c41928dd986d23eb30646ae1a28b155f1e0e37bc39b8f6b3831",
+    "fastga_compat.py": "6ba7f14ef2c6046533ef6cef6d93355a1db91255bab46c9746f1ae5a14a94fab",
+    "fastga_diagnostics.py": "bc93d372e3e5bb7f5dc4e068f4dfb3b14dfda42600ec8f84a3b51e06f631b887",
+    "fastga_interface.py": "cb0852101644a0a5a9e34fb2cfb2a249d9a148988dfdc05a0cf28f41021c7b69",
+    "fastga_mass.py": "c44a77b2f042ef8cf2834dcf0bf15a151bd30b95e1133da5a4878c7aa3077af8",
+    "fastga_worker.py": "a25185200db8ebb0222eb307f3852c7c83c15ed9c98c3c8b1bc92fed8958375f",
+    "fea_mesh.py": "f99f1817b20d85089a64d4248684c64a8ba7180268fe11b91a14ed415dc729e3",
+    "flight_loads.py": "4d9d7e8bcd24d59131337cbdb5953e90ed432853e5c6c4b359857a7395247890",
+    "flight_service.py": "72dcf0c2a247bd1ab560819a1a295141f459143377c964ecfac24129c4bc5645",
+    "flight_ui.py": "fb4b7a8a3ee36f1a3f01e65c719eed70c8150473f391047523d8d8ff74d0fa78",
+    "fuel_model.py": "2678359dc34e16e0aa7c881a479f25ed3645fb7bb9e6afd3697f82b945f0da66",
+    "fuel_validation.py": "1485a6bd9f9b870385fb5f475da73ba7a838e2eb0f1c38199c59732bfc8d64b4",
+    "geometry_report.py": "423e78b7d2b730c13dfcae8fa2c75bf3b83884e99e1b2afba3eae6ddecd0891d",
+    "geometry_service.py": "5e0364787ca74ed408a0f36d7d8592a1dded5ce3985e0f5c7b6fe1ed8d1ca841",
+    "geometry_ui.py": "5a975e5d7f37edd5c366c087f123a75fc96603642bae07c3b1dc551994398f6b",
+    "mechanics.py": "aece8baec13b7d9a84e133720f82a33d70444a38c980b86cf727cbdab0973650",
+    "model.py": "345afae92c6b8dd09435ebb31ce234ddf40e0d5e615e8a2fca4f2e85cc058b11",
+    "oas_benchmark.py": "74d2900b9dbba587c701bd2fc92ba75a8bf09ec17678c03ac67c1f00cdff5c56",
+    "oas_wingbox.py": "e8d0b503f1f1ba3fb7d77abdda14d376820fff41ef32f1b5a97e187d0f2f737b",
+    "plate_buckling.py": "7448faec93a91382127a0ade183b69d26074062be66ddaab1607b249b1fd9c09",
+    "plate_service.py": "0c740429e6591a1b020a334beb344fe3f1a8325569498cfdd43da0b2d9fb7301",
+    "plate_ui.py": "47adf0c1efec842d669cb199dfa3f8dfb47d21e8bd67f9df846bbe0813e6b0d9",
+    "project_archive.py": "c8588ad3598d4f2941428825a0074c72bb0a5ce688ed06144f03ecf1b1b9ed6a",
+    "project_ui.py": "2728081ec59a7c3f5a45e0c510ab9219ab750d0b6a95491bd8202e55bf77c9f9",
+    "reference_cruise.py": "7987b65965090c774f9043e126a10724fab4d48e3eb87120c33891cb3764242a",
+    "requirements.py": "af49146e331235fba487e736a5ae4ba04b40070d74e735bf1f44f670d010d4d9",
+    "service.py": "712f807f8791cc750b84fe8c785006b08af70d952cfdb1132a6035abc8afb4ad",
+    "shell_loads.py": "a06bdbb345ab2ac1cf18265eec95815accd6b3f2bb0732a7eaaee9c09208a397",
+    "shell_static.py": "1c23aabbf1395b4b2a7729b135428b130ff2d252397b3420bb3e287c7fee4da4",
+    "shell_validation.py": "30d6c706a44d32d131d0ab6c7f9e41508c82bd39aabe8f3cab26e28cab68be92",
+    "sizing.py": "5ebdff7ca091511d026bd907c4f06c2b76c86f2647dd743adedbdad931792687",
+    "sizing_config.py": "d4f58966878dd603a529866772ec13983ca62435bc0dcc8fd920ed5a6d2bc8c3",
+    "sizing_physics.py": "157be91854e9a4d722902b5ff3156316a33953115756f96b96b22d3a5ef3519d",
+    "sizing_service.py": "e13f8f8d9fc91be4e19d5c1d2b5607634a1760c9cfbd5196872060f86f08a41f",
+    "sizing_ui.py": "166819405b2762ffe814b64f90d722590a2d0712c60874f24df6ab163599f162",
+    "sizing_worker.py": "8a1beb33e3764ed21660e8fd2dfea387fa371d0f7ea5d06d8ebb966726d15cbb",
+    "static_service.py": "941de7a411c9814b8c73883b248aecbb04ebb812cf380bafb7e3f5f7b39528f9",
+    "structural_sensitivity.py": "cf1527dafd494a67281b12414e4f223e13e31c76252ff2f1f7592bd3ce77e6fc",
+    "structure_service.py": "5703dd5d078b0af7dfb078b661beace113b627e97c304b9d612af39fe45ad12b",
+    "vsp_structure_worker.py": "ee7cfff132602d9b5c6875b54c956cbc6d381fd4ef0228cdb7455add725899bc",
+    "vsp_worker.py": "aba49475b1221a2ad13d73644a38f508bcecc093859184e78e782282a7f73abd",
+    "__init__.py": "34aebf69fbc7e51bb6dc3bebc3089f4a5d2a6b72e422572285a00a14351fd5d3",
+    "fastga_plugins/furniture.py": "45b5a219b73c6380a63418f0e64f1f66d189c7943147f39faa2e98d118f719bf",
+    "fastga_plugins/reserve.py": "ceb05f0f889a91b66bea34856f0dbcf0de594e895f16edf0cdbdef0bbe2b2cda",
+    "fastga_plugins/unusable_fuel.py": "724433d55934a868696f27553b9924c75f99ca6594df274045dfaf9bf5a00f21",
+    "fastga_plugins/__init__.py": "652c53dda99eb1a2b439a1aca6f0ec81c25fed142d761e63ddf46af578a41a17"
+  },
+  "test_evidence_sha256": "b5f98d68de0a710778ee0fb26945e056bd4ffcc8a65c63d5944b1a063de9fdfb"
+}

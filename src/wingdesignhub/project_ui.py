@@ -9,7 +9,7 @@ from .design_cards import STATUS,METRICS
 
 
 def activate(parsed=None):
-    for key in ('sizing_result','comparison_result','design_intent_result','archive_saved_note'):
+    for key in ('sizing_result','comparison_result','design_intent_result','archive_saved_note','aircraft_geometry_result'):
         st.session_state.pop(key,None)
     for key in list(st.session_state):
         if key.startswith(('confirm_','comparison-confirm-')):st.session_state.pop(key,None)
@@ -60,6 +60,10 @@ def library(root):
             for filename in ('report.html','report.md'):
                 if 'reports/'+filename in opened['files']:
                     st.download_button('下载存档报告 '+filename,opened['files']['reports/'+filename],filename,key='archive_'+filename)
+            for r in opened.get('geometry_records',[]):
+                from .geometry_ui import show_files
+                prefix='runs/'+r['run_id']+'/'
+                show_files(r,{n[len(prefix):]:b for n,b in opened['files'].items() if n.startswith(prefix)},'archived_geometry')
         p=opened['project']
         return p.projects[0] if isinstance(p,ComparisonRequest) else p
     return DesignProject()
@@ -71,12 +75,15 @@ def save_controls(project,root,record=None,key='design'):
     valid=valid and all(p.confirmation_sha256==p.definition_hash() for p in plans)
     valid=valid and (Path(root)/'runs'/record['run_id']/'result.json').is_file() if valid else False
     chosen=record if valid else None
-    st.caption('保存内容：需求、假设'+('、本次计算结果和报告。' if chosen else '（草案，无当前有效计算结果）。'))
+    geometry=st.session_state.get('aircraft_geometry_result') if key=='design' else None
+    if not chosen or not geometry or geometry.get('parent_run_id')!=chosen['run_id']:geometry=None
+    st.caption('保存内容：需求、假设'+('、本次计算结果和报告'+('、全机几何。' if geometry else '。') if chosen else '（草案，无当前有效计算结果）。'))
     try:
-        data=archive.build_bundle(project,root,chosen)
+        data=archive.build_bundle(project,root,chosen,geometry)
         if st.button('保存'+('三方案' if key=='comparison' else '方案')+'到本机',key=key+'_save_local'):
             index=archive.save_bundle(data,root)
             st.session_state['archive_saved_note']='已保存 '+index['name']+'；可在页面顶部打开，原方案不会被覆盖。'
+            st.rerun()
         st.download_button('导出完整'+('三方案包' if key=='comparison' else '方案包')+'（需求与结果）',data,key+'.wdh',key=key+'_bundle_download')
         if chosen:
             path=Path(root)/'runs'/chosen['run_id']/'report.html'

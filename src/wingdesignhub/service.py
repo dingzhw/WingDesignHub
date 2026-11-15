@@ -140,7 +140,15 @@ def compare_designs(records, projects=None, purpose='design_trade'):
              "root_moment_nm": r["outputs"]["beam"]["root_moment_nm"]} for r in records]
 
 
-def generate_report(record, path=None, project=None):
+def generate_report(record, path=None, project=None, root=None):
+    if record.get('mode')=='aircraft_geometry':
+        if root is None or get_results(root,record['run_id'])!=record:
+            raise ValueError('几何报告需要完整且一致的本地运行记录')
+        report=Path(root)/'runs'/record['run_id']/'report.html'
+        if not report.is_file():raise ValueError('本次几何未完成报告生成，请查看失败日志')
+        text=report.read_text('utf-8')
+        if path:Path(path).write_text(text,encoding='utf-8')
+        return text
     if record.get('mode') in ('overall_sizing','overall_comparison'):
         if project is None or record.get('definition_sha256')!=project.definition_hash():
             raise ValueError('总体报告需要与运行一致的需求定义')

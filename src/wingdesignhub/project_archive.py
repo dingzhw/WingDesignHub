@@ -42,10 +42,12 @@ def raw_definition(data,kind):
     return digest(json.dumps(normalize(obj),ensure_ascii=False,sort_keys=True,allow_nan=False).encode())
 
 
-def build_bundle(project,root,record=None):
+def build_bundle(project,root,record=None,geometry_record=None):
     kind='comparison' if isinstance(project,ComparisonRequest) else 'design'
     project.validate() if kind=='comparison' else project.check_schema()
-    source=project.to_dict();files={'project.json':encoded(source)};ids=[]
+    source=project.to_dict();files={'project.json':encoded(source)};ids=[];geometry_ids=[]
+    if geometry_record is not None and (record is None or kind!='design'):
+        raise ValueError('全机几何须与其单方案总体结果一起保存')
     if record is not None:
         actual=get_results(root,record['run_id'])
         if actual!=record:raise ValueError('待保存结果与实际运行记录不符')
@@ -57,7 +59,12 @@ def build_bundle(project,root,record=None):
         if kind=='design' and project.confirmation_sha256!=project.definition_hash():
             raise ValueError('当前需求尚未确认，不能附上旧计算结果')
         ids=[actual['run_id'],*actual.get('child_runs',[])]
-        for rid in ids:
+        if geometry_record is not None:
+            gr=get_results(root,geometry_record['run_id'])
+            if gr!=geometry_record or gr.get('mode')!='aircraft_geometry' or gr.get('parent_run_id')!=actual['run_id']:
+                raise ValueError('几何结果与总体运行不匹配')
+            geometry_ids=[gr['run_id']]
+        for rid in ids+geometry_ids:
             r=get_results(root,rid);work=Path(root)/'runs'/rid
             for name in ['result.json',*r.get('artifact_hashes',{})]:
                 safe_name(name);p=(work/name).resolve()
@@ -68,7 +75,7 @@ def build_bundle(project,root,record=None):
             if p.is_file():files['reports/'+filename]=p.read_bytes()
     name=source['name'] if kind=='design' else source['projects'][0]['name']+' 等三方案'
     manifest={'bundle_schema':1,'kind':kind,'name':name,'software_version':__version__,
-              'created_utc':datetime.now(timezone.utc).isoformat(),'run_ids':ids,
+              'created_utc':datetime.now(timezone.utc).isoformat(),'run_ids':ids,'geometry_run_ids':geometry_ids,
               'definition_sha256':project.definition_hash(),'files':{n:digest(b) for n,b in files.items()},
               'integrity_scope':'SHA-256 detects damaged contents; this is not a signed authenticity certificate'}
     stream=BytesIO()
@@ -99,9 +106,11 @@ def read_bundle(data):
         source=json.loads(files['project.json']);kind=manifest['kind']
         project=ComparisonRequest.from_dict(source) if kind=='comparison' else DesignProject.from_dict(source)
         if raw_definition(source,kind)!=manifest['definition_sha256']:raise ValueError('方案包需求哈希不符')
-        records=[];ids=manifest['run_ids']
+        records=[];geometry_records=[];ids=manifest['run_ids'];geometry_ids=manifest.get('geometry_run_ids',[])
         if len(set(ids))!=len(ids) or len(ids)>(4 if kind=='comparison' else 1):raise ValueError('方案包运行列表无效')
-        for rid in ids:
+        if (len(geometry_ids)>1 or set(geometry_ids)&set(ids) or
+                (geometry_ids and (kind!='design' or len(ids)!=1))):raise ValueError('方案包几何运行列表无效')
+        for rid in ids+geometry_ids:
             if UUID(rid).hex!=rid:raise ValueError('方案包运行编号无效')
             prefix=f'runs/{rid}/';r=json.loads(files[prefix+'result.json'])
             if r['run_id']!=rid:raise ValueError('方案包运行身份不符')
@@ -115,7 +124,7 @@ def read_bundle(data):
             summary_name='comparison.json' if run_kind=='comparison' else 'summary.json'
             if prefix+summary_name in files and json.loads(files[prefix+summary_name])!=r.get('summary'):
                 raise ValueError('方案包摘要与运行结果不符')
-            records.append(r)
+            (geometry_records if rid in geometry_ids else records).append(r)
         if records:
             expected='overall_comparison' if kind=='comparison' else 'overall_sizing'
             if records[0]['mode']!=expected or records[0]['definition_sha256']!=manifest['definition_sha256']:
@@ -127,13 +136,29 @@ def read_bundle(data):
             for filename in ('report.html','report.md'):
                 if 'reports/'+filename in files and files['reports/'+filename]!=files[f'runs/{ids[0]}/{filename}']:
                     raise ValueError('方案包报告与运行产物不一致')
+        for r in geometry_records:
+            prefix=f'runs/{r["run_id"]}/';parent=records[0]
+            contract=json.loads(files[prefix+'geometry_contract.json'])
+            snapshot=files[prefix+'parent_result.json']
+            if (r['mode']!='aircraft_geometry' or r['parent_run_id']!=parent['run_id'] or
+                    r['definition_sha256']!=parent['definition_sha256'] or
+                    digest(snapshot)!=r['parent_result_sha256'] or json.loads(snapshot)!=parent or
+                    contract['parent_run_id']!=parent['run_id'] or contract['parent_input_hash']!=parent['input_hash'] or
+                    contract['definition_sha256']!=parent['definition_sha256'] or contract['options']!=r['options']):
+                raise ValueError('方案包几何来源与总体运行不符')
+            if r['status']=='geometry_checked_with_limits':
+                interface=json.loads(files[prefix+'aerodynamic_geometry.json'])
+                if (interface['references']!=contract['references'] or r['summary']['references']!=contract['references'] or
+                        interface['geometry_file_sha256']!=digest(files[prefix+'aircraft.vsp3']) or
+                        interface['degen_file_sha256']!=digest(files[prefix+'airframe_DegenGeom.csv'])):
+                    raise ValueError('方案包气动接口与几何文件不一致')
         current={p.relative_to(Path(__file__).parent).as_posix():digest(p.read_bytes()) for p in Path(__file__).parent.rglob('*.py')}
-        compatible=all(r.get('version')==__version__ and r.get('source_hashes')==current for r in records)
-        for r in records:
+        compatible=all(r.get('version')==__version__ and r.get('source_hashes')==current for r in records+geometry_records)
+        for r in records+geometry_records:
             for package,recorded in r.get('summary',{}).get('versions',{}).items():
                 try:compatible=compatible and version(package)==recorded
                 except PackageNotFoundError:compatible=False
-        return {'manifest':manifest,'input':source,'project':project,'records':records,'files':files,
+        return {'manifest':manifest,'input':source,'project':project,'records':records,'geometry_records':geometry_records,'files':files,
                 'migration_required':project.definition_hash()!=manifest['definition_sha256'],
                 'current_source_matches':compatible,'bundle_sha256':digest(data)}
     except (KeyError,TypeError,UnicodeError,json.JSONDecodeError,AttributeError) as exc:

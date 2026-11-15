@@ -21,11 +21,13 @@ from .comparison_service import run_comparison, compare_sizing_runs
 
 def main():
     parser = argparse.ArgumentParser(description="WingDesignHub 开发与自动化入口")
-    parser.add_argument("action", choices=["run", "doctor", "reference", "mesh", "static", "flight", "plate", "prepare", "size", "compare", "compare-runs", "cruise-check", "fuel-check", "archive-save", "archive-open", "report", "fastga-reference", "fastga-contract"])
+    parser.add_argument("action", choices=["run", "doctor", "reference", "mesh", "static", "flight", "plate", "prepare", "size", "geometry", "compare", "compare-runs", "cruise-check", "fuel-check", "archive-save", "archive-open", "report", "fastga-reference", "fastga-contract"])
     parser.add_argument("--root", type=Path, default=Path.cwd())
     parser.add_argument("--input", type=Path)
     parser.add_argument("--run-ids", nargs=3)
     parser.add_argument("--run-id")
+    parser.add_argument("--geometry-run-id")
+    parser.add_argument("--tessellation",type=int,choices=[1,2],default=1)
     parser.add_argument("--output",type=Path)
     parser.add_argument("--purpose", choices=['design_trade','requirements_sensitivity'], default='design_trade')
     parser.add_argument("--mode", choices=["beam", "avl", "openvsp_avl"], default="beam")
@@ -36,6 +38,13 @@ def main():
         parser.error("公开参考任务保留固定输入，不接受自定义需求覆盖；请用 prepare 保存需求。")
     if args.action == "doctor":
         result = inventory(args.root)
+    elif args.action == 'geometry':
+        from .geometry_service import run_aircraft_geometry
+        from .aircraft_geometry import GeometryOptions
+        if not args.run_id:parser.error('geometry 需要 --run-id 已收敛总体运行')
+        path=args.input or args.root/'runs'/args.run_id/'input.json'
+        project=DesignProject.from_dict(json.loads(path.read_text('utf-8')))
+        result=run_aircraft_geometry(project,args.root,args.run_id,GeometryOptions(tessellation=args.tessellation))
     elif args.action == 'fuel-check':
         from .fuel_validation import run_fuel_validation
         result=run_fuel_validation(args.root)
@@ -56,11 +65,12 @@ def main():
             raw=json.loads(path.read_text('utf-8'))
             project=ComparisonRequest.from_dict(raw) if 'projects' in raw else DesignProject.from_dict(raw)
             if args.action=='report':
-                data=generate_report(record,project=project).encode('utf-8')
+                data=generate_report(record,project=project,root=args.root).encode('utf-8')
                 with args.output.open('xb') as f:f.write(data)
                 result={'status':'report_exported','output':str(args.output)}
             else:
-                data=build_bundle(project,args.root,record);result={'status':'archive_saved',**save_bundle(data,args.root)}
+                geometry=get_results(args.root,args.geometry_run_id) if args.geometry_run_id else None
+                data=build_bundle(project,args.root,record,geometry);result={'status':'archive_saved',**save_bundle(data,args.root)}
                 if args.output:
                     with args.output.open('xb') as f:f.write(data)
     elif args.action == "compare":
