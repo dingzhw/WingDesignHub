@@ -1,21 +1,26 @@
-# FAST-GA 总体服务接口 — V0.1.6
+# FAST-GA 总体服务接口 — V0.1.7
 
-本版将设计需求服务和固定公开任务服务分别提供。普通用户从“新建飞机方案”进入，开发者可用同一 Python/CLI 服务。需求就绪意味着定义完整且已确认，飞机是否可行仍需后续定尺寸和性能计算。
+本版提供需求定义、新单发初步定尺寸、固定公开参考任务三类服务。普通用户从“新建飞机方案”进入，开发者可用同一 Python/CLI 服务。需求就绪表示定义已确认，总体结果分别报告数值收敛、已检查约束及模型边界。
 
 | 服务 | 输入 | 输出与状态 |
 |---|---|---|
 | `validate_design_project` | `DesignProject` 或 JSON 对象 | 字段/单位类型、重量关系、任务冲突、确认与零储备诊断 |
 | `prepare_design_project` | 需求方案、项目目录 | 任务编号、需求快照、任务段、来源、摘要、哈希；`requirements_ready` / `needs_confirmation` / `invalid_input` |
 | `get_fastga_contract` | 无 | 固定参考任务的变量、单位、角色与使用边界 |
-| `reference_binding_preview` | 需求方案 | 后续重量/载荷/任务接入方式；明确自定义方案尚不可执行 |
+| `reference_binding_preview` | 需求方案 | 单发重量/载荷/任务映射说明；固定参考任务继续拒绝自定义覆盖 |
+| `run_sizing` | 已确认 `DesignProject`、项目目录 | 需求驱动的初步参数、几何、重量/燃油/功率及 CG 历史、约束与完整性哈希 |
 | `run_fastga_reference` | 项目目录 | 固定公开任务的运行编号、真实参数、账目、收敛、诊断与产物哈希 |
 | `get_results` | 项目目录、任务编号 | 完整性核验后的运行记录 |
 
 `python -m wingdesignhub.cli prepare --input ...` 与 `fastga-reference` 对应上述服务；参考任务拒绝 `--input` 覆盖。原有 `reference --benchmark fastga` 使用同一 worker。求解器在独立子进程运行，600 秒超时，输出保存在独立目录；没有把需求文本作为命令执行。
 
+`python -m wingdesignhub.cli size --input ...` 调用 `run_sizing`，隔离进程超时 240 秒。成功状态为 `concept_checked_with_limits`，明确配平等未覆盖项；`constraints_not_met`、`out_of_domain`、`not_converged`、`failed`、待确认或输入冲突均非成功退出。结果含输入与源码哈希、FAST-GA 质量组 59 项真实绑定及上游源文件哈希、完整输入、迭代、日志、构型图和摘要。
+
+需求 schema 2 新增可调定尺寸假设并纳入确认哈希；schema 1 导入后保留原需求、补充默认假设并清除旧确认。`metal_single_v1` 的固定比值由当前版本模型定义，在界面和本报告说明，运行源码哈希锁定其实现。
+
 ## 输入语义与确认
 
-- `weight.mode=fixed`：`value_kg` 必填且保持规定值；后续验收质量平衡与性能约束。
+- `weight.mode=fixed`：`value_kg` 必填，保持规定满载设计重量；尺寸和任务按此重量检查。计算装载质量不得超过预算，剩余质量为未分配预算；不添加虚拟压舱物。CG 只对应实际计算台账。
 - `upper_bound`：值为上限；重量仍需求解，并检查余量。
 - `solve`：值须为空；迭代初猜属于求解器状态，不能与用户规定量混用。
 - `payload_kg`：所有机组、乘员、行李、任务设备的合计，计入一次。
@@ -43,7 +48,9 @@
 
 实际计算后通过 OpenMDAO 元数据审计 20 项公开变量的来源和角色，并以 `get_val(..., units=...)` 取 SI 值。只修改输入 XML 中同名 MTOW 不会把求解输出变成固定输入。上限不是当前模型的原生约束，需要后续外层定尺寸流程处理。
 
-载荷子组存在 `payload_from_npax=False` 选项，但顶层 weight 组未直接暴露该选项；V0.1.7 应通过受控插件/配置替换，并先检查几何座位、CG 和最大载荷的一致性。绝不能把用户总载荷粗略换成人数然后称为已接通。
+新方案直接调用 `MassBreakdown(payload_from_npax=False)`，使 `payload` / `max_payload` 都等于用户给出的含机组总载荷。座位数仅参与设备/座椅重量关系，向这些关系传递的 NPAX_max 为总座位数减 2；不重新计算乘员重量。机身长度与截面是显式模板假设，当前未做详细客舱空间布置校核。
+
+新方案的几何、速度、功率、载荷、油箱容量均显式映射到质量组。只为原生发动机对象构造读取随包 SR22 的桨图；实际发动机重量只用功率回归关系。任务效率和 BSFC 来自可见假设，桨图未作为新机推进性能使用；扰动桨图后质量输出不变已测试。原生推进总和未加不可用燃油，新方案用已声明的总油箱容量比例（默认 2%）替代该子项，再单独加入 OWE 一次；原公开参考任务保持历史合计方式以便回归。
 
 ## 数值与适用边界
 
@@ -51,4 +58,4 @@
 
 公开模型是双发 Beechcraft 教学案例；本项目目标为常规单发，新方案不自动套用该参考机。保留已定位的升降舵弦长比、平垂尾面积比、有符号升降舵偏角三个经验范围问题。该次收敛不是 V0.2.0 的三轮重量/CG/任务约束验收，也不是独立物理精度验证。
 
-在 [上游储备组件](https://github.com/supaero-aircraft-design/FAST-GA/blob/v1.4.0/src/fastga/models/performances/mission/mission_components/reserve.py) 中，原函数值 `m_c/t_c×t_r×k` 正确；其 `compute_partials` 与独立中心差分不符。当前 `evaluate_problem` 使用非线性迭代求值，不执行梯度优化，本轮保持上游代码未改。V0.1.7 若采用梯度路径，须先通过插件修复并验证；在此之前只允许经检验的求值/外部差分或无梯度流程。
+在 [上游储备组件](https://github.com/supaero-aircraft-design/FAST-GA/blob/v1.4.0/src/fastga/models/performances/mission/mission_components/reserve.py) 中，原函数值 `m_c/max(t_c, ε)×t_r×k` 正确；四项 `compute_partials` 与独立中心差分不符。V0.1.7 注册 `CorrectReserve` 插件，继承原函数并修正四项导数；正常与分母下限分支、OpenMDAO 总导数均已核验，完整参考任务输出不变。恰在 `t_c=ε=1e-6 s` 处不可微，代码采用左侧导数 0，不作为梯度工作点。安装包源码未修改，退出上下文恢复模型注册。全模型梯度及优化尚未验证。

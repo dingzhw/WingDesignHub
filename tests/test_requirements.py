@@ -41,7 +41,7 @@ def test_mission_distance_time_and_reserve_are_not_double_counted(kind, range_m,
     assert sum(x['distance_m'] or 0 for x in s) == (range_m or 0)
     assert sum(x['duration_s'] or 0 for x in s if x['role'] != 'reserve') == (time_s or 0)
     assert s[-1]['duration_s'] == 2700. and s[-1]['distance_m'] is None
-    assert r['sizing_available'] is False
+    assert r['sizing_available'] is True
 
 
 @pytest.mark.parametrize('mission', [MissionRequirement('same_route', 8e5, None),

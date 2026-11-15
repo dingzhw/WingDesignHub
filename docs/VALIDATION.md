@@ -1,6 +1,6 @@
 # 验证方法与适用边界
 
-最新结果见 [V0.1.6 需求与总体接口报告](VALIDATION_V0.1.6.md)及 `validation/v0.1.6.json`。前序记录见 [V0.1.5](VALIDATION_V0.1.5.md)、[V0.1.4](VALIDATION_V0.1.4.md)、[V0.1.3](VALIDATION_V0.1.3.md)、[V0.1.2](VALIDATION_V0.1.2.md)和 [V0.1.1](VALIDATION_V0.1.1.md)。历史失败摘要保持原状，便于前后比较。
+最新结果见 [V0.1.7 需求驱动总体闭环](VALIDATION_V0.1.7.md)及 `validation/v0.1.7.json`。前序记录见 [V0.1.6](VALIDATION_V0.1.6.md)、[V0.1.5](VALIDATION_V0.1.5.md)、[V0.1.4](VALIDATION_V0.1.4.md)、[V0.1.3](VALIDATION_V0.1.3.md)、[V0.1.2](VALIDATION_V0.1.2.md)和 [V0.1.1](VALIDATION_V0.1.1.md)。历史失败摘要保持原状，便于前后比较。
 
 ## V0.1.0 验证对象
 

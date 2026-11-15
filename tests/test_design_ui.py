@@ -50,3 +50,25 @@ def test_reference_explicit_separate_task_and_status(monkeypatch, status):
     a = app();a.button(key='fastga_reference').click().run()
     assert not a.exception and len(seen)==1 and not a.success
     assert a.error if status == 'failed' else a.warning
+
+
+@pytest.mark.parametrize('status',['failed','not_converged','constraints_not_met','out_of_domain'])
+def test_sizing_unsuccessful_states_are_visible(monkeypatch,status):
+    from wingdesignhub import sizing_service
+    def run(p,root):
+        return {'run_id':'test','definition_sha256':p.definition_hash(),'status':status,
+                'error':'测试总体失败','summary':{'diagnostics':['测试诊断']}}
+    monkeypatch.setattr(sizing_service,'run_sizing',run)
+    a=app();assert a.button(key='run_sizing').disabled
+    a.checkbox[0].check().run();a.button(key='run_sizing').click().run()
+    assert not a.exception and a.error and not a.success
+
+
+def test_actual_new_design_ui_and_assumption_change_invalidate_result():
+    pytest.importorskip('fastga')
+    a=app();a.checkbox[0].check().run();a.button(key='run_sizing').click().run(timeout=60)
+    assert not a.exception and not a.error and any('迭代已收敛' in x.value for x in a.warning)
+    assert len(a.dataframe)>=5
+    next(x for x in a.number_input if x.label=='机翼展弦比').set_value(8.).run()
+    assert not a.exception and not a.checkbox[0].value and a.button(key='run_sizing').disabled
+    assert any('上次总体结果' in x.value for x in a.info)

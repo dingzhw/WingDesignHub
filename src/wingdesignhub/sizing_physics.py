@@ -1,0 +1,129 @@
+"""Point-mass mission and constraints; SI, still air, parabolic polar.
+
+Lift/drag: NASA Glenn lift/drag equations. Propulsive power is (D V + W ROC)/eta.
+Constant BSFC, density-proportional naturally aspirated power and geometry ratios
+are declared conceptual assumptions, not empirical validation of an aircraft.
+"""
+import math
+
+G=9.80665
+RHO0=1.225
+FUEL_DENSITY=718.9
+
+
+class DesignDomainError(ValueError): pass
+
+
+def density(altitude):
+    if not 0<=altitude<=4000: raise DesignDomainError('首期标准大气高度限 0–4000 m')
+    return RHO0*(1-.0065*altitude/288.15)**4.2558797
+
+
+def flight_power(mass, area, speed, altitude, roc, assumptions):
+    if min(mass,area,speed)<=0: raise DesignDomainError('质量、面积和速度必须为正')
+    gamma=math.asin(roc/speed)
+    q=.5*density(altitude)*speed**2
+    cl=mass*G*math.cos(gamma)/(q*area)
+    cd=assumptions.cd0+cl**2/(math.pi*assumptions.oswald_efficiency*assumptions.aspect_ratio)
+    drag=q*area*cd
+    power=(drag*speed+mass*G*roc)/assumptions.propeller_efficiency
+    return power,cl,drag
+
+
+def geometry(mass, fuel_capacity, p):
+    a=p.sizing;rho=density(p.assumptions.cruise_altitude_m)
+    areas={'landing_stall':2*mass*G/(RHO0*a.stall_speed_m_s**2*a.cl_max_landing),
+           'cruise_lift':2*mass*G/(rho*p.assumptions.cruise_speed_m_s**2*.8*a.cl_max_clean),
+           'fuel_volume':(1.02*max(fuel_capacity,1)*math.sqrt(a.aspect_ratio)/(a.tank_volume_fraction*.12*FUEL_DENSITY*(1-a.unusable_fuel_fraction)))**(2/3)}
+    area=max(areas.values());span=math.sqrt(area*a.aspect_ratio);taper=.6
+    root=2*area/(span*(1+taper));tip=taper*root;mac=2/3*root*(1+taper+taper*taper)/(1+taper)
+    arm=.45*a.fuselage_length_m
+    return {'wing_area_m2':area,'wing_span_m':span,'root_chord_m':root,'tip_chord_m':tip,'mac_m':mac,
+            'wing_quarter_x_m':.39*a.fuselage_length_m,'horizontal_tail_area_m2':.7*area*mac/arm,
+            'vertical_tail_area_m2':.04*area*span/arm,'tail_arm_m':arm,'fuselage_length_m':a.fuselage_length_m,
+            'fuselage_width_m':1.2,'fuselage_height_m':1.35,'tank_capacity_kg':a.tank_volume_fraction*area*math.sqrt(area/a.aspect_ratio)*.12*FUEL_DENSITY,
+            'usable_tank_capacity_kg':a.tank_volume_fraction*area*math.sqrt(area/a.aspect_ratio)*.12*FUEL_DENSITY*(1-a.unusable_fuel_fraction),
+            'capacity_sizing_margin_fraction':.02,
+            'sizing_areas_m2':areas,'controlling_area_constraint':max(areas,key=areas.get),'engine_count':1,
+            'configuration':'low_wing_conventional_tail_fixed_tricycle_metal','axes':'x aft from nose, y right, z up'}
+
+
+def speed_schedule(mass, geo, p):
+    a=p.sizing;h=p.assumptions.cruise_altitude_m;s=geo['wing_area_m2']
+    vs=math.sqrt(2*mass*G/(density(h)*s*a.cl_max_clean))
+    climb_speed=1.3*vs;loiter_cl=min(math.sqrt(3*a.cd0*math.pi*a.oswald_efficiency*a.aspect_ratio),.8*a.cl_max_clean)
+    loiter_speed=math.sqrt(2*mass*G/(density(h)*s*loiter_cl))
+    return climb_speed,loiter_speed,vs
+
+
+def constraints(mass, geo, p):
+    a=p.sizing;h=p.assumptions.cruise_altitude_m;s=geo['wing_area_m2']
+    climb,loiter,vs=speed_schedule(mass,geo,p);sigma=density(h)/RHO0
+    pc=flight_power(mass,s,p.assumptions.cruise_speed_m_s,h,0,a)[0]/(sigma*a.cruise_power_fraction)
+    pcl=flight_power(mass,s,climb,h,a.climb_rate_m_s,a)[0]/sigma
+    pl=flight_power(mass,s,loiter,h,0,a)[0]/(sigma*a.cruise_power_fraction)
+    demand={'cruise':pc,'climb_at_cruise_altitude':pcl,'loiter':pl}
+    return {'installed_power_w':max(demand.values())*1.02,'power_constraints_w':demand,
+            'controlling_power_constraint':max(demand,key=demand.get),'clean_stall_at_altitude_m_s':vs,
+            'landing_stall_m_s':math.sqrt(2*mass*G/(RHO0*s*a.cl_max_landing))}
+
+
+def mission(mass, geo, installed_power, p, dt=30.):
+    if not math.isfinite(dt) or dt<=0: raise ValueError('任务积分步长须为正有限值')
+    a=p.sizing;m=p.mission;h=p.assumptions.cruise_altitude_m;s=geo['wing_area_m2']
+    climb_speed,loiter_speed,vs=speed_schedule(mass,geo,p)
+    tc=h/a.climb_rate_m_s;td=h/2.
+    xc=math.sqrt(climb_speed**2-a.climb_rate_m_s**2)*tc
+    xd=math.sqrt(climb_speed**2-4)*td
+    v=p.assumptions.cruise_speed_m_s
+    if m.kind=='same_route':
+        remain=m.range_m-xc-xd;need=m.endurance_s-tc-td
+        if need>0: v=min(v,remain/need)
+        if v<1.12*vs:raise DesignDomainError('同航段航程/航时要求需低于当前允许最小平飞速度；不能自动追加留空')
+    legs=[]
+    if tc: legs.append(('climb',tc,climb_speed,0,h,a.climb_rate_m_s,True))
+    if m.kind=='endurance_only':
+        level=m.endurance_s-tc-td
+        if level<60:raise DesignDomainError('航时短于爬升、下降及最少 60 秒平飞所需时间')
+        legs.append(('cruise',level,v,h,h,0,True))
+    elif m.kind=='transit_loiter':
+        outbound=m.range_m/2-xc;inbound=m.range_m/2-xd
+        if min(outbound,inbound)<v*30:raise DesignDomainError('往返距离不足以容纳爬升/下降和转场')
+        legs += [('outbound',outbound/v,v,h,h,0,True),('loiter',m.endurance_s,loiter_speed,h,h,0,False),('inbound',inbound/v,v,h,h,0,True)]
+    else:
+        distance=m.range_m-xc-xd
+        if distance<v*60:raise DesignDomainError('航程短于爬升/下降及最少 60 秒巡航所需距离')
+        legs.append(('cruise',distance/v,v,h,h,0,True))
+    if td:legs.append(('descent',td,climb_speed,h,0,-2.,True))
+    fuel_rate=a.bsfc_kg_kwh/3.6e6
+    taxi_out=installed_power*.1*300*fuel_rate
+    takeoff_roll=installed_power*.9*30*fuel_rate
+    current=mass-takeoff_roll;rows=[];worst_power=0.;max_cl=0.
+    cruise_fuel=cruise_time=0.
+    for name,duration,speed,h0,h1,roc,counts_distance in legs:
+        before=current;n=max(1,math.ceil(duration/dt));step=duration/n
+        for i in range(n):
+            z=h0+(h1-h0)*(i+.5)/n
+            # Explicit midpoint integration of fuel burn with density at midpoint height.
+            def rate(mm):
+                pw,cl,_=flight_power(mm,s,speed,z,roc,a)
+                pw=max(pw,.05*installed_power*density(z)/RHO0)
+                return pw*fuel_rate,pw,cl
+            r0,_,_=rate(current);r,pw,cl=rate(current-r0*step/2)
+            current-=r*step
+            if current<=0:raise DesignDomainError('任务耗油超过试算质量')
+            worst_power=max(worst_power,pw/(installed_power*density(z)/RHO0));max_cl=max(max_cl,cl)
+        burned=before-current
+        rows.append({'segment':name,'duration_s':duration,'path_distance_m':math.sqrt(speed**2-roc**2)*duration if counts_distance else 0.,
+                     'fuel_kg':burned,'speed_m_s':speed,'start_mass_kg':before,'end_mass_kg':current})
+        if name in ('cruise','outbound','inbound'):cruise_fuel+=burned;cruise_time+=duration
+    reserve=cruise_fuel/cruise_time*p.assumptions.reserve_duration_s
+    taxi_in=taxi_out
+    trip=sum(row['fuel_kg'] for row in rows)+takeoff_roll+taxi_in
+    duration=sum(r['duration_s'] for r in rows);distance=sum(r['path_distance_m'] for r in rows)
+    return {'segments':rows,'cruise_speed_used_m_s':v,'main_duration_s':duration,'route_distance_m':distance,
+            'takeoff_roll_fuel_kg':takeoff_roll,'taxi_in_fuel_kg':taxi_in,'taxi_out_fuel_kg':taxi_out,
+            'reserve_fuel_kg':reserve,'trip_fuel_from_takeoff_kg':trip,'takeoff_fuel_kg':trip+reserve,
+            'block_fuel_kg':trip+reserve+taxi_out,'max_power_fraction':worst_power,'max_clean_cl':max_cl,
+            'reserve_basis':'mean cruise fuel flow; not flown and not added to mission time/range',
+            'integration_step_s':dt}

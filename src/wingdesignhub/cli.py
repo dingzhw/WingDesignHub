@@ -15,11 +15,12 @@ from .plate_service import run_plate_analysis
 from .requirements import DesignProject
 from .design_service import prepare_design_project, run_fastga_reference
 from .fastga_interface import get_fastga_contract
+from .sizing_service import run_sizing
 
 
 def main():
     parser = argparse.ArgumentParser(description="WingDesignHub 开发与自动化入口")
-    parser.add_argument("action", choices=["run", "doctor", "reference", "mesh", "static", "flight", "plate", "prepare", "fastga-reference", "fastga-contract"])
+    parser.add_argument("action", choices=["run", "doctor", "reference", "mesh", "static", "flight", "plate", "prepare", "size", "fastga-reference", "fastga-contract"])
     parser.add_argument("--root", type=Path, default=Path.cwd())
     parser.add_argument("--input", type=Path)
     parser.add_argument("--mode", choices=["beam", "avl", "openvsp_avl"], default="beam")
@@ -30,9 +31,9 @@ def main():
         parser.error("公开参考任务保留固定输入，不接受自定义需求覆盖；请用 prepare 保存需求。")
     if args.action == "doctor":
         result = inventory(args.root)
-    elif args.action == "prepare":
+    elif args.action in ("prepare", "size"):
         case = DesignProject.from_dict(json.loads(args.input.read_text(encoding="utf-8"))) if args.input else DesignProject()
-        result = prepare_design_project(case, args.root)
+        result = (run_sizing if args.action == "size" else prepare_design_project)(case, args.root)
     elif args.action == "fastga-reference":
         result = run_fastga_reference(args.root)
     elif args.action == "fastga-contract":
@@ -55,7 +56,7 @@ def main():
         case = WingCase.from_dict(json.loads(args.input.read_text(encoding="utf-8"))) if args.input else WingCase()
         result = run_analysis(case, args.root, args.mode)
     print(json.dumps(result, ensure_ascii=False, indent=2))
-    return 1 if result.get("status") in ("failed", "invalid_input", "needs_confirmation") else 0
+    return 1 if result.get("status") in ("failed", "invalid_input", "needs_confirmation", "out_of_domain", "not_converged", "constraints_not_met") else 0
 
 
 if __name__ == "__main__":

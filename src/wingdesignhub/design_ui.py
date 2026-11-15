@@ -6,6 +6,7 @@ import math
 from pathlib import Path
 import streamlit as st
 from . import design_service
+from . import sizing_service, sizing_ui
 from .requirements import (DesignProject, WeightRequirement, MissionRequirement, DesignAssumptions,
                            WEIGHT_LABELS, MISSION_LABELS, ASSUMPTION_KEYS, build_design_intent)
 from .fastga_interface import get_fastga_contract, reference_binding_preview
@@ -13,13 +14,16 @@ from .fastga_interface import get_fastga_contract, reference_binding_preview
 
 def render(root):
     st.subheader('新建飞机方案')
-    st.write('先定义要完成的任务，再进入总体设计。当前版本可检查、保存需求并复算总体参考任务；自动定尺寸在 V0.1.7 接入。')
+    st.write('填写载荷和航程/航时，核对假设后，一键生成常规单发飞机的初步尺寸、重量、燃油和功率。')
     base = DesignProject()
     uploaded = st.file_uploader('打开需求方案（可选）', type='json', key='design_upload')
     key = 'design_default'
     if uploaded is not None:
         try:
-            base = DesignProject.from_dict(json.loads(uploaded.getvalue()))
+            data = json.loads(uploaded.getvalue())
+            base = DesignProject.from_dict(data)
+            if data.get('schema_version') == 1:
+                st.info('已升级旧需求格式并补充定尺寸假设，请重新核对确认。')
             key = 'design_'+hashlib.sha256(uploaded.getvalue()).hexdigest()[:16]
         except (ValueError, TypeError) as exc:
             st.error(f'需求方案无法读取：{exc}')
@@ -61,7 +65,8 @@ def render(root):
         distance = base.mission.range_m
     if duration is not None and base.mission.endurance_s is not None and math.isclose(duration, base.mission.endurance_s, rel_tol=1e-13):
         duration = base.mission.endurance_s
-    p = replace(base, name=name, payload_kg=payload, weight=WeightRequirement(mode, mtow),
+    sizing = sizing_ui.assumptions(base.sizing, key)
+    p = replace(base, name=name, payload_kg=payload, weight=WeightRequirement(mode, mtow), sizing=sizing,
                 mission=MissionRequirement(kind, distance, duration), assumptions=DesignAssumptions(**values, sources=sources))
     try:
         p.check_schema()
@@ -76,7 +81,12 @@ def render(root):
                            '要求时长（min）': None if s['duration_s'] is None else s['duration_s']/60,
                            '定义': s['definition']} for s in intent['mission_segments']], hide_index=True)
         st.download_button('保存需求配置', json.dumps(p.to_dict(), ensure_ascii=False, indent=2), 'aircraft-requirements.json', 'application/json')
-        if st.button('检查并保存需求', type='primary', key='prepare_design'):
+        if st.button('运行初步总体设计', type='primary', key='run_sizing', disabled=intent['status']!='requirements_ready'):
+            with st.spinner('正在定尺寸并迭代重量、燃油和功率……'):
+                st.session_state['sizing_result'] = sizing_service.run_sizing(p, root)
+        if 'sizing_result' in st.session_state:
+            sizing_ui.results(st.session_state['sizing_result'], p, root)
+        if st.button('检查并保存需求', key='prepare_design'):
             st.session_state['design_intent_result'] = design_service.prepare_design_project(p, root)
         if 'design_intent_result' in st.session_state:
             r = st.session_state['design_intent_result']
@@ -93,7 +103,7 @@ def render(root):
             report = Path(root)/'runs'/r['run_id']/'report.md'
             if report.is_file():
                 st.download_button('下载需求摘要', report.read_text(encoding='utf-8'), 'design-requirements.md')
-        with st.expander('后续总体计算的接口准备'):
+        with st.expander('开发接口与参考任务的区别'):
             st.json(reference_binding_preview(p))
     except (ValueError, TypeError) as exc:
         st.error(str(exc))

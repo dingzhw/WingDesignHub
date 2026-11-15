@@ -63,7 +63,8 @@ def mission_ledger(problem, values):
 def evaluate_reference(work):
     import fastga
     import fastoad.api as oad
-    from .fastga_compat import compatibility, PROVIDER, SERVICE_FURNITURE_MASS, FurnitureMass
+    from .fastga_compat import compatibility, PROVIDER, SERVICE_FURNITURE_MASS, FurnitureMass, RESERVE_PROVIDER, SUBMODEL_RESERVES
+    from .fastga_plugins.reserve import CorrectReserve
     from .fastga_diagnostics import collect_diagnostics, final_domain_checks
     work = Path(work).resolve()
     work.mkdir(parents=True, exist_ok=True)
@@ -78,12 +79,14 @@ def evaluate_reference(work):
         with compatibility(), collect_diagnostics() as (diagnostics, python_warnings):
             oad.generate_configuration_file(config, distribution_name='fast-oad-cs23', sample_file_name='fastga.yml')
             with config.open('a', encoding='utf-8') as stream:
-                stream.write(f'\nsubmodels:\n  {SERVICE_FURNITURE_MASS}: {PROVIDER}\n')
+                stream.write(f'\nsubmodels:\n  {SERVICE_FURNITURE_MASS}: {PROVIDER}\n  {SUBMODEL_RESERVES}: {RESERVE_PROVIDER}\n')
             oad.generate_inputs(config, source)
             problem = oad.evaluate_problem(config)
             domain = final_domain_checks(problem)
             if not any(isinstance(c, FurnitureMass) for c in problem.model.system_iter()):
                 raise RuntimeError('FAST-GA 家具质量替换未生效')
+            if not any(isinstance(c, CorrectReserve) for c in problem.model.system_iter()):
+                raise RuntimeError('FAST-GA 储备导数替换未生效')
             values, bindings = audit_problem(problem)
             ledger = mission_ledger(problem, values)
             outputs = {name: float(problem.get_val(name, units='kg').item()) for name in BASELINE_KG}
@@ -106,7 +109,7 @@ def evaluate_reference(work):
                   'convergence': convergence, 'interface': contract, 'actual_bindings': bindings,
                   'mission_ledger': ledger, 'reference_parameters': values,
                   'versions': {n: version(n) for n in ('fast-oad-cs23', 'fast-oad-core', 'openmdao', 'pandas', 'numpy')},
-                  'compatibility': ['furniture_identity_derivative_1', 'mission_csv_dataframe_map'],
+                  'compatibility': ['furniture_identity_derivative_1', 'mission_csv_dataframe_map', 'reserve_correct_jacobian'],
                   'final_domain_checks': domain, 'domain_check_scope': 'observed correlations only',
                   'diagnostics': diagnostics, 'python_warnings': python_warnings,
                   'custom_design_solved': False, 'gradient_optimization_supported': False,

@@ -8,6 +8,7 @@ from dataclasses import asdict, dataclass, field, fields, replace
 import hashlib
 import json
 import math
+from .sizing_config import SizingAssumptions
 
 
 DEFAULT_SOURCE = 'WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定'
@@ -54,12 +55,13 @@ class DesignAssumptions:
 
 @dataclass(frozen=True)
 class DesignProject:
-    schema_version: int = 1
+    schema_version: int = 2
     name: str = '新飞机方案'
     payload_kg: float = 350.
     weight: WeightRequirement = field(default_factory=WeightRequirement)
     mission: MissionRequirement = field(default_factory=MissionRequirement)
     assumptions: DesignAssumptions = field(default_factory=DesignAssumptions)
+    sizing: SizingAssumptions = field(default_factory=SizingAssumptions)
     confirmation_sha256: str | None = None
 
     def to_dict(self):
@@ -70,6 +72,11 @@ class DesignProject:
         if not isinstance(data, dict):
             raise ValueError('方案必须是 JSON 对象')
         data = dict(data)
+        if type(data.get('schema_version')) is int and data['schema_version']==1:
+            if 'sizing' in data: raise ValueError('旧版本方案不得携带新版定尺寸字段')
+            data.update(schema_version=2, confirmation_sha256=None)
+        if 'sizing' in data:
+            data['sizing']=SizingAssumptions.from_dict(data['sizing'])
         for name, typ in (('weight', WeightRequirement), ('mission', MissionRequirement), ('assumptions', DesignAssumptions)):
             if name in data:
                 data[name] = _decode(typ, data[name])
@@ -78,7 +85,7 @@ class DesignProject:
         return obj
 
     def check_schema(self):
-        if type(self.schema_version) is not int or self.schema_version != 1:
+        if type(self.schema_version) is not int or self.schema_version != 2:
             raise ValueError('需求方案版本无效')
         if not isinstance(self.name, str) or not self.name.strip() or len(self.name) > 100:
             raise ValueError('方案名称须为 1–100 个字符')
@@ -87,6 +94,8 @@ class DesignProject:
         if self.weight.mode not in WEIGHT_LABELS or self.mission.kind not in MISSION_LABELS:
             raise ValueError('重量模式或任务类型无效')
         _finite(self.payload_kg, '载荷')
+        if not isinstance(self.sizing, SizingAssumptions): raise ValueError('定尺寸假设类型无效')
+        self.sizing.validate()
         for name, value in (('起飞重量', self.weight.value_kg), ('航程', self.mission.range_m), ('航时', self.mission.endurance_s)):
             if value is not None:
                 _finite(value, name, strictly=True)
@@ -153,7 +162,7 @@ def build_design_intent(project):
     m, a, w = p.mission, p.assumptions, p.weight
     if m.kind == 'transit_loiter':
         segments = [{'id': 'outbound_and_return', 'role': 'route', 'distance_m': m.range_m, 'duration_s': None,
-                     'definition': '往返转场总距离；航程不是单程半径，往返分配待设计'},
+                     'definition': '往返转场总距离；航程不是单程半径，当前模板按往返各半分配'},
                     {'id': 'on_station', 'role': 'loiter', 'distance_m': None, 'duration_s': m.endurance_s,
                      'definition': '额外留空时长，与转场时间分开计算'}]
     else:
@@ -163,7 +172,7 @@ def build_design_intent(project):
                   'definition': '额外燃油储备；不计入主任务航程/航时，不作为已执行的留空段'}]
     return {'status': 'requirements_ready' if p.confirmation_sha256 == p.definition_hash() else 'needs_confirmation',
             'definition_sha256': p.definition_hash(), 'diagnostics': diagnostics,
-            'aircraft_feasibility': 'not_evaluated', 'sizing_available': False,
+            'aircraft_feasibility': 'not_evaluated', 'sizing_available': True,
             'payload_definition': '机组、乘员、行李和任务设备总和；此处不再自动追加驾驶员质量',
             'weight': {'mode': w.mode, 'prescribed_mtow_kg': w.value_kg if w.mode == 'fixed' else None,
                        'mtow_upper_bound_kg': w.value_kg if w.mode == 'upper_bound' else None,
@@ -172,4 +181,5 @@ def build_design_intent(project):
             'environment': {'atmosphere': 'ISA', 'wind_m_s': 0., 'scope': '概念任务定义；环境性能未计算'},
             'target_configuration': '常规单翼、常规尾翼、金属、单发活塞螺旋桨',
             'time_accounting': '地面滑行另列；主任务时长不含储备。航程不除以巡航速度冒充实际航时。',
-            'next_step': 'V0.1.7 约束定尺寸和重量/任务燃油/功率迭代'}
+            'sizing_assumptions': p.sizing.to_dict(),
+            'next_step': '运行初步总体设计；完整配平与高保真模型后续验证'}

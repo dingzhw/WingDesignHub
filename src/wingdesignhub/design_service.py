@@ -29,7 +29,8 @@ def prepare_design_project(project, root):
              f'巡航真空速（m/s）：{p.assumptions.cruise_speed_m_s}；高度（m）：{p.assumptions.cruise_altitude_m}',
              '环境：标准大气、无风；构型：常规金属单发活塞螺旋桨。', '', '假设来源：']
     lines += [f'- {name}：{value}' for name, value in p.assumptions.sources.items()]
-    lines += ['', '下一步：V0.1.7 总体定尺寸及重量/燃油/功率迭代。完整任务定义见 design_intent.json。']
+    lines += ['', '定尺寸假设：']+[f'- {name}：{value}' for name,value in p.sizing.to_dict().items()]
+    lines += ['', '下一步：点击“运行初步总体设计”或调用 run_sizing。完整任务定义见 design_intent.json。']
     lines += [f'- {d["message"]}' for d in intent['diagnostics']]
     (work/'report.md').write_text('\n'.join(lines)+'\n', encoding='utf-8')
     source = Path(__file__).parent

@@ -45,20 +45,21 @@ def get_fastga_contract():
                       'range 为主航线距离，巡航扣除爬升/下降距离；主航时为输出',
                       '储备油 = 巡航燃油 / 巡航时长 × 储备时长 × k；总燃油包含储备一次',
                       '发动机台数/单台功率为输入，不是本参考任务自动选出的动力方案'],
-            'limits': ['本版仅执行固定公开任务；任意需求、单发构型转换、规定重量和留空任务求解待接入',
+            'limits': ['本接口仅执行固定公开任务；新单发方案调用独立 run_sizing 服务',
                        'evaluate_problem 是耦合模型求值，不运行 YAML 中的优化设计变量',
-                       '未批准梯度优化；上游 reserve.compute_partials 的导数需修复并重新核验']}
+                       '储备导数由已验证插件修复；全模型梯度及梯度优化尚未验证']}
 
 
 def reference_binding_preview(project):
-    """Describe the next integration work without mutating user requirements."""
+    """Keep the reference boundary explicit; custom sizing is a separate service."""
     from .requirements import DesignProject
     p = DesignProject.from_dict(project) if isinstance(project, dict) else project
     p.check_schema()
     return {'executable_as_custom_design': False, 'weight_mode': p.weight.mode,
-            'weight_action': {'fixed': '保留规定重量，另建质量平衡/约束求解流程',
+            'custom_sizing_service': 'wingdesignhub.sizing_service.run_sizing',
+            'weight_action': {'fixed': '保留规定重量，检查装载质量预算并报告剩余量',
                               'upper_bound': '求解重量并检查上限，超限进入约束诊断',
                               'solve': '由质量与任务燃油闭环求重量'}[p.weight.mode],
-            'mission_action': '航时/额外留空需扩展任务模型' if p.mission.kind != 'range_only' else '航程可对应 TLAR:range；仍需先生成本方案完整几何/动力/质量输入',
-            'payload_action': '建立明确载荷台账或替换 payload 子模型，保持机组质量只计一次',
-            'reference_id': REFERENCE_ID, 'next_stage': 'V0.1.7'}
+            'mission_action': '独立质点任务积分处理航程、航时、同段双约束及转场留空；储备单列',
+            'payload_action': 'MassBreakdown(payload_from_npax=False) 直接接收含机组的总载荷；座位数仅参与设备质量',
+            'reference_id': REFERENCE_ID, 'available_since': 'V0.1.7'}

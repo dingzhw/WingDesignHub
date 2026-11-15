@@ -1,2 +1,2 @@
 """Deterministic engineering services for WingDesignHub."""
-__version__ = "0.1.6"
+__version__ = "0.1.7"

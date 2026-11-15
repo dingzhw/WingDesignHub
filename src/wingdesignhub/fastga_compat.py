@@ -17,6 +17,7 @@ from fastoad.module_management._plugins import FastoadLoader
 FastoadLoader()
 from fastga.models.performances.mission.dynamic_equilibrium import DynamicEquilibrium
 from .fastga_plugins.furniture import FurnitureMass, SEATS, FURNITURE, PROVIDER, SERVICE_FURNITURE_MASS
+from .fastga_plugins.reserve import RESERVE_PROVIDER, SUBMODEL_RESERVES
 
 
 def save_csv(self):
@@ -50,6 +51,7 @@ def compatibility():
     models = dict(oad.RegisterSubmodel.active_models)
     original = DynamicEquilibrium.save_csv
     oad.RegisterSubmodel.active_models[SERVICE_FURNITURE_MASS] = PROVIDER
+    oad.RegisterSubmodel.active_models[SUBMODEL_RESERVES] = RESERVE_PROVIDER
     DynamicEquilibrium.save_csv = save_csv
     try:
         yield

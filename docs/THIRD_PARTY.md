@@ -2,6 +2,10 @@
 
 本项目原创代码采用 GPL-3.0-only，与首期 FAST-GA 集成路线保持一致。第三方程序不重新授权、不作为本仓库二进制分发。
 
+V0.1.7 新单发流程调用 FAST-GA 1.4.0 原生 `MassBreakdown(payload_from_npax=False)` 及 `BasicICEngine.compute_weight`。质量关系以该版本 [质量组源代码](https://github.com/supaero-aircraft-design/FAST-GA/tree/v1.4.0/src/fastga/models/weight/mass_breakdown) 为依据；仅在本地读取随包 SR22 桨图以满足发动机对象构造接口，当前新机任务性能不使用该桨图。新方案采用独立模板和可见气动/推进假设，固定公开双发参考仍单独回归。
+
+`fastga_plugins/reserve.py` 继承 [FAST-GA 储备组件](https://github.com/supaero-aircraft-design/FAST-GA/blob/v1.4.0/src/fastga/models/performances/mission/mission_components/reserve.py)，原始版权 (C) 2022 ONERA & ISAE-SUPAERO、GPL-3.0-or-later；保留原函数，项目修正解析导数。新不可用燃油插件与总体任务积分独立实现。升阻力方程与诱导阻力形式见 NASA Glenn 的 [升力方程](https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/lift-equation/)、[阻力方程](https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/drag-equation/)及[诱导阻力](https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/induced-drag-coefficient/)。这些来源支撑方程形式，默认系数仍是项目假设，尚未用飞机试验数据校准。
+
 | 软件 | 来源 | 当前用途 |
 |---|---|---|
 | FAST-GA 1.4.0 | https://github.com/supaero-aircraft-design/FAST-GA | 隔离安装、随包教程；项目插件替换家具质量求和，工作进程内适配任务 CSV |
