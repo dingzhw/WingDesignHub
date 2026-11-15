@@ -1,0 +1,767 @@
+{
+  "version": "0.1.6",
+  "date": "2026-11-15",
+  "baseline_commit": "d6c9cc76b3cafc22b5f1c655903cdcd31524075b",
+  "product_status": "Requirements and task definition implemented; custom aircraft sizing starts in V0.1.7.",
+  "tests": {
+    "passed": 143,
+    "failures": 0,
+    "errors": 0,
+    "skipped_local": 0,
+    "seconds": 104.223,
+    "expected_hosted_native_skips": 4,
+    "warning": "existing traitlets metadata deprecation"
+  },
+  "intent_matrix": [
+    {
+      "mode": "fixed",
+      "mission": "range_only",
+      "run_id": "5c48fde056034c7a8aa35b1c621b82c7",
+      "status": "requirements_ready",
+      "definition_sha256": "341fb4144348c48f35c3e8a353db6f87caa2146b020e00122d16b9d272330db4"
+    },
+    {
+      "mode": "fixed",
+      "mission": "endurance_only",
+      "run_id": "1fd591725dd84b13b30e73804c26335d",
+      "status": "requirements_ready",
+      "definition_sha256": "6de57f7e7960b1e305b52ac39d191d21ebfbd716e498dcd78ef4ed35d5d50ce6"
+    },
+    {
+      "mode": "fixed",
+      "mission": "same_route",
+      "run_id": "70d74462939d47d58199541eaface286",
+      "status": "requirements_ready",
+      "definition_sha256": "00085aca0509178fb0c73924615b18b084371b39989d841609b623c2f3a6f549"
+    },
+    {
+      "mode": "fixed",
+      "mission": "transit_loiter",
+      "run_id": "5a94b85430374431957e894cf5683160",
+      "status": "requirements_ready",
+      "definition_sha256": "c6f9df8dece2ce6b3a2d44dc39280abd516f096b8632efced0b320ad5926cbdb"
+    },
+    {
+      "mode": "upper_bound",
+      "mission": "range_only",
+      "run_id": "277f129025e142f4969f0db9c2acd520",
+      "status": "requirements_ready",
+      "definition_sha256": "5ccd5a0f82180259e77ef1bdb7267865d956d0f89e2a646448a8b3947683e599"
+    },
+    {
+      "mode": "upper_bound",
+      "mission": "endurance_only",
+      "run_id": "77545ab26c004dbca3d3a4917a58e0a1",
+      "status": "requirements_ready",
+      "definition_sha256": "656a7b97f4623da0209600906d9dee93e21258188afe6bbcb990c78cf43f8cd7"
+    },
+    {
+      "mode": "upper_bound",
+      "mission": "same_route",
+      "run_id": "9eb997c8e90b40be8bdb793e4085a253",
+      "status": "requirements_ready",
+      "definition_sha256": "25e8c4c4c34816323a84c4007a0558583ff8aac09e026aba3fa142b45521e96a"
+    },
+    {
+      "mode": "upper_bound",
+      "mission": "transit_loiter",
+      "run_id": "7d7545003f81447ba4770971a4bf7b4a",
+      "status": "requirements_ready",
+      "definition_sha256": "48a931d5e98afc13f85ec26b37ef1f6207c4689b2a6a37ac672e7d49614d3bc6"
+    },
+    {
+      "mode": "solve",
+      "mission": "range_only",
+      "run_id": "16212b4e4fc84838be68cbb55867c2d3",
+      "status": "requirements_ready",
+      "definition_sha256": "1fd3ae7088baaf29df7ccb5a1dd2ee1d11212f601db095a373adf52737bb70dc"
+    },
+    {
+      "mode": "solve",
+      "mission": "endurance_only",
+      "run_id": "57ce2cb934964199ac0c5c7fa7b5c8bd",
+      "status": "requirements_ready",
+      "definition_sha256": "7945eacfe47027df64b2588eee81225105937366c3221eb48b2715dc85f13eaa"
+    },
+    {
+      "mode": "solve",
+      "mission": "same_route",
+      "run_id": "8948f54f4bde481e84d60ad876286b26",
+      "status": "requirements_ready",
+      "definition_sha256": "f430a1297cf100991bacd5df279eb83e09ba3a401a8a68a5f868060fb0a142e1"
+    },
+    {
+      "mode": "solve",
+      "mission": "transit_loiter",
+      "run_id": "ecaa6fb63ef64a9ab56469d42e98bc45",
+      "status": "requirements_ready",
+      "definition_sha256": "b07df3ddba2f30a72a2b7c620f089cea2fc868b340d998bbe4510fdc2f17bc5c"
+    }
+  ],
+  "confirmation_origin": "automated synthetic validation, not a user design approval",
+  "reference_run_id": "fd54e8048ba04187891b234b75edd950",
+  "initial_reference_run_id": "3cd22a65806e4efdb94e5c45aa42c45c",
+  "reference_status": "executed_with_limits",
+  "source_hashes": {
+    "adapters.py": "b72ca7effe5311328a85bdc8b06ad583b9cabed91751094fa5019c2b2f6a29d5",
+    "box_comparison.py": "bf8e8a4c19e59c24e53a9cbbcc2add9ef42ece3343f902663795c52a44e783b5",
+    "buckling.py": "a473b5d91d835f3f100473e11aad1185f6597854e8cdd87960a4b22658399720",
+    "calculix_benchmark.py": "f3bab4818455864f4324f62a96f1fff25cdaf42f08e8b42b6d548c8e20a630ec",
+    "cli.py": "f4b53e18bd6aae75ffcc243f60e4afb4f5bc1d1dd74211d6da4d0430dcfba21f",
+    "design_service.py": "7ceb467e63a437b8bc7363c881d80ac453f161e495b476a51daa847bcc71b2ee",
+    "design_ui.py": "6de8fe26270a2f63392bee2754553279526525ed2dbf82b57d9aa9c067e848a8",
+    "fastga_compat.py": "262e20725f06c354c7a51a9f654b5e4f7559ec534c125ff4ee166f76867815ca",
+    "fastga_diagnostics.py": "bc93d372e3e5bb7f5dc4e068f4dfb3b14dfda42600ec8f84a3b51e06f631b887",
+    "fastga_interface.py": "22cea4cc8de6e8e996f0587946a3fcf989b64137c5ae3f5cf6f3e4e1e4ffe899",
+    "fastga_worker.py": "0c26abb649f045b37cfb7b6354d6ef1cf75175a1c4d72c61ddd285890999fe4e",
+    "fea_mesh.py": "f99f1817b20d85089a64d4248684c64a8ba7180268fe11b91a14ed415dc729e3",
+    "flight_loads.py": "4d9d7e8bcd24d59131337cbdb5953e90ed432853e5c6c4b359857a7395247890",
+    "flight_service.py": "72dcf0c2a247bd1ab560819a1a295141f459143377c964ecfac24129c4bc5645",
+    "flight_ui.py": "fb4b7a8a3ee36f1a3f01e65c719eed70c8150473f391047523d8d8ff74d0fa78",
+    "mechanics.py": "aece8baec13b7d9a84e133720f82a33d70444a38c980b86cf727cbdab0973650",
+    "model.py": "345afae92c6b8dd09435ebb31ce234ddf40e0d5e615e8a2fca4f2e85cc058b11",
+    "oas_benchmark.py": "74d2900b9dbba587c701bd2fc92ba75a8bf09ec17678c03ac67c1f00cdff5c56",
+    "oas_wingbox.py": "e8d0b503f1f1ba3fb7d77abdda14d376820fff41ef32f1b5a97e187d0f2f737b",
+    "plate_buckling.py": "7448faec93a91382127a0ade183b69d26074062be66ddaab1607b249b1fd9c09",
+    "plate_service.py": "0c740429e6591a1b020a334beb344fe3f1a8325569498cfdd43da0b2d9fb7301",
+    "plate_ui.py": "47adf0c1efec842d669cb199dfa3f8dfb47d21e8bd67f9df846bbe0813e6b0d9",
+    "requirements.py": "cc894e84429c4e0756a69c14c3d4b48d06ab9a8f5464a2303521f941665909d9",
+    "service.py": "530dc9ad53ac6ab1968b63e0d1bcd293b5a3e0aa105c120e5cac1cad20af6860",
+    "shell_loads.py": "a06bdbb345ab2ac1cf18265eec95815accd6b3f2bb0732a7eaaee9c09208a397",
+    "shell_static.py": "1c23aabbf1395b4b2a7729b135428b130ff2d252397b3420bb3e287c7fee4da4",
+    "shell_validation.py": "30d6c706a44d32d131d0ab6c7f9e41508c82bd39aabe8f3cab26e28cab68be92",
+    "static_service.py": "941de7a411c9814b8c73883b248aecbb04ebb812cf380bafb7e3f5f7b39528f9",
+    "structural_sensitivity.py": "cf1527dafd494a67281b12414e4f223e13e31c76252ff2f1f7592bd3ce77e6fc",
+    "structure_service.py": "5703dd5d078b0af7dfb078b661beace113b627e97c304b9d612af39fe45ad12b",
+    "vsp_structure_worker.py": "ee7cfff132602d9b5c6875b54c956cbc6d381fd4ef0228cdb7455add725899bc",
+    "vsp_worker.py": "aba49475b1221a2ad13d73644a38f508bcecc093859184e78e782282a7f73abd",
+    "__init__.py": "62624d2f9d95300e25ffe561d74cc9f923a9334132eeea482e355e52ce4b370f",
+    "fastga_plugins/furniture.py": "45b5a219b73c6380a63418f0e64f1f66d189c7943147f39faa2e98d118f719bf",
+    "fastga_plugins/__init__.py": "652c53dda99eb1a2b439a1aca6f0ec81c25fed142d761e63ddf46af578a41a17"
+  },
+  "worker_sha256": "b24ff018e89a5148e9f667cd6d69150bd5a6410cddcf30e5b89403972b22309e",
+  "artifact_count": 11,
+  "artifact_hashes": {
+    "command.json": "099a49bb31cf28b56845a537d471414b738b00c75bfe9ef2bf4a1fe99d6553a1",
+    "interface_audit.json": "0ea4332831a324f470678db94b1451f901fbac4c4ff35c75dbee66174ada9b0d",
+    "mission_ledger.json": "b2888aab7996109072953bd0f4b5c196214e168a343d9094264f5dbe8edb8aeb",
+    "oad_process.yml": "58bb22d7f3dc28b1fa96601bde14e3d94b81be35234caded6417aab092eb8bff",
+    "problem_inputs.xml": "7c2870e1f73d066f8068603ddb26357be6dec5a95a52e0ebf1310fdd0ac161a1",
+    "problem_outputs.xml": "0013620a8965e7e82a7355b160b697e50354bdbeda20ec2dc50aba8b378003c8",
+    "reference_source.xml": "fa81a18c904b5fe6925806d0b647ac99c24e68e9e25889c882b980ab6b7ed3ff",
+    "stdin.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout.log": "c6b77d38143f217fc0191b49450686550ebe3b099b3405ce9421ce950d9be0d6",
+    "summary.json": "e27c78c1cdb63131dc783be3e055b127b75f49aa39f906dd623ff8c33b7ebbac",
+    "workdir/mda_mission_results.csv": "cc65f484ebc43c3efca11396042354eb4cd9c51eaa4d0a92f81fc7c965641a73"
+  },
+  "reference_summary": {
+    "status": "executed_with_limits",
+    "passed": true,
+    "source_sha256": "fa81a18c904b5fe6925806d0b647ac99c24e68e9e25889c882b980ab6b7ed3ff",
+    "reference_hash_matches": true,
+    "reference": "FAST-GA 1.4.0 bundled Beechcraft 76 tutorial",
+    "outputs_kg": {
+      "data:weight:aircraft:MTOW": 1710.197080992762,
+      "data:weight:aircraft:OWE": 1081.0432731126027,
+      "data:mission:sizing:fuel": 249.15380788015943
+    },
+    "baseline_difference_kg": {
+      "data:weight:aircraft:MTOW": 0.0,
+      "data:weight:aircraft:OWE": 0.0,
+      "data:mission:sizing:fuel": 0.0
+    },
+    "baseline_tolerance_kg": 1e-05,
+    "convergence": {
+      "converged": true,
+      "iterations": 9,
+      "residual_norm": 7615.5218028356685,
+      "initial_norm": 12528312.294697924,
+      "rtol": 0.001,
+      "atol": 1e-10
+    },
+    "interface": {
+      "reference_id": "fastga-1.4.0-beechcraft-76",
+      "version": "1.4.0",
+      "reference_url": "https://github.com/supaero-aircraft-design/FAST-GA/blob/v1.4.0/src/fastga/notebooks/tutorial/data/beechcraft_76.xml",
+      "execution": "fixed_public_reference",
+      "accepts_custom_design": false,
+      "configuration": "双发 Beechcraft 76 公开教学任务，所有上游输入保持原样",
+      "variables": {
+        "range": {
+          "name": "data:TLAR:range",
+          "unit": "m",
+          "role": "input"
+        },
+        "cruise_speed": {
+          "name": "data:TLAR:v_cruise",
+          "unit": "m/s",
+          "role": "input"
+        },
+        "cruise_altitude": {
+          "name": "data:mission:sizing:main_route:cruise:altitude",
+          "unit": "m",
+          "role": "input"
+        },
+        "reserve_duration": {
+          "name": "data:mission:sizing:main_route:reserve:duration",
+          "unit": "s",
+          "role": "input"
+        },
+        "passengers_excluding_two_pilots": {
+          "name": "data:TLAR:NPAX_design",
+          "unit": "unitless",
+          "role": "input"
+        },
+        "luggage": {
+          "name": "data:TLAR:luggage_mass_design",
+          "unit": "kg",
+          "role": "input"
+        },
+        "person_mass": {
+          "name": "settings:weight:aircraft:payload:design_mass_per_passenger",
+          "unit": "kg",
+          "role": "input"
+        },
+        "engine_count": {
+          "name": "data:geometry:propulsion:engine:count",
+          "unit": "unitless",
+          "role": "input"
+        },
+        "power_per_engine": {
+          "name": "data:propulsion:IC_engine:max_power",
+          "unit": "W",
+          "role": "input"
+        },
+        "payload": {
+          "name": "data:weight:aircraft:payload",
+          "unit": "kg",
+          "role": "output"
+        },
+        "mtow": {
+          "name": "data:weight:aircraft:MTOW",
+          "unit": "kg",
+          "role": "output"
+        },
+        "owe": {
+          "name": "data:weight:aircraft:OWE",
+          "unit": "kg",
+          "role": "output"
+        },
+        "zfw": {
+          "name": "data:weight:aircraft:ZFW",
+          "unit": "kg",
+          "role": "output"
+        },
+        "fuel": {
+          "name": "data:mission:sizing:fuel",
+          "unit": "kg",
+          "role": "output"
+        },
+        "wing_area": {
+          "name": "data:geometry:wing:area",
+          "unit": "m**2",
+          "role": "output"
+        },
+        "wing_span": {
+          "name": "data:geometry:wing:span",
+          "unit": "m",
+          "role": "output"
+        },
+        "wing_mac": {
+          "name": "data:geometry:wing:MAC:length",
+          "unit": "m",
+          "role": "output"
+        },
+        "fuselage_length": {
+          "name": "data:geometry:fuselage:length",
+          "unit": "m",
+          "role": "output"
+        },
+        "horizontal_tail_area": {
+          "name": "data:geometry:horizontal_tail:area",
+          "unit": "m**2",
+          "role": "output"
+        },
+        "vertical_tail_area": {
+          "name": "data:geometry:vertical_tail:area",
+          "unit": "m**2",
+          "role": "output"
+        }
+      },
+      "rules": [
+        "参考流程由 ZFW + 总任务燃油求 MTOW；规定 MTOW 需要另建固定重量流程",
+        "重量上限需在求解后检查余量并参与后续约束定尺寸，不能直接覆盖 MTOW",
+        "参考载荷 = (NPAX_design + 2) × 单人质量 + 行李；新方案总载荷不直接映射到 NPAX",
+        "range 为主航线距离，巡航扣除爬升/下降距离；主航时为输出",
+        "储备油 = 巡航燃油 / 巡航时长 × 储备时长 × k；总燃油包含储备一次",
+        "发动机台数/单台功率为输入，不是本参考任务自动选出的动力方案"
+      ],
+      "limits": [
+        "本版仅执行固定公开任务；任意需求、单发构型转换、规定重量和留空任务求解待接入",
+        "evaluate_problem 是耦合模型求值，不运行 YAML 中的优化设计变量",
+        "未批准梯度优化；上游 reserve.compute_partials 的导数需修复并重新核验"
+      ]
+    },
+    "actual_bindings": {
+      "range": {
+        "name": "data:TLAR:range",
+        "absolute_source": "_auto_ivc.v2",
+        "role": "input",
+        "native_units": "m",
+        "reporting_units": "m",
+        "value": 1316772.0
+      },
+      "cruise_speed": {
+        "name": "data:TLAR:v_cruise",
+        "absolute_source": "_auto_ivc.v4",
+        "role": "input",
+        "native_units": "m/s",
+        "reporting_units": "m/s",
+        "value": 81.28222222222223
+      },
+      "cruise_altitude": {
+        "name": "data:mission:sizing:main_route:cruise:altitude",
+        "absolute_source": "_auto_ivc.v58",
+        "role": "input",
+        "native_units": "m",
+        "reporting_units": "m",
+        "value": 3048.0
+      },
+      "reserve_duration": {
+        "name": "data:mission:sizing:main_route:reserve:duration",
+        "absolute_source": "_auto_ivc.v60",
+        "role": "input",
+        "native_units": "s",
+        "reporting_units": "s",
+        "value": 2700.0
+      },
+      "passengers_excluding_two_pilots": {
+        "name": "data:TLAR:NPAX_design",
+        "absolute_source": "_auto_ivc.v0",
+        "role": "input",
+        "native_units": "unitless",
+        "reporting_units": "unitless",
+        "value": 2.0
+      },
+      "luggage": {
+        "name": "data:TLAR:luggage_mass_design",
+        "absolute_source": "_auto_ivc.v1",
+        "role": "input",
+        "native_units": "kg",
+        "reporting_units": "kg",
+        "value": 60.0
+      },
+      "person_mass": {
+        "name": "settings:weight:aircraft:payload:design_mass_per_passenger",
+        "absolute_source": "_auto_ivc.v88",
+        "role": "input",
+        "native_units": "kg",
+        "reporting_units": "kg",
+        "value": 80.0
+      },
+      "engine_count": {
+        "name": "data:geometry:propulsion:engine:count",
+        "absolute_source": "_auto_ivc.v33",
+        "role": "input",
+        "native_units": "unitless",
+        "reporting_units": "unitless",
+        "value": 2.0
+      },
+      "power_per_engine": {
+        "name": "data:propulsion:IC_engine:max_power",
+        "absolute_source": "_auto_ivc.v71",
+        "role": "input",
+        "native_units": "W",
+        "reporting_units": "W",
+        "value": 130000.0
+      },
+      "payload": {
+        "name": "data:weight:aircraft:payload",
+        "absolute_source": "aircraft_sizing.weight.mass_breakdown.payload.data:weight:aircraft:payload",
+        "role": "output",
+        "native_units": "kg",
+        "reporting_units": "kg",
+        "value": 380.0
+      },
+      "mtow": {
+        "name": "data:weight:aircraft:MTOW",
+        "absolute_source": "aircraft_sizing.mtow.data:weight:aircraft:MTOW",
+        "role": "output",
+        "native_units": "kg",
+        "reporting_units": "kg",
+        "value": 1710.197080992762
+      },
+      "owe": {
+        "name": "data:weight:aircraft:OWE",
+        "absolute_source": "aircraft_sizing.weight.mass_breakdown.owe.OWE_sum.data:weight:aircraft:OWE",
+        "role": "output",
+        "native_units": "kg",
+        "reporting_units": "kg",
+        "value": 1081.0432731126027
+      },
+      "zfw": {
+        "name": "data:weight:aircraft:ZFW",
+        "absolute_source": "aircraft_sizing.weight.mass_breakdown.update_mzfw_and_mlw.data:weight:aircraft:ZFW",
+        "role": "output",
+        "native_units": "kg",
+        "reporting_units": "kg",
+        "value": 1461.0432731126027
+      },
+      "fuel": {
+        "name": "data:mission:sizing:fuel",
+        "absolute_source": "aircraft_sizing.performance.update_fw.data:mission:sizing:fuel",
+        "role": "output",
+        "native_units": "kg",
+        "reporting_units": "kg",
+        "value": 249.15380788015943
+      },
+      "wing_area": {
+        "name": "data:geometry:wing:area",
+        "absolute_source": "aircraft_sizing.wing_area.update_wing_area.data:geometry:wing:area",
+        "role": "output",
+        "native_units": "m**2",
+        "reporting_units": "m**2",
+        "value": 15.520007680681877
+      },
+      "wing_span": {
+        "name": "data:geometry:wing:span",
+        "absolute_source": "aircraft_sizing.geometry.compute_wing.wing_y.data:geometry:wing:span",
+        "role": "output",
+        "native_units": "m",
+        "reporting_units": "m",
+        "value": 11.12716137973436
+      },
+      "wing_mac": {
+        "name": "data:geometry:wing:MAC:length",
+        "absolute_source": "aircraft_sizing.geometry.compute_wing.wing_MAC.data:geometry:wing:MAC:length",
+        "role": "output",
+        "native_units": "m",
+        "reporting_units": "m",
+        "value": 1.3942064126969504
+      },
+      "fuselage_length": {
+        "name": "data:geometry:fuselage:length",
+        "absolute_source": "aircraft_sizing.geometry.compute_fuselage.compute_fuselage_dim.fuselage_length.data:geometry:fuselage:length",
+        "role": "output",
+        "native_units": "m",
+        "reporting_units": "m",
+        "value": 8.338407125497895
+      },
+      "horizontal_tail_area": {
+        "name": "data:geometry:horizontal_tail:area",
+        "absolute_source": "aircraft_sizing.hq.tail_sizing.horizontal_tail.ht_area.data:geometry:horizontal_tail:area",
+        "role": "output",
+        "native_units": "m**2",
+        "reporting_units": "m**2",
+        "value": 4.323991372154579
+      },
+      "vertical_tail_area": {
+        "name": "data:geometry:vertical_tail:area",
+        "absolute_source": "aircraft_sizing.hq.tail_sizing.vertical_tail.vtp_area.data:geometry:vertical_tail:area",
+        "role": "output",
+        "native_units": "m**2",
+        "reporting_units": "m**2",
+        "value": 1.647772495801183
+      }
+    },
+    "mission_ledger": {
+      "fuel_by_phase_kg": {
+        "taxi_out": 8.725357155872564,
+        "takeoff": 0.5401174033756208,
+        "initial_climb": 0.08915340024095957,
+        "main_route:climb": 12.155764792624188,
+        "main_route:cruise": 171.26688702556663,
+        "main_route:reserve": 32.688297378138046,
+        "main_route:descent": 14.962873568468904,
+        "taxi_in": 8.725357155872564
+      },
+      "main_route_distance_m": {
+        "climb": 36838.541775722064,
+        "cruise": 1161462.6323423262,
+        "descent": 118459.44275606514
+      },
+      "main_route_duration_s": {
+        "climb": 728.4494418419093,
+        "cruise": 14146.365276225646,
+        "descent": 1999.999999999999
+      },
+      "main_route_time_total_s": 16874.814718067555,
+      "reserve_duration_s": 2700.0,
+      "reserve_k_factor": 1.0,
+      "reserve_fuel_kg": 32.688297378138046,
+      "non_reserve_fuel_kg": 216.4655105020214,
+      "fuel_includes_reserve": true,
+      "errors": {
+        "mass_balance_kg": -1.1368683772161603e-13,
+        "fuel_sum_kg": 5.684341886080802e-14,
+        "reserve_formula_kg": 0.0,
+        "payload_formula_kg": 0.0,
+        "range_m": -11.383125886553898
+      },
+      "checks": {
+        "mass_balance_kg": true,
+        "fuel_sum_kg": true,
+        "reserve_formula_kg": true,
+        "payload_formula_kg": true,
+        "range_m": true
+      },
+      "note": "主航线时长只合计爬升/巡航/下降；地面滑行、起飞/初始爬升及储备另列，非整段总空中时间"
+    },
+    "reference_parameters": {
+      "range": 1316772.0,
+      "cruise_speed": 81.28222222222223,
+      "cruise_altitude": 3048.0,
+      "reserve_duration": 2700.0,
+      "passengers_excluding_two_pilots": 2.0,
+      "luggage": 60.0,
+      "person_mass": 80.0,
+      "engine_count": 2.0,
+      "power_per_engine": 130000.0,
+      "payload": 380.0,
+      "mtow": 1710.197080992762,
+      "owe": 1081.0432731126027,
+      "zfw": 1461.0432731126027,
+      "fuel": 249.15380788015943,
+      "wing_area": 15.520007680681877,
+      "wing_span": 11.12716137973436,
+      "wing_mac": 1.3942064126969504,
+      "fuselage_length": 8.338407125497895,
+      "horizontal_tail_area": 4.323991372154579,
+      "vertical_tail_area": 1.647772495801183
+    },
+    "versions": {
+      "fast-oad-cs23": "1.4.0",
+      "fast-oad-core": "1.11.0",
+      "openmdao": "3.45.2",
+      "pandas": "2.3.3",
+      "numpy": "2.5.4"
+    },
+    "compatibility": [
+      "furniture_identity_derivative_1",
+      "mission_csv_dataframe_map"
+    ],
+    "final_domain_checks": [
+      {
+        "parameter": "elevator_chord_ratio",
+        "value": 0.34,
+        "lower": 0.1006849315068493,
+        "upper": 0.3,
+        "correlation": "delta_cd_plain_flap",
+        "within_range": false
+      },
+      {
+        "parameter": "horizontal_to_vertical_tail_area",
+        "value": 2.6241434319196837,
+        "lower": 8.16493161869e-05,
+        "upper": 1.975076546233926,
+        "correlation": "k_vh",
+        "within_range": false
+      },
+      {
+        "parameter": "takeoff_elevator_angle_deg",
+        "value": -0.3490658503988659,
+        "lower": -0.08,
+        "upper": 79.32,
+        "correlation": "ComputeSingleSlottedLiftEffectiveness",
+        "within_range": false
+      }
+    ],
+    "domain_check_scope": "observed correlations only",
+    "diagnostics": [
+      {
+        "source": "fastga.models.aerodynamics.components.figure_digitization",
+        "function": "delta_cd_plain_flap",
+        "message": "Chord ratio outside of the range in Roskam's book, value clipped",
+        "arguments": {
+          "chord_ratio": 0.34,
+          "control_deflection": 20.0
+        },
+        "ranges": {
+          "x_15": [
+            0.1,
+            0.3
+          ],
+          "x_60": [
+            0.1006849315068493,
+            0.3
+          ]
+        }
+      },
+      {
+        "source": "fastga.models.aerodynamics.components.digitization.compute_k_prime_single_slotted",
+        "function": "compute",
+        "message": "Flap angle value outside of the range in Roskam's book, value clipped",
+        "arguments": {
+          "chord_ratio": 0.34,
+          "flap_angle": -20.0
+        },
+        "ranges": {}
+      },
+      {
+        "source": "fastga.models.aerodynamics.components.figure_digitization",
+        "function": "k_vh",
+        "message": "Area ratio value outside of the range in Roskam's book, value clipped",
+        "arguments": {
+          "area_ratio": 2.35592346583658
+        },
+        "ranges": {
+          "x": [
+            8.16493161869e-05,
+            1.975076546233926
+          ]
+        }
+      },
+      {
+        "source": "fastga.models.aerodynamics.components.figure_digitization",
+        "function": "k_vh",
+        "message": "Area ratio value outside of the range in Roskam's book, value clipped",
+        "arguments": {
+          "area_ratio": 2.5300485360956433
+        },
+        "ranges": {
+          "x": [
+            8.16493161869e-05,
+            1.975076546233926
+          ]
+        }
+      },
+      {
+        "source": "fastga.models.aerodynamics.components.figure_digitization",
+        "function": "k_vh",
+        "message": "Area ratio value outside of the range in Roskam's book, value clipped",
+        "arguments": {
+          "area_ratio": 2.677650254508946
+        },
+        "ranges": {
+          "x": [
+            8.16493161869e-05,
+            1.975076546233926
+          ]
+        }
+      },
+      {
+        "source": "fastga.models.aerodynamics.components.figure_digitization",
+        "function": "k_vh",
+        "message": "Area ratio value outside of the range in Roskam's book, value clipped",
+        "arguments": {
+          "area_ratio": 2.6353381355953585
+        },
+        "ranges": {
+          "x": [
+            8.16493161869e-05,
+            1.975076546233926
+          ]
+        }
+      },
+      {
+        "source": "fastga.models.aerodynamics.components.figure_digitization",
+        "function": "k_vh",
+        "message": "Area ratio value outside of the range in Roskam's book, value clipped",
+        "arguments": {
+          "area_ratio": 2.6235144732950646
+        },
+        "ranges": {
+          "x": [
+            8.16493161869e-05,
+            1.975076546233926
+          ]
+        }
+      },
+      {
+        "source": "fastga.models.aerodynamics.components.figure_digitization",
+        "function": "k_vh",
+        "message": "Area ratio value outside of the range in Roskam's book, value clipped",
+        "arguments": {
+          "area_ratio": 2.6249847133167217
+        },
+        "ranges": {
+          "x": [
+            8.16493161869e-05,
+            1.975076546233926
+          ]
+        }
+      },
+      {
+        "source": "fastga.models.aerodynamics.components.figure_digitization",
+        "function": "k_vh",
+        "message": "Area ratio value outside of the range in Roskam's book, value clipped",
+        "arguments": {
+          "area_ratio": 2.624118239331438
+        },
+        "ranges": {
+          "x": [
+            8.16493161869e-05,
+            1.975076546233926
+          ]
+        }
+      },
+      {
+        "source": "fastga.models.aerodynamics.components.figure_digitization",
+        "function": "k_vh",
+        "message": "Area ratio value outside of the range in Roskam's book, value clipped",
+        "arguments": {
+          "area_ratio": 2.623890512581382
+        },
+        "ranges": {
+          "x": [
+            8.16493161869e-05,
+            1.975076546233926
+          ]
+        }
+      }
+    ],
+    "python_warnings": [
+      {
+        "category": "OpenMDAOWarning",
+        "message": "The following groups have a nonlinear solver that computes gradients and will be treated as atomic for the purposes of determining which systems are included in the optimization iteration: \naircraft_sizing\n"
+      }
+    ],
+    "custom_design_solved": false,
+    "gradient_optimization_supported": false,
+    "physical_validation_passed": false
+  },
+  "physical_validation_passed": false,
+  "upstream_content_comparison": [
+    {
+      "relative_path": "notebooks/tutorial/data/beechcraft_76.xml",
+      "canonical_equal": true,
+      "local_sha256": "fa81a18c904b5fe6925806d0b647ac99c24e68e9e25889c882b980ab6b7ed3ff",
+      "canonical_sha256": "fa81a18c904b5fe6925806d0b647ac99c24e68e9e25889c882b980ab6b7ed3ff"
+    },
+    {
+      "relative_path": "configurations/fastga.yml",
+      "canonical_equal": true,
+      "local_sha256": "ee0862849535b999e7feac7773be1571ba06c16ad132b04e08164accf7d37afc",
+      "canonical_sha256": "ee0862849535b999e7feac7773be1571ba06c16ad132b04e08164accf7d37afc"
+    },
+    {
+      "relative_path": "models/performances/mission/mission_components/reserve.py",
+      "canonical_equal": true,
+      "local_sha256": "f999f86f0c7571c29dfbc624ed1f3bc543972ccb5615592581abe14df9678866",
+      "canonical_sha256": "10654bbd34df4748f30534ba64c53ac500597bc15746371974bc62bce6d1f0d1"
+    }
+  ],
+  "worker_format_audit": {
+    "file": "scripts/validate_fastga.py",
+    "change": "preserve original LF line endings",
+    "ast_unchanged": true,
+    "before": "94b2121980d7449bd05abd1d4cd666c6bce3847653f33371d6819e9338410f80",
+    "after": "b24ff018e89a5148e9f667cd6d69150bd5a6410cddcf30e5b89403972b22309e"
+  },
+  "references": [
+    "https://github.com/supaero-aircraft-design/FAST-GA/tree/v1.4.0",
+    "docs/FASTGA_INTERFACE.md",
+    "docs/VALIDATION_V0.1.6.md"
+  ],
+  "prior_tests": {
+    "passed": 142,
+    "failures": 0,
+    "errors": 0,
+    "skipped_local": 0,
+    "seconds": 105.715,
+    "expected_hosted_native_skips": 4,
+    "warning": "existing traitlets metadata deprecation"
+  },
+  "pre_release_reference_run_id": "3598a2523a134226b8bc07a50265be25",
+  "final_review_fix": "Both fastga-reference and legacy reference --benchmark fastga reject custom --input overrides."
+}

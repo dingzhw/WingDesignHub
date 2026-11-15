@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "name": "新飞机方案",
+  "payload_kg": 350.0,
+  "weight": {
+    "mode": "solve",
+    "value_kg": null
+  },
+  "mission": {
+    "kind": "range_only",
+    "range_m": 800000.0,
+    "endurance_s": null
+  },
+  "assumptions": {
+    "cruise_speed_m_s": 60.0,
+    "cruise_altitude_m": 2000.0,
+    "reserve_duration_s": 2700.0,
+    "reserve_basis": "cruise_fuel_flow",
+    "sources": {
+      "cruise_speed_m_s": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+      "cruise_altitude_m": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+      "reserve_duration_s": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+      "reserve_basis": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定"
+    }
+  },
+  "confirmation_sha256": null
+}

@@ -31,3 +31,5 @@ V0.1.4 局部板屈曲依据 Gerard/Becker 的 [NACA TN 3781（1957）](https://
 AVL 条带定义和轴系依据 [AVL 3.40 User Primer](https://web.mit.edu/drela/Public/web/avl/avl_doc.txt) 的 Force and moment output / Trefftz Plane Plotting 章节。V0.1.4 仅以孤立无后掠翼条带升力近似竖向载荷；轴向力、剖面俯仰矩和全机配平另行扩展。新增翼盒、卸载和板筛查代码为项目独立实现，第三方依赖版本未变。
 
 V0.1.5 代表板采用 CalculiX 2.23 S8R、`*BUCKLE` 与原生 DAT/FRD，依据 [官方 2.23 手册](https://www.dhondt.de/ccx_2.23.pdf) §6.2.14、§6.9.4、§7.5、§10.7；经典板解析关系沿用 NACA TN 3781。手册描述了从偏移 1 开始的特征值搜索；高参考载荷遗漏较低模态的现象由本地实际文件复现，项目采用低参考载荷并验证缩放一致性，未修改求解器。新增代码均为独立输入/解析/诊断实现，依赖版本与许可无变更。
+
+V0.1.6 沿用 FAST-GA 1.4.0（GPL-3.0）公开 [Beechcraft XML](https://github.com/supaero-aircraft-design/FAST-GA/blob/v1.4.0/src/fastga/notebooks/tutorial/data/beechcraft_76.xml) 和 fastga.yml，标签提交 `8092ced91226a3583138ecf0a42d80909aaee346`。本地源码核查范围为 `performances/mission/mission.py`、`mission_components/cruise.py` / `reserve.py`、`weight/mass_breakdown/payload.py` / `update_mtow.py` 及 FAST-OAD 1.11.0 的 `evaluate_problem`。需求模型、服务封装和运行时接口审计独立实现；原始参考 XML、求解文件和第三方源码不新增至公开仓库。既有兼容层继续保留版权和许可说明，上游源文件未修改。

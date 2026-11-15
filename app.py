@@ -15,11 +15,13 @@ from wingdesignhub.static_service import run_wing_static
 ROOT = Path(__file__).resolve().parent
 st.set_page_config(page_title="WingDesignHub", page_icon="✈", layout="wide")
 st.title("✈ WingDesignHub")
-st.caption(f"V{__version__} · 固定翼概念设计工作台 · P0 计算与接口验证")
-st.info("当前可以运行合成机翼/梁验证。整机总体闭环与十模块完整功能按路线图接入。")
-page = st.sidebar.radio("工作区", ["开始计算", "结构网格", "机翼静力", "载荷与屈曲", "代表板屈曲", "公开基准算例", "工具设置", "验证与路线图"])
+st.caption(f"V{__version__} · 固定翼概念设计工作台 · 需求与总体服务")
+page = st.sidebar.radio("工作区", ["新建飞机方案", "开始计算", "结构网格", "机翼静力", "载荷与屈曲", "代表板屈曲", "公开基准算例", "工具设置", "验证与路线图"])
 
-if page == "开始计算":
+if page == "新建飞机方案":
+    from wingdesignhub.design_ui import render
+    render(ROOT)
+elif page == "开始计算":
     base = WingCase()
     uploaded = st.file_uploader("打开已保存的方案（可选）", type="json")
     if uploaded:
