@@ -79,10 +79,10 @@ def ccx_number(value):
     return text
 
 
-def static_deck(mesh,ids,forces):
+def static_deck(mesh,ids,forces,allow_root_loads=False):
     root=[n for n,p in mesh['nodes'].items() if abs(p[1])<1e-7]
     if len(root)<3: raise ValueError('缺少根部固支截面节点')
-    if any(n in root and np.linalg.norm(f)>1e-9 for n,f in zip(ids,forces)):
+    if not allow_root_loads and any(n in root and np.linalg.norm(f)>1e-9 for n,f in zip(ids,forces)):
         raise ValueError('禁止将外载直接施加于固支节点')
     lines=['*HEADING','WingDesignHub synthetic half-wing; SI; linear static; S6','*NODE']
     lines += [f'{n},'+','.join(ccx_number(v) for v in p) for n,p in mesh['nodes'].items()]
@@ -158,9 +158,9 @@ def von_mises(values):
     return np.sqrt(.5*((x-y)**2+(y-z)**2+(z-x)**2)+3*(xy**2+xz**2+yz**2))
 
 
-def solve_shell(executable,work,mesh,ids,forces,length,load_audit):
+def solve_shell(executable,work,mesh,ids,forces,length,load_audit,allow_root_loads=False):
     work=Path(work);work.mkdir(parents=True,exist_ok=False)
-    deck,fixed=static_deck(mesh,ids,forces);(work/'wing.inp').write_text(deck,encoding='ascii')
+    deck,fixed=static_deck(mesh,ids,forces,allow_root_loads);(work/'wing.inp').write_text(deck,encoding='ascii')
     serialized_points=[[float(ccx_number(v)) for v in mesh['nodes'][n]] for n in ids]
     serialized_forces=[[float(ccx_number(v)) for v in f] for f in forces]
     actual_f,actual_m=resultant(serialized_points,serialized_forces)

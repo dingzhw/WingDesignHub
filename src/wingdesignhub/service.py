@@ -21,7 +21,7 @@ def write_json(path, value):
 
 def run_reference(root, name):
     import sys
-    if name not in ("fastga", "calculix", "oas", "vsp_structure", "oas_wingbox", "shell_static"):
+    if name not in ("fastga", "calculix", "oas", "vsp_structure", "oas_wingbox", "shell_static", "box_comparison"):
         raise ValueError("未注册的基准任务")
     root = Path(root).resolve()
     run_id = uuid4().hex

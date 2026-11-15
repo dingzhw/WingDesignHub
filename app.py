@@ -17,7 +17,7 @@ st.set_page_config(page_title="WingDesignHub", page_icon="✈", layout="wide")
 st.title("✈ WingDesignHub")
 st.caption(f"V{__version__} · 固定翼概念设计工作台 · P0 计算与接口验证")
 st.info("当前可以运行合成机翼/梁验证。整机总体闭环与十模块完整功能按路线图接入。")
-page = st.sidebar.radio("工作区", ["开始计算", "结构网格", "机翼静力", "公开基准算例", "工具设置", "验证与路线图"])
+page = st.sidebar.radio("工作区", ["开始计算", "结构网格", "机翼静力", "载荷与屈曲", "公开基准算例", "工具设置", "验证与路线图"])
 
 if page == "开始计算":
     base = WingCase()
@@ -196,12 +196,16 @@ elif page == "机翼静力":
                 st.download_button(label,(work/name).read_bytes(),Path(name).name)
         with st.expander("完整计算记录"):st.json(r)
         st.download_button("下载静力检查记录",json.dumps(r,ensure_ascii=False,indent=2),"static-result.json")
+elif page == "载荷与屈曲":
+    from wingdesignhub.flight_ui import render
+    render(ROOT)
 elif page == "公开基准算例":
     st.subheader("复现公开软件案例")
-    st.write("算例保留上游默认条件，在独立目录运行。它们用来检查软件和方法，尚未与本工作台的飞机模型联算。")
+    st.write("这里可复现上游公开案例，也可运行本项目的合成结构基准。每项案例保留独立计算条件和记录。")
     references = {"FAST-GA 总体案例":"fastga","CalculiX 悬臂梁基准":"calculix",
                   "OpenAeroStruct 官方结构优化与管梁验证":"oas","OpenVSP 结构网格加密与翼展变化":"vsp_structure",
-                  "OpenAeroStruct 官方翼盒与燃油卸载":"oas_wingbox","代表半翼静力与载荷响应验证":"shell_static"}
+                  "OpenAeroStruct 官方翼盒与燃油卸载":"oas_wingbox","代表半翼静力与载荷响应验证":"shell_static",
+                  "同构型翼盒梁与壳对照":"box_comparison"}
     ref = st.selectbox("选择案例", list(references))
     st.caption("各案例保留独立计算记录。FAST-GA 可能需要数分钟；结构网格基准比较两档网格和翼展变化。")
     if st.button("运行公开案例", type="primary"):
@@ -216,6 +220,10 @@ elif page == "公开基准算例":
         else:
             st.success("案例运行结束。请结合日志与验证记录评估结果。")
         summary = r.get("summary", {})
+        if "mesh_relative_differences" in summary:
+            st.dataframe(pd.DataFrame([{'工况':v['case'],'展向分段':v['span_segments'],
+                '梁/壳响应差':v['beam_shell_relative_error']} for v in summary['rows']]),hide_index=True)
+            st.write('壳网格加密响应差',summary['mesh_relative_differences'])
         if "official" in summary:
             st.metric("官方 CRM 管梁回归质量",f"{summary['official']['mass_kg']:.6f} kg")
             st.caption(f"相对官方回归值误差：{summary['official']['mass_relative_error']:.3e}；该合成案例不作为目标飞机重量。")

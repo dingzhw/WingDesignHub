@@ -1,0 +1,1622 @@
+{
+  "version": "0.1.4",
+  "date": "2026-11-15",
+  "baseline_commit": "44b0eac5423215b9fcd1b97366ba06d1f6dba59b",
+  "tests": {
+    "passed": 88,
+    "failed": 0,
+    "errors": 0,
+    "seconds": 69.376,
+    "warning": "existing traitlets metadata deprecation",
+    "hosted_ci_native_skips": [
+      "OpenVSP mesh integration",
+      "OpenVSP-CalculiX static integration",
+      "AVL-OpenVSP-CalculiX flight integration"
+    ]
+  },
+  "source_hashes": {
+    "adapters.py": "b72ca7effe5311328a85bdc8b06ad583b9cabed91751094fa5019c2b2f6a29d5",
+    "box_comparison.py": "bf8e8a4c19e59c24e53a9cbbcc2add9ef42ece3343f902663795c52a44e783b5",
+    "buckling.py": "06824bfd26e80164a634be0e3ad8adbee25a0181066eee09b59d1db3d7ec7c2b",
+    "calculix_benchmark.py": "f3bab4818455864f4324f62a96f1fff25cdaf42f08e8b42b6d548c8e20a630ec",
+    "cli.py": "923f768b7c2f78aabe7835a38de66182674d9487abeda5a5378f5bb61d6a721c",
+    "fastga_compat.py": "262e20725f06c354c7a51a9f654b5e4f7559ec534c125ff4ee166f76867815ca",
+    "fastga_diagnostics.py": "bc93d372e3e5bb7f5dc4e068f4dfb3b14dfda42600ec8f84a3b51e06f631b887",
+    "fea_mesh.py": "f99f1817b20d85089a64d4248684c64a8ba7180268fe11b91a14ed415dc729e3",
+    "flight_loads.py": "48a651da6011583a0c274f0084e8072f6df9c023f46c8871d350040d839108bf",
+    "flight_service.py": "72dcf0c2a247bd1ab560819a1a295141f459143377c964ecfac24129c4bc5645",
+    "flight_ui.py": "fb4b7a8a3ee36f1a3f01e65c719eed70c8150473f391047523d8d8ff74d0fa78",
+    "mechanics.py": "aece8baec13b7d9a84e133720f82a33d70444a38c980b86cf727cbdab0973650",
+    "model.py": "345afae92c6b8dd09435ebb31ce234ddf40e0d5e615e8a2fca4f2e85cc058b11",
+    "oas_benchmark.py": "74d2900b9dbba587c701bd2fc92ba75a8bf09ec17678c03ac67c1f00cdff5c56",
+    "oas_wingbox.py": "e8d0b503f1f1ba3fb7d77abdda14d376820fff41ef32f1b5a97e187d0f2f737b",
+    "service.py": "20bb51810066ec6064e6796b48304d7f53ebe4b8407212e11f126a7ce73b0619",
+    "shell_loads.py": "a06bdbb345ab2ac1cf18265eec95815accd6b3f2bb0732a7eaaee9c09208a397",
+    "shell_static.py": "6ccd9790a2f8d1e67933b7ea0dc81b0b8c6c50c33d8e9b2548f331630f770688",
+    "shell_validation.py": "30d6c706a44d32d131d0ab6c7f9e41508c82bd39aabe8f3cab26e28cab68be92",
+    "static_service.py": "941de7a411c9814b8c73883b248aecbb04ebb812cf380bafb7e3f5f7b39528f9",
+    "structure_service.py": "5703dd5d078b0af7dfb078b661beace113b627e97c304b9d612af39fe45ad12b",
+    "vsp_structure_worker.py": "ee7cfff132602d9b5c6875b54c956cbc6d381fd4ef0228cdb7455add725899bc",
+    "vsp_worker.py": "aba49475b1221a2ad13d73644a38f508bcecc093859184e78e782282a7f73abd",
+    "__init__.py": "1eb1300b22298181a5f4ab28c363e2f4bc1b375ab58614ce7841d84b67c2a452",
+    "fastga_plugins/furniture.py": "45b5a219b73c6380a63418f0e64f1f66d189c7943147f39faa2e98d118f719bf",
+    "fastga_plugins/__init__.py": "652c53dda99eb1a2b439a1aca6f0ec81c25fed142d761e63ddf46af578a41a17"
+  },
+  "physical_validation_passed": false,
+  "strength_certified": false,
+  "box_service": {
+    "run_id": "c15128a503bc41f990e08901440d516f",
+    "status": "passed",
+    "artifact_integrity_checked": true,
+    "summary": {
+      "rows": [
+        {
+          "case": "bending",
+          "span_segments": 40,
+          "beam": {
+            "root_force_n": 9.74338036030531e-07,
+            "root_moment_nm": -4999.999995173313,
+            "tip_displacement_m": 0.039938143777037124,
+            "tip_twist_rad": 0.0,
+            "section": {
+              "area_m2": 0.0034799999999999996,
+              "Ixx_m4": 2.2355999999999997e-05,
+              "J_m4": 6.479999999999999e-05,
+              "shear_modulus_pa": 26315789473.684208
+            },
+            "mapping_force_error_n": 0.0,
+            "mapping_moment_error_nm": 1.1141310096718372e-12
+          },
+          "shell": {
+            "solver_version": "2.23",
+            "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+            "element": "S6",
+            "nodes": 2268,
+            "elements": 1120,
+            "fixed_nodes": 28,
+            "root_displacement_max_m": 0.0,
+            "tip_mean_z_m": 0.039819172142857136,
+            "max_displacement_m": 0.03985621506415437,
+            "peak_von_mises_pa": 22365272.122432407,
+            "bulk_von_mises_p95_pa": 20304454.53884014,
+            "stress_location": "expanded element integration points; bulk statistic uses 10%<element centroid y/span<90%",
+            "balance": {
+              "force_residual_n": [
+                0.010416482212246315,
+                0.00014410152028808166,
+                -0.020928105960933387
+              ],
+              "moment_residual_nm": [
+                0.05160014319068262,
+                0.004938521567564307,
+                -0.001478358661828037
+              ],
+              "coordinate_min_m": [
+                -0.0015,
+                0.0,
+                -0.091
+              ],
+              "coordinate_max_m": [
+                0.6015,
+                5.0,
+                0.091
+              ],
+              "expanded_nodes": 5922,
+              "method": "global expanded RF resultant, including applied forces and constraint forces",
+              "force_scaled_error": 3.5364228031944577e-07,
+              "moment_scaled_error": 1.7438742270157222e-07
+            },
+            "serialized_load_errors": {
+              "force_n": [
+                0.0,
+                1.5916157281026244e-12,
+                0.0
+              ],
+              "moment_nm": [
+                -1.418811734765768e-10,
+                0.0,
+                -4.831690603168681e-13
+              ]
+            },
+            "root_resultant_from_prescribed_load_balance": {
+              "force_n": [
+                -0.0,
+                6.821210263296962e-13,
+                -0.0
+              ],
+              "moment_nm": [
+                -5000.0,
+                -0.0,
+                -9.094947017729282e-13
+              ],
+              "source": "negative prescribed resultant, not independently measured support reactions"
+            }
+          },
+          "tip_fit": {
+            "translation_z_m": 0.039819172142857136,
+            "twist_y_rad": 1.484923335643254e-09,
+            "section_fit_rms_m": 1.1405264656773298e-05
+          },
+          "beam_shell_relative_error": 0.002978897438102589
+        },
+        {
+          "case": "torsion",
+          "span_segments": 40,
+          "beam": {
+            "root_force_n": 7.105427353017177e-15,
+            "root_moment_nm": 3.5527136765281536e-14,
+            "tip_displacement_m": -1.891850529379292e-19,
+            "tip_twist_rad": 0.00029320987654320966,
+            "section": {
+              "area_m2": 0.0034799999999999996,
+              "Ixx_m4": 2.2355999999999997e-05,
+              "J_m4": 6.479999999999999e-05,
+              "shear_modulus_pa": 26315789473.684208
+            },
+            "mapping_force_error_n": 0.0,
+            "mapping_moment_error_nm": 9.237055564881302e-14
+          },
+          "shell": {
+            "solver_version": "2.23",
+            "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+            "element": "S6",
+            "nodes": 2268,
+            "elements": 1120,
+            "fixed_nodes": 28,
+            "root_displacement_max_m": 0.0,
+            "tip_mean_z_m": -3.493714287134275e-12,
+            "max_displacement_m": 9.030857825997864e-05,
+            "peak_von_mises_pa": 429107.8240359346,
+            "bulk_von_mises_p95_pa": 405414.269013937,
+            "stress_location": "expanded element integration points; bulk statistic uses 10%<element centroid y/span<90%",
+            "balance": {
+              "force_residual_n": [
+                -0.00014607575303573475,
+                -0.00190879723525246,
+                -0.0006027430346546371
+              ],
+              "moment_residual_nm": [
+                -0.0009669481210726827,
+                5.6865199275456195e-05,
+                0.0004579362874380106
+              ],
+              "coordinate_min_m": [
+                -0.0015,
+                0.0,
+                -0.091
+              ],
+              "coordinate_max_m": [
+                0.6015,
+                5.0,
+                0.091
+              ],
+              "expanded_nodes": 5922,
+              "method": "global expanded RF resultant, including applied forces and constraint forces",
+              "force_scaled_error": 2.7125013343061264e-06,
+              "moment_scaled_error": 2.748168344101308e-07
+            },
+            "serialized_load_errors": {
+              "force_n": [
+                -4.263256414560601e-14,
+                0.0,
+                0.0
+              ],
+              "moment_nm": [
+                -5.684341886080802e-14,
+                6.437517185986508e-12,
+                5.684341886080802e-14
+              ]
+            },
+            "root_resultant_from_prescribed_load_balance": {
+              "force_n": [
+                -2.842170943040401e-14,
+                -0.0,
+                7.105427357601002e-15
+              ],
+              "moment_nm": [
+                -5.684341886080802e-14,
+                -99.99999999999999,
+                5.684341886080802e-14
+              ],
+              "source": "negative prescribed resultant, not independently measured support reactions"
+            }
+          },
+          "tip_fit": {
+            "translation_z_m": -3.4937142841590794e-12,
+            "twist_y_rad": 0.000287873452874926,
+            "section_fit_rms_m": 6.760327843252806e-07
+          },
+          "beam_shell_relative_error": 0.018200013352883234
+        },
+        {
+          "case": "bending",
+          "span_segments": 80,
+          "beam": {
+            "root_force_n": -1.0070856660604477e-05,
+            "root_moment_nm": -5000.000051825993,
+            "tip_displacement_m": 0.03993814407770836,
+            "tip_twist_rad": 0.0,
+            "section": {
+              "area_m2": 0.0034799999999999996,
+              "Ixx_m4": 2.2355999999999997e-05,
+              "J_m4": 6.479999999999999e-05,
+              "shear_modulus_pa": 26315789473.684208
+            },
+            "mapping_force_error_n": 0.0,
+            "mapping_moment_error_nm": 7.318590178329032e-13
+          },
+          "shell": {
+            "solver_version": "2.23",
+            "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+            "element": "S6",
+            "nodes": 8372,
+            "elements": 4160,
+            "fixed_nodes": 52,
+            "root_displacement_max_m": 0.0,
+            "tip_mean_z_m": 0.03982404269230769,
+            "max_displacement_m": 0.03985516465313562,
+            "peak_von_mises_pa": 24973745.298820075,
+            "bulk_von_mises_p95_pa": 20303681.73354626,
+            "stress_location": "expanded element integration points; bulk statistic uses 10%<element centroid y/span<90%",
+            "balance": {
+              "force_residual_n": [
+                -0.0024647579635058764,
+                2.7007416429133236e-05,
+                -0.000774524039753337
+              ],
+              "moment_residual_nm": [
+                0.008387155777974031,
+                0.001962903555841632,
+                0.00018264870045202802
+              ],
+              "coordinate_min_m": [
+                -0.0015,
+                0.0,
+                -0.091
+              ],
+              "coordinate_max_m": [
+                0.6015,
+                5.0,
+                0.091
+              ],
+              "expanded_nodes": 20462,
+              "method": "global expanded RF resultant, including applied forces and constraint forces",
+              "force_scaled_error": 4.193464918731915e-08,
+              "moment_scaled_error": 2.853930815409245e-08
+            },
+            "serialized_load_errors": {
+              "force_n": [
+                0.0,
+                -2.9558577807620168e-12,
+                0.0
+              ],
+              "moment_nm": [
+                4.001776687800884e-11,
+                0.0,
+                3.268496584496461e-13
+              ]
+            },
+            "root_resultant_from_prescribed_load_balance": {
+              "force_n": [
+                -0.0,
+                -3.410605131648481e-12,
+                -0.0
+              ],
+              "moment_nm": [
+                -4999.999999999999,
+                -0.0,
+                -2.3447910280083306e-13
+              ],
+              "source": "negative prescribed resultant, not independently measured support reactions"
+            }
+          },
+          "tip_fit": {
+            "translation_z_m": 0.039824042692307694,
+            "twist_y_rad": 1.4168165399689317e-09,
+            "section_fit_rms_m": 1.0168780004390551e-05
+          },
+          "beam_shell_relative_error": 0.002856952620999589
+        },
+        {
+          "case": "torsion",
+          "span_segments": 80,
+          "beam": {
+            "root_force_n": 0.0,
+            "root_moment_nm": 0.0,
+            "tip_displacement_m": -0.0,
+            "tip_twist_rad": 0.0002932098765432103,
+            "section": {
+              "area_m2": 0.0034799999999999996,
+              "Ixx_m4": 2.2355999999999997e-05,
+              "J_m4": 6.479999999999999e-05,
+              "shear_modulus_pa": 26315789473.684208
+            },
+            "mapping_force_error_n": 0.0,
+            "mapping_moment_error_nm": 9.592326932761353e-14
+          },
+          "shell": {
+            "solver_version": "2.23",
+            "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+            "element": "S6",
+            "nodes": 8372,
+            "elements": 4160,
+            "fixed_nodes": 52,
+            "root_displacement_max_m": 0.0,
+            "tip_mean_z_m": 2.9011538461957307e-12,
+            "max_displacement_m": 8.991958229932389e-05,
+            "peak_von_mises_pa": 428524.0765054112,
+            "bulk_von_mises_p95_pa": 405478.75972750457,
+            "stress_location": "expanded element integration points; bulk statistic uses 10%<element centroid y/span<90%",
+            "balance": {
+              "force_residual_n": [
+                7.66479241756904e-05,
+                -0.0012685981642982216,
+                2.5281041758897214e-05
+              ],
+              "moment_residual_nm": [
+                0.00017639385774208952,
+                -0.00017232054027523192,
+                -0.0006603599603813037
+              ],
+              "coordinate_min_m": [
+                -0.0015,
+                0.0,
+                -0.091
+              ],
+              "coordinate_max_m": [
+                0.6015,
+                5.0,
+                0.091
+              ],
+              "expanded_nodes": 20462,
+              "method": "global expanded RF resultant, including applied forces and constraint forces",
+              "force_scaled_error": 1.7833060869741264e-06,
+              "moment_scaled_error": 1.856575186821942e-07
+            },
+            "serialized_load_errors": {
+              "force_n": [
+                -1.7763568394002505e-14,
+                0.0,
+                -7.105427357601002e-15
+              ],
+              "moment_nm": [
+                -2.842170943040401e-14,
+                5.144329406903125e-12,
+                -4.263256414560601e-14
+              ]
+            },
+            "root_resultant_from_prescribed_load_balance": {
+              "force_n": [
+                -1.0658141036401503e-14,
+                -0.0,
+                -0.0
+              ],
+              "moment_nm": [
+                -2.842170943040401e-14,
+                -100.00000000000001,
+                -4.263256414560601e-14
+              ],
+              "source": "negative prescribed resultant, not independently measured support reactions"
+            }
+          },
+          "tip_fit": {
+            "translation_z_m": 2.9011538453835614e-12,
+            "twist_y_rad": 0.0002864402870206489,
+            "section_fit_rms_m": 8.135025715582626e-07
+          },
+          "beam_shell_relative_error": 0.023087863213788362
+        }
+      ],
+      "mesh_relative_differences": {
+        "bending": 0.0001223017333571541,
+        "torsion": 0.005003366911770295
+      },
+      "thresholds": {
+        "beam_shell": 0.1,
+        "shell_mesh": 0.05
+      },
+      "passed": true,
+      "physical_validation_passed": false,
+      "limits": [
+        "独立等截面矩形闭口薄壁翼盒，非 NACA 半翼或 OAS uCRM",
+        "梁忽略剪切挠度及约束翘曲；壳允许截面畸变。仅比较翼尖整体位移/扭转，不以梁验证壳局部峰值应力",
+        "相同中面尺寸、材料、根部固支和实际端部线载荷；端部未加刚性端板；截面 I 忽略板自身厚度立方项"
+      ],
+      "status": "passed"
+    }
+  },
+  "flight_suite": {
+    "runs": {
+      "base": {
+        "run_id": "810a13a0664b4151b51b07baa7e18742",
+        "status": "executed_with_limits",
+        "artifact_integrity_checked": true,
+        "result_sha256": "3ed45f86fe2f6ac2f9e206b67fc0e1281d12e995f3ce14efc9a55e70da49a9e7"
+      },
+      "refined": {
+        "run_id": "395adb4d53df4ea3a60890b0af562152",
+        "status": "executed_with_limits",
+        "artifact_integrity_checked": true,
+        "result_sha256": "02949f95c6bc4d1a34598a03c348872e0d7f8e20c41a5bc5256e0769e5d0237a"
+      },
+      "fuel_plus20": {
+        "run_id": "17023f7b11a042f3ae8ccfccbcc7e7a9",
+        "status": "executed_with_limits",
+        "artifact_integrity_checked": true,
+        "result_sha256": "4bba4aad7f227270b6df4b835609c13e1ab0893b04a37637d1d2b09e46bd46ad"
+      },
+      "negative": {
+        "run_id": "21262bb8729b445f89ddc0ebbd3030e3",
+        "status": "executed_with_limits",
+        "artifact_integrity_checked": true,
+        "result_sha256": "1104c9c46de1d76f7881bfcd3a2158936cd71c5cd331cc7504f0ad30e13f23c2"
+      }
+    },
+    "physical_validation_passed": false,
+    "thresholds": {
+      "tip_mesh": 0.05,
+      "panel_utilization_mesh": 0.1,
+      "load_reversal": 0.001,
+      "aero_bending_mesh": 0.05
+    },
+    "summary": {
+      "base": {
+        "tip_mean_z_m": 0.034604280427807485,
+        "peak_von_mises_pa": 39817220.211638756,
+        "yield_margin": 4.022952354206261,
+        "mapping": {
+          "input_force_n": [
+            0.0,
+            0.0,
+            5286.232715043292
+          ],
+          "input_moment_nm": [
+            11546.661246907395,
+            -1297.299107906545,
+            0.0
+          ],
+          "force_scale_n": 7061.344157733141,
+          "moment_scale_nm": 35306.720788665705,
+          "force_absolute_error_n": 3.001332515850663e-11,
+          "moment_absolute_error_nm": 5.093170329928398e-11,
+          "passed": true,
+          "origin_m": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "structure_mass": {
+          "mass_kg": 100.66578365321502,
+          "cg_m": [
+            0.7184099781684439,
+            2.4999966897767814,
+            -3.513917150683562e-06
+          ],
+          "parts_kg": {
+            "ESkin_DemoWing_Struct0_0": 84.54430010276782,
+            "EFrontSpar_DemoWing_Struct0_0": 7.218234000000001,
+            "ERearSpar_DemoWing_Struct0_0": 4.965867000000004,
+            "ERib0_DemoWing_Struct0_0": 0.9843493710618002,
+            "ERib1_DemoWing_Struct0_0": 0.9843427663622999,
+            "ERib2_DemoWing_Struct0_0": 0.9843427939725,
+            "ERib3_DemoWing_Struct0_0": 0.9843476190507001
+          },
+          "nodal_mass_error_kg": 1.7053025658242404e-13,
+          "first_moment_error_kg_m": [
+            -7.673861546209082e-13,
+            2.2737367544323206e-13,
+            8.642500777533701e-15
+          ]
+        },
+        "represented_half_mass_kg": 140.66578365321502,
+        "load_components": [
+          {
+            "name": "aerodynamic",
+            "mass_kg": null,
+            "limit_force_n": [
+              0.0,
+              0.0,
+              4903.615250625
+            ],
+            "limit_moment_nm": [
+              10901.254914929094,
+              -1838.8557189843748,
+              0.0
+            ],
+            "mapping_force_error_n": 1.3642420526593924e-11,
+            "mapping_moment_error_nm": 2.9103830456733704e-11
+          },
+          {
+            "name": "structure_gravity_and_inertia",
+            "mass_kg": 100.66578365321502,
+            "limit_force_n": [
+              0.0,
+              0.0,
+              -987.1941072628056
+            ],
+            "limit_moment_nm": [
+              -2467.982000324164,
+              709.2100970466781,
+              0.0
+            ],
+            "mapping_force_error_n": 0.0,
+            "mapping_moment_error_nm": 0.0
+          },
+          {
+            "name": "fuel_gravity_and_inertia",
+            "mass_kg": 30.0,
+            "limit_force_n": [
+              0.0,
+              0.0,
+              -294.19949999999983
+            ],
+            "limit_moment_nm": [
+              -588.3989999999999,
+              198.58466249999998,
+              0.0
+            ],
+            "mapping_force_error_n": 9.094947017729282e-13,
+            "mapping_moment_error_nm": 1.7053025658242404e-12
+          },
+          {
+            "name": "point:合成设备",
+            "mass_kg": 10.0,
+            "limit_force_n": [
+              0.0,
+              0.0,
+              -98.06649999999999
+            ],
+            "limit_moment_nm": [
+              -147.09974999999997,
+              66.1948875,
+              0.0
+            ],
+            "mapping_force_error_n": 1.7053025658242404e-13,
+            "mapping_moment_error_nm": 2.8421709430404007e-13
+          }
+        ],
+        "screening_issues": [
+          "局部板屈曲工程筛查未满足"
+        ],
+        "aero": {
+          "alpha_deg": 5.63600841636895,
+          "target_CL": 0.42695619047619043,
+          "solved_CL": 0.42697,
+          "lift_iterations": [
+            {
+              "alpha_deg": 5.656828346349885,
+              "CL": 0.42853
+            },
+            {
+              "alpha_deg": 5.63600841636895,
+              "CL": 0.42697
+            }
+          ],
+          "target_half_lift_n": 4903.325,
+          "strip_half_lift_n": 4903.615250625,
+          "lift_relative_error": 5.919465362794148e-05,
+          "approximation": "strip lift projected entirely onto geometric +z, quarter-chord application; drag and section pitching moment omitted",
+          "vertical_projection_relative_bound": 0.004834124034484688,
+          "reference_area_m2": 15.0,
+          "reference_chord_m": 1.5,
+          "reference_span_m": 10.0
+        },
+        "buckling": {
+          "panels": [
+            {
+              "kc": 4.136814170898776,
+              "compression_half_waves": 1,
+              "ks_long_strip": 5.34,
+              "compression_critical_pa": 2960325.2722224207,
+              "shear_critical_pa": 5520155.8001379585,
+              "compression_ratio": 13.239393105804384,
+              "shear_ratio": 1.0154843609007247,
+              "interaction_utilization": 14.270601593038338,
+              "proportional_load_factor_to_buckling": 0.07509294859649852,
+              "screen_passed": false,
+              "sigma_longitudinal_pa": -39192910.0,
+              "tau_pa": 5605631.884775523,
+              "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization",
+              "panel": "upper_skin",
+              "bay": 0,
+              "y_start_m": 0.0,
+              "y_end_m": 0.5,
+              "width_m": 0.6009499915053726,
+              "thickness_m": 0.002,
+              "compression_element": 5688,
+              "shear_element": 6134,
+              "sampled_elements": 30
+            },
+            {
+              "kc": 4.043234744075497,
+              "compression_half_waves": 2,
+              "ks_long_strip": 5.34,
+              "compression_critical_pa": 2893359.3581782677,
+              "shear_critical_pa": 3821331.1743305125,
+              "compression_ratio": 9.701921182068013,
+              "shear_ratio": 1.3112521645363873,
+              "interaction_utilization": 11.421303421069373,
+              "proportional_load_factor_to_buckling": 0.10125538559838343,
+              "screen_passed": false,
+              "sigma_longitudinal_pa": -28071144.444444444,
+              "tau_pa": 5010728.773751259,
+              "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization",
+              "panel": "upper_skin",
+              "bay": 1,
+              "y_start_m": 0.5,
+              "y_end_m": 1.8333333333333335,
+              "width_m": 0.6009499915053726,
+              "thickness_m": 0.002,
+              "compression_element": 5443,
+              "shear_element": 5536,
+              "sampled_elements": 63
+            },
+            {
+              "kc": 4.043234744075497,
+              "compression_half_waves": 2,
+              "ks_long_strip": 5.34,
+              "compression_critical_pa": 2893359.3581782677,
+              "shear_critical_pa": 3821331.1743305125,
+              "compression_ratio": 4.442439303988244,
+              "shear_ratio": 0.8692173265573757,
+              "interaction_utilization": 5.197978064775795,
+              "proportional_load_factor_to_buckling": 0.21708659768301672,
+              "screen_passed": false,
+              "sigma_longitudinal_pa": -12853573.333333334,
+              "tau_pa": 3321567.267241925,
+              "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization",
+              "panel": "upper_skin",
+              "bay": 2,
+              "y_start_m": 1.8333333333333335,
+              "y_end_m": 3.1666666666666665,
+              "width_m": 0.6009499915053726,
+              "thickness_m": 0.002,
+              "compression_element": 3319,
+              "shear_element": 3318,
+              "sampled_elements": 64
+            },
+            {
+              "kc": 4.043234744075497,
+              "compression_half_waves": 2,
+              "ks_long_strip": 5.34,
+              "compression_critical_pa": 2893359.3581782677,
+              "shear_critical_pa": 3821331.1743305125,
+              "compression_ratio": 1.3233263074401866,
+              "shear_ratio": 0.4081377087443723,
+              "interaction_utilization": 1.4899026967392928,
+              "proportional_load_factor_to_buckling": 0.6948891570117819,
+              "screen_passed": false,
+              "sigma_longitudinal_pa": -3828858.5555555555,
+              "tau_pa": 1559629.3498446967,
+              "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization",
+              "panel": "upper_skin",
+              "bay": 3,
+              "y_start_m": 3.1666666666666665,
+              "y_end_m": 4.5,
+              "width_m": 0.6009499915053726,
+              "thickness_m": 0.002,
+              "compression_element": 5851,
+              "shear_element": 6060,
+              "sampled_elements": 68
+            },
+            {
+              "kc": 4.136814170898776,
+              "compression_half_waves": 1,
+              "ks_long_strip": 5.34,
+              "compression_critical_pa": 2960325.2722224207,
+              "shear_critical_pa": 5520155.8001379585,
+              "compression_ratio": 0.0,
+              "shear_ratio": 0.9472806199040502,
+              "interaction_utilization": 0.8973405728458017,
+              "proportional_load_factor_to_buckling": 1.0556533924459361,
+              "screen_passed": true,
+              "sigma_longitudinal_pa": 21750745.555555556,
+              "tau_pa": 5229136.608321624,
+              "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization",
+              "panel": "lower_skin",
+              "bay": 0,
+              "y_start_m": 0.0,
+              "y_end_m": 0.5,
+              "width_m": 0.6009499915053726,
+              "thickness_m": 0.002,
+              "compression_element": 219,
+              "shear_element": 1725,
+              "sampled_elements": 27
+            },
+            {
+              "kc": 4.043234744075497,
+              "compression_half_waves": 2,
+              "ks_long_strip": 5.34,
+              "compression_critical_pa": 2893359.3581782677,
+              "shear_critical_pa": 3821331.1743305125,
+              "compression_ratio": 0.0,
+              "shear_ratio": 1.3116072368400225,
+              "interaction_utilization": 1.7203135437311188,
+              "proportional_load_factor_to_buckling": 0.7624233626594198,
+              "screen_passed": false,
+              "sigma_longitudinal_pa": 10038111.444444444,
+              "tau_pa": 5012085.622614281,
+              "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization",
+              "panel": "lower_skin",
+              "bay": 1,
+              "y_start_m": 0.5,
+              "y_end_m": 1.8333333333333335,
+              "width_m": 0.6009499915053726,
+              "thickness_m": 0.002,
+              "compression_element": 246,
+              "shear_element": 2112,
+              "sampled_elements": 66
+            },
+            {
+              "kc": 4.043234744075497,
+              "compression_half_waves": 2,
+              "ks_long_strip": 5.34,
+              "compression_critical_pa": 2893359.3581782677,
+              "shear_critical_pa": 3821331.1743305125,
+              "compression_ratio": 0.0,
+              "shear_ratio": 0.8560551095726502,
+              "interaction_utilization": 0.7328303506254421,
+              "proportional_load_factor_to_buckling": 1.1681490932274305,
+              "screen_passed": true,
+              "sigma_longitudinal_pa": 3101110.111111111,
+              "tau_pa": 3271270.077154891,
+              "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization",
+              "panel": "lower_skin",
+              "bay": 2,
+              "y_start_m": 1.8333333333333335,
+              "y_end_m": 3.1666666666666665,
+              "width_m": 0.6009499915053726,
+              "thickness_m": 0.002,
+              "compression_element": 268,
+              "shear_element": 2664,
+              "sampled_elements": 67
+            },
+            {
+              "kc": 4.043234744075497,
+              "compression_half_waves": 2,
+              "ks_long_strip": 5.34,
+              "compression_critical_pa": 2893359.3581782677,
+              "shear_critical_pa": 3821331.1743305125,
+              "compression_ratio": 0.0,
+              "shear_ratio": 0.42047091033142636,
+              "interaction_utilization": 0.1767957864349384,
+              "proportional_load_factor_to_buckling": 2.378285811048791,
+              "screen_passed": true,
+              "sigma_longitudinal_pa": 100127.40888888888,
+              "tau_pa": 1606758.5975486091,
+              "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization",
+              "panel": "lower_skin",
+              "bay": 3,
+              "y_start_m": 3.1666666666666665,
+              "y_end_m": 4.5,
+              "width_m": 0.6009499915053726,
+              "thickness_m": 0.002,
+              "compression_element": 2679,
+              "shear_element": 1724,
+              "sampled_elements": 67
+            },
+            {
+              "kc": 4.018019363090039,
+              "compression_half_waves": 3,
+              "ks_long_strip": 5.34,
+              "compression_critical_pa": 73551708.14705981,
+              "shear_critical_pa": 97751176.88911396,
+              "compression_ratio": 0.3739685638798615,
+              "shear_ratio": 0.07262229813523279,
+              "interaction_utilization": 0.37924256206630413,
+              "proportional_load_factor_to_buckling": 2.580137751711935,
+              "screen_passed": true,
+              "sigma_longitudinal_pa": -27506026.666666668,
+              "tau_pa": 7098915.111111111,
+              "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization",
+              "panel": "front_web",
+              "bay": 0,
+              "y_start_m": 0.0,
+              "y_end_m": 0.5,
+              "width_m": 0.178228,
+              "thickness_m": 0.003,
+              "compression_element": 6266,
+              "shear_element": 6265,
+              "sampled_elements": 18
+            },
+            {
+              "kc": 4.017695659372805,
+              "compression_half_waves": 7,
+              "ks_long_strip": 5.34,
+              "compression_critical_pa": 73545782.60037011,
+              "shear_critical_pa": 97751176.88911396,
+              "compression_ratio": 0.2349945019888684,
+              "shear_ratio": 0.03932672515060817,
+              "interaction_utilization": 0.2365410932999399,
+              "proportional_load_factor_to_buckling": 4.142481013402265,
+              "screen_passed": true,
+              "sigma_longitudinal_pa": -17282854.555555556,
+              "tau_pa": 3844233.6666666665,
+              "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization",
+              "panel": "front_web",
+              "bay": 1,
+              "y_start_m": 0.5,
+              "y_end_m": 1.8333333333333335,
+              "width_m": 0.178228,
+              "thickness_m": 0.003,
+              "compression_element": 6215,
+              "shear_element": 6214,
+              "sampled_elements": 42
+            },
+            {
+              "kc": 4.017695659372805,
+              "compression_half_waves": 7,
+              "ks_long_strip": 5.34,
+              "compression_critical_pa": 73545782.60037011,
+              "shear_critical_pa": 97751176.88911396,
+              "compression_ratio": 0.10452653443841513,
+              "shear_ratio": 0.022438606797648586,
+              "interaction_utilization": 0.10503002551343461,
+              "proportional_load_factor_to_buckling": 9.162560169169025,
+              "screen_passed": true,
+              "sigma_longitudinal_pa": -7687485.777777778,
+              "tau_pa": 2193400.222222222,
+              "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization",
+              "panel": "front_web",
+              "bay": 2,
+              "y_start_m": 1.8333333333333335,
+              "y_end_m": 3.1666666666666665,
+              "width_m": 0.178228,
+              "thickness_m": 0.003,
+              "compression_element": 6276,
+              "shear_element": 6275,
+              "sampled_elements": 42
+            },
+            {
+              "kc": 4.017695659372805,
+              "compression_half_waves": 7,
+              "ks_long_strip": 5.34,
+              "compression_critical_pa": 73545782.60037011,
+              "shear_critical_pa": 97751176.88911396,
+              "compression_ratio": 0.02430440714945155,
+              "shear_ratio": 0.01053786778389666,
+              "interaction_utilization": 0.024415453806882436,
+              "proportional_load_factor_to_buckling": 35.414447774921356,
+              "screen_passed": true,
+              "sigma_longitudinal_pa": -1787486.6444444444,
+              "tau_pa": 1030088.9777777778,
+              "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization",
+              "panel": "front_web",
+              "bay": 3,
+              "y_start_m": 3.1666666666666665,
+              "y_end_m": 4.5,
+              "width_m": 0.178228,
+              "thickness_m": 0.003,
+              "compression_element": 6288,
+              "shear_element": 6293,
+              "sampled_elements": 42
+            },
+            {
+              "kc": 4.001485905271295,
+              "compression_half_waves": 4,
+              "ks_long_strip": 5.34,
+              "compression_critical_pa": 154765364.74159816,
+              "shear_critical_pa": 206535039.0542241,
+              "compression_ratio": 0.0990650533257858,
+              "shear_ratio": 0.017669226786677813,
+              "interaction_utilization": 0.09937725490102485,
+              "proportional_load_factor_to_buckling": 9.792191024089712,
+              "screen_passed": true,
+              "sigma_longitudinal_pa": -15331839.111111112,
+              "tau_pa": 3649314.4444444445,
+              "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization",
+              "panel": "rear_web",
+              "bay": 0,
+              "y_start_m": 0.0,
+              "y_end_m": 0.5,
+              "width_m": 0.122614,
+              "thickness_m": 0.003,
+              "compression_element": 6375,
+              "shear_element": 6397,
+              "sampled_elements": 13
+            },
+            {
+              "kc": 4.000528943354024,
+              "compression_half_waves": 11,
+              "ks_long_strip": 5.34,
+              "compression_critical_pa": 154728352.35078228,
+              "shear_critical_pa": 206535039.0542241,
+              "compression_ratio": 0.0781764516443156,
+              "shear_ratio": 0.011775275571335363,
+              "interaction_utilization": 0.07831510875909649,
+              "proportional_load_factor_to_buckling": 12.513830400715095,
+              "screen_passed": true,
+              "sigma_longitudinal_pa": -12096113.555555556,
+              "tau_pa": 2432007.0,
+              "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization",
+              "panel": "rear_web",
+              "bay": 1,
+              "y_start_m": 0.5,
+              "y_end_m": 1.8333333333333335,
+              "width_m": 0.122614,
+              "thickness_m": 0.003,
+              "compression_element": 6396,
+              "shear_element": 6404,
+              "sampled_elements": 28
+            },
+            {
+              "kc": 4.000528943354024,
+              "compression_half_waves": 11,
+              "ks_long_strip": 5.34,
+              "compression_critical_pa": 154728352.35078228,
+              "shear_critical_pa": 206535039.0542241,
+              "compression_ratio": 0.03507146934754542,
+              "shear_ratio": 0.007226798503275971,
+              "interaction_utilization": 0.035123695964152366,
+              "proportional_load_factor_to_buckling": 27.395573414440076,
+              "screen_passed": true,
+              "sigma_longitudinal_pa": -5426550.666666667,
+              "tau_pa": 1492587.111111111,
+              "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization",
+              "panel": "rear_web",
+              "bay": 2,
+              "y_start_m": 1.8333333333333335,
+              "y_end_m": 3.1666666666666665,
+              "width_m": 0.122614,
+              "thickness_m": 0.003,
+              "compression_element": 6449,
+              "shear_element": 6389,
+              "sampled_elements": 28
+            },
+            {
+              "kc": 4.000528943354024,
+              "compression_half_waves": 11,
+              "ks_long_strip": 5.34,
+              "compression_critical_pa": 154728352.35078228,
+              "shear_critical_pa": 206535039.0542241,
+              "compression_ratio": 0.008153786891305526,
+              "shear_ratio": 0.003423541663191942,
+              "interaction_utilization": 0.008165507528825137,
+              "proportional_load_factor_to_buckling": 106.37635219981703,
+              "screen_passed": true,
+              "sigma_longitudinal_pa": -1261622.011111111,
+              "tau_pa": 707081.3111111111,
+              "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization",
+              "panel": "rear_web",
+              "bay": 3,
+              "y_start_m": 3.1666666666666665,
+              "y_end_m": 4.5,
+              "width_m": 0.122614,
+              "thickness_m": 0.003,
+              "compression_element": 6465,
+              "shear_element": 6467,
+              "sampled_elements": 28
+            }
+          ],
+          "screen_passed": false,
+          "max_interaction_utilization": 14.270601593038338,
+          "screened_area_m2": 6.68614847295454,
+          "total_shell_area_m2": 17.889706787632424,
+          "excluded_area_by_part_m2": {
+            "ESkin_DemoWing_Struct0_0": 10.323992397928388,
+            "EFrontSpar_DemoWing_Struct0_0": 0.08911400000000001,
+            "ERearSpar_DemoWing_Struct0_0": 0.061306999999999987,
+            "ERib0_DemoWing_Struct0_0": 0.18228692056700002,
+            "ERib1_DemoWing_Struct0_0": 0.18228569747449988,
+            "ERib2_DemoWing_Struct0_0": 0.18228570258750001,
+            "ERib3_DemoWing_Struct0_0": 0.1822865961205
+          },
+          "eigenvalue_buckling_checked": false,
+          "physical_validation_passed": false,
+          "limits": [
+            "仅筛查根部至最后一道内肋的两梁间上下蒙皮及两梁腹板；前后缘、翼尖末段、肋板和根/尖封板未筛查",
+            "曲面蒙皮按平板弧宽等效，四边简支属工程假设；真实肋/梁弹性支承、曲率与连接需另行验证",
+            "每单元 9 积分点等权平均近似膜应力，取面板最大压应力与最大剪应力作为均匀包络；两峰值可不共点",
+            "剪切系数采用长板下限估计，不计有限长收益；不考虑横向压应力、后屈曲、塑性、缺陷或疲劳"
+          ]
+        }
+      },
+      "refined": {
+        "tip_mean_z_m": 0.03449751834146341,
+        "peak_von_mises_pa": 39958815.89417843,
+        "yield_margin": 4.005153319098674,
+        "mapping": {
+          "input_force_n": [
+            0.0,
+            0.0,
+            5285.935928759852
+          ],
+          "input_moment_nm": [
+            11545.916214518622,
+            -1297.1828124135516,
+            0.0
+          ],
+          "force_scale_n": 7064.617636910485,
+          "moment_scale_nm": 35323.08818455243,
+          "force_absolute_error_n": 4.8203219193965197e-11,
+          "moment_absolute_error_nm": 2.546585164964199e-11,
+          "passed": true,
+          "origin_m": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "structure_mass": {
+          "mass_kg": 100.68595950554986,
+          "cg_m": [
+            0.7183445406401628,
+            2.499998760999224,
+            5.848811316785187e-07
+          ],
+          "nodal_mass_error_kg": -3.126388037344441e-13,
+          "first_moment_error_kg_m": [
+            -4.263256414560601e-13,
+            1.5631940186722204e-12,
+            -7.345178339255437e-15
+          ]
+        },
+        "represented_half_mass_kg": 140.68595950554987,
+        "load_components": [
+          {
+            "name": "aerodynamic",
+            "mass_kg": null,
+            "limit_force_n": [
+              0.0,
+              0.0,
+              4903.615250625
+            ],
+            "limit_moment_nm": [
+              10901.254914929094,
+              -1838.8557189843748,
+              0.0
+            ],
+            "mapping_force_error_n": 7.275957614183426e-12,
+            "mapping_moment_error_nm": 9.094947017729282e-12
+          },
+          {
+            "name": "structure_gravity_and_inertia",
+            "mass_kg": 100.68595950554986,
+            "limit_force_n": [
+              0.0,
+              0.0,
+              -987.3919647850994
+            ],
+            "limit_moment_nm": [
+              -2468.4786885833446,
+              709.2876273753404,
+              0.0
+            ],
+            "mapping_force_error_n": 0.0,
+            "mapping_moment_error_nm": 0.0
+          },
+          {
+            "name": "fuel_gravity_and_inertia",
+            "mass_kg": 30.0,
+            "limit_force_n": [
+              0.0,
+              0.0,
+              -294.19949999999983
+            ],
+            "limit_moment_nm": [
+              -588.3989999999999,
+              198.58466249999998,
+              0.0
+            ],
+            "mapping_force_error_n": 9.663381206337363e-13,
+            "mapping_moment_error_nm": 3.751665644813329e-12
+          },
+          {
+            "name": "point:合成设备",
+            "mass_kg": 10.0,
+            "limit_force_n": [
+              0.0,
+              0.0,
+              -98.06649999999999
+            ],
+            "limit_moment_nm": [
+              -147.09974999999997,
+              66.1948875,
+              0.0
+            ],
+            "mapping_force_error_n": 1.4210854715202004e-13,
+            "mapping_moment_error_nm": 1.8474111129762605e-13
+          }
+        ],
+        "screening_issues": [
+          "局部板屈曲工程筛查未满足"
+        ],
+        "aero": {
+          "alpha_deg": 5.63600841636895,
+          "target_CL": 0.42695619047619043,
+          "solved_CL": 0.42697,
+          "lift_iterations": [
+            {
+              "alpha_deg": 5.656828346349885,
+              "CL": 0.42853
+            },
+            {
+              "alpha_deg": 5.63600841636895,
+              "CL": 0.42697
+            }
+          ],
+          "target_half_lift_n": 4903.325,
+          "strip_half_lift_n": 4903.615250625,
+          "lift_relative_error": 5.919465362794148e-05,
+          "approximation": "strip lift projected entirely onto geometric +z, quarter-chord application; drag and section pitching moment omitted",
+          "vertical_projection_relative_bound": 0.004834124034484688,
+          "reference_area_m2": 15.0,
+          "reference_chord_m": 1.5,
+          "reference_span_m": 10.0
+        },
+        "buckling": {
+          "screen_passed": false,
+          "max_interaction_utilization": 14.17018112609939,
+          "screened_area_m2": 6.740679921492544,
+          "total_shell_area_m2": 17.893443056583187,
+          "excluded_area_by_part_m2": {
+            "ESkin_DemoWing_Struct0_0": 10.271962365209703,
+            "EFrontSpar_DemoWing_Struct0_0": 0.089114,
+            "ERearSpar_DemoWing_Struct0_0": 0.061307000000000014,
+            "ERib0_DemoWing_Struct0_0": 0.182595014248,
+            "ERib1_DemoWing_Struct0_0": 0.18259465807100003,
+            "ERib2_DemoWing_Struct0_0": 0.18259489252199998,
+            "ERib3_DemoWing_Struct0_0": 0.18259520504
+          },
+          "eigenvalue_buckling_checked": false,
+          "physical_validation_passed": false,
+          "limits": [
+            "仅筛查根部至最后一道内肋的两梁间上下蒙皮及两梁腹板；前后缘、翼尖末段、肋板和根/尖封板未筛查",
+            "曲面蒙皮按平板弧宽等效，四边简支属工程假设；真实肋/梁弹性支承、曲率与连接需另行验证",
+            "每单元 9 积分点等权平均近似膜应力，取面板最大压应力与最大剪应力作为均匀包络；两峰值可不共点",
+            "剪切系数采用长板下限估计，不计有限长收益；不考虑横向压应力、后屈曲、塑性、缺陷或疲劳"
+          ],
+          "controlling_panel": {
+            "kc": 4.136829705008371,
+            "compression_half_waves": 1,
+            "ks_long_strip": 5.34,
+            "compression_critical_pa": 2960275.2645250484,
+            "shear_critical_pa": 5520155.8001379585,
+            "compression_ratio": 13.322613168728354,
+            "shear_ratio": 0.9206345406137202,
+            "interaction_utilization": 14.17018112609939,
+            "proportional_load_factor_to_buckling": 0.0747053007299949,
+            "screen_passed": false,
+            "sigma_longitudinal_pa": -39438602.222222224,
+            "tau_pa": 5082046.099176172,
+            "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization",
+            "panel": "upper_skin",
+            "bay": 0,
+            "y_start_m": 0.0,
+            "y_end_m": 0.5,
+            "width_m": 0.6009561957035505,
+            "thickness_m": 0.002,
+            "compression_element": 8540,
+            "shear_element": 4452,
+            "sampled_elements": 40
+          }
+        }
+      },
+      "fuel_plus20": {
+        "tip_mean_z_m": 0.03312274427807487,
+        "peak_von_mises_pa": 37886829.96984294,
+        "yield_margin": 4.278879234794663,
+        "mapping": {
+          "input_force_n": [
+            0.0,
+            0.0,
+            4992.033215043291
+          ],
+          "input_moment_nm": [
+            10958.262246907394,
+            -1098.7144454065449,
+            0.0
+          ],
+          "force_scale_n": 6890.040056773229,
+          "moment_scale_nm": 34450.20028386614,
+          "force_absolute_error_n": 3.3651303965598345e-11,
+          "moment_absolute_error_nm": 2.3646862246096134e-11,
+          "passed": true,
+          "origin_m": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "structure_mass": {
+          "mass_kg": 100.66578365321502,
+          "cg_m": [
+            0.7184099781684439,
+            2.4999966897767814,
+            -3.513917150683562e-06
+          ],
+          "nodal_mass_error_kg": 1.7053025658242404e-13,
+          "first_moment_error_kg_m": [
+            -7.673861546209082e-13,
+            2.2737367544323206e-13,
+            8.642500777533701e-15
+          ]
+        },
+        "represented_half_mass_kg": 160.66578365321502,
+        "load_components": [
+          {
+            "name": "aerodynamic",
+            "mass_kg": null,
+            "limit_force_n": [
+              0.0,
+              0.0,
+              4903.615250625
+            ],
+            "limit_moment_nm": [
+              10901.254914929094,
+              -1838.8557189843748,
+              0.0
+            ],
+            "mapping_force_error_n": 1.3642420526593924e-11,
+            "mapping_moment_error_nm": 2.9103830456733704e-11
+          },
+          {
+            "name": "structure_gravity_and_inertia",
+            "mass_kg": 100.66578365321502,
+            "limit_force_n": [
+              0.0,
+              0.0,
+              -987.1941072628056
+            ],
+            "limit_moment_nm": [
+              -2467.982000324164,
+              709.2100970466781,
+              0.0
+            ],
+            "mapping_force_error_n": 0.0,
+            "mapping_moment_error_nm": 0.0
+          },
+          {
+            "name": "fuel_gravity_and_inertia",
+            "mass_kg": 50.0,
+            "limit_force_n": [
+              0.0,
+              0.0,
+              -490.3324999999998
+            ],
+            "limit_moment_nm": [
+              -980.6649999999997,
+              330.97443750000014,
+              0.0
+            ],
+            "mapping_force_error_n": 2.8990143619012088e-12,
+            "mapping_moment_error_nm": 4.547473508864641e-12
+          },
+          {
+            "name": "point:合成设备",
+            "mass_kg": 10.0,
+            "limit_force_n": [
+              0.0,
+              0.0,
+              -98.06649999999999
+            ],
+            "limit_moment_nm": [
+              -147.09974999999997,
+              66.1948875,
+              0.0
+            ],
+            "mapping_force_error_n": 1.7053025658242404e-13,
+            "mapping_moment_error_nm": 2.8421709430404007e-13
+          }
+        ],
+        "screening_issues": [
+          "局部板屈曲工程筛查未满足"
+        ],
+        "aero": {
+          "alpha_deg": 5.63600841636895,
+          "target_CL": 0.42695619047619043,
+          "solved_CL": 0.42697,
+          "lift_iterations": [
+            {
+              "alpha_deg": 5.656828346349885,
+              "CL": 0.42853
+            },
+            {
+              "alpha_deg": 5.63600841636895,
+              "CL": 0.42697
+            }
+          ],
+          "target_half_lift_n": 4903.325,
+          "strip_half_lift_n": 4903.615250625,
+          "lift_relative_error": 5.919465362794148e-05,
+          "approximation": "strip lift projected entirely onto geometric +z, quarter-chord application; drag and section pitching moment omitted",
+          "vertical_projection_relative_bound": 0.004834124034484688,
+          "reference_area_m2": 15.0,
+          "reference_chord_m": 1.5,
+          "reference_span_m": 10.0
+        },
+        "buckling": {
+          "screen_passed": false,
+          "max_interaction_utilization": 13.567210637849794,
+          "screened_area_m2": 6.68614847295454,
+          "total_shell_area_m2": 17.889706787632424,
+          "excluded_area_by_part_m2": {
+            "ESkin_DemoWing_Struct0_0": 10.323992397928388,
+            "EFrontSpar_DemoWing_Struct0_0": 0.08911400000000001,
+            "ERearSpar_DemoWing_Struct0_0": 0.061306999999999987,
+            "ERib0_DemoWing_Struct0_0": 0.18228692056700002,
+            "ERib1_DemoWing_Struct0_0": 0.18228569747449988,
+            "ERib2_DemoWing_Struct0_0": 0.18228570258750001,
+            "ERib3_DemoWing_Struct0_0": 0.1822865961205
+          },
+          "eigenvalue_buckling_checked": false,
+          "physical_validation_passed": false,
+          "limits": [
+            "仅筛查根部至最后一道内肋的两梁间上下蒙皮及两梁腹板；前后缘、翼尖末段、肋板和根/尖封板未筛查",
+            "曲面蒙皮按平板弧宽等效，四边简支属工程假设；真实肋/梁弹性支承、曲率与连接需另行验证",
+            "每单元 9 积分点等权平均近似膜应力，取面板最大压应力与最大剪应力作为均匀包络；两峰值可不共点",
+            "剪切系数采用长板下限估计，不计有限长收益；不考虑横向压应力、后屈曲、塑性、缺陷或疲劳"
+          ],
+          "controlling_panel": {
+            "kc": 4.136814170898776,
+            "compression_half_waves": 1,
+            "ks_long_strip": 5.34,
+            "compression_critical_pa": 2960325.2722224207,
+            "shear_critical_pa": 5520155.8001379585,
+            "compression_ratio": 12.600802994716613,
+            "shear_ratio": 0.9830603456213562,
+            "interaction_utilization": 13.567210637849794,
+            "proportional_load_factor_to_buckling": 0.07888279291972317,
+            "screen_passed": false,
+            "sigma_longitudinal_pa": -37302475.55555555,
+            "tau_pa": 5426646.268767356,
+            "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization",
+            "panel": "upper_skin",
+            "bay": 0,
+            "y_start_m": 0.0,
+            "y_end_m": 0.5,
+            "width_m": 0.6009499915053726,
+            "thickness_m": 0.002,
+            "compression_element": 5688,
+            "shear_element": 6134,
+            "sampled_elements": 30
+          }
+        }
+      },
+      "negative": {
+        "tip_mean_z_m": -0.034604280427807485,
+        "peak_von_mises_pa": 39817220.211638756,
+        "yield_margin": 4.022952354206261,
+        "mapping": {
+          "input_force_n": [
+            0.0,
+            0.0,
+            -5286.232715043292
+          ],
+          "input_moment_nm": [
+            -11546.661246907395,
+            1297.299107906545,
+            0.0
+          ],
+          "force_scale_n": 7061.344157733141,
+          "moment_scale_nm": 35306.720788665705,
+          "force_absolute_error_n": 3.001332515850663e-11,
+          "moment_absolute_error_nm": 5.093170329928398e-11,
+          "passed": true,
+          "origin_m": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "structure_mass": {
+          "mass_kg": 100.66578365321502,
+          "cg_m": [
+            0.7184099781684439,
+            2.4999966897767814,
+            -3.513917150683562e-06
+          ],
+          "nodal_mass_error_kg": 1.7053025658242404e-13,
+          "first_moment_error_kg_m": [
+            -7.673861546209082e-13,
+            2.2737367544323206e-13,
+            8.642500777533701e-15
+          ]
+        },
+        "represented_half_mass_kg": 140.66578365321502,
+        "load_components": [
+          {
+            "name": "aerodynamic",
+            "mass_kg": null,
+            "limit_force_n": [
+              0.0,
+              0.0,
+              -4903.615250625
+            ],
+            "limit_moment_nm": [
+              -10901.254914929094,
+              1838.8557189843748,
+              0.0
+            ],
+            "mapping_force_error_n": 1.3642420526593924e-11,
+            "mapping_moment_error_nm": 2.9103830456733704e-11
+          },
+          {
+            "name": "structure_gravity_and_inertia",
+            "mass_kg": 100.66578365321502,
+            "limit_force_n": [
+              0.0,
+              0.0,
+              987.1941072628056
+            ],
+            "limit_moment_nm": [
+              2467.982000324164,
+              -709.2100970466781,
+              0.0
+            ],
+            "mapping_force_error_n": 0.0,
+            "mapping_moment_error_nm": 0.0
+          },
+          {
+            "name": "fuel_gravity_and_inertia",
+            "mass_kg": 30.0,
+            "limit_force_n": [
+              0.0,
+              0.0,
+              294.19949999999983
+            ],
+            "limit_moment_nm": [
+              588.3989999999999,
+              -198.58466249999998,
+              0.0
+            ],
+            "mapping_force_error_n": 9.094947017729282e-13,
+            "mapping_moment_error_nm": 1.7053025658242404e-12
+          },
+          {
+            "name": "point:合成设备",
+            "mass_kg": 10.0,
+            "limit_force_n": [
+              0.0,
+              0.0,
+              98.06649999999999
+            ],
+            "limit_moment_nm": [
+              147.09974999999997,
+              -66.1948875,
+              0.0
+            ],
+            "mapping_force_error_n": 1.7053025658242404e-13,
+            "mapping_moment_error_nm": 2.8421709430404007e-13
+          }
+        ],
+        "screening_issues": [
+          "局部板屈曲工程筛查未满足"
+        ],
+        "aero": {
+          "alpha_deg": -5.63600841636895,
+          "target_CL": -0.42695619047619043,
+          "solved_CL": -0.42697,
+          "lift_iterations": [
+            {
+              "alpha_deg": -5.656828346349885,
+              "CL": -0.42853
+            },
+            {
+              "alpha_deg": -5.63600841636895,
+              "CL": -0.42697
+            }
+          ],
+          "target_half_lift_n": -4903.325,
+          "strip_half_lift_n": -4903.615250625,
+          "lift_relative_error": 5.919465362794148e-05,
+          "approximation": "strip lift projected entirely onto geometric +z, quarter-chord application; drag and section pitching moment omitted",
+          "vertical_projection_relative_bound": 0.004834124034484688,
+          "reference_area_m2": 15.0,
+          "reference_chord_m": 1.5,
+          "reference_span_m": 10.0
+        },
+        "buckling": {
+          "screen_passed": false,
+          "max_interaction_utilization": 14.11533775655905,
+          "screened_area_m2": 6.68614847295454,
+          "total_shell_area_m2": 17.889706787632424,
+          "excluded_area_by_part_m2": {
+            "ESkin_DemoWing_Struct0_0": 10.323992397928388,
+            "EFrontSpar_DemoWing_Struct0_0": 0.08911400000000001,
+            "ERearSpar_DemoWing_Struct0_0": 0.061306999999999987,
+            "ERib0_DemoWing_Struct0_0": 0.18228692056700002,
+            "ERib1_DemoWing_Struct0_0": 0.18228569747449988,
+            "ERib2_DemoWing_Struct0_0": 0.18228570258750001,
+            "ERib3_DemoWing_Struct0_0": 0.1822865961205
+          },
+          "eigenvalue_buckling_checked": false,
+          "physical_validation_passed": false,
+          "limits": [
+            "仅筛查根部至最后一道内肋的两梁间上下蒙皮及两梁腹板；前后缘、翼尖末段、肋板和根/尖封板未筛查",
+            "曲面蒙皮按平板弧宽等效，四边简支属工程假设；真实肋/梁弹性支承、曲率与连接需另行验证",
+            "每单元 9 积分点等权平均近似膜应力，取面板最大压应力与最大剪应力作为均匀包络；两峰值可不共点",
+            "剪切系数采用长板下限估计，不计有限长收益；不考虑横向压应力、后屈曲、塑性、缺陷或疲劳"
+          ],
+          "controlling_panel": {
+            "kc": 4.136814170898776,
+            "compression_half_waves": 1,
+            "ks_long_strip": 5.34,
+            "compression_critical_pa": 2960325.2722224207,
+            "shear_critical_pa": 5520155.8001379585,
+            "compression_ratio": 13.217997183713248,
+            "shear_ratio": 0.9472806199040502,
+            "interaction_utilization": 14.11533775655905,
+            "proportional_load_factor_to_buckling": 0.07526980555428674,
+            "screen_passed": false,
+            "sigma_longitudinal_pa": -39129571.11111111,
+            "tau_pa": -5229136.608321624,
+            "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization",
+            "panel": "lower_skin",
+            "bay": 0,
+            "y_start_m": 0.0,
+            "y_end_m": 0.5,
+            "width_m": 0.6009499915053726,
+            "thickness_m": 0.002,
+            "compression_element": 2792,
+            "shear_element": 1725,
+            "sampled_elements": 27
+          }
+        }
+      }
+    },
+    "checks": {
+      "tip_mesh_relative_difference": 0.003094775841187223,
+      "panel_utilization_mesh_relative_difference": 0.0070867454724335135,
+      "fuel_force_delta_n": [
+        0.0,
+        0.0,
+        -294.1995000000006
+      ],
+      "expected_fuel_force_delta_n": [
+        0.0,
+        0.0,
+        -294.19949999999994
+      ],
+      "fuel_moment_delta_nm": [
+        -588.3990000000013,
+        198.58466250000015,
+        0.0
+      ],
+      "expected_fuel_moment_delta_nm": [
+        -588.3989999999998,
+        198.58466249999998,
+        0.0
+      ],
+      "fuel_unloads_tip": true,
+      "load_reversal_tip_relative_error": 0.0,
+      "aero_24_48_bending_relative_difference": 0.00018256128913180363
+    },
+    "passed": true
+  },
+  "sources": [
+    {
+      "title": "NACA TN3781",
+      "url": "https://ntrs.nasa.gov/citations/19930084505",
+      "pdf_sha256": "360755d7b925afc8b91cb8fa214d4786050beebd04a91189879c9b7b8a3a3b53",
+      "checked": "printed pages 15,38,39 and table3; equations20,53,55"
+    },
+    {
+      "title": "AVL 3.40 User Primer",
+      "url": "https://web.mit.edu/drela/Public/web/avl/avl_doc.txt"
+    }
+  ],
+  "preserved_failures": [
+    {
+      "case": "perimeter vertical end load, 20 segments",
+      "force_z_residual_n": -1.5970382378467791,
+      "moment_x_residual_nm": -8.435293926069843,
+      "reason": "global balance threshold exceeded"
+    },
+    {
+      "case": "perimeter vertical end load, 40/80 segments",
+      "beam_shell_relative_error": [
+        0.3032049888080526,
+        0.5074351907552073
+      ],
+      "reason": "free-edge skin distortion; common pure-moment benchmark adopted"
+    },
+    {
+      "case": "two-point alpha interpolation",
+      "relative_lift_residual_approx": 0.0037,
+      "resolution": "bounded iterative AVL solve, no force rescaling"
+    }
+  ],
+  "raw_artifacts": "Full inputs, strip/nodal arrays, solver files and field outputs remain in the artifact-hashed service run directories; reproduce via scripts/validate_flight_loads.py and the box_comparison reference service."
+}

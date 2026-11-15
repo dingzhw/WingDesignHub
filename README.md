@@ -1,6 +1,6 @@
 # WingDesignHub
 
-面向固定翼飞机概念设计的本地工程工作台。当前版本 **V0.1.3**：代表半翼静力、守恒载荷映射与 OpenAeroStruct 官方翼盒接入版。
+面向固定翼飞机概念设计的本地工程工作台。当前版本 **V0.1.4**：同构型梁/壳对照、气动与质量卸载、局部板屈曲工程筛查版。
 
 目标是整合 FAST-GA/OpenMDAO、OpenVSP、AVL/XFOIL、CCBlade、OpenAeroStruct、CalculiX 等工具，逐步覆盖 AAA 的十个核心模块。当前提供合成机翼/梁案例、真实 OpenVSP/AVL 调用、载荷映射、计算记录和中文界面。完整整机设计与 AI 功能仍按路线图开发。
 
@@ -33,6 +33,12 @@ CalculiX 基准要求 2.23。其他电脑可从 [CalculiX Windows 项目](https:
 关闭浏览器后本地服务仍可供再次打开使用。双击 **关闭 WingDesignHub.cmd** 可关闭本项目服务。服务仅监听 127.0.0.1。
 
 ## 开发与验证
+
+V0.1.4 使用方法：双击启动后进入“载荷与屈曲”，保留默认参数，点击“一键计算载荷与结构”。可修改质量、速度、载荷因数、燃油、设备位置和板厚。结果同时显示升力、各项卸载及板屈曲指标；**默认合成方案屈服筛查通过、局部屈曲筛查未满足**，界面保留该诊断。此页使用竖向 `-m*n_z*g` 有效质量载荷，未包含转动惯性和全机配平。
+
+“公开基准算例”→“同构型翼盒梁与壳对照”可一键复算独立矩形翼盒的弯曲/扭转与网格检查。该基准与 NACA 半翼分别定义；适用范围、量化误差及原始失败过程见 [V0.1.4 验证报告](docs/VALIDATION_V0.1.4.md)。
+
+开发者可使用 `python -m wingdesignhub.cli flight --input examples/flight_loads.json`、`python -m wingdesignhub.cli reference --benchmark box_comparison`；`python scripts/validate_flight_loads.py` 复算四组载荷/网格案例及 AVL 条带加密。普通用户使用界面即可。
 
 ```powershell
 .venv\Scripts\python.exe -m pytest -q

@@ -1,6 +1,6 @@
 # 验证方法与适用边界
 
-最新结果见 [V0.1.3 半翼静力与官方翼盒报告](VALIDATION_V0.1.3.md)及 `validation/v0.1.3.json`；前序记录见 [V0.1.2 报告](VALIDATION_V0.1.2.md)和 [V0.1.1 报告](VALIDATION_V0.1.1.md)。历史失败摘要保持原状，便于前后比较。
+最新结果见 [V0.1.4 梁/壳、质量卸载与屈曲筛查报告](VALIDATION_V0.1.4.md)及 `validation/v0.1.4.json`。前序记录见 [V0.1.3](VALIDATION_V0.1.3.md)、[V0.1.2](VALIDATION_V0.1.2.md)和 [V0.1.1](VALIDATION_V0.1.1.md)。历史失败摘要保持原状，便于前后比较。
 
 ## V0.1.0 验证对象
 

@@ -25,3 +25,7 @@ OpenVSP 结构接口依据安装包 3.56.0 自带 API 测试及 [FEA API 文档]
 V0.1.3 的 `oas_wingbox.py` 改编自 [OpenAeroStruct v2.12.1 官方翼盒测试](https://github.com/mdolab/OpenAeroStruct/blob/v2.12.1/tests/integration_tests/test_wingbox_analysis.py)，原测试本地文件 SHA-256 为 `4ffb25a6be8df73cd383db146dbbcc0ba3f5041fb9aa19275c7c63e1920d791b`，沿用 Apache-2.0 许可副本。保留翼型坐标、几何、载荷、燃油、材料和优化参考值；显式给出 num_x=3，将虚部为零的物理坐标转为实数，记录并显式执行优化器原本的初值裁剪，补充燃油合力检查。上游完整测试也在本地原样执行；本轮未将其导数测试替代独立梯度精度验收。
 
 CalculiX 壳单元、输出和边界依据随包 2.23 手册（6.2.13–6.2.14、7.4、7.53、7.97、7.99、7.123；[官网](https://www.dhondt.de/)）。数值字段截断通过本机构型实际复现，并核对上游 [nodes.f](https://github.com/Dhondtguido/CalculiX/blob/master/src/nodes.f) 和 [cloads.f](https://github.com/Dhondtguido/CalculiX/blob/master/src/cloads.f) 中的 `f20.0` 读取规则。本项目未修改求解器二进制或上游源码。
+
+V0.1.4 局部板屈曲依据 Gerard/Becker 的 [NACA TN 3781（1957）](https://ntrs.nasa.gov/citations/19930084505)，正文 p.15 式 (20)、p.38 式 (53)/(55)、p.39 有限长压剪相互作用讨论及表 3。采用经典解析式独立实现，不复制第三方程序；原报告仅在 local 保存核查，不入仓库。简支剪切长板系数取 5.34，是对表 3 中 5.35 的向下取值，不使用有限长度增强。板边支承、膜应力包络和曲面等效属于项目工程假设。
+
+AVL 条带定义和轴系依据 [AVL 3.40 User Primer](https://web.mit.edu/drela/Public/web/avl/avl_doc.txt) 的 Force and moment output / Trefftz Plane Plotting 章节。V0.1.4 仅以孤立无后掠翼条带升力近似竖向载荷；轴向力、剖面俯仰矩和全机配平另行扩展。新增翼盒、卸载和板筛查代码为项目独立实现，第三方依赖版本未变。
