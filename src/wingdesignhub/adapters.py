@@ -17,12 +17,13 @@ def sha256(path):
 
 
 def tool_paths(root):
+    bundled_ccx = Path(root)/".runtime/calculix-2.23/CalculiX-2.23.0-win-x64/bin/ccx.exe"
     defaults = {"avl": "C:/apps/avl/avl.exe", "xfoil": "C:/apps/XFOIL6.99/xfoil.exe",
-                "openvsp": "C:/apps/OpenVSP-3.56.0-win64", "calculix": ""}
+                "openvsp": "C:/apps/OpenVSP-3.56.0-win64", "calculix": str(bundled_ccx) if bundled_ccx.is_file() else ""}
     config = Path(root)/"local/tools.json"
     if config.exists():
         custom = json.loads(config.read_text(encoding="utf-8"))
-        defaults.update({k: v for k, v in custom.items() if k in defaults})
+        defaults.update({k: v for k, v in custom.items() if k in defaults and not (k == "calculix" and not v)})
     return defaults
 
 

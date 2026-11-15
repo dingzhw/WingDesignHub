@@ -78,7 +78,7 @@ elif page == "公开基准算例":
     st.subheader("复现公开软件案例")
     st.write("算例保留上游默认条件，在独立目录运行。它们用来检查软件和方法，尚未与本工作台的飞机模型联算。")
     ref = st.selectbox("选择案例", ["FAST-GA 总体案例", "CalculiX 悬臂梁基准"])
-    st.caption("FAST-GA 可能需要数分钟。CalculiX 当前基准使用旧版 2.10，代表件阶段须升级重验。")
+    st.caption("FAST-GA 可能需要数分钟，会显示经验方法范围检查。CalculiX 2.23 自动执行三档网格与手册尺寸梁验证。")
     if st.button("运行公开案例", type="primary"):
         with st.spinner("正在执行基准并保存日志……"):
             st.session_state["reference_result"] = run_reference(ROOT, "fastga" if ref.startswith("FAST") else "calculix")
@@ -86,16 +86,39 @@ elif page == "公开基准算例":
         r = st.session_state["reference_result"]
         if r["status"] == "failed":
             st.error(r["error"])
+        elif r["status"] == "executed_with_limits":
+            st.warning("参考案例复现完成，但部分经验方法超出范围，须复核后再用于工程方案。")
         else:
             st.success("案例运行结束。请结合日志与验证记录评估结果。")
-        st.json(r)
+        summary = r.get("summary", {})
+        if "mesh_study" in summary:
+            st.metric("20 单元梁挠度误差", f"{summary['relative_error']:.3%}")
+            st.caption(f"验收门槛 {summary['threshold']:.0%}；求解器版本 {summary['solver_version']}")
+            st.dataframe(pd.DataFrame([{"单元数": row["elements"], "挠度（mm）": row["tip_displacement_m"]*1000,
+                                        "相对误差（%）": row["relative_error"]*100} for row in summary["mesh_study"]]), hide_index=True)
+        if "outputs_kg" in summary:
+            a, b, c = st.columns(3)
+            for column, key, title in ((a, "data:weight:aircraft:MTOW", "起飞重量"),
+                                       (b, "data:weight:aircraft:OWE", "使用空重"),
+                                       (c, "data:mission:sizing:fuel", "任务燃油")):
+                column.metric(title, f"{summary['outputs_kg'][key]:.2f} kg")
+            labels = {"elevator_chord_ratio": "升降舵弦长比", "horizontal_to_vertical_tail_area": "平尾/垂尾面积比",
+                      "takeoff_elevator_angle_deg": "起飞升降舵偏角（°，铰链力矩关系）"}
+            for check in summary.get("final_domain_checks", []):
+                if not check["within_range"]:
+                    st.warning(f"{labels.get(check['parameter'], check['parameter'])}：{check['value']:.4f}，"
+                               f"经验表范围 {check['lower']:.4f}–{check['upper']:.4f}；上游采用边界值计算。")
+        st.caption("数值基准通过与独立物理验证分别记录。")
+        with st.expander("运行详情与完整诊断"):
+            st.json(r)
+        st.download_button("下载基准记录", json.dumps(r, ensure_ascii=False, indent=2), "benchmark.json")
 elif page == "工具设置":
     st.subheader("本机计算工具")
     st.caption("路径只保存在本地；检测到文件或安装包不等于已经完成工程验证。")
-    st.caption("OpenVSP 的 Python 接口须与安装目录版本一致。CalculiX 路径预留给代表件计算；当前公开基准固定使用项目内 2.10 版本。")
+    st.caption("OpenVSP 的 Python 接口须与安装目录版本一致。CalculiX 基准要求 2.23，可选择项目内便携版或填写路径。")
     st.dataframe(pd.DataFrame.from_dict(inventory(ROOT), orient="index").fillna(""), width="stretch")
     with st.form("tools"):
-        labels = {"avl": "AVL 程序路径", "xfoil": "XFOIL 程序路径", "openvsp": "OpenVSP 安装目录", "calculix": "CalculiX 程序路径（预留）"}
+        labels = {"avl": "AVL 程序路径", "xfoil": "XFOIL 程序路径", "openvsp": "OpenVSP 安装目录", "calculix": "CalculiX 2.23 程序路径"}
         config = {k: st.text_input(labels[k], v) for k, v in tool_paths(ROOT).items()}
         if st.form_submit_button("保存本机路径"):
             (ROOT/"local").mkdir(exist_ok=True)

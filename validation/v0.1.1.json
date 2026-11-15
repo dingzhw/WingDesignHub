@@ -1,0 +1,391 @@
+{
+  "version": "0.1.1",
+  "date": "2026-11-15",
+  "baseline_commit": "b7493dd81240412993948f2547b25dc3be2ee63d",
+  "test_suite": {
+    "passed": 35,
+    "failed": 0,
+    "seconds": 13.69,
+    "warning": "traitlets constructor metadata deprecation"
+  },
+  "calculix": {
+    "solver": "CalculiX",
+    "solver_version": "2.23",
+    "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+    "element": "B32R",
+    "threshold": 0.02,
+    "mesh_study": [
+      {
+        "elements": 10,
+        "parameters_si": {
+          "length": 2.0,
+          "modulus": 70000000000.0,
+          "side": 0.1,
+          "force": 100.0
+        },
+        "tip_displacement_m": 0.0004525506,
+        "analytical_tip_m": 0.000457142857142857,
+        "relative_error": 0.010045562499999723,
+        "input_sha256": "6fb440dc7743fbab6d6ea96d7aea69d0e7c10449d6d9c704cd5cd621a67db487",
+        "solver_version": "2.23"
+      },
+      {
+        "elements": 20,
+        "parameters_si": {
+          "length": 2.0,
+          "modulus": 70000000000.0,
+          "side": 0.1,
+          "force": 100.0
+        },
+        "tip_displacement_m": 0.0004551338,
+        "analytical_tip_m": 0.000457142857142857,
+        "relative_error": 0.004394812499999783,
+        "input_sha256": "4eff945cd47a33258d638679b796b03698eabf0c9f25c8925e160827d59ec806",
+        "solver_version": "2.23"
+      },
+      {
+        "elements": 40,
+        "parameters_si": {
+          "length": 2.0,
+          "modulus": 70000000000.0,
+          "side": 0.1,
+          "force": 100.0
+        },
+        "tip_displacement_m": 0.0004563524,
+        "analytical_tip_m": 0.000457142857142857,
+        "relative_error": 0.0017291249999997177,
+        "input_sha256": "ed66235b087c30d99a5b85aad25920d6ad11555d1b808bbfc8acd90b62a7c8d2",
+        "solver_version": "2.23"
+      }
+    ],
+    "manual_dimensions_case": {
+      "elements": 10,
+      "parameters_si": {
+        "length": 0.1,
+        "modulus": 100000000000.0,
+        "side": 0.002,
+        "force": 1.0
+      },
+      "tip_displacement_m": 0.002471726,
+      "analytical_tip_m": 0.0025,
+      "relative_error": 0.011309600000000003,
+      "input_sha256": "3b25dd425f8318155d69d3a527560aa4323bb3e87b376fe93afea99478baff59",
+      "solver_version": "2.23"
+    },
+    "relative_error": 0.004394812499999783,
+    "physical_validation_passed": false,
+    "evidence_level": "analytical_and_manual_dimensions",
+    "passed": true,
+    "status": "passed"
+  },
+  "calculix_controlled_comparison": {
+    "identical_input_sha256": "46b89837f412cbebc81ed7095dea1711bcbdc07e3b656abffc6c6ed4fbee435e",
+    "cases": [
+      {
+        "version": "2.10",
+        "ne": 20,
+        "nu": 0.3,
+        "output": "3D",
+        "clamp": 6,
+        "tip": 0.0005074936,
+        "error": 0.11014225000000022
+      },
+      {
+        "version": "2.23",
+        "ne": 20,
+        "nu": 0.3,
+        "output": "3D",
+        "clamp": 6,
+        "tip": 0.0004551338,
+        "error": -0.004394812499999734
+      },
+      {
+        "version": "2.23",
+        "ne": 20,
+        "nu": 0.3,
+        "output": "2D",
+        "clamp": 6,
+        "tip": 0.0004551338,
+        "error": -0.004394812499999734
+      },
+      {
+        "version": "2.23",
+        "ne": 20,
+        "nu": 0.0,
+        "output": "2D",
+        "clamp": 6,
+        "tip": 0.0004577286,
+        "error": 0.0012813125000001868
+      },
+      {
+        "version": "2.23",
+        "ne": 2,
+        "nu": 0.3,
+        "output": "2D",
+        "clamp": 6,
+        "tip": 0.0004317498,
+        "error": -0.05554731249999978
+      },
+      {
+        "version": "2.23",
+        "ne": 10,
+        "nu": 0.3,
+        "output": "2D",
+        "clamp": 6,
+        "tip": 0.0004525506,
+        "error": -0.010045562499999772
+      },
+      {
+        "version": "2.23",
+        "ne": 40,
+        "nu": 0.3,
+        "output": "2D",
+        "clamp": 6,
+        "tip": 0.0004563524,
+        "error": -0.001729124999999665
+      },
+      {
+        "version": "2.23",
+        "ne": 20,
+        "nu": 0.3,
+        "output": "2D",
+        "clamp": 3,
+        "tip": -10942480.0,
+        "error": -23936675001.000008
+      }
+    ],
+    "attribution": "version/build difference; specific upstream patch not identified"
+  },
+  "fastga": {
+    "status": "executed_with_limits",
+    "passed": true,
+    "source_sha256": "fa81a18c904b5fe6925806d0b647ac99c24e68e9e25889c882b980ab6b7ed3ff",
+    "outputs_kg": {
+      "data:weight:aircraft:MTOW": 1710.197080992762,
+      "data:weight:aircraft:OWE": 1081.0432731126027,
+      "data:mission:sizing:fuel": 249.15380788015943
+    },
+    "reference_hash_matches": true,
+    "baseline_difference_kg": {
+      "data:weight:aircraft:MTOW": 0.0,
+      "data:weight:aircraft:OWE": 0.0,
+      "data:mission:sizing:fuel": 0.0
+    },
+    "baseline_tolerance_kg": 1e-05,
+    "convergence": {
+      "converged": true,
+      "iterations": 9,
+      "residual_norm": 7615.5218028356685,
+      "initial_norm": 12528312.294697924,
+      "rtol": 0.001,
+      "atol": 1e-10
+    },
+    "versions": {
+      "fast-oad-cs23": "1.4.0",
+      "fast-oad-core": "1.11.0",
+      "openmdao": "3.45.2",
+      "pandas": "2.3.3",
+      "numpy": "2.5.4"
+    },
+    "compatibility": [
+      "furniture_identity_derivative_1",
+      "mission_csv_dataframe_map"
+    ],
+    "final_domain_checks": [
+      {
+        "parameter": "elevator_chord_ratio",
+        "value": 0.34,
+        "lower": 0.1006849315068493,
+        "upper": 0.3,
+        "correlation": "delta_cd_plain_flap",
+        "within_range": false
+      },
+      {
+        "parameter": "horizontal_to_vertical_tail_area",
+        "value": 2.6241434319196837,
+        "lower": 8.16493161869e-05,
+        "upper": 1.975076546233926,
+        "correlation": "k_vh",
+        "within_range": false
+      },
+      {
+        "parameter": "takeoff_elevator_angle_deg",
+        "value": -0.3490658503988659,
+        "lower": -0.08,
+        "upper": 79.32,
+        "correlation": "ComputeSingleSlottedLiftEffectiveness",
+        "within_range": false
+      }
+    ],
+    "domain_check_scope": "observed correlations only",
+    "diagnostics": [
+      {
+        "source": "fastga.models.aerodynamics.components.figure_digitization",
+        "function": "delta_cd_plain_flap",
+        "message": "Chord ratio outside of the range in Roskam's book, value clipped",
+        "arguments": {
+          "chord_ratio": 0.34,
+          "control_deflection": 20.0
+        },
+        "ranges": {
+          "x_15": [
+            0.1,
+            0.3
+          ],
+          "x_60": [
+            0.1006849315068493,
+            0.3
+          ]
+        }
+      },
+      {
+        "source": "fastga.models.aerodynamics.components.digitization.compute_k_prime_single_slotted",
+        "function": "compute",
+        "message": "Flap angle value outside of the range in Roskam's book, value clipped",
+        "arguments": {
+          "chord_ratio": 0.34,
+          "flap_angle": -20.0
+        },
+        "ranges": {}
+      },
+      {
+        "source": "fastga.models.aerodynamics.components.figure_digitization",
+        "function": "k_vh",
+        "message": "Area ratio value outside of the range in Roskam's book, value clipped",
+        "arguments": {
+          "area_ratio": 2.35592346583658
+        },
+        "ranges": {
+          "x": [
+            8.16493161869e-05,
+            1.975076546233926
+          ]
+        }
+      },
+      {
+        "source": "fastga.models.aerodynamics.components.figure_digitization",
+        "function": "k_vh",
+        "message": "Area ratio value outside of the range in Roskam's book, value clipped",
+        "arguments": {
+          "area_ratio": 2.5300485360956433
+        },
+        "ranges": {
+          "x": [
+            8.16493161869e-05,
+            1.975076546233926
+          ]
+        }
+      },
+      {
+        "source": "fastga.models.aerodynamics.components.figure_digitization",
+        "function": "k_vh",
+        "message": "Area ratio value outside of the range in Roskam's book, value clipped",
+        "arguments": {
+          "area_ratio": 2.677650254508946
+        },
+        "ranges": {
+          "x": [
+            8.16493161869e-05,
+            1.975076546233926
+          ]
+        }
+      },
+      {
+        "source": "fastga.models.aerodynamics.components.figure_digitization",
+        "function": "k_vh",
+        "message": "Area ratio value outside of the range in Roskam's book, value clipped",
+        "arguments": {
+          "area_ratio": 2.6353381355953585
+        },
+        "ranges": {
+          "x": [
+            8.16493161869e-05,
+            1.975076546233926
+          ]
+        }
+      },
+      {
+        "source": "fastga.models.aerodynamics.components.figure_digitization",
+        "function": "k_vh",
+        "message": "Area ratio value outside of the range in Roskam's book, value clipped",
+        "arguments": {
+          "area_ratio": 2.6235144732950646
+        },
+        "ranges": {
+          "x": [
+            8.16493161869e-05,
+            1.975076546233926
+          ]
+        }
+      },
+      {
+        "source": "fastga.models.aerodynamics.components.figure_digitization",
+        "function": "k_vh",
+        "message": "Area ratio value outside of the range in Roskam's book, value clipped",
+        "arguments": {
+          "area_ratio": 2.6249847133167217
+        },
+        "ranges": {
+          "x": [
+            8.16493161869e-05,
+            1.975076546233926
+          ]
+        }
+      },
+      {
+        "source": "fastga.models.aerodynamics.components.figure_digitization",
+        "function": "k_vh",
+        "message": "Area ratio value outside of the range in Roskam's book, value clipped",
+        "arguments": {
+          "area_ratio": 2.624118239331438
+        },
+        "ranges": {
+          "x": [
+            8.16493161869e-05,
+            1.975076546233926
+          ]
+        }
+      },
+      {
+        "source": "fastga.models.aerodynamics.components.figure_digitization",
+        "function": "k_vh",
+        "message": "Area ratio value outside of the range in Roskam's book, value clipped",
+        "arguments": {
+          "area_ratio": 2.623890512581382
+        },
+        "ranges": {
+          "x": [
+            8.16493161869e-05,
+            1.975076546233926
+          ]
+        }
+      }
+    ],
+    "python_warnings": [
+      {
+        "category": "OpenMDAOWarning",
+        "message": "The following groups have a nonlinear solver that computes gradients and will be treated as atomic for the purposes of determining which systems are included in the optimization iteration: \naircraft_sizing\n"
+      }
+    ],
+    "physical_validation_passed": false,
+    "reference": "FAST-GA 1.4.0 bundled tutorial"
+  },
+  "fastga_csv": {
+    "before_sha256": "cc65f484ebc43c3efca11396042354eb4cd9c51eaa4d0a92f81fc7c965641a73",
+    "after_sha256": "cc65f484ebc43c3efca11396042354eb4cd9c51eaa4d0a92f81fc7c965641a73",
+    "identical": true
+  },
+  "furniture_derivative": {
+    "upstream_analytic": 0.5,
+    "upstream_finite_difference": 1.0,
+    "patched_analytic": 1.0,
+    "patched_finite_difference": 1.0
+  },
+  "service_runs": {
+    "calculix": "aacb9dc94da042178f567d15e4f0bb9c",
+    "fastga": "5fdc531e5684430d84c4a52b6547da21",
+    "artifact_integrity_checked": true
+  },
+  "physical_validation_passed": false,
+  "full_aircraft_chain_complete": false
+}

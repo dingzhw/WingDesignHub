@@ -26,17 +26,25 @@ def run_reference(root, name):
     root = Path(root).resolve()
     run_id = uuid4().hex
     work = root/"runs"/run_id; work.mkdir(parents=True)
-    result = {"run_id": run_id, "benchmark": name, "status": "running", "physical_validation_passed": False}
+    result = {"run_id": run_id, "version": __version__, "benchmark": name, "status": "running",
+              "started_utc": datetime.now(timezone.utc).isoformat(),
+              "source_hashes": {p.relative_to(Path(__file__).parent).as_posix(): sha256(p)
+                                for p in Path(__file__).parent.rglob("*.py")},
+              "worker_sha256": sha256(root/"scripts"/f"validate_{name}.py"),
+              "physical_validation_passed": False}
     try:
         execute([sys.executable, str(root/"scripts"/f"validate_{name}.py"), str(work)], work, timeout=600)
         result["summary"] = json.loads((work/"summary.json").read_text(encoding="utf-8"))
-        result["status"] = "executed"
+        result["status"] = result["summary"].get("status", "executed")
+        if result["summary"].get("passed") is False:
+            raise ValueError("基准验收未通过")
     except Exception as exc:
         result.update(status="failed", error=str(exc))
         if (work/"summary.json").exists():
             result["summary"] = json.loads((work/"summary.json").read_text(encoding="utf-8"))
             if result["summary"].get("passed") is False:
-                result["error"] = "基准计算已执行，但误差超过验收门槛；见下方误差与阈值。"
+                result["error"] = "基准计算已执行，但验收未通过；请查看误差、收敛状态与阈值。"
+    result["finished_utc"] = datetime.now(timezone.utc).isoformat()
     result["artifact_hashes"] = {p.relative_to(work).as_posix(): sha256(p) for p in work.rglob("*") if p.is_file()}
     write_json(work/"result.json", result)
     return result
@@ -56,7 +64,8 @@ def run_analysis(case, root, mode="beam"):
     signature = hashlib.sha256(json.dumps({"input": inputs, "mode": mode}, sort_keys=True).encode()).hexdigest()
     record = {"run_id": run_id, "version": __version__, "mode": mode, "status": "running",
               "input_hash": signature, "started_utc": datetime.now(timezone.utc).isoformat(),
-              "source_hashes": {p.name: sha256(p) for p in Path(__file__).parent.glob("*.py")},
+              "source_hashes": {p.relative_to(Path(__file__).parent).as_posix(): sha256(p)
+                                for p in Path(__file__).parent.rglob("*.py")},
               "evidence_level": "numerical_demo", "physical_validation_passed": False,
               "assumptions": [case.assumption], "outputs": {}}
     write_json(directory/"input.json", inputs); write_json(directory/"result.json", record)
