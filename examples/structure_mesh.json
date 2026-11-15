@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "name": "公开金属半翼结构网格",
+  "half_span_m": 5.0,
+  "chord_m": 1.5,
+  "front_spar_fraction": 0.25,
+  "rear_spar_fraction": 0.65,
+  "rib_count": 4,
+  "max_edge_m": 0.4,
+  "min_edge_m": 0.04,
+  "skin_thickness_m": 0.002,
+  "spar_thickness_m": 0.003,
+  "rib_thickness_m": 0.002,
+  "elastic_modulus_pa": 70000000000.0,
+  "poisson_ratio": 0.33,
+  "density_kg_m3": 2700.0
+}

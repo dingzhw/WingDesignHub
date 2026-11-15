@@ -1,0 +1,614 @@
+{
+  "version": "0.1.2",
+  "date": "2026-11-15",
+  "baseline_commit": "f907420016820b6dd0cf52563ac1da202c17dd65",
+  "test_suite": {
+    "passed": 55,
+    "failed": 0,
+    "seconds": 29.73,
+    "warning": "existing traitlets metadata deprecation",
+    "ci_scope": "OpenVSP native test requires local installation and is skipped on hosted CI"
+  },
+  "oas": {
+    "status": "passed",
+    "passed": true,
+    "versions": {
+      "openaerostruct": "2.12.1",
+      "openmdao": "3.45.2",
+      "numpy": "2.5.4",
+      "scipy": "1.18.1"
+    },
+    "official": {
+      "mass_kg": 71088.46824057373,
+      "initial_mass_kg": 124229.64601095667,
+      "reference_mass_kg": 71088.4682399,
+      "mass_relative_error": 9.4772694914361e-12,
+      "reference_rtol": 1e-08,
+      "driver_success": true,
+      "failure_ks": 3.8891789094774865e-12,
+      "max_thickness_intersects_m": -0.2445858411366715,
+      "thickness_cp_m": [
+        0.026873779222090933,
+        0.11004265564872502,
+        0.024490033107480047
+      ],
+      "half_mesh_nodes": 4,
+      "full_wing_mass": true,
+      "wing_weight_ratio": 2.0,
+      "load_columns": [
+        "Fx_N",
+        "Fy_N",
+        "Fz_N",
+        "Mx_Nm",
+        "My_Nm",
+        "Mz_Nm"
+      ],
+      "load_at_each_node": [
+        200000.0,
+        200000.0,
+        200000.0,
+        200000.0,
+        200000.0,
+        200000.0
+      ],
+      "reference": "https://github.com/mdolab/OpenAeroStruct/blob/v2.12.1/tests/integration_tests/test_struct.py",
+      "passed": true
+    },
+    "straight_tube": [
+      {
+        "elements": 5,
+        "length_m": 2.0,
+        "force_n": 100.0,
+        "radius_m": 0.05,
+        "thickness_m": 0.005,
+        "tip_displacement_m": 0.0022566729216149848,
+        "analytical_tip_m": 0.0022566729216148226,
+        "full_mass_kg": 16.116370312915645,
+        "analytical_full_mass_kg": 16.116370312915645,
+        "max_stress_pa": 5331389.777315393,
+        "analytical_root_element_midpoint_stress_pa": 5331389.777315019,
+        "root_displacement_norm": 0.0,
+        "relative_errors": {
+          "tip": 7.187423726774163e-14,
+          "mass": 0.0,
+          "stress_midpoint": 7.022402987462165e-14
+        },
+        "y_m": [
+          -2.0,
+          -1.6,
+          -1.2,
+          -0.7999999999999998,
+          -0.3999999999999999,
+          0.0
+        ],
+        "displacement_z_m": [
+          0.0022566729216149848,
+          0.0015886977368169482,
+          0.0009748827021376715,
+          0.00046938796769591584,
+          0.00012637368361043935,
+          0.0
+        ],
+        "passed": true
+      },
+      {
+        "elements": 10,
+        "length_m": 2.0,
+        "force_n": 100.0,
+        "radius_m": 0.05,
+        "thickness_m": 0.005,
+        "tip_displacement_m": 0.0022566729216140836,
+        "analytical_tip_m": 0.0022566729216148226,
+        "full_mass_kg": 16.116370312915645,
+        "analytical_full_mass_kg": 16.116370312915645,
+        "max_stress_pa": 5627578.098275322,
+        "analytical_root_element_midpoint_stress_pa": 5627578.098276964,
+        "root_displacement_norm": 0.0,
+        "relative_errors": {
+          "tip": 3.274697869097105e-13,
+          "mass": 0.0,
+          "stress_midpoint": 2.9192896001295977e-13
+        },
+        "y_m": [
+          -2.0,
+          -1.8,
+          -1.6,
+          -1.4,
+          -1.2,
+          -1.0,
+          -0.7999999999999998,
+          -0.5999999999999999,
+          -0.3999999999999999,
+          -0.19999999999999996,
+          0.0
+        ],
+        "displacement_z_m": [
+          0.0022566729216140836,
+          0.0019193003198327769,
+          0.0015886977368163133,
+          0.001271635191329533,
+          0.0009748827021372815,
+          0.0007052102880044029,
+          0.00046938796769573646,
+          0.00027418575997612113,
+          0.00012637368361039468,
+          3.2721757363404976e-05,
+          0.0
+        ],
+        "passed": true
+      },
+      {
+        "elements": 20,
+        "length_m": 2.0,
+        "force_n": 100.0,
+        "radius_m": 0.05,
+        "thickness_m": 0.005,
+        "tip_displacement_m": 0.0022566729216025485,
+        "analytical_tip_m": 0.0022566729216148226,
+        "full_mass_kg": 16.11637031291564,
+        "analytical_full_mass_kg": 16.116370312915645,
+        "max_stress_pa": 5775672.258733463,
+        "analytical_root_element_midpoint_stress_pa": 5775672.258757937,
+        "root_displacement_norm": 2.232560729894293e-21,
+        "relative_errors": {
+          "tip": 5.4389964255391005e-12,
+          "mass": 2.2044130345859323e-16,
+          "stress_midpoint": 4.237467924397664e-12
+        },
+        "y_m": [
+          -2.0,
+          -1.9,
+          -1.8,
+          -1.7,
+          -1.6,
+          -1.5,
+          -1.4,
+          -1.2999999999999998,
+          -1.2,
+          -1.1,
+          -1.0,
+          -0.8999999999999999,
+          -0.7999999999999998,
+          -0.7,
+          -0.5999999999999999,
+          -0.5,
+          -0.3999999999999999,
+          -0.2999999999999998,
+          -0.19999999999999996,
+          -0.09999999999999987,
+          0.0
+        ],
+        "displacement_z_m": [
+          0.0022566729216025485,
+          0.0020875634945399717,
+          0.0019193003198230006,
+          0.0017527296497972368,
+          0.0015886977368082815,
+          0.0014280508332017313,
+          0.0012716351913231844,
+          0.0011202970635182403,
+          0.0009748827021324988,
+          0.0008362383595115601,
+          0.0007052102880010243,
+          0.000582644739946488,
+          0.00046938796769354973,
+          0.00036628622358781526,
+          0.00027418575997488666,
+          0.0001939328292003662,
+          0.00012637368360985657,
+          7.235457554895957e-05,
+          3.272175736327656e-05,
+          8.321481398419341e-06,
+          -2.232560729894293e-21
+        ],
+        "passed": true
+      }
+    ],
+    "double_load": {
+      "elements": 10,
+      "length_m": 2.0,
+      "force_n": 200.0,
+      "radius_m": 0.05,
+      "thickness_m": 0.005,
+      "tip_displacement_m": 0.004513345843228167,
+      "analytical_tip_m": 0.004513345843229645,
+      "full_mass_kg": 16.116370312915645,
+      "analytical_full_mass_kg": 16.116370312915645,
+      "max_stress_pa": 11255156.196550643,
+      "analytical_root_element_midpoint_stress_pa": 11255156.196553929,
+      "root_displacement_norm": 0.0,
+      "relative_errors": {
+        "tip": 3.274697869097105e-13,
+        "mass": 0.0,
+        "stress_midpoint": 2.9192896001295977e-13
+      },
+      "y_m": [
+        -2.0,
+        -1.8,
+        -1.6,
+        -1.4,
+        -1.2,
+        -1.0,
+        -0.7999999999999998,
+        -0.5999999999999999,
+        -0.3999999999999999,
+        -0.19999999999999996,
+        0.0
+      ],
+      "displacement_z_m": [
+        0.004513345843228167,
+        0.0038386006396655538,
+        0.0031773954736326266,
+        0.002543270382659066,
+        0.001949765404274563,
+        0.0014104205760088059,
+        0.0009387759353914729,
+        0.0005483715199522423,
+        0.00025274736722078936,
+        6.544351472680995e-05,
+        0.0
+      ],
+      "passed": true
+    },
+    "longer_beam": {
+      "elements": 10,
+      "length_m": 2.4,
+      "force_n": 100.0,
+      "radius_m": 0.05,
+      "thickness_m": 0.005,
+      "tip_displacement_m": 0.0038995308085485697,
+      "analytical_tip_m": 0.0038995308085504133,
+      "full_mass_kg": 19.33964437549877,
+      "analytical_full_mass_kg": 19.339644375498775,
+      "max_stress_pa": 6753093.717929261,
+      "analytical_root_element_midpoint_stress_pa": 6753093.7179323565,
+      "root_displacement_norm": 0.0,
+      "relative_errors": {
+        "tip": 4.727690239174367e-13,
+        "mass": 1.8370108621549435e-16,
+        "stress_midpoint": 4.584145233763598e-13
+      },
+      "y_m": [
+        -2.4,
+        -2.16,
+        -1.92,
+        -1.68,
+        -1.44,
+        -1.2,
+        -0.96,
+        -0.72,
+        -0.48,
+        -0.23999999999999977,
+        0.0
+      ],
+      "displacement_z_m": [
+        0.0038995308085485697,
+        0.0033165509526705416,
+        0.0027452696892181646,
+        0.0021973856106170865,
+        0.0016845973092929508,
+        0.0012186033776714067,
+        0.0008111024081780973,
+        0.0004737929932386582,
+        0.00021837372527872546,
+        5.654319672395399e-05,
+        0.0
+      ],
+      "passed": true
+    },
+    "sensitivity_ratios": {
+      "double_load_tip": 2.0,
+      "longer_tip": 1.7279999999997488
+    },
+    "evidence_level": "upstream_regression_and_analytical",
+    "physical_validation_passed": false,
+    "limits": [
+      "线弹性管梁；不包含蒙皮、肋、连接件或屈曲",
+      "官方 CRM 为合成六分量外载优化，不是本项目目标飞机",
+      "半翼网格，输出质量已计左右对称及 wing_weight_ratio；不得再次翻倍",
+      "载荷来自规定输入；关闭自重和燃油卸载"
+    ]
+  },
+  "openvsp": {
+    "status": "mesh_checked",
+    "passed": true,
+    "coarse": {
+      "version": "OpenVSP 3.56.0",
+      "native_extension_sha256": "cc220bd32b614e210f35c3fce9b345de078bf09fac4488308d34ac29865e2300",
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "modulus": "Pa"
+      },
+      "coordinates": "x aft, y right, z up; right half-wing y>=0",
+      "rib_fractions": [
+        0.1,
+        0.3666666666666667,
+        0.6333333333333333,
+        0.9
+      ],
+      "metrics": {
+        "nodes": 1662,
+        "elements": 3558,
+        "element_types": [
+          "S3"
+        ],
+        "connected_components": 1,
+        "orphan_nodes": 0,
+        "extent_m": [
+          1.5,
+          5.0,
+          0.179875
+        ],
+        "minimum_area_m2": 0.00040029446412659896,
+        "quality_min": 0.21551341405037808,
+        "quality_p05": 0.7910475148760634,
+        "parts": {
+          "Skin": {
+            "elements": 3094,
+            "area_m2": 15.644311438163957,
+            "mass_kg": 84.47928176608536
+          },
+          "FrontSpar": {
+            "elements": 162,
+            "area_m2": 0.8911399999999999,
+            "mass_kg": 7.218233999999999
+          },
+          "RearSpar": {
+            "elements": 110,
+            "area_m2": 0.61307,
+            "mass_kg": 4.965867
+          },
+          "Rib0": {
+            "elements": 48,
+            "area_m2": 0.18201856643599998,
+            "mass_kg": 0.9829002587543999
+          },
+          "Rib1": {
+            "elements": 48,
+            "area_m2": 0.1820176507795,
+            "mass_kg": 0.9828953142093
+          },
+          "Rib2": {
+            "elements": 48,
+            "area_m2": 0.182017397935,
+            "mass_kg": 0.982893948849
+          },
+          "Rib3": {
+            "elements": 48,
+            "area_m2": 0.1820186466245,
+            "mass_kg": 0.9829006917723001
+          }
+        },
+        "shell_material_mass_kg": 100.59497297967036,
+        "area_m2": 17.876593699938958
+      },
+      "status": "mesh_checked",
+      "passed": true,
+      "physical_validation_passed": false,
+      "structural_analysis_performed": false,
+      "limits": [
+        "参数化 NACA0012 矩形半翼，含全外形蒙皮、两梁和内翼肋",
+        "仅几何与网格检查；文件未定义边界条件、载荷或分析步",
+        "质量为面积×板厚×密度，不含接头、紧固件、工艺余量或强度定尺寸",
+        "网格质量与面积加密检查不等同于应力、变形或屈曲收敛",
+        "部分中心肋/曲面交线组合会产生退化单元，检查失败时保留文件并拒绝通过"
+      ]
+    },
+    "fine": {
+      "version": "OpenVSP 3.56.0",
+      "native_extension_sha256": "cc220bd32b614e210f35c3fce9b345de078bf09fac4488308d34ac29865e2300",
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "modulus": "Pa"
+      },
+      "coordinates": "x aft, y right, z up; right half-wing y>=0",
+      "rib_fractions": [
+        0.1,
+        0.3666666666666667,
+        0.6333333333333333,
+        0.9
+      ],
+      "metrics": {
+        "nodes": 3242,
+        "elements": 6740,
+        "element_types": [
+          "S3"
+        ],
+        "connected_components": 1,
+        "orphan_nodes": 0,
+        "extent_m": [
+          1.5,
+          5.0,
+          0.179991
+        ],
+        "minimum_area_m2": 9.776942790630133e-05,
+        "quality_min": 0.2249182562145136,
+        "quality_p05": 0.8170604931263435,
+        "parts": {
+          "Skin": {
+            "elements": 6212,
+            "area_m2": 15.656351870882963,
+            "mass_kg": 84.54430010276799
+          },
+          "FrontSpar": {
+            "elements": 162,
+            "area_m2": 0.8911399999999999,
+            "mass_kg": 7.218233999999999
+          },
+          "RearSpar": {
+            "elements": 110,
+            "area_m2": 0.61307,
+            "mass_kg": 4.965867
+          },
+          "Rib0": {
+            "elements": 64,
+            "area_m2": 0.182286920567,
+            "mass_kg": 0.9843493710618
+          },
+          "Rib1": {
+            "elements": 64,
+            "area_m2": 0.1822856974745,
+            "mass_kg": 0.9843427663623
+          },
+          "Rib2": {
+            "elements": 64,
+            "area_m2": 0.1822857025875,
+            "mass_kg": 0.9843427939725
+          },
+          "Rib3": {
+            "elements": 64,
+            "area_m2": 0.1822865961205,
+            "mass_kg": 0.9843476190507
+          }
+        },
+        "shell_material_mass_kg": 100.66578365321529,
+        "area_m2": 17.889706787632463
+      },
+      "status": "mesh_checked",
+      "passed": true,
+      "physical_validation_passed": false,
+      "structural_analysis_performed": false,
+      "limits": [
+        "参数化 NACA0012 矩形半翼，含全外形蒙皮、两梁和内翼肋",
+        "仅几何与网格检查；文件未定义边界条件、载荷或分析步",
+        "质量为面积×板厚×密度，不含接头、紧固件、工艺余量或强度定尺寸",
+        "网格质量与面积加密检查不等同于应力、变形或屈曲收敛",
+        "部分中心肋/曲面交线组合会产生退化单元，检查失败时保留文件并拒绝通过"
+      ]
+    },
+    "longer": {
+      "version": "OpenVSP 3.56.0",
+      "native_extension_sha256": "cc220bd32b614e210f35c3fce9b345de078bf09fac4488308d34ac29865e2300",
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "modulus": "Pa"
+      },
+      "coordinates": "x aft, y right, z up; right half-wing y>=0",
+      "rib_fractions": [
+        0.1,
+        0.3666666666666667,
+        0.6333333333333333,
+        0.9
+      ],
+      "metrics": {
+        "nodes": 1965,
+        "elements": 4190,
+        "element_types": [
+          "S3"
+        ],
+        "connected_components": 1,
+        "orphan_nodes": 0,
+        "extent_m": [
+          1.5,
+          6.0,
+          0.17991200000000002
+        ],
+        "minimum_area_m2": 0.0003661113842197443,
+        "quality_min": 0.2154791450081523,
+        "quality_p05": 0.7982390579199685,
+        "parts": {
+          "Skin": {
+            "elements": 3678,
+            "area_m2": 18.699850911251453,
+            "mass_kg": 100.97919492075785
+          },
+          "FrontSpar": {
+            "elements": 178,
+            "area_m2": 1.0693679999999999,
+            "mass_kg": 8.661880799999999
+          },
+          "RearSpar": {
+            "elements": 142,
+            "area_m2": 0.735684,
+            "mass_kg": 5.9590404
+          },
+          "Rib0": {
+            "elements": 48,
+            "area_m2": 0.1820185503,
+            "mass_kg": 0.98290017162
+          },
+          "Rib1": {
+            "elements": 48,
+            "area_m2": 0.1820176749455,
+            "mass_kg": 0.9828954447057001
+          },
+          "Rib2": {
+            "elements": 48,
+            "area_m2": 0.1820175549565,
+            "mass_kg": 0.9828947967651
+          },
+          "Rib3": {
+            "elements": 48,
+            "area_m2": 0.182018865949,
+            "mass_kg": 0.9829018761246
+          }
+        },
+        "shell_material_mass_kg": 119.53170840997325,
+        "area_m2": 21.23297555740245
+      },
+      "status": "mesh_checked",
+      "passed": true,
+      "physical_validation_passed": false,
+      "structural_analysis_performed": false,
+      "limits": [
+        "参数化 NACA0012 矩形半翼，含全外形蒙皮、两梁和内翼肋",
+        "仅几何与网格检查；文件未定义边界条件、载荷或分析步",
+        "质量为面积×板厚×密度，不含接头、紧固件、工艺余量或强度定尺寸",
+        "网格质量与面积加密检查不等同于应力、变形或屈曲收敛",
+        "部分中心肋/曲面交线组合会产生退化单元，检查失败时保留文件并拒绝通过"
+      ]
+    },
+    "relative_differences": {
+      "area_m2": 0.0007329962334860608,
+      "shell_material_mass_kg": 0.0007034234570592806
+    },
+    "part_area_relative_differences": {
+      "Skin": 0.0007690445908665692,
+      "FrontSpar": 0.0,
+      "RearSpar": 0.0,
+      "Rib0": 0.001472152418644763,
+      "Rib1": 0.001470475735143692,
+      "Rib2": 0.001471890821339677,
+      "Rib3": 0.0014699352651406877
+    },
+    "difference_threshold": 0.02,
+    "evidence_level": "geometry_mesh_screening",
+    "structural_analysis_performed": false,
+    "physical_validation_passed": false,
+    "limits": [
+      "参数化 NACA0012 矩形半翼，含全外形蒙皮、两梁和内翼肋",
+      "仅几何与网格检查；文件未定义边界条件、载荷或分析步",
+      "质量为面积×板厚×密度，不含接头、紧固件、工艺余量或强度定尺寸",
+      "网格质量与面积加密检查不等同于应力、变形或屈曲收敛",
+      "部分中心肋/曲面交线组合会产生退化单元，检查失败时保留文件并拒绝通过"
+    ]
+  },
+  "native_failure_case": {
+    "rib_count": 5,
+    "observed_status": "failed",
+    "reason": "collinear zero-area triangle at center rib intersection; rejection verified in native integration test"
+  },
+  "service_runs": {
+    "oas": {
+      "run_id": "58e0ef8203b14df68e75317f5fd8b7b3",
+      "status": "passed",
+      "artifact_integrity_checked": true
+    },
+    "vsp_structure": {
+      "run_id": "ae427dfb2b654597b0bdd4f13caf99cc",
+      "status": "mesh_checked",
+      "artifact_integrity_checked": true
+    },
+    "mesh": {
+      "run_id": "94b56f19f28640e8b929277bdf852bfb",
+      "status": "mesh_checked",
+      "artifact_integrity_checked": true
+    }
+  },
+  "physical_validation_passed": false,
+  "shell_fem_analysis_performed": false,
+  "full_aircraft_chain_complete": false
+}
