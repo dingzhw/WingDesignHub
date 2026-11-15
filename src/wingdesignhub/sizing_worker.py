@@ -1,6 +1,7 @@
 """Isolated model registry and numerical execution."""
 from pathlib import Path
 import json,sys
+import hashlib
 from importlib.metadata import version
 from .requirements import DesignProject
 from .fastga_mass import FastGAMassModel
@@ -32,7 +33,14 @@ def main(work):
         r=solve_design(p,model)
         write_json(work/'fastga_mass_inputs.json',model.last_inputs)
         write_json(work/'fastga_mass_interface.json',model.audit)
-    r['versions']={n:version(n) for n in ('fast-oad-cs23','openmdao','numpy','wingdesignhub')}
+        import fastga
+        from .adapters import sha256
+        engine=Path(fastga.__file__).parent/'models/propulsion/fuel_propulsion/basicIC_engine/basicIC_engine.py'
+        evidence={'mass_sources':model.audit.get('upstream_mass_source_hashes',{}),'engine_source':sha256(engine),
+                  'constructor_data':model.audit.get('propeller_constructor_source_sha256')}
+        r['model_signature']=hashlib.sha256(json.dumps(evidence,sort_keys=True).encode()).hexdigest()
+        write_json(work/'model_evidence.json',evidence)
+    r['versions']={n:version(n) for n in ('fast-oad-cs23','fast-oad-core','openmdao','numpy','wingdesignhub')}
     write_json(work/'summary.json',r)
     lines=[f'# {p.name} — 初步总体设计','',f'状态：{r["status"]}',
            '概念模型结果；配平、起降距离和实际结构强度尚未验收。','']

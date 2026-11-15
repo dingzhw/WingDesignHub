@@ -1,0 +1,64 @@
+"""Recorded three-design orchestration, shared by UI/CLI/Python."""
+from pathlib import Path
+from datetime import datetime,timezone
+from uuid import uuid4
+import json
+import traceback
+from zipfile import ZipFile,ZIP_DEFLATED
+from . import __version__
+from .adapters import sha256
+from .requirements import DesignProject
+from .design_comparison import ComparisonRequest,summarize_comparison
+from .design_cards import card_html,comparison_markdown
+from .service import get_results,write_json
+from .sizing_service import run_sizing
+
+
+def _save(request,root,records=None):
+    request.validate();root=Path(root).resolve();work=root/'runs'/uuid4().hex;work.mkdir(parents=True)
+    write_json(work/'input.json',request.to_dict())
+    result={'run_id':work.name,'version':__version__,'mode':'overall_comparison','status':'running',
+            'definition_sha256':request.definition_hash(),'input_hash':sha256(work/'input.json'),
+            'started_utc':datetime.now(timezone.utc).isoformat(),'physical_validation_passed':False,
+            'source_hashes':{p.relative_to(Path(__file__).parent).as_posix():sha256(p) for p in Path(__file__).parent.rglob('*.py')}}
+    write_json(work/'result.json',result)
+    try:
+        if any(p.confirmation_sha256!=p.definition_hash() for p in request.projects):
+            result.update(status='needs_confirmation',error='三个方案均需核对确认后计算')
+        else:
+            if records is None:
+                records=[]
+                for project in request.projects:
+                    r=run_sizing(project,root)
+                    records.append(get_results(root,r['run_id']))
+                    # Checkpoint after each completed child; one failed solver does not hide the others.
+                    result['child_runs']=[x['run_id'] for x in records];write_json(work/'result.json',result)
+            summary=summarize_comparison(request,records)
+            result.update(status=summary['status'],summary=summary,child_runs=[r['run_id'] for r in records])
+            write_json(work/'comparison.json',summary)
+            for i,(p,r,card) in enumerate(zip(request.projects,records,summary['cards']),1):
+                write_json(work/f'plan-{i}-input.json',p.to_dict());write_json(work/f'plan-{i}-result.json',r)
+                write_json(work/f'plan-{i}-card.json',card)
+                (work/f'plan-{i}-card.html').write_text(card_html(card),encoding='utf-8')
+            (work/'report.md').write_text(comparison_markdown(summary),encoding='utf-8')
+            with ZipFile(work/'scheme-cards.zip','w',compression=ZIP_DEFLATED) as archive:
+                for f in sorted(work.iterdir()):
+                    if f.suffix in ('.html','.md') or f.name.endswith('-input.json') or f.name=='comparison.json':
+                        archive.write(f,f.name)
+    except Exception as exc:
+        result.update(status='failed',error=str(exc));(work/'error.log').write_text(traceback.format_exc(),encoding='utf-8')
+    result['finished_utc']=datetime.now(timezone.utc).isoformat()
+    result['artifact_hashes']={p.name:sha256(p) for p in work.iterdir() if p.is_file() and p.name!='result.json'}
+    write_json(work/'result.json',result);return result
+
+
+def run_comparison(request,root):
+    req=ComparisonRequest.from_dict(request) if isinstance(request,dict) else request
+    return _save(req,root)
+
+
+def compare_sizing_runs(root,run_ids,purpose='design_trade'):
+    if len(run_ids)!=3:raise ValueError('请选择三个总体运行编号')
+    root=Path(root).resolve();records=[get_results(root,rid) for rid in run_ids]
+    projects=[DesignProject.from_dict(json.loads((root/'runs'/rid/'input.json').read_text(encoding='utf-8'))) for rid in run_ids]
+    return _save(ComparisonRequest(tuple(projects),purpose),root,records)

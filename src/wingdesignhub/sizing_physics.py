@@ -19,10 +19,12 @@ def density(altitude):
     return RHO0*(1-.0065*altitude/288.15)**4.2558797
 
 
-def flight_power(mass, area, speed, altitude, roc, assumptions):
+def flight_power(mass, area, speed, altitude, roc, assumptions, *, air_density_kg_m3=None):
     if min(mass,area,speed)<=0: raise DesignDomainError('质量、面积和速度必须为正')
     gamma=math.asin(roc/speed)
-    q=.5*density(altitude)*speed**2
+    rho=density(altitude) if air_density_kg_m3 is None else air_density_kg_m3
+    if not math.isfinite(rho) or rho<=0: raise DesignDomainError('空气密度必须为正有限值')
+    q=.5*rho*speed**2
     cl=mass*G*math.cos(gamma)/(q*area)
     cd=assumptions.cd0+cl**2/(math.pi*assumptions.oswald_efficiency*assumptions.aspect_ratio)
     drag=q*area*cd

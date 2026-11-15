@@ -1,0 +1,1661 @@
+{
+  "version": "0.1.8",
+  "baseline_commit": "70ad6582c3bbe5eab6aa03919332820edac65f97",
+  "date": "2026-11-15",
+  "route_review": {
+    "product_step": "requirements -> sizing -> comparison and scheme cards",
+    "aligned": true,
+    "next_gate": "V0.2.0 workflow acceptance, bounded fuel model review and professional review"
+  },
+  "verification": {
+    "software_and_numerical_checks_passed": true,
+    "physical_validation_passed": false,
+    "batches": 7,
+    "child_designs": 21,
+    "eligible": 18,
+    "constraints_not_met": 2,
+    "out_of_domain": 1,
+    "checks": {
+      "aspect_ratio_status": true,
+      "payload_status": true,
+      "payload_propagation": true,
+      "range_status": true,
+      "range_propagation": true,
+      "endurance_status": true,
+      "endurance_propagation": true,
+      "loiter_status": true,
+      "loiter_propagation": true,
+      "fixed_budget_status": true,
+      "fixed_mass_preserved": true,
+      "fixed_overload": true,
+      "same_route_conflict_status": true,
+      "task_conflict_not_success": true,
+      "archive_replay": true,
+      "public_condition_and_diagnostic": true
+    }
+  },
+  "tests": {
+    "passed": 195,
+    "failed": 0,
+    "skipped": 0,
+    "time_s": 162.202,
+    "native_integrations_executed": 4,
+    "warnings": [
+      "existing traitlets constructor metadata deprecation"
+    ]
+  },
+  "environment": {
+    "python": "3.13.18",
+    "fast-oad-cs23": "1.4.0",
+    "fast-oad-core": "1.11.0",
+    "openmdao": "3.45.2",
+    "numpy": "2.5.4",
+    "wingdesignhub": "0.1.8"
+  },
+  "model_signature": "a3387c62ad6803d7fa059e6e94cfd9cb9136c40ac6f7a5b406ca8c90b4db8a80",
+  "source_hashes": {
+    "adapters.py": "b72ca7effe5311328a85bdc8b06ad583b9cabed91751094fa5019c2b2f6a29d5",
+    "box_comparison.py": "bf8e8a4c19e59c24e53a9cbbcc2add9ef42ece3343f902663795c52a44e783b5",
+    "buckling.py": "a473b5d91d835f3f100473e11aad1185f6597854e8cdd87960a4b22658399720",
+    "calculix_benchmark.py": "f3bab4818455864f4324f62a96f1fff25cdaf42f08e8b42b6d548c8e20a630ec",
+    "cli.py": "b4849dfb269a6227b7398792aec485aebdf0d893609bd0ed165cc555df710a61",
+    "comparison_service.py": "b64ee25c1e7e4ab44669a4350efed3d4802ab228fd4b57b129f8d386e39d2015",
+    "comparison_ui.py": "9eef54fed0d0623bbe2b66071d85f26d47557f7ad793c230c8987bf6449336bc",
+    "design_cards.py": "252e80effbf34623f2d6bec7451adb9977ff45db48a5c4c2d74378d57da01dba",
+    "design_comparison.py": "0f057f8d30f0452bd65d564748cd9c048d92eddbb6b7fe5f2384b7df3cb287dd",
+    "design_service.py": "45abc8b6ac761c6c489fd27b0119b7e9258563f4548d6e86bae1d1bd2ad22c88",
+    "design_ui.py": "3d47f0c87ae0a0fd10bde898e2e00059d06cc8ac17a95fb0f54a435a8725774a",
+    "fastga_compat.py": "6ba7f14ef2c6046533ef6cef6d93355a1db91255bab46c9746f1ae5a14a94fab",
+    "fastga_diagnostics.py": "bc93d372e3e5bb7f5dc4e068f4dfb3b14dfda42600ec8f84a3b51e06f631b887",
+    "fastga_interface.py": "cb0852101644a0a5a9e34fb2cfb2a249d9a148988dfdc05a0cf28f41021c7b69",
+    "fastga_mass.py": "c44a77b2f042ef8cf2834dcf0bf15a151bd30b95e1133da5a4878c7aa3077af8",
+    "fastga_worker.py": "a25185200db8ebb0222eb307f3852c7c83c15ed9c98c3c8b1bc92fed8958375f",
+    "fea_mesh.py": "f99f1817b20d85089a64d4248684c64a8ba7180268fe11b91a14ed415dc729e3",
+    "flight_loads.py": "4d9d7e8bcd24d59131337cbdb5953e90ed432853e5c6c4b359857a7395247890",
+    "flight_service.py": "72dcf0c2a247bd1ab560819a1a295141f459143377c964ecfac24129c4bc5645",
+    "flight_ui.py": "fb4b7a8a3ee36f1a3f01e65c719eed70c8150473f391047523d8d8ff74d0fa78",
+    "mechanics.py": "aece8baec13b7d9a84e133720f82a33d70444a38c980b86cf727cbdab0973650",
+    "model.py": "345afae92c6b8dd09435ebb31ce234ddf40e0d5e615e8a2fca4f2e85cc058b11",
+    "oas_benchmark.py": "74d2900b9dbba587c701bd2fc92ba75a8bf09ec17678c03ac67c1f00cdff5c56",
+    "oas_wingbox.py": "e8d0b503f1f1ba3fb7d77abdda14d376820fff41ef32f1b5a97e187d0f2f737b",
+    "plate_buckling.py": "7448faec93a91382127a0ade183b69d26074062be66ddaab1607b249b1fd9c09",
+    "plate_service.py": "0c740429e6591a1b020a334beb344fe3f1a8325569498cfdd43da0b2d9fb7301",
+    "plate_ui.py": "47adf0c1efec842d669cb199dfa3f8dfb47d21e8bd67f9df846bbe0813e6b0d9",
+    "reference_cruise.py": "056ed42aebef207df96d11c84824c322f373f516efd71606366d4e0d08751956",
+    "requirements.py": "a8701c2957236d7aa8564d00d23f1a3da150bf604601b86a996c204dab606a8a",
+    "service.py": "f5d5c54d9ba710b09cf33bf4a6a38ea717c95368f812b8e70209873ebafa1db8",
+    "shell_loads.py": "a06bdbb345ab2ac1cf18265eec95815accd6b3f2bb0732a7eaaee9c09208a397",
+    "shell_static.py": "1c23aabbf1395b4b2a7729b135428b130ff2d252397b3420bb3e287c7fee4da4",
+    "shell_validation.py": "30d6c706a44d32d131d0ab6c7f9e41508c82bd39aabe8f3cab26e28cab68be92",
+    "sizing.py": "64b0adcf26232b61ba2869c790e9a3b29ade7dc9209c3d945af1d62c559c2e9b",
+    "sizing_config.py": "fe4bc505a4f562d6afcd7e30199b4b8f3d4503ebce154c5411a75f598d7d2fd8",
+    "sizing_physics.py": "41e8b6efd6e0ca96f7c1049450bdcff97b750530a2d4240aab0985dfe696aa01",
+    "sizing_service.py": "0a4592076a1870db45d189d8c622a14cc68052f31ade50c0726e9175f29d3364",
+    "sizing_ui.py": "57d04db557fc544ca96e3be2a4444cd4c21f89f707335c7cd990bb48d796cb8c",
+    "sizing_worker.py": "8a1beb33e3764ed21660e8fd2dfea387fa371d0f7ea5d06d8ebb966726d15cbb",
+    "static_service.py": "941de7a411c9814b8c73883b248aecbb04ebb812cf380bafb7e3f5f7b39528f9",
+    "structural_sensitivity.py": "cf1527dafd494a67281b12414e4f223e13e31c76252ff2f1f7592bd3ce77e6fc",
+    "structure_service.py": "5703dd5d078b0af7dfb078b661beace113b627e97c304b9d612af39fe45ad12b",
+    "vsp_structure_worker.py": "ee7cfff132602d9b5c6875b54c956cbc6d381fd4ef0228cdb7455add725899bc",
+    "vsp_worker.py": "aba49475b1221a2ad13d73644a38f508bcecc093859184e78e782282a7f73abd",
+    "__init__.py": "ab3be762144f4e263267e8a4383e15c06f5affab464e81815294d5c17e9de79e",
+    "fastga_plugins/furniture.py": "45b5a219b73c6380a63418f0e64f1f66d189c7943147f39faa2e98d118f719bf",
+    "fastga_plugins/reserve.py": "ceb05f0f889a91b66bea34856f0dbcf0de594e895f16edf0cdbdef0bbe2b2cda",
+    "fastga_plugins/unusable_fuel.py": "724433d55934a868696f27553b9924c75f99ca6594df274045dfaf9bf5a00f21",
+    "fastga_plugins/__init__.py": "652c53dda99eb1a2b439a1aca6f0ec81c25fed142d761e63ddf46af578a41a17"
+  },
+  "cases": {
+    "aspect_ratio": {
+      "run_id": "14634f4ff5cd4c0bac3853a20e6c28fd",
+      "status": "compared_with_limits",
+      "purpose": "design_trade",
+      "differences": [
+        {
+          "scheme": 1,
+          "field": "sizing.aspect_ratio",
+          "base": 7.5,
+          "value": 8.25
+        },
+        {
+          "scheme": 2,
+          "field": "sizing.aspect_ratio",
+          "base": 7.5,
+          "value": 9.0
+        }
+      ],
+      "eligible_schemes": [
+        0,
+        1,
+        2
+      ],
+      "artifact_hashes": {
+        "comparison.json": "e0d7d182a38779956d5c239442a3d7e095a0acdef0491e74366f0d4ef7f37de0",
+        "input.json": "24ca4b93d9e35b87bfcf97770d0fcebc7aa7623240ede996366e0e7b497de2f2",
+        "report.md": "b6d33c11dbc59efb8e102e05a5011ba30c318f012bb1fec668bdb6e89abf04b4",
+        "scheme-cards.zip": "24ad8361038bf3f1090285dc70e5f18ea04b266a9690da0a9dba2fe8be947d1e"
+      },
+      "designs": [
+        {
+          "run_id": "e1dd7cb49c5d4386926562ba6982f366",
+          "status": "concept_checked_with_limits",
+          "converged": true,
+          "eligible": true,
+          "definition_sha256": "9f0a2dcbf8cf880aa7fa3fde8da9591ffd0f313193a78e3749ec51d8cd10cb41",
+          "metrics": {
+            "mtow_kg": 1229.4159528684945,
+            "owe_kg": 770.4071410960252,
+            "block_fuel_kg": 109.41544853610884,
+            "reserve_kg": 18.408403926664008,
+            "power_kw": 138.27258903943496,
+            "area_m2": 13.948414959273704,
+            "span_m": 10.228055152107501,
+            "duration_h": 3.81583197660797,
+            "route_km": 800.0,
+            "cg_x_m": 2.6863648801077433
+          },
+          "margins": {
+            "mass_budget_kg": -0.06095529104072739,
+            "upper_bound_kg": null,
+            "usable_fuel_capacity_kg": 83.56517626462079
+          },
+          "controls": {
+            "wing_area": "landing_stall",
+            "power": "cruise"
+          },
+          "checks": {
+            "mass_budget": true,
+            "mtow_upper_bound": true,
+            "fuel_capacity": true,
+            "landing_stall": true,
+            "power_available": true,
+            "clean_lift": true,
+            "range": true,
+            "endurance": true
+          },
+          "diagnostics": [],
+          "iterations": 33,
+          "final_residuals": {
+            "mass_closure_fraction": 4.958068983772778e-05,
+            "fuel_capacity_kg": 83.56517626462079,
+            "max_state_change": 3.165972899621394e-05,
+            "cg_change_mac": 3.848101886873771e-06
+          },
+          "artifact_hashes": {
+            "aircraft_parameters.json": "40c6a96da2ebc24feef9bd78d21a545e5d9a76de4e4dcd53f846e3721444ee50",
+            "command.json": "e4e54bf6d2c04b4175ed19d8ff4b15a95db9121b4a1986f5fab65f8ca8aa044f",
+            "fastga_mass_inputs.json": "a184ca62d4f957ae32543d2687035a72d7a38f4c1426e23e9dfb9ebc930a4b4f",
+            "fastga_mass_interface.json": "7f30cc985f13e451ec6af9df703436e8f72a4545eb6b7d61e0b8afae1216e9d2",
+            "geometry.svg": "7e5a658e9dff77c3d3e06b960ae2b38a9364848ea44e564d6ea103ffd418d9e5",
+            "input.json": "474f2c10003e99dfbf4e2f16da3cd69e89b0bf23beeb75ea14bde4e2a36067c3",
+            "model_evidence.json": "8021b10937deb579cb286ebc47474f669bc070cc6131219f589c1237eee53ee4",
+            "report.md": "7dcc01ae34ec945204c8ccc5bcf7e114f906fec252545c112e987b7f404fe1fd",
+            "stdin.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.log": "5a446cbd12607540cb48126ec7092eb5d2c3e8972e8ceda7a8fce1f2263dbe10",
+            "summary.json": "4ea061bc15c97525960e3177119aaa35f79dc02a2929c9166fcfd88599536aab"
+          }
+        },
+        {
+          "run_id": "c8146a9a0500496bb4ab76e091d4afad",
+          "status": "concept_checked_with_limits",
+          "converged": true,
+          "eligible": true,
+          "definition_sha256": "49fce4547baea34138f0a361e84c096a8dd6b7afb121f40d5c1546d326cad000",
+          "metrics": {
+            "mtow_kg": 1222.8535354572882,
+            "owe_kg": 767.0788325974561,
+            "block_fuel_kg": 106.18447370276338,
+            "reserve_kg": 17.887586080874858,
+            "power_kw": 134.10888088491805,
+            "area_m2": 13.873960645439647,
+            "span_m": 10.698606232817296,
+            "duration_h": 3.81583197660797,
+            "route_km": 800.0,
+            "cg_x_m": 2.698735908853835
+          },
+          "margins": {
+            "mass_budget_kg": -0.07449864071918455,
+            "upper_bound_kg": null,
+            "usable_fuel_capacity_kg": 76.34405978574686
+          },
+          "controls": {
+            "wing_area": "landing_stall",
+            "power": "cruise"
+          },
+          "checks": {
+            "mass_budget": true,
+            "mtow_upper_bound": true,
+            "fuel_capacity": true,
+            "landing_stall": true,
+            "power_available": true,
+            "clean_lift": true,
+            "range": true,
+            "endurance": true
+          },
+          "diagnostics": [],
+          "iterations": 32,
+          "final_residuals": {
+            "mass_closure_fraction": 6.092196535321432e-05,
+            "fuel_capacity_kg": 76.34405978574686,
+            "max_state_change": 3.893758156370275e-05,
+            "cg_change_mac": 4.824523190544327e-06
+          },
+          "artifact_hashes": {
+            "aircraft_parameters.json": "2efa9defafef3853b8b0d5c0e33753a1b29d729327d90aa67102e3b942dacbe5",
+            "command.json": "1a32ca61738cdffc15c8480a05069813c60d2c8c9b80357fdc7508caf98d5bb5",
+            "fastga_mass_inputs.json": "82fc6518d6533c248d4fb68ee82917d684aa2e2eee38d1f7423cfc7ba2f8615e",
+            "fastga_mass_interface.json": "7f30cc985f13e451ec6af9df703436e8f72a4545eb6b7d61e0b8afae1216e9d2",
+            "geometry.svg": "fc9887c20185aa385a22d87e3e863e23df37d291b385b0157facb452c7c47188",
+            "input.json": "793ac9f40adf2985f6419a480df3c9fe9c2b52afa8646edf3c7dff60d2199da5",
+            "model_evidence.json": "8021b10937deb579cb286ebc47474f669bc070cc6131219f589c1237eee53ee4",
+            "report.md": "39079facb557ec86cee7d74fe7e1b09156f79869c95e672b95898ddbd7edd0bc",
+            "stdin.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.log": "8c0f79b8a91eccbe6660d060697cf43239a168ea79ff4d10369e56e65027cfed",
+            "summary.json": "8914ce9e987f881cd635ae505c9e37f89f349c729e244cccad913894574a651a"
+          }
+        },
+        {
+          "run_id": "895c9a0fbef6449f946ac2ef3951551f",
+          "status": "concept_checked_with_limits",
+          "converged": true,
+          "eligible": true,
+          "definition_sha256": "01e027e0efa66458394b5238eebb93594c6151ca9de4deb369c57b0d45f03c13",
+          "metrics": {
+            "mtow_kg": 1219.2637895367386,
+            "owe_kg": 765.9984104202925,
+            "block_fuel_kg": 103.6658068629117,
+            "reserve_kg": 17.48276658952997,
+            "power_kw": 130.86888440848918,
+            "area_m2": 13.833232960410541,
+            "span_m": 11.157916321773294,
+            "duration_h": 3.81583197660797,
+            "route_km": 800.0,
+            "cg_x_m": 2.7092713363827947
+          },
+          "margins": {
+            "mass_budget_kg": -0.07325553544433205,
+            "upper_bound_kg": null,
+            "usable_fuel_capacity_kg": 70.32300919272282
+          },
+          "controls": {
+            "wing_area": "landing_stall",
+            "power": "cruise"
+          },
+          "checks": {
+            "mass_budget": true,
+            "mtow_upper_bound": true,
+            "fuel_capacity": true,
+            "landing_stall": true,
+            "power_available": true,
+            "clean_lift": true,
+            "range": true,
+            "endurance": true
+          },
+          "diagnostics": [],
+          "iterations": 32,
+          "final_residuals": {
+            "mass_closure_fraction": 6.008177727656918e-05,
+            "fuel_capacity_kg": 70.32300919272282,
+            "max_state_change": 3.840906739971395e-05,
+            "cg_change_mac": 4.831963904168406e-06
+          },
+          "artifact_hashes": {
+            "aircraft_parameters.json": "97f1b0e8ddf270232b39a1b0d16391f8e68e1e049df993a87080ec23a0123e58",
+            "command.json": "20a03c4547c27d5a8e73cab57b25afbfe8532f6a7ade22659d4b2984ea69281f",
+            "fastga_mass_inputs.json": "49b5d13d6205e03ca6341e0fd5c325e109c5d6cb277adc9898db843b2bbb3509",
+            "fastga_mass_interface.json": "7f30cc985f13e451ec6af9df703436e8f72a4545eb6b7d61e0b8afae1216e9d2",
+            "geometry.svg": "8aaac1b5ee82c726f88c1c815a864ca02a8aa26fa750c9889f0d41e6412f55bb",
+            "input.json": "d8c437632c53f19a8e41de6bd0f9a37ac673e08aff53f607030c13b272fb477b",
+            "model_evidence.json": "8021b10937deb579cb286ebc47474f669bc070cc6131219f589c1237eee53ee4",
+            "report.md": "d630ebdf4300eeef825fbad1aa5473e5ee7de2bdf55f1265c3eed8806ddea3c6",
+            "stdin.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.log": "cc444b9ae521e97d4dc7090591d6414698f37dc8427ba452a1b7191993b0ba9d",
+            "summary.json": "1f08bb939fab199ba5a5793d84b487cb6e721bb518561618701bdfdb595aa0a8"
+          }
+        }
+      ]
+    },
+    "payload": {
+      "run_id": "2d9cd29375b243ab89a3935835639f0e",
+      "status": "compared_with_limits",
+      "purpose": "requirements_sensitivity",
+      "differences": [
+        {
+          "scheme": 1,
+          "field": "payload_kg",
+          "base": 350.0,
+          "value": 400.0
+        },
+        {
+          "scheme": 2,
+          "field": "payload_kg",
+          "base": 350.0,
+          "value": 450.0
+        }
+      ],
+      "eligible_schemes": [
+        0,
+        1,
+        2
+      ],
+      "artifact_hashes": {
+        "comparison.json": "b7f1fb2747ad51a59e3337738a5b53de74aea023d2384f02be9b1442a8a405bb",
+        "input.json": "2d080dfa75451d239b5ee03252864ded44f959c6d84bb343c3e45838a4910068",
+        "report.md": "d779128073d57093a410f101e6f39480606e9e30e6a3c1a791babe2264f5d77e",
+        "scheme-cards.zip": "c968113446c62edae8a3a335c8418f9cc769aacec9d495930d1a3c41f43626d1"
+      },
+      "designs": [
+        {
+          "run_id": "e5214a090b7349a896de8352b77ebf7c",
+          "status": "concept_checked_with_limits",
+          "converged": true,
+          "eligible": true,
+          "definition_sha256": "9f0a2dcbf8cf880aa7fa3fde8da9591ffd0f313193a78e3749ec51d8cd10cb41",
+          "metrics": {
+            "mtow_kg": 1229.4159528684945,
+            "owe_kg": 770.4071410960252,
+            "block_fuel_kg": 109.41544853610884,
+            "reserve_kg": 18.408403926664008,
+            "power_kw": 138.27258903943496,
+            "area_m2": 13.948414959273704,
+            "span_m": 10.228055152107501,
+            "duration_h": 3.81583197660797,
+            "route_km": 800.0,
+            "cg_x_m": 2.6863648801077433
+          },
+          "margins": {
+            "mass_budget_kg": -0.06095529104072739,
+            "upper_bound_kg": null,
+            "usable_fuel_capacity_kg": 83.56517626462079
+          },
+          "controls": {
+            "wing_area": "landing_stall",
+            "power": "cruise"
+          },
+          "checks": {
+            "mass_budget": true,
+            "mtow_upper_bound": true,
+            "fuel_capacity": true,
+            "landing_stall": true,
+            "power_available": true,
+            "clean_lift": true,
+            "range": true,
+            "endurance": true
+          },
+          "diagnostics": [],
+          "iterations": 33,
+          "final_residuals": {
+            "mass_closure_fraction": 4.958068983772778e-05,
+            "fuel_capacity_kg": 83.56517626462079,
+            "max_state_change": 3.165972899621394e-05,
+            "cg_change_mac": 3.848101886873771e-06
+          },
+          "artifact_hashes": {
+            "aircraft_parameters.json": "40c6a96da2ebc24feef9bd78d21a545e5d9a76de4e4dcd53f846e3721444ee50",
+            "command.json": "7439f06719cda30aae4a8d4592d767cc5f4ec5132d69d45c454c8fad0b3dccf2",
+            "fastga_mass_inputs.json": "a184ca62d4f957ae32543d2687035a72d7a38f4c1426e23e9dfb9ebc930a4b4f",
+            "fastga_mass_interface.json": "7f30cc985f13e451ec6af9df703436e8f72a4545eb6b7d61e0b8afae1216e9d2",
+            "geometry.svg": "7e5a658e9dff77c3d3e06b960ae2b38a9364848ea44e564d6ea103ffd418d9e5",
+            "input.json": "474f2c10003e99dfbf4e2f16da3cd69e89b0bf23beeb75ea14bde4e2a36067c3",
+            "model_evidence.json": "8021b10937deb579cb286ebc47474f669bc070cc6131219f589c1237eee53ee4",
+            "report.md": "7dcc01ae34ec945204c8ccc5bcf7e114f906fec252545c112e987b7f404fe1fd",
+            "stdin.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.log": "5a446cbd12607540cb48126ec7092eb5d2c3e8972e8ceda7a8fce1f2263dbe10",
+            "summary.json": "4ea061bc15c97525960e3177119aaa35f79dc02a2929c9166fcfd88599536aab"
+          }
+        },
+        {
+          "run_id": "0ce77dfe151c4f1aae372bc088df6dd2",
+          "status": "concept_checked_with_limits",
+          "converged": true,
+          "eligible": true,
+          "definition_sha256": "cf6f26683007ebcc51d8936ed96a01f88bf5333c3acbbbb87a752c9f7b2ba6c1",
+          "metrics": {
+            "mtow_kg": 1344.8728975493411,
+            "owe_kg": 825.6385605527767,
+            "block_fuel_kg": 119.69087513960558,
+            "reserve_kg": 20.137174461051032,
+            "power_kw": 151.25804821324402,
+            "area_m2": 15.258338887445326,
+            "span_m": 10.697548394648184,
+            "duration_h": 3.81583197660797,
+            "route_km": 800.0,
+            "cg_x_m": 2.6807611282742725
+          },
+          "margins": {
+            "mass_budget_kg": -0.07839302250795299,
+            "upper_bound_kg": null,
+            "usable_fuel_capacity_kg": 101.10314356752961
+          },
+          "controls": {
+            "wing_area": "landing_stall",
+            "power": "cruise"
+          },
+          "checks": {
+            "mass_budget": true,
+            "mtow_upper_bound": true,
+            "fuel_capacity": true,
+            "landing_stall": true,
+            "power_available": true,
+            "clean_lift": true,
+            "range": true,
+            "endurance": true
+          },
+          "diagnostics": [],
+          "iterations": 32,
+          "final_residuals": {
+            "mass_closure_fraction": 5.829028352850488e-05,
+            "fuel_capacity_kg": 101.10314356752961,
+            "max_state_change": 3.717353216337038e-05,
+            "cg_change_mac": 4.207578370021196e-06
+          },
+          "artifact_hashes": {
+            "aircraft_parameters.json": "356e2277b60640f6f7d5f35f87fb25cc473e40ad44ab216e18989ba226e12d55",
+            "command.json": "4598a11566ab576f14e83106777fcaf318a4c427be6805bbd766ef0cfa158705",
+            "fastga_mass_inputs.json": "b66a18d16f83c168c60ef463dfb2fb950fbb8b092ce8722538ba6627452a2ab1",
+            "fastga_mass_interface.json": "7f30cc985f13e451ec6af9df703436e8f72a4545eb6b7d61e0b8afae1216e9d2",
+            "geometry.svg": "0175f84702d8c748fb6050ebfce85986e5ff6d282f8546ade39d13eb92fd8e10",
+            "input.json": "d75f20a368d0a514301a9d5f6e10ee0f90386ae843dceab02dcb31d585da8879",
+            "model_evidence.json": "8021b10937deb579cb286ebc47474f669bc070cc6131219f589c1237eee53ee4",
+            "report.md": "4a01da19c82129cbc7fad9a0ccb7d7e0fe46f8bec449cc3307415e29a3751596",
+            "stdin.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.log": "93462b7cd68a683636938da13973e3ff6c7a1c3d070215817857091967babc43",
+            "summary.json": "c2b0ed6fee96032b23cf281705b078c8f2e809b84eb7ad04a2b8e9045eb02d3f"
+          }
+        },
+        {
+          "run_id": "7eb232775b1f45d48f249d0173d60317",
+          "status": "concept_checked_with_limits",
+          "converged": true,
+          "eligible": true,
+          "definition_sha256": "c51356f4940ddf770afc0d386ca00283afc531ee3d0002276ceeab96fd1530f5",
+          "metrics": {
+            "mtow_kg": 1460.9384296555422,
+            "owe_kg": 881.4080772290404,
+            "block_fuel_kg": 130.0204647511183,
+            "reserve_kg": 21.87505755260235,
+            "power_kw": 164.31195530231273,
+            "area_m2": 16.575167582004628,
+            "span_m": 11.14960792427405,
+            "duration_h": 3.81583197660797,
+            "route_km": 800.0,
+            "cg_x_m": 2.6760787591690702
+          },
+          "margins": {
+            "mass_budget_kg": -0.07933243636080078,
+            "upper_bound_kg": null,
+            "usable_fuel_capacity_kg": 119.96416771178397
+          },
+          "controls": {
+            "wing_area": "landing_stall",
+            "power": "cruise"
+          },
+          "checks": {
+            "mass_budget": true,
+            "mtow_upper_bound": true,
+            "fuel_capacity": true,
+            "landing_stall": true,
+            "power_available": true,
+            "clean_lift": true,
+            "range": true,
+            "endurance": true
+          },
+          "diagnostics": [],
+          "iterations": 32,
+          "final_residuals": {
+            "mass_closure_fraction": 5.4302381777653466e-05,
+            "fuel_capacity_kg": 119.96416771178397,
+            "max_state_change": 3.458112547427561e-05,
+            "cg_change_mac": 3.6641115234996755e-06
+          },
+          "artifact_hashes": {
+            "aircraft_parameters.json": "a841e3fb36952cb54b770df0e9c9c11a4a3a63244e7316a32750be3d809b7852",
+            "command.json": "d3f088772aa04af12158db4eb5918f5c94d230c7711488587e04bceba2c06fd1",
+            "fastga_mass_inputs.json": "c84aa0bd2912284e1068fea73bfb821492a4c547f21c7df0c047d1cdc9e7ea83",
+            "fastga_mass_interface.json": "7f30cc985f13e451ec6af9df703436e8f72a4545eb6b7d61e0b8afae1216e9d2",
+            "geometry.svg": "53dcb00a6b63dc787cada3426522a6707f4dd58fb9a95dedd8075f7be53a9f8d",
+            "input.json": "1f3482e8cbd37e13827d3caebba27d6b04132b61a846d2c56f5b734e2a98950d",
+            "model_evidence.json": "8021b10937deb579cb286ebc47474f669bc070cc6131219f589c1237eee53ee4",
+            "report.md": "e2409220b57f7580eeed2a9499914b7efa69bc6ce2b44909c76174a6b6a8d8ab",
+            "stdin.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.log": "ec5525c5558ed1d8f8f051f00997948f794418ab8fb81eb530112442790f9ee6",
+            "summary.json": "77ecce41d0a2a855f9ea393ac46cc85dadeac30e25de1f3de8643665c1dbb53f"
+          }
+        }
+      ]
+    },
+    "range": {
+      "run_id": "53a18e30e3504602bcfdad62aad9ced5",
+      "status": "compared_with_limits",
+      "purpose": "requirements_sensitivity",
+      "differences": [
+        {
+          "scheme": 1,
+          "field": "mission.range_m",
+          "base": 800000.0,
+          "value": 1000000.0
+        },
+        {
+          "scheme": 2,
+          "field": "mission.range_m",
+          "base": 800000.0,
+          "value": 1200000.0
+        }
+      ],
+      "eligible_schemes": [
+        0,
+        1,
+        2
+      ],
+      "artifact_hashes": {
+        "comparison.json": "7a82020f79aeb96b9c015d1a59666d617bb64726f601aad557766a6a52f1d92b",
+        "input.json": "49cb3095f0eec4eb118213df7c1539271f540e462d5aadf187132275276d5906",
+        "report.md": "f01bd1d90cccaa39f25309935b586962475193ad90c6d7f39a510d257240be4b",
+        "scheme-cards.zip": "bdba774ef32417b3bf0e842e3ef2665108b214f48696174f768f997fed8f3f84"
+      },
+      "designs": [
+        {
+          "run_id": "894d48e7d275459ea25ff1a748f53c9b",
+          "status": "concept_checked_with_limits",
+          "converged": true,
+          "eligible": true,
+          "definition_sha256": "9f0a2dcbf8cf880aa7fa3fde8da9591ffd0f313193a78e3749ec51d8cd10cb41",
+          "metrics": {
+            "mtow_kg": 1229.4159528684945,
+            "owe_kg": 770.4071410960252,
+            "block_fuel_kg": 109.41544853610884,
+            "reserve_kg": 18.408403926664008,
+            "power_kw": 138.27258903943496,
+            "area_m2": 13.948414959273704,
+            "span_m": 10.228055152107501,
+            "duration_h": 3.81583197660797,
+            "route_km": 800.0,
+            "cg_x_m": 2.6863648801077433
+          },
+          "margins": {
+            "mass_budget_kg": -0.06095529104072739,
+            "upper_bound_kg": null,
+            "usable_fuel_capacity_kg": 83.56517626462079
+          },
+          "controls": {
+            "wing_area": "landing_stall",
+            "power": "cruise"
+          },
+          "checks": {
+            "mass_budget": true,
+            "mtow_upper_bound": true,
+            "fuel_capacity": true,
+            "landing_stall": true,
+            "power_available": true,
+            "clean_lift": true,
+            "range": true,
+            "endurance": true
+          },
+          "diagnostics": [],
+          "iterations": 33,
+          "final_residuals": {
+            "mass_closure_fraction": 4.958068983772778e-05,
+            "fuel_capacity_kg": 83.56517626462079,
+            "max_state_change": 3.165972899621394e-05,
+            "cg_change_mac": 3.848101886873771e-06
+          },
+          "artifact_hashes": {
+            "aircraft_parameters.json": "40c6a96da2ebc24feef9bd78d21a545e5d9a76de4e4dcd53f846e3721444ee50",
+            "command.json": "15a3c8edac18b0639760684501389b2c93ec089211fe9d7a80f33a51bf987fb6",
+            "fastga_mass_inputs.json": "a184ca62d4f957ae32543d2687035a72d7a38f4c1426e23e9dfb9ebc930a4b4f",
+            "fastga_mass_interface.json": "7f30cc985f13e451ec6af9df703436e8f72a4545eb6b7d61e0b8afae1216e9d2",
+            "geometry.svg": "7e5a658e9dff77c3d3e06b960ae2b38a9364848ea44e564d6ea103ffd418d9e5",
+            "input.json": "474f2c10003e99dfbf4e2f16da3cd69e89b0bf23beeb75ea14bde4e2a36067c3",
+            "model_evidence.json": "8021b10937deb579cb286ebc47474f669bc070cc6131219f589c1237eee53ee4",
+            "report.md": "7dcc01ae34ec945204c8ccc5bcf7e114f906fec252545c112e987b7f404fe1fd",
+            "stdin.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.log": "5a446cbd12607540cb48126ec7092eb5d2c3e8972e8ceda7a8fce1f2263dbe10",
+            "summary.json": "4ea061bc15c97525960e3177119aaa35f79dc02a2929c9166fcfd88599536aab"
+          }
+        },
+        {
+          "run_id": "84603574ee8e4406bf4f825e5fc7c8dd",
+          "status": "concept_checked_with_limits",
+          "converged": true,
+          "eligible": true,
+          "definition_sha256": "ed327726905478328e6fba9e4cba7054c31a3273a4874104048dd062154c8317",
+          "metrics": {
+            "mtow_kg": 1282.5646083371112,
+            "owe_kg": 795.8030654535679,
+            "block_fuel_kg": 137.1999760059412,
+            "reserve_kg": 19.111288510799923,
+            "power_kw": 144.25022596407692,
+            "area_m2": 14.551416326934527,
+            "span_m": 10.4467996272547,
+            "duration_h": 4.741757902533896,
+            "route_km": 1000.0,
+            "cg_x_m": 2.683653391539271
+          },
+          "margins": {
+            "mass_budget_kg": -0.0778075574878585,
+            "upper_bound_kg": null,
+            "usable_fuel_capacity_kg": 68.42900305879914
+          },
+          "controls": {
+            "wing_area": "landing_stall",
+            "power": "cruise"
+          },
+          "checks": {
+            "mass_budget": true,
+            "mtow_upper_bound": true,
+            "fuel_capacity": true,
+            "landing_stall": true,
+            "power_available": true,
+            "clean_lift": true,
+            "range": true,
+            "endurance": true
+          },
+          "diagnostics": [],
+          "iterations": 34,
+          "final_residuals": {
+            "mass_closure_fraction": 6.0665604665903464e-05,
+            "fuel_capacity_kg": 68.42900305879914,
+            "max_state_change": 3.8276911921153456e-05,
+            "cg_change_mac": 4.382071741189822e-06
+          },
+          "artifact_hashes": {
+            "aircraft_parameters.json": "9beea0b0252d10199c36a431d17c1789594dedcb7bbf5fafa76bc735885c3adb",
+            "command.json": "ddbc10a6ec2d0a415fe35f2d04a26d73e9eebd013e4a1a3d2db659c3e5e31284",
+            "fastga_mass_inputs.json": "32e8b808b91efbcc70c8df787568389f6f4ac1d13830e55a89d9d6798d14d6bd",
+            "fastga_mass_interface.json": "7f30cc985f13e451ec6af9df703436e8f72a4545eb6b7d61e0b8afae1216e9d2",
+            "geometry.svg": "f49df3d925b4517bf444dd5655d270769db72328063a10c03fcdef994a1c572e",
+            "input.json": "12ec0b56efb11da3b31d9e8d7be08cec5ff95b82ba5cef6ecf4c024c94e92396",
+            "model_evidence.json": "8021b10937deb579cb286ebc47474f669bc070cc6131219f589c1237eee53ee4",
+            "report.md": "116bc9c7c935809acd1429a167678f8a66fdbf08eed581937cc5000ee085ae5f",
+            "stdin.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.log": "ff606046588838c45c83f65981db5ad693d3de0cba088be9ee063d7fef664e1d",
+            "summary.json": "c4bce98040a0a495a7c32a122c508d6624321fdfe5ccdcc00e4b593eb2cfd8cb"
+          }
+        },
+        {
+          "run_id": "eda43b186a3847fda366147d5768214f",
+          "status": "concept_checked_with_limits",
+          "converged": true,
+          "eligible": true,
+          "definition_sha256": "43b2507fe786689a7c99dd057713591b6b1e33866992634883b5e33079dd17c9",
+          "metrics": {
+            "mtow_kg": 1340.1345986205001,
+            "owe_kg": 823.3672228173959,
+            "block_fuel_kg": 167.2244972688345,
+            "reserve_kg": 19.873881569052692,
+            "power_kw": 150.72513105123315,
+            "area_m2": 15.204580223010927,
+            "span_m": 10.678686795321884,
+            "duration_h": 5.667683828459823,
+            "route_km": 1200.0,
+            "cg_x_m": 2.680971316472156
+          },
+          "margins": {
+            "mass_budget_kg": -0.080308638102224,
+            "upper_bound_kg": null,
+            "usable_fuel_capacity_kg": 52.40368707024007
+          },
+          "controls": {
+            "wing_area": "landing_stall",
+            "power": "cruise"
+          },
+          "checks": {
+            "mass_budget": true,
+            "mtow_upper_bound": true,
+            "fuel_capacity": true,
+            "landing_stall": true,
+            "power_available": true,
+            "clean_lift": true,
+            "range": true,
+            "endurance": true
+          },
+          "diagnostics": [],
+          "iterations": 36,
+          "final_residuals": {
+            "mass_closure_fraction": 5.9925800128503234e-05,
+            "fuel_capacity_kg": 52.40368707024007,
+            "max_state_change": 3.736595584813429e-05,
+            "cg_change_mac": 4.016778800685125e-06
+          },
+          "artifact_hashes": {
+            "aircraft_parameters.json": "8bd999ed0333cd373a7ce8b9ffaf8b16c160c630fa74962c638b7c6b65f41f0f",
+            "command.json": "6c52dd3c91dbd2ccd90fa3f0e06d5d4f38f6ada4009abb9928baa0a310e8dc28",
+            "fastga_mass_inputs.json": "6074bea0ea93abb03d505455bac85323a3fad3f078b7394d0459a5f9fe490a6f",
+            "fastga_mass_interface.json": "7f30cc985f13e451ec6af9df703436e8f72a4545eb6b7d61e0b8afae1216e9d2",
+            "geometry.svg": "1bd5d2928abb07254c516fd00fb24edbc6418ca5df2ab9fabaeefd742d8e80c7",
+            "input.json": "73c105944a21b051bd9da18e69e35313b710bf9d510534191d2e5c93378ff910",
+            "model_evidence.json": "8021b10937deb579cb286ebc47474f669bc070cc6131219f589c1237eee53ee4",
+            "report.md": "df278320b6647d069e3c82596277f1563836068de24f0257468109b6ed1272d2",
+            "stdin.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.log": "8199ed29df6f8f6b04c1f3a06f80b3dfd259e301e32baa763fd55b676c59d97f",
+            "summary.json": "6fd74ac00ff05430da45446cca2f2b231a27019c8103fb91925d308642277fbe"
+          }
+        }
+      ]
+    },
+    "endurance": {
+      "run_id": "4dbd10aeac3f4323a02053a125b695b4",
+      "status": "compared_with_limits",
+      "purpose": "requirements_sensitivity",
+      "differences": [
+        {
+          "scheme": 1,
+          "field": "mission.endurance_s",
+          "base": 10800.0,
+          "value": 14400.0
+        },
+        {
+          "scheme": 2,
+          "field": "mission.endurance_s",
+          "base": 10800.0,
+          "value": 18000.0
+        }
+      ],
+      "eligible_schemes": [
+        0,
+        1,
+        2
+      ],
+      "artifact_hashes": {
+        "comparison.json": "83ec04f86e36de376604b50ad4a7ce37e539486f50fa19db2aee229ca99bc159",
+        "input.json": "29ac7f92a73d95212cd964b4ad6d410e814918c1de6e9576bd27015c08ddb277",
+        "report.md": "50ef8754fb5305ee596158326c8ed40ea30497c1199b76578d7f338848b7e6b0",
+        "scheme-cards.zip": "7ae258261ef702a6e12f7ed75f07d1dc6b37b3280a6d48887d37d73790020051"
+      },
+      "designs": [
+        {
+          "run_id": "7359f772c6d44c10b4d4eccd8cf6bbdf",
+          "status": "concept_checked_with_limits",
+          "converged": true,
+          "eligible": true,
+          "definition_sha256": "01d72d840d9e755a0f5c8eb420ac7ba4d673be0a6025874c641a9a9ace01e8f0",
+          "metrics": {
+            "mtow_kg": 1185.7702509064534,
+            "owe_kg": 749.5868218487816,
+            "block_fuel_kg": 86.58259583235709,
+            "reserve_kg": 17.831965753747216,
+            "power_kw": 133.3637506624365,
+            "area_m2": 13.453229940131159,
+            "span_m": 10.044860603860249,
+            "duration_h": 3.0,
+            "route_km": 623.7802930526784,
+            "cg_x_m": 2.688787941662589
+          },
+          "margins": {
+            "mass_budget_kg": -0.06575739802929093,
+            "upper_bound_kg": null,
+            "usable_fuel_capacity_kg": 96.21322708532527
+          },
+          "controls": {
+            "wing_area": "landing_stall",
+            "power": "cruise"
+          },
+          "checks": {
+            "mass_budget": true,
+            "mtow_upper_bound": true,
+            "fuel_capacity": true,
+            "landing_stall": true,
+            "power_available": true,
+            "clean_lift": true,
+            "range": true,
+            "endurance": true
+          },
+          "diagnostics": [],
+          "iterations": 31,
+          "final_residuals": {
+            "mass_closure_fraction": 5.545542905889498e-05,
+            "fuel_capacity_kg": 96.21322708532527,
+            "max_state_change": 3.579233412298599e-05,
+            "cg_change_mac": 4.5755340851525e-06
+          },
+          "artifact_hashes": {
+            "aircraft_parameters.json": "125755c5b3199ff354bf9937c9eac86f056de2b7254b0f0fa3fd9b63cf9c7be6",
+            "command.json": "8e537993e24e07c7c8d9f43c7d743c1b98c8a24249918714b803cf5d680051b0",
+            "fastga_mass_inputs.json": "55215dd8f0aff03a34414959f7d39e3f8e0408f131768e8eea9f7403939ae5e3",
+            "fastga_mass_interface.json": "7f30cc985f13e451ec6af9df703436e8f72a4545eb6b7d61e0b8afae1216e9d2",
+            "geometry.svg": "e21e68086724db04ef7d850019578eb599558876c9b363c6bf8a7c60333cae9d",
+            "input.json": "05bb3c093c46ddb128868c318c1c8df5da06bdf3c39a42a8709d9d4b4cfe885e",
+            "model_evidence.json": "8021b10937deb579cb286ebc47474f669bc070cc6131219f589c1237eee53ee4",
+            "report.md": "79f5ebe45857a25e63233f59e41ecbcfb2df70457d6cef531ba9bf7c8e3dd594",
+            "stdin.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.log": "1725afdb5b9744af1c3b3dd9778f9737bc06066f99e3ea1ac98808214cc97b44",
+            "summary.json": "a3df2fa4eff9fff1e3ec04d1c50ebcffd10f14010d4979875112f9dc11743018"
+          }
+        },
+        {
+          "run_id": "cea5bcefa4c2410cadc541fa1a51a8d1",
+          "status": "concept_checked_with_limits",
+          "converged": true,
+          "eligible": true,
+          "definition_sha256": "47a15ffa08f1bac788efa2e2bfeb6feecdfec5f184469f732abcee10fc2d30d2",
+          "metrics": {
+            "mtow_kg": 1239.6569955818081,
+            "owe_kg": 775.2968986204698,
+            "block_fuel_kg": 114.77576473000437,
+            "reserve_kg": 18.543743302161396,
+            "power_kw": 139.4244005863157,
+            "area_m2": 14.064605344673906,
+            "span_m": 10.270566687629962,
+            "duration_h": 4.0,
+            "route_km": 839.7802930526784,
+            "cg_x_m": 2.6858237855813774
+          },
+          "margins": {
+            "mass_budget_kg": -0.06710676720035735,
+            "upper_bound_kg": null,
+            "usable_fuel_capacity_kg": 80.6211693955388
+          },
+          "controls": {
+            "wing_area": "landing_stall",
+            "power": "cruise"
+          },
+          "checks": {
+            "mass_budget": true,
+            "mtow_upper_bound": true,
+            "fuel_capacity": true,
+            "landing_stall": true,
+            "power_available": true,
+            "clean_lift": true,
+            "range": true,
+            "endurance": true
+          },
+          "diagnostics": [],
+          "iterations": 33,
+          "final_residuals": {
+            "mass_closure_fraction": 5.413333481723478e-05,
+            "fuel_capacity_kg": 80.6211693955388,
+            "max_state_change": 3.448416546114608e-05,
+            "cg_change_mac": 4.142757399100736e-06
+          },
+          "artifact_hashes": {
+            "aircraft_parameters.json": "46faba68ad20d2a9d4c9158fb3971741d52de04f9559e8129efb9a5764046c50",
+            "command.json": "434ea01a7b5eca03f08b013333408a52a7d4368d26b937167330a50bca53ac0f",
+            "fastga_mass_inputs.json": "62f615336fe9136a6edebe624d24355b6df74ff441133d9599ed1a6ad4da5998",
+            "fastga_mass_interface.json": "7f30cc985f13e451ec6af9df703436e8f72a4545eb6b7d61e0b8afae1216e9d2",
+            "geometry.svg": "53e465991d6af8636b4f09b8109b237573d54e260144b4daaa4c50065e0a1f69",
+            "input.json": "79a6bdc8de52519814c029478e10d5fc2e7dd7e2721245751320a2f2c23e6a53",
+            "model_evidence.json": "8021b10937deb579cb286ebc47474f669bc070cc6131219f589c1237eee53ee4",
+            "report.md": "790d2ee053f85c00b0cd615105f880224f2ffb84656f3a763403810c5f1b1cab",
+            "stdin.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.log": "f0580bdd8204375999d02d3eaa453e202f3684e976583d865b091da4be8f2c9e",
+            "summary.json": "db9f19647e499c98e9a999be8e61559a472fe2c3d3c86bd32a6bda3fb7ce66fc"
+          }
+        },
+        {
+          "run_id": "df7eed2dc97d433ab96b1875dabbd1ab",
+          "status": "concept_checked_with_limits",
+          "converged": true,
+          "eligible": true,
+          "definition_sha256": "949c8f4e7e31acd4cdc3a6c97d009f3b69d7a3fdb8e1daf9df82ec1d101863fb",
+          "metrics": {
+            "mtow_kg": 1298.1747173937017,
+            "owe_kg": 803.2712481042028,
+            "block_fuel_kg": 145.3391809143088,
+            "reserve_kg": 19.31798070890681,
+            "power_kw": 146.00589717479008,
+            "area_m2": 14.728521787598849,
+            "span_m": 10.510181416464293,
+            "duration_h": 5.0,
+            "route_km": 1055.7802930526782,
+            "cg_x_m": 2.68289955517033
+          },
+          "margins": {
+            "mass_budget_kg": -0.07069688187289103,
+            "upper_bound_kg": null,
+            "usable_fuel_capacity_kg": 64.05526690327957
+          },
+          "controls": {
+            "wing_area": "landing_stall",
+            "power": "cruise"
+          },
+          "checks": {
+            "mass_budget": true,
+            "mtow_upper_bound": true,
+            "fuel_capacity": true,
+            "landing_stall": true,
+            "power_available": true,
+            "clean_lift": true,
+            "range": true,
+            "endurance": true
+          },
+          "diagnostics": [],
+          "iterations": 35,
+          "final_residuals": {
+            "mass_closure_fraction": 5.445868027288853e-05,
+            "fuel_capacity_kg": 64.05526690327957,
+            "max_state_change": 3.424691684505987e-05,
+            "cg_change_mac": 3.8536744630504944e-06
+          },
+          "artifact_hashes": {
+            "aircraft_parameters.json": "1f051400c141a76597f79b21cf2fc239ed195246f49f26af723530b4d87b2445",
+            "command.json": "92eb8d44f256ce4449396f1c0351b0796f7d27073ad76fb1ef66819f9b22b08b",
+            "fastga_mass_inputs.json": "4c82d850bdf4d77b6158d54b52483b0c2b7e649f0d35208433da137ac8fdeb9e",
+            "fastga_mass_interface.json": "7f30cc985f13e451ec6af9df703436e8f72a4545eb6b7d61e0b8afae1216e9d2",
+            "geometry.svg": "51b6da8fc7cb0c3b5bbae164bbf9b4df4dfe7c0251cea6b54866bbb9b95740cf",
+            "input.json": "6296889e0c2eb5567910fcd1f5e3bbb0cd3924411d6333cf7e027f9f5facbaef",
+            "model_evidence.json": "8021b10937deb579cb286ebc47474f669bc070cc6131219f589c1237eee53ee4",
+            "report.md": "669dc5808684dcf2303e9bb78302ed8811199c1ab5683b72e2ae1ce118521d48",
+            "stdin.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.log": "571c9dfd8d540f38e4954c5e4a48991a2a6212483ace06ed23faa3e3842556d7",
+            "summary.json": "169f9a577baab53c93e5badfca9b8ebd4f6233fc9fec1c7e001a4e4b3c8f406a"
+          }
+        }
+      ]
+    },
+    "loiter": {
+      "run_id": "27016a6b05fe48e7a00d38f0a2340274",
+      "status": "compared_with_limits",
+      "purpose": "requirements_sensitivity",
+      "differences": [
+        {
+          "scheme": 1,
+          "field": "mission.endurance_s",
+          "base": 1800.0,
+          "value": 3600.0
+        },
+        {
+          "scheme": 2,
+          "field": "mission.endurance_s",
+          "base": 1800.0,
+          "value": 7200.0
+        }
+      ],
+      "eligible_schemes": [
+        0,
+        1,
+        2
+      ],
+      "artifact_hashes": {
+        "comparison.json": "cf36a3c130ba854bc7778e7f2cc20d32ce2b3ea86de4a5c69ddcb3b2a7a197c0",
+        "input.json": "6bf6f8b29880c7b77e03866c8bca538f0d29d5acbe388bf2c2de3e9948b0203c",
+        "report.md": "4e96ce0f4b2492bd3a817affff4b60f0a85627ac0db6f3d6f7537c611823aa44",
+        "scheme-cards.zip": "8e981ca3d966f840f7d87e022dae840e9abc342224810a833c4124bb962e1c3d"
+      },
+      "designs": [
+        {
+          "run_id": "b880919548a34597a9c75b3495984518",
+          "status": "concept_checked_with_limits",
+          "converged": true,
+          "eligible": true,
+          "definition_sha256": "aa5a265baee396895e8348ddc5b91395a76ec88410b7bc5c3cce32000d722892",
+          "metrics": {
+            "mtow_kg": 1148.9973648701923,
+            "owe_kg": 732.0680180378022,
+            "block_fuel_kg": 67.31081333110257,
+            "reserve_kg": 17.348502815941053,
+            "power_kw": 129.22789888109088,
+            "area_m2": 13.036020880425134,
+            "span_m": 9.8878792773369,
+            "duration_h": 2.463980124756118,
+            "route_km": 400.0,
+            "cg_x_m": 2.690977486746689
+          },
+          "margins": {
+            "mass_budget_kg": -0.05839675150969015,
+            "upper_bound_kg": null,
+            "usable_fuel_capacity_kg": 107.04803462705652
+          },
+          "controls": {
+            "wing_area": "landing_stall",
+            "power": "cruise"
+          },
+          "checks": {
+            "mass_budget": true,
+            "mtow_upper_bound": true,
+            "fuel_capacity": true,
+            "landing_stall": true,
+            "power_available": true,
+            "clean_lift": true,
+            "range": true,
+            "endurance": true
+          },
+          "diagnostics": [],
+          "iterations": 30,
+          "final_residuals": {
+            "mass_closure_fraction": 5.0824095246108336e-05,
+            "fuel_capacity_kg": 107.04803462705652,
+            "max_state_change": 3.312351084394649e-05,
+            "cg_change_mac": 4.42269815373473e-06
+          },
+          "artifact_hashes": {
+            "aircraft_parameters.json": "6605d4d7890af1f04246b80a7e64a9ed9cd95b35cb8dd4dc3c3d0f1e0902ccc7",
+            "command.json": "0e8c3030ab6319992317dd559619a0c3c525d46ab51afc49e1135e3643fdb985",
+            "fastga_mass_inputs.json": "d94639cf2eb3e2f7c1b021ebffd39f55a6b5a248a984b2ce6337a77da7b47353",
+            "fastga_mass_interface.json": "7f30cc985f13e451ec6af9df703436e8f72a4545eb6b7d61e0b8afae1216e9d2",
+            "geometry.svg": "6db2bee0c5610ac357d6d7f3cb5d4e1e10b2a448a3367a95c89839a5af0fde3b",
+            "input.json": "d4af71ead6654d1ff4eb071c9bf60e94e7f2f2b043c8c1ba2e2159c3cb5cec1b",
+            "model_evidence.json": "8021b10937deb579cb286ebc47474f669bc070cc6131219f589c1237eee53ee4",
+            "report.md": "1c3a3dcad9eed63a69cac36be6638d0af94f63e081fd4d4984fd1378456a8efc",
+            "stdin.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.log": "f8a4d347f9218df6be97ff80d60402dbc689e5b90514d9483e99f5f5f6985efd",
+            "summary.json": "6e759c083dd2a75c651c4abb9cc4261ec5ad276a92365cab2132f5aaae01a7bb"
+          }
+        },
+        {
+          "run_id": "ad136d6188494f508655c23bdbbf989f",
+          "status": "concept_checked_with_limits",
+          "converged": true,
+          "eligible": true,
+          "definition_sha256": "02894686388a39648850bc23b26f357b897074307fb95de261dde172028e9f52",
+          "metrics": {
+            "mtow_kg": 1163.9921633245895,
+            "owe_kg": 739.2091676048568,
+            "block_fuel_kg": 75.17859559179034,
+            "reserve_kg": 17.547788804367976,
+            "power_kw": 130.9143660198785,
+            "area_m2": 13.206145296481887,
+            "span_m": 9.952190197319089,
+            "duration_h": 2.963980124756118,
+            "route_km": 400.0,
+            "cg_x_m": 2.690068551776788
+          },
+          "margins": {
+            "mass_budget_kg": -0.06831395700805842,
+            "upper_bound_kg": null,
+            "usable_fuel_capacity_kg": 102.6045255799586
+          },
+          "controls": {
+            "wing_area": "landing_stall",
+            "power": "cruise"
+          },
+          "checks": {
+            "mass_budget": true,
+            "mtow_upper_bound": true,
+            "fuel_capacity": true,
+            "landing_stall": true,
+            "power_available": true,
+            "clean_lift": true,
+            "range": true,
+            "endurance": true
+          },
+          "diagnostics": [],
+          "iterations": 30,
+          "final_residuals": {
+            "mass_closure_fraction": 5.86893616301852e-05,
+            "fuel_capacity_kg": 102.6045255799586,
+            "max_state_change": 3.809513739327919e-05,
+            "cg_change_mac": 4.996434465796979e-06
+          },
+          "artifact_hashes": {
+            "aircraft_parameters.json": "20b1d2ac781047142766829b31db57782ffefb8e1445053c1c6090b98d9af5dd",
+            "command.json": "4eed5a08cc10eb8c68faff8db50c10271b3a594b6581c32410dc48bf63ce0ae6",
+            "fastga_mass_inputs.json": "b165b002a180726bd2468b50286b5c11b94c44c24cf3b38be4eefdbd1e1ab1d9",
+            "fastga_mass_interface.json": "7f30cc985f13e451ec6af9df703436e8f72a4545eb6b7d61e0b8afae1216e9d2",
+            "geometry.svg": "b5f0e4aef5284c84d426898147dae3c000a3edc3ba531fb443e46dfebcf2d0dd",
+            "input.json": "6f37fb33641c345ed4d4152f11ac4421ed6cbef07cc8f9a8a3add842bb582450",
+            "model_evidence.json": "8021b10937deb579cb286ebc47474f669bc070cc6131219f589c1237eee53ee4",
+            "report.md": "74d56f224990f3582bcc74fcd4b45c3c51de0c7150bbc2ac96382ca859192e60",
+            "stdin.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.log": "b9ec73b3d18a6e0ac64420b9d6706ae9e05e089e0051051857c6d13fb381886e",
+            "summary.json": "7fad7efe44d4f1171fb130696c920954de26530dc296eab4e7780bf51e2543b9"
+          }
+        },
+        {
+          "run_id": "80e96cc8e21f4549952f309feda16664",
+          "status": "concept_checked_with_limits",
+          "converged": true,
+          "eligible": true,
+          "definition_sha256": "54dc011ac0795d46e2692b67d4f5a5147a1bf42d7f79ca698760f2ba586cbfd6",
+          "metrics": {
+            "mtow_kg": 1194.85924858548,
+            "owe_kg": 753.9200539071595,
+            "block_fuel_kg": 91.34708909657272,
+            "reserve_kg": 17.9586502620246,
+            "power_kw": 134.38599153861853,
+            "area_m2": 13.556349727128504,
+            "span_m": 10.083284333661517,
+            "duration_h": 3.963980124756118,
+            "route_km": 400.0,
+            "cg_x_m": 2.6882694023154654
+          },
+          "margins": {
+            "mass_budget_kg": -0.0719294394057215,
+            "upper_bound_kg": null,
+            "usable_fuel_capacity_kg": 93.55446698595179
+          },
+          "controls": {
+            "wing_area": "landing_stall",
+            "power": "cruise"
+          },
+          "checks": {
+            "mass_budget": true,
+            "mtow_upper_bound": true,
+            "fuel_capacity": true,
+            "landing_stall": true,
+            "power_available": true,
+            "clean_lift": true,
+            "range": true,
+            "endurance": true
+          },
+          "diagnostics": [],
+          "iterations": 31,
+          "final_residuals": {
+            "mass_closure_fraction": 6.019908996885978e-05,
+            "fuel_capacity_kg": 93.55446698595179,
+            "max_state_change": 3.8764715905692526e-05,
+            "cg_change_mac": 4.903156505663489e-06
+          },
+          "artifact_hashes": {
+            "aircraft_parameters.json": "6dfddba1ff4d2ac787323db683a2b60be8510084a6fc86e82af452bb9803c200",
+            "command.json": "5d56bdc53873d620c4d674a02aeefd9360b6c13d541e04f81ba35ed4555442cf",
+            "fastga_mass_inputs.json": "2178ff380c2010a64cd3df98ce6849c9417409dc32c12854abe17d7ec6f24c44",
+            "fastga_mass_interface.json": "7f30cc985f13e451ec6af9df703436e8f72a4545eb6b7d61e0b8afae1216e9d2",
+            "geometry.svg": "e7e262eabcc9960fe001996ca5e84eaea73b45d0c60705f9cefd1ee426d415a5",
+            "input.json": "ba2ee3c27dc004307919366a3bb9ab742c0b07c1b77d8a3e93393ad3818b5f66",
+            "model_evidence.json": "8021b10937deb579cb286ebc47474f669bc070cc6131219f589c1237eee53ee4",
+            "report.md": "d9f89593f5ddecb98809380a77b2a15dfdc5587c107f5dbc267c7afacffda631",
+            "stdin.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.log": "c5b64b178eb9150d9f71e393ee823f187ef6edbd48cf2e08f61934ce835c3e04",
+            "summary.json": "10c758bf3bd9266c58c2e9600e038eeff74670cb69ebc82253e34b01c5fa3ff9"
+          }
+        }
+      ]
+    },
+    "fixed_budget": {
+      "run_id": "36bf832442324e1f922e2a9e261859d9",
+      "status": "comparison_incomplete",
+      "purpose": "requirements_sensitivity",
+      "differences": [
+        {
+          "scheme": 1,
+          "field": "payload_kg",
+          "base": 350.0,
+          "value": 450.0
+        },
+        {
+          "scheme": 2,
+          "field": "payload_kg",
+          "base": 350.0,
+          "value": 600.0
+        }
+      ],
+      "eligible_schemes": [
+        0
+      ],
+      "artifact_hashes": {
+        "comparison.json": "ee505630f2a64ec9e9a00aa41bd83b2fcf2390256bf2af5f62970585b65fe4e4",
+        "input.json": "f6d43a66253af2605e284815a70b71dfad5ea31b66e6a2c9617b66472921cc21",
+        "report.md": "12a796ff1e4207f33041f11fa90ecd89cec6e7a0e85af2a7e9fb7fbe6e3b3b42",
+        "scheme-cards.zip": "00e29698ba5bc53aed86750c7e79004f44c5a1ea1d219b2746881456cfe93c1a"
+      },
+      "designs": [
+        {
+          "run_id": "f77b4a076d9545d0969374c2e489468e",
+          "status": "concept_checked_with_limits",
+          "converged": true,
+          "eligible": true,
+          "definition_sha256": "f28610f43c3bf7af078a6bf7d1604e264ecc724ea2e57c71af51d13234ae166e",
+          "metrics": {
+            "mtow_kg": 1400.0,
+            "owe_kg": 852.0949241013965,
+            "block_fuel_kg": 124.59707196181338,
+            "reserve_kg": 20.96260865754951,
+            "power_kw": 157.45820135450575,
+            "area_m2": 15.883786848072559,
+            "span_m": 10.914595794647834,
+            "duration_h": 3.81583197660797,
+            "route_km": 800.0,
+            "cg_x_m": 2.664715855529633
+          },
+          "margins": {
+            "mass_budget_kg": 73.70164944017642,
+            "upper_bound_kg": null,
+            "usable_fuel_capacity_kg": 109.91083761156662
+          },
+          "controls": {
+            "wing_area": "landing_stall",
+            "power": "cruise"
+          },
+          "checks": {
+            "mass_budget": true,
+            "mtow_upper_bound": true,
+            "fuel_capacity": true,
+            "landing_stall": true,
+            "power_available": true,
+            "clean_lift": true,
+            "range": true,
+            "endurance": true
+          },
+          "diagnostics": [],
+          "iterations": 4,
+          "final_residuals": {
+            "mass_closure_fraction": -0.05264403531441173,
+            "fuel_capacity_kg": 109.91083761156662,
+            "max_state_change": 0.0,
+            "cg_change_mac": 0.0
+          },
+          "artifact_hashes": {
+            "aircraft_parameters.json": "3b727097c373b79d6a6587a1d7cea1d2a05ca28a21f404a67b6f95b48da0ffe4",
+            "command.json": "2a17651573e3c2264a8760c80a2c1fcf73a45491ccbe5d4ee3826844340ee8a2",
+            "fastga_mass_inputs.json": "2ab030bca1c2a3f8069b6a3cb852342cc56cbc8c026f4ac6681e9e866908a9d8",
+            "fastga_mass_interface.json": "7f30cc985f13e451ec6af9df703436e8f72a4545eb6b7d61e0b8afae1216e9d2",
+            "geometry.svg": "3edf383a02184b705ea11c4277422a6dcaeb35afb5767be98f363d8c8aafb06b",
+            "input.json": "168cb98f8770dfb7e6b242cf68547ef4413ee808a83363c77768c66d1da2643a",
+            "model_evidence.json": "8021b10937deb579cb286ebc47474f669bc070cc6131219f589c1237eee53ee4",
+            "report.md": "63102a3a7de48a69f504016fa8919b62ee8e57f2a08f10d21bc5778a912e67c3",
+            "stdin.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.log": "0073c40d0f065fc25c6841b3e8bce34cbc0659e0e97bdfcfe7be525c98c3738f",
+            "summary.json": "b6ccb6bbe5137d71085e03d2ed5238c09306bbf2ca693bf1d378ea0ad4bfb87e"
+          }
+        },
+        {
+          "run_id": "406ae00fe11040c690197abfd06cf77f",
+          "status": "constraints_not_met",
+          "converged": true,
+          "eligible": false,
+          "definition_sha256": "144a12ee21434d60c6319fcfc6b5aac4e7744d2c33dbdd6f5cca80b0163518c3",
+          "metrics": {
+            "mtow_kg": 1400.0,
+            "owe_kg": 852.0949241013965,
+            "block_fuel_kg": 124.59707196181338,
+            "reserve_kg": 20.96260865754951,
+            "power_kw": 157.45820135450575,
+            "area_m2": 15.883786848072559,
+            "span_m": 10.914595794647834,
+            "duration_h": 3.81583197660797,
+            "route_km": 800.0,
+            "cg_x_m": 2.682964782506812
+          },
+          "margins": {
+            "mass_budget_kg": -26.298350559823575,
+            "upper_bound_kg": null,
+            "usable_fuel_capacity_kg": 109.91083761156662
+          },
+          "controls": {
+            "wing_area": "landing_stall",
+            "power": "cruise"
+          },
+          "checks": {
+            "mass_budget": false,
+            "mtow_upper_bound": true,
+            "fuel_capacity": true,
+            "landing_stall": true,
+            "power_available": true,
+            "clean_lift": true,
+            "range": true,
+            "endurance": true
+          },
+          "diagnostics": [],
+          "iterations": 4,
+          "final_residuals": {
+            "mass_closure_fraction": 0.018784536114159697,
+            "fuel_capacity_kg": 109.91083761156662,
+            "max_state_change": 0.0,
+            "cg_change_mac": 0.0
+          },
+          "artifact_hashes": {
+            "aircraft_parameters.json": "6a22cc66447d28b35b2cb2708e2e19348f30324586032984dd0581f4c9de2e4e",
+            "command.json": "3ec06a647f9c11b4f1a79782d60bb331c984f5482ac90a6542d6a906b1d44807",
+            "fastga_mass_inputs.json": "908f7c299497a1bec51ff880c1c5a4f270c3fc20c439a08ba4effad712e007ec",
+            "fastga_mass_interface.json": "7f30cc985f13e451ec6af9df703436e8f72a4545eb6b7d61e0b8afae1216e9d2",
+            "geometry.svg": "3edf383a02184b705ea11c4277422a6dcaeb35afb5767be98f363d8c8aafb06b",
+            "input.json": "0509165e55578c87bcf8677bed4381f9e15a6a1defec99bdfe159ba225ab0291",
+            "model_evidence.json": "8021b10937deb579cb286ebc47474f669bc070cc6131219f589c1237eee53ee4",
+            "report.md": "9c9891e26dfd8542586e77a03b9aef7e574518901f6a693fb016b66b31af34ae",
+            "stdin.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.log": "4416d20b69b39cc33982f4bbc6c7b9c46ec08dc305b090736d1862bdeb9e9662",
+            "summary.json": "4716591175f49f0bc7c3ce8354e02f3d5f6f3eccfcc6182d9465e8a07f8b1e5b"
+          }
+        },
+        {
+          "run_id": "9a3b56ca46fd4407996f078e7a691aa0",
+          "status": "constraints_not_met",
+          "converged": true,
+          "eligible": false,
+          "definition_sha256": "9f8b8dc2194e3d533f43fde4dc931e74e20d666c8dbe1ee8a0bcb36bf74bbc10",
+          "metrics": {
+            "mtow_kg": 1400.0,
+            "owe_kg": 852.0949241013965,
+            "block_fuel_kg": 124.59707196181338,
+            "reserve_kg": 20.96260865754951,
+            "power_kw": 157.45820135450575,
+            "area_m2": 15.883786848072559,
+            "span_m": 10.914595794647834,
+            "duration_h": 3.81583197660797,
+            "route_km": 800.0,
+            "cg_x_m": 2.7059967691932694
+          },
+          "margins": {
+            "mass_budget_kg": -176.29835055982358,
+            "upper_bound_kg": null,
+            "usable_fuel_capacity_kg": 109.91083761156662
+          },
+          "controls": {
+            "wing_area": "landing_stall",
+            "power": "cruise"
+          },
+          "checks": {
+            "mass_budget": false,
+            "mtow_upper_bound": true,
+            "fuel_capacity": true,
+            "landing_stall": true,
+            "power_available": true,
+            "clean_lift": true,
+            "range": true,
+            "endurance": true
+          },
+          "diagnostics": [],
+          "iterations": 4,
+          "final_residuals": {
+            "mass_closure_fraction": 0.12592739325701685,
+            "fuel_capacity_kg": 109.91083761156662,
+            "max_state_change": 0.0,
+            "cg_change_mac": 0.0
+          },
+          "artifact_hashes": {
+            "aircraft_parameters.json": "f6b5fa09f130a660fb2419ff34dce42d87cbb373acca4703808524bb9b1b4060",
+            "command.json": "010781d93fe4da04088bb339e256c09b876a4682c4e409664c9d6c5b1f2fbfa1",
+            "fastga_mass_inputs.json": "2c2740c91d6ef25c0ef2ce175d449ec268afcf4d4120eb372b87fe02402d162e",
+            "fastga_mass_interface.json": "7f30cc985f13e451ec6af9df703436e8f72a4545eb6b7d61e0b8afae1216e9d2",
+            "geometry.svg": "3edf383a02184b705ea11c4277422a6dcaeb35afb5767be98f363d8c8aafb06b",
+            "input.json": "bae78fd4312031c9c320685c5a5f3ae94d9e02dfbe9f5248f2b9b930b7b86ac7",
+            "model_evidence.json": "8021b10937deb579cb286ebc47474f669bc070cc6131219f589c1237eee53ee4",
+            "report.md": "b5ddc8737b1efc18b8ac7ef7fdcb050bcb045f5d59d8524fb0ade88b384eff90",
+            "stdin.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.log": "4416d20b69b39cc33982f4bbc6c7b9c46ec08dc305b090736d1862bdeb9e9662",
+            "summary.json": "5bb44ba5ef82cb1376aee1567c83db8bccf466d0f115861720cdfa2972bd2fc0"
+          }
+        }
+      ]
+    },
+    "same_route_conflict": {
+      "run_id": "b85724f55ea544ba8e64b2bdcf8b5bc5",
+      "status": "comparison_incomplete",
+      "purpose": "requirements_sensitivity",
+      "differences": [
+        {
+          "scheme": 1,
+          "field": "mission.endurance_s",
+          "base": 12600.0,
+          "value": 14400.0
+        },
+        {
+          "scheme": 2,
+          "field": "mission.endurance_s",
+          "base": 12600.0,
+          "value": 36000.0
+        }
+      ],
+      "eligible_schemes": [
+        0,
+        1
+      ],
+      "artifact_hashes": {
+        "comparison.json": "16cf7d53a6f7e8c3ea78209eb88fcfac8424f38c86b213ef7e334c08e7a211a2",
+        "input.json": "ba4df95638958843763346e674f888fde3ef9d0348c7679a01d37907be1d0555",
+        "report.md": "9f71681e7c5943e6477127d9ecd365b54c43ebf3c60e2cd2200e582719dc0193",
+        "scheme-cards.zip": "4f67ce4cc6c49060e8a69abe03978f77580848aa4ea9ae612a4e96061e69f1f4"
+      },
+      "designs": [
+        {
+          "run_id": "be085f7482e44f88824941bd5c8c5665",
+          "status": "concept_checked_with_limits",
+          "converged": true,
+          "eligible": true,
+          "definition_sha256": "3aa8ef990b74d19d3c934ff45ea0b89c36c6cdd2e744d5b235e243f4f26c2173",
+          "metrics": {
+            "mtow_kg": 1229.4159528684945,
+            "owe_kg": 770.4071410960252,
+            "block_fuel_kg": 109.41544853610884,
+            "reserve_kg": 18.408403926664008,
+            "power_kw": 138.27258903943496,
+            "area_m2": 13.948414959273704,
+            "span_m": 10.228055152107501,
+            "duration_h": 3.81583197660797,
+            "route_km": 800.0,
+            "cg_x_m": 2.6863648801077433
+          },
+          "margins": {
+            "mass_budget_kg": -0.06095529104072739,
+            "upper_bound_kg": null,
+            "usable_fuel_capacity_kg": 83.56517626462079
+          },
+          "controls": {
+            "wing_area": "landing_stall",
+            "power": "cruise"
+          },
+          "checks": {
+            "mass_budget": true,
+            "mtow_upper_bound": true,
+            "fuel_capacity": true,
+            "landing_stall": true,
+            "power_available": true,
+            "clean_lift": true,
+            "range": true,
+            "endurance": true
+          },
+          "diagnostics": [],
+          "iterations": 33,
+          "final_residuals": {
+            "mass_closure_fraction": 4.958068983772778e-05,
+            "fuel_capacity_kg": 83.56517626462079,
+            "max_state_change": 3.165972899621394e-05,
+            "cg_change_mac": 3.848101886873771e-06
+          },
+          "artifact_hashes": {
+            "aircraft_parameters.json": "40c6a96da2ebc24feef9bd78d21a545e5d9a76de4e4dcd53f846e3721444ee50",
+            "command.json": "18ee301849ebf5b5a7b22fe04cc3ea4d89488226033f22589eb873a835a6438f",
+            "fastga_mass_inputs.json": "a184ca62d4f957ae32543d2687035a72d7a38f4c1426e23e9dfb9ebc930a4b4f",
+            "fastga_mass_interface.json": "7f30cc985f13e451ec6af9df703436e8f72a4545eb6b7d61e0b8afae1216e9d2",
+            "geometry.svg": "7e5a658e9dff77c3d3e06b960ae2b38a9364848ea44e564d6ea103ffd418d9e5",
+            "input.json": "3ac6fefaa8d74073e6d23c8d530715e3bee7e03e56c863f7f82e9d6d428d526b",
+            "model_evidence.json": "8021b10937deb579cb286ebc47474f669bc070cc6131219f589c1237eee53ee4",
+            "report.md": "89d4c9846d5c62a6daa388b83aa7146730a8a84410cc14015cf879bbbaaf1dfc",
+            "stdin.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.log": "5a446cbd12607540cb48126ec7092eb5d2c3e8972e8ceda7a8fce1f2263dbe10",
+            "summary.json": "4ea061bc15c97525960e3177119aaa35f79dc02a2929c9166fcfd88599536aab"
+          }
+        },
+        {
+          "run_id": "f4ee6dee26f0448a9a09fe0a7e95212f",
+          "status": "concept_checked_with_limits",
+          "converged": true,
+          "eligible": true,
+          "definition_sha256": "24a1061ba3116aee1f0b2ece8614370b4e695063cd1dc7b317c26ec0bc655500",
+          "metrics": {
+            "mtow_kg": 1216.9631116023252,
+            "owe_kg": 764.4636433307783,
+            "block_fuel_kg": 102.91092800638147,
+            "reserve_kg": 16.494194658476108,
+            "power_kw": 136.8720161912034,
+            "area_m2": 13.807130476184621,
+            "span_m": 10.176122963652938,
+            "duration_h": 4.0,
+            "route_km": 800.0,
+            "cg_x_m": 2.687038909109257
+          },
+          "margins": {
+            "mass_budget_kg": -0.06927969435673731,
+            "upper_bound_kg": null,
+            "usable_fuel_capacity_kg": 87.1450625407234
+          },
+          "controls": {
+            "wing_area": "landing_stall",
+            "power": "cruise"
+          },
+          "checks": {
+            "mass_budget": true,
+            "mtow_upper_bound": true,
+            "fuel_capacity": true,
+            "landing_stall": true,
+            "power_available": true,
+            "clean_lift": true,
+            "range": true,
+            "endurance": true
+          },
+          "diagnostics": [],
+          "iterations": 32,
+          "final_residuals": {
+            "mass_closure_fraction": 5.692834375687821e-05,
+            "fuel_capacity_kg": 87.1450625407234,
+            "max_state_change": 3.645970396060072e-05,
+            "cg_change_mac": 4.495161248917022e-06
+          },
+          "artifact_hashes": {
+            "aircraft_parameters.json": "00b47cb1028352e93ff8143749d4933417ed0f3af61b9538c0dfbe470e7ffc0b",
+            "command.json": "3c256b24681e68074aa5596a987b0b784f7e3aec93393b62dafcc8e800250bc8",
+            "fastga_mass_inputs.json": "ad0d2b7dac6fab0dc8edeb5a054ad5c3041abee16f681475af2f965ce62166aa",
+            "fastga_mass_interface.json": "7f30cc985f13e451ec6af9df703436e8f72a4545eb6b7d61e0b8afae1216e9d2",
+            "geometry.svg": "27fb836633cf49c1a733b0420c442e8b36cc32bb1a0aa7ceff98e83fa730e7f7",
+            "input.json": "342e3143215d3e7c7160c7504a62116ae2fbbbf7e3a84e3686fe64baa54d3ae4",
+            "model_evidence.json": "8021b10937deb579cb286ebc47474f669bc070cc6131219f589c1237eee53ee4",
+            "report.md": "4b790851bbf9a74a0cb569d320b9e9c23f56811aaa8e3857094eaaf528a0573d",
+            "stdin.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.log": "157102b15531fce3574ef9f56460bfdf002cec1ed7a7a02ec373b2068a8e913e",
+            "summary.json": "1a20eea078211543ddc92ae184377d7a4aad3885dfad596c02316209be1b4585"
+          }
+        },
+        {
+          "run_id": "51ba668d7ad442749c43f216df1b4f8f",
+          "status": "out_of_domain",
+          "converged": false,
+          "eligible": false,
+          "definition_sha256": "8c4039cc4c566d33ca63dd758345a05203f9da3cf8e32ebcf70132becbc15025",
+          "metrics": {
+            "mtow_kg": null,
+            "owe_kg": null,
+            "block_fuel_kg": null,
+            "reserve_kg": null,
+            "power_kw": null,
+            "area_m2": null,
+            "span_m": null,
+            "duration_h": null,
+            "route_km": null,
+            "cg_x_m": null
+          },
+          "margins": {},
+          "controls": {},
+          "checks": {},
+          "diagnostics": [
+            "同航段航程/航时要求需低于当前允许最小平飞速度；不能自动追加留空"
+          ],
+          "iterations": 0,
+          "final_residuals": {},
+          "artifact_hashes": {
+            "command.json": "72ed45c66423713617f2d9b1a2292777e4d8bf808264036334434a8f4931062a",
+            "fastga_mass_inputs.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+            "fastga_mass_interface.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+            "input.json": "6d9e658c4565442372501893e09bdcf23b69e131e4021dc316e5fc30fe0805f4",
+            "model_evidence.json": "a188e6be1265e8ba35e618e68abb660809d3a6342a8e60a6d7e34cb59611c087",
+            "report.md": "1cdc656399c21e5a02b6ef5e0111673f8404b7b1c4999c568b8fed09b8e631ab",
+            "stdin.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.log": "95fc2d895a8dc99ea74f872de1d12c0928757d27979214fa48e53d349c515d20",
+            "summary.json": "c9a966984ef98025628834affdafbb9af495d38e29d58e80949e3b29105193bc"
+          }
+        }
+      ]
+    }
+  },
+  "public_cruise": {
+    "run_id": "502b0abf60684befab6eb35eb1cc6df7",
+    "status": "model_discrepancy",
+    "reference": {
+      "aircraft": "Piper PA-28-181 Cherokee Archer II",
+      "document": "Piper VB-760, issued 1975-08-15",
+      "url": "https://www.summitaviationspokane.com/wp-content/uploads/2025/08/pa-28-181-archer-ii-poh.pdf",
+      "document_sha256": "0a51a23b0db5d4d1bbb063484a56d7ed12a0a1935da96e5c90e88dd13e1bd43c",
+      "pages": {
+        "geometry": "1-2, PDF 9",
+        "engine": "1-3, PDF 10",
+        "atmosphere": "5-4, PDF 65",
+        "cruise_example": "5-5, PDF 66 (revised 1979-03-16)",
+        "speed_figure": "5-19 Fig.5-17, PDF 82"
+      },
+      "pressure_altitude_ft": 6000.0,
+      "temperature_f": 55.0,
+      "gross_weight_lb": 2550.0,
+      "wing_area_ft2": 170.0,
+      "span_ft": 35.0,
+      "rated_power_hp": 180.0,
+      "power_fraction": 0.65,
+      "true_airspeed_mph": 127.0,
+      "fuel_us_gal_h": 7.6,
+      "fuel_lb_us_gal": 6.0,
+      "configuration": "wheel fairings installed, economy mixture leaned to peak EGT, still air",
+      "interpretation": "speed uses chart gross weight 2550 lb; fuel is the same 65% rated-power example; whole flight-plan 2400 lb not compared",
+      "data_role": "independent handbook spot check; not calibration and not new flight-test data"
+    },
+    "conditions_si": {
+      "gross_mass_kg": 1156.6605435000001,
+      "area_m2": 15.7935168,
+      "pressure_altitude_m": 1828.8000000000002,
+      "temperature_k": 285.92777777777775,
+      "density_kg_m3": 0.9893174287936171,
+      "shaft_power_w": 87246.88497512563
+    },
+    "predicted": {
+      "speed_mph": 134.799904448868,
+      "fuel_us_gal_h": 9.617322815100001,
+      "power_at_reference_speed_w": 77208.39963578165
+    },
+    "relative_errors": {
+      "speed": 0.06141657046352744,
+      "fuel": 0.2654372125131581
+    },
+    "checks": {
+      "speed": true,
+      "fuel": false
+    },
+    "diagnostic_bands": {
+      "speed_relative": 0.1,
+      "fuel_relative": 0.2
+    },
+    "numerical_power_residual_w": 1.4551915228366852e-11,
+    "assumptions": {
+      "template": "metal_single_v1",
+      "stall_speed_m_s": 28.0,
+      "climb_rate_m_s": 3.0,
+      "aspect_ratio": 7.205882352941177,
+      "cd0": 0.032,
+      "oswald_efficiency": 0.8,
+      "cl_max_clean": 1.4,
+      "cl_max_landing": 1.8,
+      "propeller_efficiency": 0.8,
+      "bsfc_kg_kwh": 0.3,
+      "cruise_power_fraction": 0.75,
+      "seats": 4,
+      "fuselage_length_m": 7.5,
+      "tank_volume_fraction": 0.12,
+      "unusable_fuel_fraction": 0.02,
+      "source": "WingDesignHub V0.1.7 独立金属单发概念模板；系数为待校准工程假设，非真实型号数据"
+    },
+    "coefficients_fitted": false,
+    "physical_validation_passed": false,
+    "limits": [
+      "匹配压力高度、实际温度、巡航图重量、功率与参考面积；极曲线和桨效率仍为平台默认假设。",
+      "单个手册工况仅测量模型偏差，不构成整机、全包线或完整任务精度验收。",
+      "同一额定功率下的经济混合比耗油可暴露常数 BSFC 的局限；保持偏差，不据此自动改默认值。",
+      "主总体任务仍采用标准大气；此处显式密度仅用于同条件对照，不代表高温高原整机能力已接通。"
+    ]
+  },
+  "ui_verification": {
+    "run_id": "ceb31bae670b42489a5e0878ee419a86",
+    "status": "compared_with_limits",
+    "child_runs": [
+      "3ec94cd034754f979755dd282627b512",
+      "fe01d881c8ae47e7945aecdf09eedd52",
+      "088cbb28352d46adbc5c5ae7860ffd9d"
+    ],
+    "download_sha256": "335456352bb6c4a70607947f3fa64d34153dcd7706fe3092cc8dca25d1f649d0",
+    "zip_integrity": true,
+    "download_equals_recorded_artifact": true,
+    "ui_screenshot": "local/v018-three-designs-ui.jpg",
+    "screenshot_sha256": "d8a8432c94df795933f0a925d9159e3cc604f6b0d0e1a86187d1ec85ba3885b0",
+    "confirmation_origin": "synthetic UI validation, not user design approval"
+  },
+  "evidence_hashes": {
+    "aspect_ratio.json": "3438d2f81d82ec25e4d42b6a40435614891ded893722e98b4a8a84f4c1e64cf4",
+    "endurance.json": "e6d6192a07154f94628fa7671168d044d75ad2a36e59b8eb70eedfffbfe80647",
+    "fixed_budget.json": "779201d3a2c5d2d565cf89b818bae2a1bd91a6a336148c3201e53376350b6cc5",
+    "loiter.json": "fa6c873c34f2f4373e23feeadb3262100a7869cb6f98f6e780bedbaebc4c0970",
+    "payload.json": "64cdc4016bdb49dae8f4a11e436746ba347024f61f63228b18e34e2331921cf2",
+    "public_cruise.json": "ee32fa9a352cbaeb048185fb3b533cde517dcdba11ec021cc350862e11c30d79",
+    "range.json": "20dd99bdba0eccb1af5c4c902ddd53759e2c6a8dddfebdda4ffaa4542bc41d37",
+    "same_route_conflict.json": "19fbabcd5d02dc6daab17a05099ee2cbc56a1297dbd153d8ce52772ff4274ee5",
+    "scripts/validate_comparison.py": "5bd8ec03e5b668501f69bdc0ee742c3115d1359817a4cc8e848ae10f9ad0c9f0",
+    "tests/test_comparison.py": "0aa0dbfabe9463acaae5c431aa875306b7b69ee86396a5d319418f7ce869efca",
+    "tests/test_public_cruise.py": "f9c28bdd449b6c739f17139d79eca41059d396e1bee936fa4373b51857b94666",
+    "tests/test_requirement_sensitivity.py": "28485f38adf7e9cb77400f4811048399183bc6224a643e6ce94a89b02ca99dab",
+    "local/tests-v018-full1.xml": "fde5315ddbda576a8cc09c1cf7f8bea654bd4cec6359dc8b76c2c831541993eb"
+  },
+  "confirmation_origin": "synthetic validation, not a user design approval"
+}

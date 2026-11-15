@@ -2,6 +2,8 @@
 
 本项目原创代码采用 GPL-3.0-only，与首期 FAST-GA 集成路线保持一致。第三方程序不重新授权、不作为本仓库二进制分发。
 
+V0.1.8 对照 Piper Aircraft 原厂《PA-28-181 Cherokee Archer II POH》VB-760（1975-08-15），读取 [公开镜像](https://www.summitaviationspokane.com/wp-content/uploads/2025/08/pa-28-181-archer-ii-poh.pdf) 的 1-2/1-3、5-4/5-5、5-19 页；PDF SHA-256 `0a51a23b0db5d4d1bbb063484a56d7ed12a0a1935da96e5c90e88dd13e1bd43c`。只发布对照所需少量事实数值、来源与模型偏差；原 PDF 和页面图在本地保存，未重新分发手册或图表。比较/卡片服务为独立实现，无新增求解器和第三方依赖。
+
 V0.1.7 新单发流程调用 FAST-GA 1.4.0 原生 `MassBreakdown(payload_from_npax=False)` 及 `BasicICEngine.compute_weight`。质量关系以该版本 [质量组源代码](https://github.com/supaero-aircraft-design/FAST-GA/tree/v1.4.0/src/fastga/models/weight/mass_breakdown) 为依据；仅在本地读取随包 SR22 桨图以满足发动机对象构造接口，当前新机任务性能不使用该桨图。新方案采用独立模板和可见气动/推进假设，固定公开双发参考仍单独回归。
 
 `fastga_plugins/reserve.py` 继承 [FAST-GA 储备组件](https://github.com/supaero-aircraft-design/FAST-GA/blob/v1.4.0/src/fastga/models/performances/mission/mission_components/reserve.py)，原始版权 (C) 2022 ONERA & ISAE-SUPAERO、GPL-3.0-or-later；保留原函数，项目修正解析导数。新不可用燃油插件与总体任务积分独立实现。升阻力方程与诱导阻力形式见 NASA Glenn 的 [升力方程](https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/lift-equation/)、[阻力方程](https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/drag-equation/)及[诱导阻力](https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/induced-drag-coefficient/)。这些来源支撑方程形式，默认系数仍是项目假设，尚未用飞机试验数据校准。

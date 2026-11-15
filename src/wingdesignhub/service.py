@@ -128,7 +128,10 @@ def get_results(root, run_id):
     return record
 
 
-def compare_designs(records):
+def compare_designs(records, projects=None, purpose='design_trade'):
+    if projects is not None:
+        from .design_comparison import ComparisonRequest, summarize_comparison
+        return summarize_comparison(ComparisonRequest(tuple(projects),purpose),records)
     if any(r["status"] != "success" for r in records):
         raise ValueError("仅比较成功运行")
     if len({(r["mode"], r["version"], json.dumps(r["source_hashes"], sort_keys=True)) for r in records}) > 1:

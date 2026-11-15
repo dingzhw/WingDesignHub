@@ -105,6 +105,8 @@ def render(root):
                 st.download_button('下载需求摘要', report.read_text(encoding='utf-8'), 'design-requirements.md')
         with st.expander('开发接口与参考任务的区别'):
             st.json(reference_binding_preview(p))
+        from .comparison_ui import render as render_comparison
+        render_comparison(p, root)
     except (ValueError, TypeError) as exc:
         st.error(str(exc))
     with st.expander('总体服务验证：公开参考任务'):

@@ -3,6 +3,7 @@ from dataclasses import replace
 from pathlib import Path
 import json
 import streamlit as st
+from .design_cards import CHECK_LABELS as CHECKS
 
 
 FIELDS = {
@@ -16,10 +17,6 @@ FIELDS = {
     'fuselage_length_m': '机身长度（m）', 'tank_volume_fraction': '油箱占翼体积包络比例',
     'unusable_fuel_fraction': '不可用燃油占总容量比例',
 }
-CHECKS = {'mass_budget': '质量预算或闭合残差', 'mtow_upper_bound': '起飞重量上限',
-          'fuel_capacity': '油箱容量', 'landing_stall': '着陆构型失速速度',
-          'power_available': '任务可用功率', 'clean_lift': '净构型升力',
-          'range': '规定航程', 'endurance': '最低航时或留空时间'}
 
 
 def assumptions(base, key):

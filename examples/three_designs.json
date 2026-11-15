@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "purpose": "design_trade",
+  "projects": [
+    {
+      "schema_version": 2,
+      "name": "新飞机方案 · A",
+      "payload_kg": 350.0,
+      "weight": {
+        "mode": "solve",
+        "value_kg": null
+      },
+      "mission": {
+        "kind": "range_only",
+        "range_m": 800000.0,
+        "endurance_s": null
+      },
+      "assumptions": {
+        "cruise_speed_m_s": 60.0,
+        "cruise_altitude_m": 2000.0,
+        "reserve_duration_s": 2700.0,
+        "reserve_basis": "cruise_fuel_flow",
+        "sources": {
+          "cruise_speed_m_s": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+          "cruise_altitude_m": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+          "reserve_duration_s": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+          "reserve_basis": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定"
+        }
+      },
+      "sizing": {
+        "template": "metal_single_v1",
+        "stall_speed_m_s": 28.0,
+        "climb_rate_m_s": 3.0,
+        "aspect_ratio": 7.5,
+        "cd0": 0.032,
+        "oswald_efficiency": 0.8,
+        "cl_max_clean": 1.4,
+        "cl_max_landing": 1.8,
+        "propeller_efficiency": 0.8,
+        "bsfc_kg_kwh": 0.3,
+        "cruise_power_fraction": 0.75,
+        "seats": 4,
+        "fuselage_length_m": 7.5,
+        "tank_volume_fraction": 0.12,
+        "unusable_fuel_fraction": 0.02,
+        "source": "WingDesignHub V0.1.7 独立金属单发概念模板；系数为待校准工程假设，非真实型号数据"
+      },
+      "confirmation_sha256": null
+    },
+    {
+      "schema_version": 2,
+      "name": "新飞机方案 · B",
+      "payload_kg": 350.0,
+      "weight": {
+        "mode": "solve",
+        "value_kg": null
+      },
+      "mission": {
+        "kind": "range_only",
+        "range_m": 800000.0,
+        "endurance_s": null
+      },
+      "assumptions": {
+        "cruise_speed_m_s": 60.0,
+        "cruise_altitude_m": 2000.0,
+        "reserve_duration_s": 2700.0,
+        "reserve_basis": "cruise_fuel_flow",
+        "sources": {
+          "cruise_speed_m_s": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+          "cruise_altitude_m": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+          "reserve_duration_s": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+          "reserve_basis": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定"
+        }
+      },
+      "sizing": {
+        "template": "metal_single_v1",
+        "stall_speed_m_s": 28.0,
+        "climb_rate_m_s": 3.0,
+        "aspect_ratio": 8.25,
+        "cd0": 0.032,
+        "oswald_efficiency": 0.8,
+        "cl_max_clean": 1.4,
+        "cl_max_landing": 1.8,
+        "propeller_efficiency": 0.8,
+        "bsfc_kg_kwh": 0.3,
+        "cruise_power_fraction": 0.75,
+        "seats": 4,
+        "fuselage_length_m": 7.5,
+        "tank_volume_fraction": 0.12,
+        "unusable_fuel_fraction": 0.02,
+        "source": "WingDesignHub V0.1.7 独立金属单发概念模板；系数为待校准工程假设，非真实型号数据"
+      },
+      "confirmation_sha256": null
+    },
+    {
+      "schema_version": 2,
+      "name": "新飞机方案 · C",
+      "payload_kg": 350.0,
+      "weight": {
+        "mode": "solve",
+        "value_kg": null
+      },
+      "mission": {
+        "kind": "range_only",
+        "range_m": 800000.0,
+        "endurance_s": null
+      },
+      "assumptions": {
+        "cruise_speed_m_s": 60.0,
+        "cruise_altitude_m": 2000.0,
+        "reserve_duration_s": 2700.0,
+        "reserve_basis": "cruise_fuel_flow",
+        "sources": {
+          "cruise_speed_m_s": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+          "cruise_altitude_m": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+          "reserve_duration_s": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+          "reserve_basis": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定"
+        }
+      },
+      "sizing": {
+        "template": "metal_single_v1",
+        "stall_speed_m_s": 28.0,
+        "climb_rate_m_s": 3.0,
+        "aspect_ratio": 9.0,
+        "cd0": 0.032,
+        "oswald_efficiency": 0.8,
+        "cl_max_clean": 1.4,
+        "cl_max_landing": 1.8,
+        "propeller_efficiency": 0.8,
+        "bsfc_kg_kwh": 0.3,
+        "cruise_power_fraction": 0.75,
+        "seats": 4,
+        "fuselage_length_m": 7.5,
+        "tank_volume_fraction": 0.12,
+        "unusable_fuel_fraction": 0.02,
+        "source": "WingDesignHub V0.1.7 独立金属单发概念模板；系数为待校准工程假设，非真实型号数据"
+      },
+      "confirmation_sha256": null
+    }
+  ]
+}
