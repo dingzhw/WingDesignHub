@@ -79,7 +79,9 @@ def ccx_number(value):
     return text
 
 
-def static_deck(mesh,ids,forces,allow_root_loads=False):
+def static_deck(mesh,ids,forces,allow_root_loads=False,root_support='clamped'):
+    if root_support not in ('clamped','translations_fixed'):
+        raise ValueError('根部支承类型无效')
     root=[n for n,p in mesh['nodes'].items() if abs(p[1])<1e-7]
     if len(root)<3: raise ValueError('缺少根部固支截面节点')
     if not allow_root_loads and any(n in root and np.linalg.norm(f)>1e-9 for n,f in zip(ids,forces)):
@@ -96,7 +98,7 @@ def static_deck(mesh,ids,forces,allow_root_loads=False):
         lines += [f"*SHELL SECTION,ELSET={name},MATERIAL={sec['material']}",ccx_number(sec['thickness_m'])]
     lines += ['*NSET,NSET=ROOT']+set_lines(root)+['*NSET,NSET=ALL']+set_lines(mesh['nodes'])
     lines += ['*ELSET,ELSET=ALL']+list(mesh['sets'])
-    lines += ['*BOUNDARY','ROOT,1,6','*STEP','*STATIC','*CLOAD']
+    lines += ['*BOUNDARY','ROOT,1,6' if root_support=='clamped' else 'ROOT,1,3','*STEP','*STATIC','*CLOAD']
     lines += [f'{n},{j+1},{ccx_number(v)}' for n,f in zip(ids,forces) for j,v in enumerate(f) if v!=0.]
     lines += ['*NODE PRINT,NSET=ALL','U','*EL PRINT,ELSET=ALL,GLOBAL=YES','S',
               '*NODE FILE,OUTPUT=3D','U,RF','*EL FILE','S','*END STEP']
@@ -158,9 +160,9 @@ def von_mises(values):
     return np.sqrt(.5*((x-y)**2+(y-z)**2+(z-x)**2)+3*(xy**2+xz**2+yz**2))
 
 
-def solve_shell(executable,work,mesh,ids,forces,length,load_audit,allow_root_loads=False):
+def solve_shell(executable,work,mesh,ids,forces,length,load_audit,allow_root_loads=False,root_support='clamped'):
     work=Path(work);work.mkdir(parents=True,exist_ok=False)
-    deck,fixed=static_deck(mesh,ids,forces,allow_root_loads);(work/'wing.inp').write_text(deck,encoding='ascii')
+    deck,fixed=static_deck(mesh,ids,forces,allow_root_loads,root_support);(work/'wing.inp').write_text(deck,encoding='ascii')
     serialized_points=[[float(ccx_number(v)) for v in mesh['nodes'][n]] for n in ids]
     serialized_forces=[[float(ccx_number(v)) for v in f] for f in forces]
     actual_f,actual_m=resultant(serialized_points,serialized_forces)
@@ -190,7 +192,7 @@ def solve_shell(executable,work,mesh,ids,forces,length,load_audit,allow_root_loa
     root_u=max(np.linalg.norm(u[n]) for n in fixed)
     if root_u>1e-9:raise ValueError('固支节点位移不为零')
     out={'solver_version':'2.23','solver_sha256':sha256(executable),'element':'S6',
-         'nodes':len(mesh['nodes']),'elements':len(mesh['elements']),'fixed_nodes':len(fixed),
+         'nodes':len(mesh['nodes']),'elements':len(mesh['elements']),'fixed_nodes':len(fixed),'root_support':root_support,
          'root_displacement_max_m':float(root_u),'tip_mean_z_m':float(np.mean([u[n][2] for n in tip])),
          'max_displacement_m':float(max(np.linalg.norm(v) for v in u.values())),
          'peak_von_mises_pa':float(max(vm)),'bulk_von_mises_p95_pa':float(np.quantile(bulk,.95)),

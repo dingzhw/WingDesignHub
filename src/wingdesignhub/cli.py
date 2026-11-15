@@ -10,15 +10,17 @@ from .static_service import run_wing_static
 from .adapters import inventory
 from .flight_loads import FlightLoadCase
 from .flight_service import run_flight_structure
+from .plate_buckling import PlateCase
+from .plate_service import run_plate_analysis
 
 
 def main():
     parser = argparse.ArgumentParser(description="WingDesignHub 开发与自动化入口")
-    parser.add_argument("action", choices=["run", "doctor", "reference", "mesh", "static", "flight"])
+    parser.add_argument("action", choices=["run", "doctor", "reference", "mesh", "static", "flight", "plate"])
     parser.add_argument("--root", type=Path, default=Path.cwd())
     parser.add_argument("--input", type=Path)
     parser.add_argument("--mode", choices=["beam", "avl", "openvsp_avl"], default="beam")
-    parser.add_argument("--benchmark", choices=["fastga","calculix","oas","vsp_structure","oas_wingbox","shell_static","box_comparison"], default="oas")
+    parser.add_argument("--benchmark", choices=["fastga","calculix","oas","vsp_structure","oas_wingbox","shell_static","box_comparison","plate_buckling","structural_sensitivity"], default="oas")
     args = parser.parse_args()
     if args.action == "doctor":
         result = inventory(args.root)
@@ -33,6 +35,9 @@ def main():
     elif args.action == "mesh":
         case = StructureMeshCase.from_dict(json.loads(args.input.read_text(encoding="utf-8"))) if args.input else StructureMeshCase()
         result = run_structure_mesh(case,args.root)
+    elif args.action == "plate":
+        case = PlateCase.from_dict(json.loads(args.input.read_text(encoding="utf-8"))) if args.input else PlateCase()
+        result = run_plate_analysis(case,args.root)
     else:
         case = WingCase.from_dict(json.loads(args.input.read_text(encoding="utf-8"))) if args.input else WingCase()
         result = run_analysis(case, args.root, args.mode)

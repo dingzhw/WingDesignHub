@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "length_m": 0.5,
+  "width_m": 0.6,
+  "thickness_m": 0.002,
+  "elastic_modulus_pa": 70000000000.0,
+  "poisson_ratio": 0.33,
+  "compression_pa": 1000000.0,
+  "shear_pa": 0.0,
+  "support": "simply_supported",
+  "divisions": 16,
+  "modes": 3
+}

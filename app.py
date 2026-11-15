@@ -17,7 +17,7 @@ st.set_page_config(page_title="WingDesignHub", page_icon="✈", layout="wide")
 st.title("✈ WingDesignHub")
 st.caption(f"V{__version__} · 固定翼概念设计工作台 · P0 计算与接口验证")
 st.info("当前可以运行合成机翼/梁验证。整机总体闭环与十模块完整功能按路线图接入。")
-page = st.sidebar.radio("工作区", ["开始计算", "结构网格", "机翼静力", "载荷与屈曲", "公开基准算例", "工具设置", "验证与路线图"])
+page = st.sidebar.radio("工作区", ["开始计算", "结构网格", "机翼静力", "载荷与屈曲", "代表板屈曲", "公开基准算例", "工具设置", "验证与路线图"])
 
 if page == "开始计算":
     base = WingCase()
@@ -199,13 +199,17 @@ elif page == "机翼静力":
 elif page == "载荷与屈曲":
     from wingdesignhub.flight_ui import render
     render(ROOT)
+elif page == "代表板屈曲":
+    from wingdesignhub.plate_ui import render
+    render(ROOT)
 elif page == "公开基准算例":
     st.subheader("复现公开软件案例")
     st.write("这里可复现上游公开案例，也可运行本项目的合成结构基准。每项案例保留独立计算条件和记录。")
     references = {"FAST-GA 总体案例":"fastga","CalculiX 悬臂梁基准":"calculix",
                   "OpenAeroStruct 官方结构优化与管梁验证":"oas","OpenVSP 结构网格加密与翼展变化":"vsp_structure",
                   "OpenAeroStruct 官方翼盒与燃油卸载":"oas_wingbox","代表半翼静力与载荷响应验证":"shell_static",
-                  "同构型翼盒梁与壳对照":"box_comparison"}
+                  "同构型翼盒梁与壳对照":"box_comparison","代表板线性屈曲验证":"plate_buckling",
+                  "载荷作用区与支承敏感性":"structural_sensitivity"}
     ref = st.selectbox("选择案例", list(references))
     st.caption("各案例保留独立计算记录。FAST-GA 可能需要数分钟；结构网格基准比较两档网格和翼展变化。")
     if st.button("运行公开案例", type="primary"):
@@ -216,10 +220,19 @@ elif page == "公开基准算例":
         if r["status"] == "failed":
             st.error(r["error"])
         elif r["status"] == "executed_with_limits":
-            st.warning("参考案例复现完成，但部分经验方法超出范围，须复核后再用于工程方案。")
+            st.warning("案例计算完成，存在适用范围或结构筛查未满足项，请查看具体诊断。")
         else:
             st.success("案例运行结束。请结合日志与验证记录评估结果。")
         summary = r.get("summary", {})
+        if "representative_plates" in summary:
+            st.dataframe(pd.DataFrame([{'映射带宽/半展':v['patch_width_fraction'],'根部约束':v['root_support'],
+                '翼尖位移 mm':v['static']['tip_mean_z_m']*1000,'最大屈曲指标':v['buckling']['max_interaction_utilization']}
+                for v in summary['rows']]),hide_index=True)
+            st.dataframe(pd.DataFrame([{'代表板假设':k,'首阶实际工况系数':v['first_factor']} for k,v in summary['representative_plates'].items()]),hide_index=True)
+            st.caption('低于 1 的代表板系数表示该理想板参考应力超限；全翼特征值屈曲尚未计算。')
+        if "runs" in summary and "maximum_compression_error" in summary.get('checks',{}):
+            st.dataframe(pd.DataFrame([{'算例':k,'首阶系数':v['first_factor'],'压缩解析误差':v['analytical_compression_relative_error']}
+                for k,v in summary['runs'].items()]),hide_index=True)
         if "mesh_relative_differences" in summary:
             st.dataframe(pd.DataFrame([{'工况':v['case'],'展向分段':v['span_segments'],
                 '梁/壳响应差':v['beam_shell_relative_error']} for v in summary['rows']]),hide_index=True)
@@ -283,5 +296,5 @@ elif page == "工具设置":
             (ROOT/"local/tools.json").write_text(json.dumps(config, ensure_ascii=False, indent=2), encoding="utf-8")
             st.success("已保存。计算时会再次检查实际文件。")
 else:
-    for name in ("COVERAGE.md", "VALIDATION.md", "ROADMAP.md"):
+    for name in ("FORWARD_DESIGN.md", "COVERAGE.md", "VALIDATION.md", "ROADMAP.md"):
         st.markdown((ROOT/"docs"/name).read_text(encoding="utf-8"))

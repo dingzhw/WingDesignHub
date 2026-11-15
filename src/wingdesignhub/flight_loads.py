@@ -131,13 +131,15 @@ def aerodynamic_loads(case,executable,work):
     write_json(work/'summary.json',summary);return p,f,summary
 
 
-def combine_loads(case,mesh,aero_positions,aero_forces):
+def combine_loads(case,mesh,aero_positions,aero_forces,patch_width_fraction=.1):
     case.validate();L,c=case.mesh.half_span_m,case.mesh.chord_m
+    if isinstance(patch_width_fraction,bool) or not isinstance(patch_width_fraction,(int,float)) or not np.isfinite(patch_width_fraction) or not .025<=patch_width_fraction<=.25:
+        raise ValueError('载荷映射带宽须为半翼展的 0.025–0.25')
     nodes=list(mesh['nodes']);index={n:i for i,n in enumerate(nodes)};xyz=np.array([mesh['nodes'][n] for n in nodes])
     total=np.zeros_like(xyz);ledger=[]
     def add(name,p,f,ids=None,nf=None,mass=None):
         source_f,source_m=resultant(p,f)
-        if ids is None:ids,nf,_=conservative_transfer(mesh,p,f,np.zeros_like(f),L,c,L/10)
+        if ids is None:ids,nf,_=conservative_transfer(mesh,p,f,np.zeros_like(f),L,c,L*patch_width_fraction)
         F,M=resultant([mesh['nodes'][n] for n in ids],nf)
         if not np.all(abs(F-source_f)<=1e-8+.001*abs(source_f)) or not np.all(abs(M-source_m)<=1e-8+.001*abs(source_m)):
             raise ValueError('分项载荷不守恒')
@@ -169,5 +171,6 @@ def combine_loads(case,mesh,aero_positions,aero_forces):
     root_f=total[abs(xyz[:,1])<1e-7].sum(0)
     return nodes,total,{'mapping':audit,'components':ledger,'structure_mass':structure,'represented_half_mass_kg':represented,
                        'ultimate_factor':case.ultimate_factor,'root_applied_force_n':root_f.tolist(),
+                       'patch_width_fraction':patch_width_fraction,'patch_support_radius_m':1.5*L*patch_width_fraction,
                        'definition':'n_z=1+a_z/g; effective mass force=-m*n_z*g; ultimate factor multiplies complete sum once; no GRAV card',
                        'nodal_ids':nodes,'nodal_forces_n':total.tolist()}

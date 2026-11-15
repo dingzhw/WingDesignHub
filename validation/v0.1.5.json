@@ -1,0 +1,2162 @@
+{
+  "version": "0.1.5",
+  "date": "2026-11-15",
+  "baseline_commit": "1c487d76fc6800e90cb53953452a0c0619141da8",
+  "product_status": "Requirements-to-aircraft workflow is planned for V0.2.0, not implemented in V0.1.5.",
+  "roadmap_change": {
+    "next": "V0.1.6 requirements, mission, assumptions and FAST-GA service contract",
+    "first_forward_design_acceptance": "V0.2.0",
+    "specification": "docs/FORWARD_DESIGN.md"
+  },
+  "tests": {
+    "passed": 106,
+    "failed": 0,
+    "errors": 0,
+    "seconds": 111.941,
+    "warning": "existing traitlets metadata deprecation",
+    "hosted_ci_native_skips": 4
+  },
+  "source_hashes": {
+    "adapters.py": "b72ca7effe5311328a85bdc8b06ad583b9cabed91751094fa5019c2b2f6a29d5",
+    "box_comparison.py": "bf8e8a4c19e59c24e53a9cbbcc2add9ef42ece3343f902663795c52a44e783b5",
+    "buckling.py": "a473b5d91d835f3f100473e11aad1185f6597854e8cdd87960a4b22658399720",
+    "calculix_benchmark.py": "f3bab4818455864f4324f62a96f1fff25cdaf42f08e8b42b6d548c8e20a630ec",
+    "cli.py": "27adf4b15aa711ba46600660861f1b53952328f8833ebc797deaad00aa29df3f",
+    "fastga_compat.py": "262e20725f06c354c7a51a9f654b5e4f7559ec534c125ff4ee166f76867815ca",
+    "fastga_diagnostics.py": "bc93d372e3e5bb7f5dc4e068f4dfb3b14dfda42600ec8f84a3b51e06f631b887",
+    "fea_mesh.py": "f99f1817b20d85089a64d4248684c64a8ba7180268fe11b91a14ed415dc729e3",
+    "flight_loads.py": "4d9d7e8bcd24d59131337cbdb5953e90ed432853e5c6c4b359857a7395247890",
+    "flight_service.py": "72dcf0c2a247bd1ab560819a1a295141f459143377c964ecfac24129c4bc5645",
+    "flight_ui.py": "fb4b7a8a3ee36f1a3f01e65c719eed70c8150473f391047523d8d8ff74d0fa78",
+    "mechanics.py": "aece8baec13b7d9a84e133720f82a33d70444a38c980b86cf727cbdab0973650",
+    "model.py": "345afae92c6b8dd09435ebb31ce234ddf40e0d5e615e8a2fca4f2e85cc058b11",
+    "oas_benchmark.py": "74d2900b9dbba587c701bd2fc92ba75a8bf09ec17678c03ac67c1f00cdff5c56",
+    "oas_wingbox.py": "e8d0b503f1f1ba3fb7d77abdda14d376820fff41ef32f1b5a97e187d0f2f737b",
+    "plate_buckling.py": "7448faec93a91382127a0ade183b69d26074062be66ddaab1607b249b1fd9c09",
+    "plate_service.py": "0c740429e6591a1b020a334beb344fe3f1a8325569498cfdd43da0b2d9fb7301",
+    "plate_ui.py": "47adf0c1efec842d669cb199dfa3f8dfb47d21e8bd67f9df846bbe0813e6b0d9",
+    "service.py": "530dc9ad53ac6ab1968b63e0d1bcd293b5a3e0aa105c120e5cac1cad20af6860",
+    "shell_loads.py": "a06bdbb345ab2ac1cf18265eec95815accd6b3f2bb0732a7eaaee9c09208a397",
+    "shell_static.py": "1c23aabbf1395b4b2a7729b135428b130ff2d252397b3420bb3e287c7fee4da4",
+    "shell_validation.py": "30d6c706a44d32d131d0ab6c7f9e41508c82bd39aabe8f3cab26e28cab68be92",
+    "static_service.py": "941de7a411c9814b8c73883b248aecbb04ebb812cf380bafb7e3f5f7b39528f9",
+    "structural_sensitivity.py": "cf1527dafd494a67281b12414e4f223e13e31c76252ff2f1f7592bd3ce77e6fc",
+    "structure_service.py": "5703dd5d078b0af7dfb078b661beace113b627e97c304b9d612af39fe45ad12b",
+    "vsp_structure_worker.py": "ee7cfff132602d9b5c6875b54c956cbc6d381fd4ef0228cdb7455add725899bc",
+    "vsp_worker.py": "aba49475b1221a2ad13d73644a38f508bcecc093859184e78e782282a7f73abd",
+    "__init__.py": "6ab67519ae0cfabcc9f05f19b76c72c28778c492df1ad5c8b9ecb5f898c87bae",
+    "fastga_plugins/furniture.py": "45b5a219b73c6380a63418f0e64f1f66d189c7943147f39faa2e98d118f719bf",
+    "fastga_plugins/__init__.py": "652c53dda99eb1a2b439a1aca6f0ec81c25fed142d761e63ddf46af578a41a17"
+  },
+  "physical_validation_passed": false,
+  "whole_wing_buckling_checked": false,
+  "service_runs": {
+    "plate_buckling": {
+      "run_id": "697ce29031c846f7822f7bd1761a290e",
+      "status": "passed",
+      "artifact_integrity_checked": true,
+      "result_sha256": "e16ad12294dfb415ddf6d0d7e905d25217391cc963630469c3f212e59c3abf3b"
+    },
+    "structural_sensitivity": {
+      "run_id": "3e16cce4b03648e6b9431dcdb8742e9b",
+      "status": "executed_with_limits",
+      "artifact_integrity_checked": true,
+      "result_sha256": "8ee3e3d2bef4e7be2d94b6f06061faaf240ba9254c10c37c72989c758a539a80"
+    },
+    "plate_service": {
+      "run_id": "7cebc4e702864a99bd0f7d40fefb78d2",
+      "status": "eigenvalue_computed",
+      "artifact_integrity_checked": true,
+      "result_sha256": "5ae1fae90b3609756887b0f08482658fc20f19550e08ae39a8ffda35256ac55d"
+    }
+  },
+  "plate_benchmarks": {
+    "runs": {
+      "mesh_8": {
+        "solver_version": "2.23",
+        "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+        "element": "S8R",
+        "input": {
+          "schema_version": 1,
+          "length_m": 0.5,
+          "width_m": 0.6,
+          "thickness_m": 0.002,
+          "elastic_modulus_pa": 70000000000.0,
+          "poisson_ratio": 0.33,
+          "compression_pa": 1000000.0,
+          "shear_pa": 0.0,
+          "support": "simply_supported",
+          "divisions": 8,
+          "modes": 3
+        },
+        "nodes": 199,
+        "elements": 56,
+        "factors": [
+          2.9458211542594612,
+          5.707638413892912,
+          10.932495066639811
+        ],
+        "first_factor": 2.9458211542594612,
+        "mode_checks": [
+          {
+            "max_normalized_transverse_amplitude": 0.00756436,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.00264721,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.00130913,
+            "edge_transverse_relative_residual": 0.0
+          }
+        ],
+        "native_reference_scale": 0.02968005810490554,
+        "native_factors": [
+          99.25254,
+          192.3055,
+          368.3448
+        ],
+        "reference_membrane_strain": [
+          1.3992028932029872e-07,
+          -4.240009739118278e-07,
+          -1.761467854876058e-20
+        ],
+        "analytical_membrane_strain": [
+          1.399202739231261e-07,
+          -4.2400083007007914e-07,
+          0.0
+        ],
+        "critical_compression_pa": 2945821.1542594614,
+        "critical_shear_pa": 0.0,
+        "engineering_screen": {
+          "kc": 4.134444444444444,
+          "compression_half_waves": 1,
+          "ks_long_strip": 5.34,
+          "compression_critical_pa": 2968005.810490554,
+          "shear_critical_pa": 5520155.8001379585,
+          "compression_ratio": 0.33692656411434696,
+          "shear_ratio": 0.0,
+          "interaction_utilization": 0.33692656411434696,
+          "proportional_load_factor_to_buckling": 2.968005810490554,
+          "screen_passed": true,
+          "sigma_longitudinal_pa": -1000000.0,
+          "tau_pa": 0.0,
+          "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization"
+        },
+        "reference_force_residual_n": [
+          0.0,
+          3.774758283725532e-15,
+          0.0
+        ],
+        "reference_moment_residual_nm": [
+          0.0,
+          0.0,
+          1.942890293094024e-15
+        ],
+        "analytical_compression_relative_error": 0.00747460000000002,
+        "physical_validation_passed": false,
+        "limits": [
+          "独立各向同性理想平板，四边横向简支或固支，均匀膜压缩/剪切",
+          "线性特征值为参考载荷的比例因子，模态振幅任意；不含初始缺陷、塑性、后屈曲和实际极限承载力",
+          "代表板载荷可来自半翼面板应力包络，但并非全翼特征值屈曲模型"
+        ]
+      },
+      "mesh_16": {
+        "solver_version": "2.23",
+        "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+        "element": "S8R",
+        "input": {
+          "schema_version": 1,
+          "length_m": 0.5,
+          "width_m": 0.6,
+          "thickness_m": 0.002,
+          "elastic_modulus_pa": 70000000000.0,
+          "poisson_ratio": 0.33,
+          "compression_pa": 1000000.0,
+          "shear_pa": 0.0,
+          "support": "simply_supported",
+          "divisions": 16,
+          "modes": 3
+        },
+        "nodes": 683,
+        "elements": 208,
+        "factors": [
+          2.958307851504776,
+          5.686900957295014,
+          10.787505014791536
+        ],
+        "first_factor": 2.958307851504776,
+        "mode_checks": [
+          {
+            "max_normalized_transverse_amplitude": 0.0075523,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.00270363,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.00132032,
+            "edge_transverse_relative_residual": 0.0
+          }
+        ],
+        "native_reference_scale": 0.02968005810490554,
+        "native_factors": [
+          99.67325,
+          191.6068,
+          363.4597
+        ],
+        "reference_membrane_strain": [
+          1.3992028015698253e-07,
+          -4.2400095090243154e-07,
+          -1.8584655095997294e-19
+        ],
+        "analytical_membrane_strain": [
+          1.399202739231261e-07,
+          -4.2400083007007914e-07,
+          0.0
+        ],
+        "critical_compression_pa": 2958307.851504776,
+        "critical_shear_pa": 0.0,
+        "engineering_screen": {
+          "kc": 4.134444444444444,
+          "compression_half_waves": 1,
+          "ks_long_strip": 5.34,
+          "compression_critical_pa": 2968005.810490554,
+          "shear_critical_pa": 5520155.8001379585,
+          "compression_ratio": 0.33692656411434696,
+          "shear_ratio": 0.0,
+          "interaction_utilization": 0.33692656411434696,
+          "proportional_load_factor_to_buckling": 2.968005810490554,
+          "screen_passed": true,
+          "sigma_longitudinal_pa": -1000000.0,
+          "tau_pa": 0.0,
+          "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization"
+        },
+        "reference_force_residual_n": [
+          0.0,
+          -5.88418203051333e-15,
+          0.0
+        ],
+        "reference_moment_residual_nm": [
+          0.0,
+          0.0,
+          -4.718447854656915e-16
+        ],
+        "analytical_compression_relative_error": 0.003267500000000051,
+        "physical_validation_passed": false,
+        "limits": [
+          "独立各向同性理想平板，四边横向简支或固支，均匀膜压缩/剪切",
+          "线性特征值为参考载荷的比例因子，模态振幅任意；不含初始缺陷、塑性、后屈曲和实际极限承载力",
+          "代表板载荷可来自半翼面板应力包络，但并非全翼特征值屈曲模型"
+        ]
+      },
+      "mesh_24": {
+        "solver_version": "2.23",
+        "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+        "element": "S8R",
+        "input": {
+          "schema_version": 1,
+          "length_m": 0.5,
+          "width_m": 0.6,
+          "thickness_m": 0.002,
+          "elastic_modulus_pa": 70000000000.0,
+          "poisson_ratio": 0.33,
+          "compression_pa": 1000000.0,
+          "shear_pa": 0.0,
+          "support": "simply_supported",
+          "divisions": 24,
+          "modes": 3
+        },
+        "nodes": 1529,
+        "elements": 480,
+        "factors": [
+          2.959606354046866,
+          5.685951195435658,
+          10.782411916820735
+        ],
+        "first_factor": 2.959606354046866,
+        "mode_checks": [
+          {
+            "max_normalized_transverse_amplitude": 0.00755105,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.00272361,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.00132056,
+            "edge_transverse_relative_residual": 0.0
+          }
+        ],
+        "native_reference_scale": 0.02968005810490554,
+        "native_factors": [
+          99.717,
+          191.5748,
+          363.2881
+        ],
+        "reference_membrane_strain": [
+          1.3992027343825266e-07,
+          -4.2399982115738187e-07,
+          7.935001752516224e-21
+        ],
+        "analytical_membrane_strain": [
+          1.399202739231261e-07,
+          -4.2400083007007914e-07,
+          0.0
+        ],
+        "critical_compression_pa": 2959606.354046866,
+        "critical_shear_pa": 0.0,
+        "engineering_screen": {
+          "kc": 4.134444444444444,
+          "compression_half_waves": 1,
+          "ks_long_strip": 5.34,
+          "compression_critical_pa": 2968005.810490554,
+          "shear_critical_pa": 5520155.8001379585,
+          "compression_ratio": 0.33692656411434696,
+          "shear_ratio": 0.0,
+          "interaction_utilization": 0.33692656411434696,
+          "proportional_load_factor_to_buckling": 2.968005810490554,
+          "screen_passed": true,
+          "sigma_longitudinal_pa": -1000000.0,
+          "tau_pa": 0.0,
+          "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization"
+        },
+        "reference_force_residual_n": [
+          0.0,
+          1.762479051592436e-14,
+          0.0
+        ],
+        "reference_moment_residual_nm": [
+          0.0,
+          0.0,
+          6.938893903907228e-16
+        ],
+        "analytical_compression_relative_error": 0.002830000000000033,
+        "physical_validation_passed": false,
+        "limits": [
+          "独立各向同性理想平板，四边横向简支或固支，均匀膜压缩/剪切",
+          "线性特征值为参考载荷的比例因子，模态振幅任意；不含初始缺陷、塑性、后屈曲和实际极限承载力",
+          "代表板载荷可来自半翼面板应力包络，但并非全翼特征值屈曲模型"
+        ]
+      },
+      "half_reference": {
+        "solver_version": "2.23",
+        "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+        "element": "S8R",
+        "input": {
+          "schema_version": 1,
+          "length_m": 0.5,
+          "width_m": 0.6,
+          "thickness_m": 0.002,
+          "elastic_modulus_pa": 70000000000.0,
+          "poisson_ratio": 0.33,
+          "compression_pa": 1000000.0,
+          "shear_pa": 0.0,
+          "support": "simply_supported",
+          "divisions": 24,
+          "modes": 3
+        },
+        "nodes": 1529,
+        "elements": 480,
+        "factors": [
+          2.95957073797714,
+          5.685922999380458,
+          10.782398560794586
+        ],
+        "first_factor": 2.95957073797714,
+        "mode_checks": [
+          {
+            "max_normalized_transverse_amplitude": 0.00755105,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.00272366,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.00132056,
+            "edge_transverse_relative_residual": 0.0
+          }
+        ],
+        "native_reference_scale": 0.01484002905245277,
+        "native_factors": [
+          199.4316,
+          383.1477,
+          726.5753
+        ],
+        "reference_membrane_strain": [
+          6.996021696160591e-08,
+          -2.120002643842298e-07,
+          4.027884602314053e-21
+        ],
+        "analytical_membrane_strain": [
+          6.996013696156305e-08,
+          -2.1200041503503957e-07,
+          0.0
+        ],
+        "critical_compression_pa": 2959570.73797714,
+        "critical_shear_pa": 0.0,
+        "engineering_screen": {
+          "kc": 4.134444444444444,
+          "compression_half_waves": 1,
+          "ks_long_strip": 5.34,
+          "compression_critical_pa": 2968005.810490554,
+          "shear_critical_pa": 5520155.8001379585,
+          "compression_ratio": 0.33692656411434696,
+          "shear_ratio": 0.0,
+          "interaction_utilization": 0.33692656411434696,
+          "proportional_load_factor_to_buckling": 2.968005810490554,
+          "screen_passed": true,
+          "sigma_longitudinal_pa": -1000000.0,
+          "tau_pa": 0.0,
+          "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization"
+        },
+        "reference_force_residual_n": [
+          0.0,
+          8.81239525796218e-15,
+          0.0
+        ],
+        "reference_moment_residual_nm": [
+          0.0,
+          0.0,
+          3.469446951953614e-16
+        ],
+        "analytical_compression_relative_error": 0.002841999999999975,
+        "physical_validation_passed": false,
+        "limits": [
+          "独立各向同性理想平板，四边横向简支或固支，均匀膜压缩/剪切",
+          "线性特征值为参考载荷的比例因子，模态振幅任意；不含初始缺陷、塑性、后屈曲和实际极限承载力",
+          "代表板载荷可来自半翼面板应力包络，但并非全翼特征值屈曲模型"
+        ]
+      },
+      "double_stress": {
+        "solver_version": "2.23",
+        "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+        "element": "S8R",
+        "input": {
+          "schema_version": 1,
+          "length_m": 0.5,
+          "width_m": 0.6,
+          "thickness_m": 0.002,
+          "elastic_modulus_pa": 70000000000.0,
+          "poisson_ratio": 0.33,
+          "compression_pa": 2000000.0,
+          "shear_pa": 0.0,
+          "support": "simply_supported",
+          "divisions": 24,
+          "modes": 3
+        },
+        "nodes": 1529,
+        "elements": 480,
+        "factors": [
+          1.479803177023433,
+          2.842975597717829,
+          5.391205958410367
+        ],
+        "first_factor": 1.479803177023433,
+        "mode_checks": [
+          {
+            "max_normalized_transverse_amplitude": 0.00755105,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.00272361,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.00132056,
+            "edge_transverse_relative_residual": 0.0
+          }
+        ],
+        "native_reference_scale": 0.01484002905245277,
+        "native_factors": [
+          99.717,
+          191.5748,
+          363.2881
+        ],
+        "reference_membrane_strain": [
+          1.3992027343825266e-07,
+          -4.2399982115738187e-07,
+          7.935001752516224e-21
+        ],
+        "analytical_membrane_strain": [
+          1.399202739231261e-07,
+          -4.2400083007007914e-07,
+          0.0
+        ],
+        "critical_compression_pa": 2959606.354046866,
+        "critical_shear_pa": 0.0,
+        "engineering_screen": {
+          "kc": 4.134444444444444,
+          "compression_half_waves": 1,
+          "ks_long_strip": 5.34,
+          "compression_critical_pa": 2968005.810490554,
+          "shear_critical_pa": 5520155.8001379585,
+          "compression_ratio": 0.6738531282286939,
+          "shear_ratio": 0.0,
+          "interaction_utilization": 0.6738531282286939,
+          "proportional_load_factor_to_buckling": 1.484002905245277,
+          "screen_passed": true,
+          "sigma_longitudinal_pa": -2000000.0,
+          "tau_pa": 0.0,
+          "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization"
+        },
+        "reference_force_residual_n": [
+          0.0,
+          1.762479051592436e-14,
+          0.0
+        ],
+        "reference_moment_residual_nm": [
+          0.0,
+          0.0,
+          6.938893903907228e-16
+        ],
+        "analytical_compression_relative_error": 0.002830000000000033,
+        "physical_validation_passed": false,
+        "limits": [
+          "独立各向同性理想平板，四边横向简支或固支，均匀膜压缩/剪切",
+          "线性特征值为参考载荷的比例因子，模态振幅任意；不含初始缺陷、塑性、后屈曲和实际极限承载力",
+          "代表板载荷可来自半翼面板应力包络，但并非全翼特征值屈曲模型"
+        ]
+      },
+      "clamped": {
+        "solver_version": "2.23",
+        "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+        "element": "S8R",
+        "input": {
+          "schema_version": 1,
+          "length_m": 0.5,
+          "width_m": 0.6,
+          "thickness_m": 0.002,
+          "elastic_modulus_pa": 70000000000.0,
+          "poisson_ratio": 0.33,
+          "compression_pa": 1000000.0,
+          "shear_pa": 0.0,
+          "support": "clamped",
+          "divisions": 24,
+          "modes": 3
+        },
+        "nodes": 1529,
+        "elements": 480,
+        "factors": [
+          7.848146396383837,
+          10.82043800726474,
+          18.978037593467754
+        ],
+        "first_factor": 7.848146396383837,
+        "mode_checks": [
+          {
+            "max_normalized_transverse_amplitude": 0.00506582,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.00207343,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.00169579,
+            "edge_transverse_relative_residual": 0.0
+          }
+        ],
+        "native_reference_scale": 0.02968005810490554,
+        "native_factors": [
+          264.4249,
+          364.5693,
+          639.4205
+        ],
+        "reference_membrane_strain": [
+          1.399202734381043e-07,
+          -4.2399982115722114e-07,
+          2.5908561141567488e-20
+        ],
+        "analytical_membrane_strain": [
+          1.399202739231261e-07,
+          -4.2400083007007914e-07,
+          0.0
+        ],
+        "critical_compression_pa": 7848146.396383837,
+        "critical_shear_pa": 0.0,
+        "engineering_screen": {
+          "kc": 4.134444444444444,
+          "compression_half_waves": 1,
+          "ks_long_strip": 5.34,
+          "compression_critical_pa": 2968005.810490554,
+          "shear_critical_pa": 5520155.8001379585,
+          "compression_ratio": 0.33692656411434696,
+          "shear_ratio": 0.0,
+          "interaction_utilization": 0.33692656411434696,
+          "proportional_load_factor_to_buckling": 2.968005810490554,
+          "screen_passed": true,
+          "sigma_longitudinal_pa": -1000000.0,
+          "tau_pa": 0.0,
+          "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization"
+        },
+        "reference_force_residual_n": [
+          0.0,
+          1.762479051592436e-14,
+          0.0
+        ],
+        "reference_moment_residual_nm": [
+          0.0,
+          0.0,
+          6.938893903907228e-16
+        ],
+        "analytical_compression_relative_error": null,
+        "physical_validation_passed": false,
+        "limits": [
+          "独立各向同性理想平板，四边横向简支或固支，均匀膜压缩/剪切",
+          "线性特征值为参考载荷的比例因子，模态振幅任意；不含初始缺陷、塑性、后屈曲和实际极限承载力",
+          "代表板载荷可来自半翼面板应力包络，但并非全翼特征值屈曲模型"
+        ]
+      },
+      "square": {
+        "solver_version": "2.23",
+        "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+        "element": "S8R",
+        "input": {
+          "schema_version": 1,
+          "length_m": 0.6,
+          "width_m": 0.6,
+          "thickness_m": 0.002,
+          "elastic_modulus_pa": 70000000000.0,
+          "poisson_ratio": 0.33,
+          "compression_pa": 1000000.0,
+          "shear_pa": 0.0,
+          "support": "simply_supported",
+          "divisions": 24,
+          "modes": 3
+        },
+        "nodes": 1825,
+        "elements": 576,
+        "factors": [
+          2.8638406913277636,
+          4.478527899498944,
+          7.9664744077528855
+        ],
+        "first_factor": 2.8638406913277636,
+        "mode_checks": [
+          {
+            "max_normalized_transverse_amplitude": 0.00840883,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.003362,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.00168374,
+            "edge_transverse_relative_residual": 0.0
+          }
+        ],
+        "native_reference_scale": 0.028714917811787144,
+        "native_factors": [
+          99.73355,
+          155.9652,
+          277.4333
+        ],
+        "reference_membrane_strain": [
+          1.3537032717573834e-07,
+          -4.102133868257819e-07,
+          3.9610276186983367e-20
+        ],
+        "analytical_membrane_strain": [
+          1.3537032682699653e-07,
+          -4.102131115969592e-07,
+          0.0
+        ],
+        "critical_compression_pa": 2863840.6913277637,
+        "critical_shear_pa": 0.0,
+        "engineering_screen": {
+          "kc": 4.0,
+          "compression_half_waves": 1,
+          "ks_long_strip": 5.34,
+          "compression_critical_pa": 2871491.7811787142,
+          "shear_critical_pa": 3833441.5278735836,
+          "compression_ratio": 0.34825104029707915,
+          "shear_ratio": 0.0,
+          "interaction_utilization": 0.34825104029707915,
+          "proportional_load_factor_to_buckling": 2.8714917811787144,
+          "screen_passed": true,
+          "sigma_longitudinal_pa": -1000000.0,
+          "tau_pa": 0.0,
+          "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization"
+        },
+        "reference_force_residual_n": [
+          0.0,
+          1.1962653090336062e-14,
+          0.0
+        ],
+        "reference_moment_residual_nm": [
+          0.0,
+          0.0,
+          1.4432899320127035e-15
+        ],
+        "analytical_compression_relative_error": 0.002664499999999943,
+        "physical_validation_passed": false,
+        "limits": [
+          "独立各向同性理想平板，四边横向简支或固支，均匀膜压缩/剪切",
+          "线性特征值为参考载荷的比例因子，模态振幅任意；不含初始缺陷、塑性、后屈曲和实际极限承载力",
+          "代表板载荷可来自半翼面板应力包络，但并非全翼特征值屈曲模型"
+        ]
+      },
+      "shear_positive": {
+        "solver_version": "2.23",
+        "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+        "element": "S8R",
+        "input": {
+          "schema_version": 1,
+          "length_m": 0.6,
+          "width_m": 0.6,
+          "thickness_m": 0.002,
+          "elastic_modulus_pa": 70000000000.0,
+          "poisson_ratio": 0.33,
+          "compression_pa": 0.0,
+          "shear_pa": 1000000.0,
+          "support": "simply_supported",
+          "divisions": 24,
+          "modes": 3
+        },
+        "nodes": 1825,
+        "elements": 576,
+        "factors": [
+          6.678805835054695,
+          8.279735352808316,
+          17.778991958554474
+        ],
+        "first_factor": 6.678805835054695,
+        "mode_checks": [
+          {
+            "max_normalized_transverse_amplitude": 0.00588528,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.00296861,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.00246782,
+            "edge_transverse_relative_residual": 0.0
+          }
+        ],
+        "native_reference_scale": 0.03833441527873584,
+        "native_factors": [
+          174.2248,
+          215.987,
+          463.7867
+        ],
+        "reference_membrane_strain": [
+          3.499579699747344e-19,
+          -5.144230372049657e-19,
+          1.4567078208306096e-06
+        ],
+        "analytical_membrane_strain": [
+          0.0,
+          -0.0,
+          1.4567077805919621e-06
+        ],
+        "critical_compression_pa": 0.0,
+        "critical_shear_pa": 6678805.835054696,
+        "engineering_screen": {
+          "kc": 4.0,
+          "compression_half_waves": 1,
+          "ks_long_strip": 5.34,
+          "compression_critical_pa": 2871491.7811787142,
+          "shear_critical_pa": 3833441.5278735836,
+          "compression_ratio": 0.0,
+          "shear_ratio": 0.2608622024697222,
+          "interaction_utilization": 0.06804908867735433,
+          "proportional_load_factor_to_buckling": 3.8334415278735836,
+          "screen_passed": true,
+          "sigma_longitudinal_pa": -0.0,
+          "tau_pa": 1000000.0,
+          "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization"
+        },
+        "reference_force_residual_n": [
+          -2.453592884421596e-14,
+          0.0,
+          0.0
+        ],
+        "reference_moment_residual_nm": [
+          0.0,
+          0.0,
+          -1.021405182655144e-14
+        ],
+        "analytical_compression_relative_error": null,
+        "physical_validation_passed": false,
+        "limits": [
+          "独立各向同性理想平板，四边横向简支或固支，均匀膜压缩/剪切",
+          "线性特征值为参考载荷的比例因子，模态振幅任意；不含初始缺陷、塑性、后屈曲和实际极限承载力",
+          "代表板载荷可来自半翼面板应力包络，但并非全翼特征值屈曲模型"
+        ]
+      },
+      "shear_negative": {
+        "solver_version": "2.23",
+        "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+        "element": "S8R",
+        "input": {
+          "schema_version": 1,
+          "length_m": 0.6,
+          "width_m": 0.6,
+          "thickness_m": 0.002,
+          "elastic_modulus_pa": 70000000000.0,
+          "poisson_ratio": 0.33,
+          "compression_pa": 0.0,
+          "shear_pa": -1000000.0,
+          "support": "simply_supported",
+          "divisions": 24,
+          "modes": 3
+        },
+        "nodes": 1825,
+        "elements": 576,
+        "factors": [
+          6.678821168820807,
+          8.27973151936679,
+          17.77903412641128
+        ],
+        "first_factor": 6.678821168820807,
+        "mode_checks": [
+          {
+            "max_normalized_transverse_amplitude": 0.00588527,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.0029686,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.00246781,
+            "edge_transverse_relative_residual": 0.0
+          }
+        ],
+        "native_reference_scale": 0.03833441527873584,
+        "native_factors": [
+          174.2252,
+          215.9869,
+          463.7878
+        ],
+        "reference_membrane_strain": [
+          -3.499579699747344e-19,
+          5.144230372049657e-19,
+          -1.4567078208306096e-06
+        ],
+        "analytical_membrane_strain": [
+          0.0,
+          -0.0,
+          -1.4567077805919621e-06
+        ],
+        "critical_compression_pa": 0.0,
+        "critical_shear_pa": -6678821.168820807,
+        "engineering_screen": {
+          "kc": 4.0,
+          "compression_half_waves": 1,
+          "ks_long_strip": 5.34,
+          "compression_critical_pa": 2871491.7811787142,
+          "shear_critical_pa": 3833441.5278735836,
+          "compression_ratio": 0.0,
+          "shear_ratio": 0.2608622024697222,
+          "interaction_utilization": 0.06804908867735433,
+          "proportional_load_factor_to_buckling": 3.8334415278735836,
+          "screen_passed": true,
+          "sigma_longitudinal_pa": -0.0,
+          "tau_pa": -1000000.0,
+          "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization"
+        },
+        "reference_force_residual_n": [
+          2.453592884421596e-14,
+          0.0,
+          0.0
+        ],
+        "reference_moment_residual_nm": [
+          0.0,
+          0.0,
+          1.021405182655144e-14
+        ],
+        "analytical_compression_relative_error": null,
+        "physical_validation_passed": false,
+        "limits": [
+          "独立各向同性理想平板，四边横向简支或固支，均匀膜压缩/剪切",
+          "线性特征值为参考载荷的比例因子，模态振幅任意；不含初始缺陷、塑性、后屈曲和实际极限承载力",
+          "代表板载荷可来自半翼面板应力包络，但并非全翼特征值屈曲模型"
+        ]
+      }
+    },
+    "checks": {
+      "maximum_compression_error": 0.00747460000000002,
+      "mesh_16_24_difference": 0.0004387416388380583,
+      "reference_scaling_error": 1.2034056379506275e-05,
+      "double_stress_critical_error": 0.0,
+      "clamped_increases_critical_load": true,
+      "square_compression_error": 0.002664499999999943,
+      "shear_sign_symmetry_error": 2.29587912659035e-06
+    },
+    "thresholds": {
+      "compression_error": 0.05,
+      "mesh_difference": 0.02,
+      "load_scaling": 0.001
+    },
+    "passed": true,
+    "physical_validation_passed": false,
+    "limits": [
+      "理想简支/固支均匀膜应力平板的数值基准；与全翼屈曲验收区分",
+      "用低参考载荷避开特征值搜索偏移，保留原生与实际工况两套系数；第二档参考载荷核验临界值"
+    ],
+    "status": "passed"
+  },
+  "wing_sensitivity": {
+    "checks": {
+      "same_resultants": true,
+      "same_mass": true,
+      "same_geometry": true,
+      "representative_reference_scaling_error": 1.0495675781596603e-05,
+      "representative_mesh_24_32_error": 3.7984350447661797e-05
+    },
+    "rows": [
+      {
+        "name": "width_0.05_clamped",
+        "patch_width_fraction": 0.05,
+        "patch_support_radius_m": 0.375,
+        "root_support": "clamped",
+        "mapping": {
+          "input_force_n": [
+            0.0,
+            0.0,
+            5286.232715043292
+          ],
+          "input_moment_nm": [
+            11546.661246907395,
+            -1297.299107906545,
+            0.0
+          ],
+          "force_scale_n": 7025.812203973006,
+          "moment_scale_nm": 35129.06101986503,
+          "force_absolute_error_n": 1.0913936421275139e-11,
+          "moment_absolute_error_nm": 6.002665031701326e-11,
+          "passed": true,
+          "origin_m": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "structure_mass_kg": 100.66578365321502,
+        "source_mesh_sha256": "96cd21452dcaee7030d24a48b65e3b6f5b20071977516c70b1153744abf0a3c0",
+        "changes_from_baseline": {
+          "tip_relative": -0.010401382386554081,
+          "peak_stress_relative": -0.0004563888213290346,
+          "screen_utilization_relative": 0.0006028921256806541
+        },
+        "controlling_panel": {
+          "kc": 4.136814170898776,
+          "compression_half_waves": 1,
+          "ks_long_strip": 5.34,
+          "compression_critical_pa": 2960325.2722224207,
+          "shear_critical_pa": 5520155.8001379585,
+          "compression_ratio": 13.231353824069974,
+          "shear_ratio": 1.0236461313840497,
+          "interaction_utilization": 14.279205226367505,
+          "proportional_load_factor_to_buckling": 0.07513102863912131,
+          "screen_passed": false,
+          "sigma_longitudinal_pa": -39169111.11111111,
+          "tau_pa": 5650686.129448445,
+          "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization",
+          "panel": "upper_skin",
+          "bay": 0,
+          "y_start_m": 0.0,
+          "y_end_m": 0.5,
+          "width_m": 0.6009499915053726,
+          "thickness_m": 0.002,
+          "compression_element": 5688,
+          "shear_element": 6134,
+          "sampled_elements": 30,
+          "diagnostics": {
+            "compression_control_centroid_m": [
+              0.40794033333333335,
+              0.073002,
+              0.08938933333333332
+            ],
+            "shear_control_centroid_m": [
+              0.3977633333333333,
+              0.436226,
+              0.08941600000000001
+            ],
+            "compression_contribution": 13.231353824069974,
+            "shear_squared_contribution": 1.0478514022975312,
+            "max_coincident_utilization": 13.403748467797328,
+            "coincident_element": 5688,
+            "area_mean_sigma_pa": -28600006.52336425,
+            "area_mean_tau_pa": 1502163.9618847424,
+            "area_mean_screen": {
+              "kc": 4.136814170898776,
+              "compression_half_waves": 1,
+              "ks_long_strip": 5.34,
+              "compression_critical_pa": 2960325.2722224207,
+              "shear_critical_pa": 5520155.8001379585,
+              "compression_ratio": 9.661102714531507,
+              "shear_ratio": 0.2721234719221513,
+              "interaction_utilization": 9.735153898502473,
+              "proportional_load_factor_to_buckling": 0.10342586252787185,
+              "screen_passed": false,
+              "sigma_longitudinal_pa": -28600006.52336425,
+              "tau_pa": 1502163.9618847424,
+              "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization"
+            },
+            "purpose": "diagnostic stress averaging; does not replace the envelope acceptance screen"
+          }
+        },
+        "static": {
+          "tip_mean_z_m": 0.03424434807486631,
+          "peak_von_mises_pa": 39799048.077437766,
+          "bulk_von_mises_p95_pa": 17844888.625732884,
+          "root_displacement_max_m": 1.039884e-23,
+          "balance": {
+            "force_residual_n": [
+              0.006658278158078352,
+              0.03309290512712667,
+              -0.11121385311212213
+            ],
+            "moment_residual_nm": [
+              -0.23623388166218437,
+              0.060650645606708485,
+              0.024951013964270297
+            ],
+            "coordinate_min_m": [
+              -0.000977682,
+              -0.001,
+              -0.09097
+            ],
+            "coordinate_max_m": [
+              1.50014,
+              5.001,
+              0.091021
+            ],
+            "expanded_nodes": 35333,
+            "method": "global expanded RF resultant, including applied forces and constraint forces",
+            "force_scaled_error": 1.582932334132588e-05,
+            "moment_scaled_error": 6.72474227331602e-06
+          }
+        },
+        "max_buckling_utilization": 14.279205226367505
+      },
+      {
+        "name": "width_0.05_translations_fixed",
+        "patch_width_fraction": 0.05,
+        "patch_support_radius_m": 0.375,
+        "root_support": "translations_fixed",
+        "mapping": {
+          "input_force_n": [
+            0.0,
+            0.0,
+            5286.232715043292
+          ],
+          "input_moment_nm": [
+            11546.661246907395,
+            -1297.299107906545,
+            0.0
+          ],
+          "force_scale_n": 7025.812203973006,
+          "moment_scale_nm": 35129.06101986503,
+          "force_absolute_error_n": 1.0913936421275139e-11,
+          "moment_absolute_error_nm": 6.002665031701326e-11,
+          "passed": true,
+          "origin_m": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "structure_mass_kg": 100.66578365321502,
+        "source_mesh_sha256": "96cd21452dcaee7030d24a48b65e3b6f5b20071977516c70b1153744abf0a3c0",
+        "changes_from_baseline": {
+          "tip_relative": -0.009509767549946258,
+          "peak_stress_relative": -0.002744963863799854,
+          "screen_utilization_relative": -0.002024393973890981
+        },
+        "controlling_panel": {
+          "kc": 4.136814170898776,
+          "compression_half_waves": 1,
+          "ks_long_strip": 5.34,
+          "compression_critical_pa": 2960325.2722224207,
+          "shear_critical_pa": 5520155.8001379585,
+          "compression_ratio": 13.241479963568205,
+          "shear_ratio": 1.0001161480555083,
+          "interaction_utilization": 14.241712273169592,
+          "proportional_load_factor_to_buckling": 0.07509429008712647,
+          "screen_passed": false,
+          "sigma_longitudinal_pa": -39199087.777777776,
+          "tau_pa": 5520796.955500248,
+          "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization",
+          "panel": "upper_skin",
+          "bay": 0,
+          "y_start_m": 0.0,
+          "y_end_m": 0.5,
+          "width_m": 0.6009499915053726,
+          "thickness_m": 0.002,
+          "compression_element": 5688,
+          "shear_element": 6134,
+          "sampled_elements": 30,
+          "diagnostics": {
+            "compression_control_centroid_m": [
+              0.40794033333333335,
+              0.073002,
+              0.08938933333333332
+            ],
+            "shear_control_centroid_m": [
+              0.3977633333333333,
+              0.436226,
+              0.08941600000000001
+            ],
+            "compression_contribution": 13.241479963568205,
+            "shear_squared_contribution": 1.0002323096013874,
+            "max_coincident_utilization": 13.450444426784454,
+            "coincident_element": 5688,
+            "area_mean_sigma_pa": -28567805.24861628,
+            "area_mean_tau_pa": 1500803.7373872022,
+            "area_mean_screen": {
+              "kc": 4.136814170898776,
+              "compression_half_waves": 1,
+              "ks_long_strip": 5.34,
+              "compression_critical_pa": 2960325.2722224207,
+              "shear_critical_pa": 5520155.8001379585,
+              "compression_ratio": 9.650225100827997,
+              "shear_ratio": 0.27187706139556683,
+              "interaction_utilization": 9.724142237341086,
+              "proportional_load_factor_to_buckling": 0.10354240670274584,
+              "screen_passed": false,
+              "sigma_longitudinal_pa": -28567805.24861628,
+              "tau_pa": 1500803.7373872022,
+              "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization"
+            },
+            "purpose": "diagnostic stress averaging; does not replace the envelope acceptance screen"
+          }
+        },
+        "static": {
+          "tip_mean_z_m": 0.03427520176470588,
+          "peak_von_mises_pa": 39707923.38100085,
+          "bulk_von_mises_p95_pa": 17823269.635796204,
+          "root_displacement_max_m": 7.690519280505852e-23,
+          "balance": {
+            "force_residual_n": [
+              -0.07567584624443965,
+              -0.016420773067057602,
+              0.3255953533820149
+            ],
+            "moment_residual_nm": [
+              -0.13379554769240545,
+              0.3593023112917359,
+              0.17553979222769395
+            ],
+            "coordinate_min_m": [
+              -0.000977682,
+              -0.001,
+              -0.09097
+            ],
+            "coordinate_max_m": [
+              1.50014,
+              5.001,
+              0.091021
+            ],
+            "expanded_nodes": 35333,
+            "method": "global expanded RF resultant, including applied forces and constraint forces",
+            "force_scaled_error": 4.634273503608521e-05,
+            "moment_scaled_error": 1.022806476633563e-05
+          }
+        },
+        "max_buckling_utilization": 14.241712273169592
+      },
+      {
+        "name": "width_0.1_clamped",
+        "patch_width_fraction": 0.1,
+        "patch_support_radius_m": 0.75,
+        "root_support": "clamped",
+        "mapping": {
+          "input_force_n": [
+            0.0,
+            0.0,
+            5286.232715043292
+          ],
+          "input_moment_nm": [
+            11546.661246907395,
+            -1297.299107906545,
+            0.0
+          ],
+          "force_scale_n": 7061.344157733141,
+          "moment_scale_nm": 35306.720788665705,
+          "force_absolute_error_n": 3.001332515850663e-11,
+          "moment_absolute_error_nm": 5.093170329928398e-11,
+          "passed": true,
+          "origin_m": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "structure_mass_kg": 100.66578365321502,
+        "source_mesh_sha256": "96cd21452dcaee7030d24a48b65e3b6f5b20071977516c70b1153744abf0a3c0",
+        "changes_from_baseline": {
+          "tip_relative": 0.0,
+          "peak_stress_relative": 0.0,
+          "screen_utilization_relative": 0.0
+        },
+        "controlling_panel": {
+          "kc": 4.136814170898776,
+          "compression_half_waves": 1,
+          "ks_long_strip": 5.34,
+          "compression_critical_pa": 2960325.2722224207,
+          "shear_critical_pa": 5520155.8001379585,
+          "compression_ratio": 13.239393105804384,
+          "shear_ratio": 1.0154843609007247,
+          "interaction_utilization": 14.270601593038338,
+          "proportional_load_factor_to_buckling": 0.07509294859649852,
+          "screen_passed": false,
+          "sigma_longitudinal_pa": -39192910.0,
+          "tau_pa": 5605631.884775523,
+          "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization",
+          "panel": "upper_skin",
+          "bay": 0,
+          "y_start_m": 0.0,
+          "y_end_m": 0.5,
+          "width_m": 0.6009499915053726,
+          "thickness_m": 0.002,
+          "compression_element": 5688,
+          "shear_element": 6134,
+          "sampled_elements": 30,
+          "diagnostics": {
+            "compression_control_centroid_m": [
+              0.40794033333333335,
+              0.073002,
+              0.08938933333333332
+            ],
+            "shear_control_centroid_m": [
+              0.3977633333333333,
+              0.436226,
+              0.08941600000000001
+            ],
+            "compression_contribution": 13.239393105804384,
+            "shear_squared_contribution": 1.0312084872339533,
+            "max_coincident_utilization": 13.422934527275697,
+            "coincident_element": 5688,
+            "area_mean_sigma_pa": -28603846.802674044,
+            "area_mean_tau_pa": 1548463.0629539387,
+            "area_mean_screen": {
+              "kc": 4.136814170898776,
+              "compression_half_waves": 1,
+              "ks_long_strip": 5.34,
+              "compression_critical_pa": 2960325.2722224207,
+              "shear_critical_pa": 5520155.8001379585,
+              "compression_ratio": 9.66239996363647,
+              "shear_ratio": 0.28051075350359495,
+              "interaction_utilization": 9.741086246467626,
+              "proportional_load_factor_to_buckling": 0.10340687745593896,
+              "screen_passed": false,
+              "sigma_longitudinal_pa": -28603846.802674044,
+              "tau_pa": 1548463.0629539387,
+              "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization"
+            },
+            "purpose": "diagnostic stress averaging; does not replace the envelope acceptance screen"
+          }
+        },
+        "static": {
+          "tip_mean_z_m": 0.034604280427807485,
+          "peak_von_mises_pa": 39817220.211638756,
+          "bulk_von_mises_p95_pa": 17933666.38387077,
+          "root_displacement_max_m": 1.087152e-23,
+          "balance": {
+            "force_residual_n": [
+              -0.07125025886234558,
+              0.020374156379723857,
+              0.040417187003498535
+            ],
+            "moment_residual_nm": [
+              -0.16918090357805177,
+              -0.013819031764840912,
+              0.297265147515764
+            ],
+            "coordinate_min_m": [
+              -0.000977682,
+              -0.001,
+              -0.09097
+            ],
+            "coordinate_max_m": [
+              1.50014,
+              5.001,
+              0.091021
+            ],
+            "expanded_nodes": 35333,
+            "method": "global expanded RF resultant, including applied forces and constraint forces",
+            "force_scaled_error": 1.009018357847872e-05,
+            "moment_scaled_error": 8.419505999865985e-06
+          }
+        },
+        "max_buckling_utilization": 14.270601593038338
+      },
+      {
+        "name": "width_0.1_translations_fixed",
+        "patch_width_fraction": 0.1,
+        "patch_support_radius_m": 0.75,
+        "root_support": "translations_fixed",
+        "mapping": {
+          "input_force_n": [
+            0.0,
+            0.0,
+            5286.232715043292
+          ],
+          "input_moment_nm": [
+            11546.661246907395,
+            -1297.299107906545,
+            0.0
+          ],
+          "force_scale_n": 7061.344157733141,
+          "moment_scale_nm": 35306.720788665705,
+          "force_absolute_error_n": 3.001332515850663e-11,
+          "moment_absolute_error_nm": 5.093170329928398e-11,
+          "passed": true,
+          "origin_m": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "structure_mass_kg": 100.66578365321502,
+        "source_mesh_sha256": "96cd21452dcaee7030d24a48b65e3b6f5b20071977516c70b1153744abf0a3c0",
+        "changes_from_baseline": {
+          "tip_relative": 0.0009249667119479721,
+          "peak_stress_relative": -0.0025389129607903405,
+          "screen_utilization_relative": -0.00277172203058651
+        },
+        "controlling_panel": {
+          "kc": 4.136814170898776,
+          "compression_half_waves": 1,
+          "ks_long_strip": 5.34,
+          "compression_critical_pa": 2960325.2722224207,
+          "shear_critical_pa": 5520155.8001379585,
+          "compression_ratio": 13.249862300697604,
+          "shear_ratio": 0.9905479047050602,
+          "interaction_utilization": 14.23104745221319,
+          "proportional_load_factor_to_buckling": 0.07505532251626823,
+          "screen_passed": false,
+          "sigma_longitudinal_pa": -39223902.222222224,
+          "tau_pa": 5467978.7614721395,
+          "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization",
+          "panel": "upper_skin",
+          "bay": 0,
+          "y_start_m": 0.0,
+          "y_end_m": 0.5,
+          "width_m": 0.6009499915053726,
+          "thickness_m": 0.002,
+          "compression_element": 5688,
+          "shear_element": 6134,
+          "sampled_elements": 30,
+          "diagnostics": {
+            "compression_control_centroid_m": [
+              0.40794033333333335,
+              0.073002,
+              0.08938933333333332
+            ],
+            "shear_control_centroid_m": [
+              0.3977633333333333,
+              0.436226,
+              0.08941600000000001
+            ],
+            "compression_contribution": 13.249862300697604,
+            "shear_squared_contribution": 0.9811851515155849,
+            "max_coincident_utilization": 13.473165083102822,
+            "coincident_element": 5688,
+            "area_mean_sigma_pa": -28570805.523388367,
+            "area_mean_tau_pa": 1546859.490238962,
+            "area_mean_screen": {
+              "kc": 4.136814170898776,
+              "compression_half_waves": 1,
+              "ks_long_strip": 5.34,
+              "compression_critical_pa": 2960325.2722224207,
+              "shear_critical_pa": 5520155.8001379585,
+              "compression_ratio": 9.651238595797702,
+              "shear_ratio": 0.2802202593992552,
+              "interaction_utilization": 9.729761989575488,
+              "proportional_load_factor_to_buckling": 0.1035264435729785,
+              "screen_passed": false,
+              "sigma_longitudinal_pa": -28570805.523388367,
+              "tau_pa": 1546859.490238962,
+              "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization"
+            },
+            "purpose": "diagnostic stress averaging; does not replace the envelope acceptance screen"
+          }
+        },
+        "static": {
+          "tip_mean_z_m": 0.03463628823529412,
+          "peak_von_mises_pa": 39716127.75518078,
+          "bulk_von_mises_p95_pa": 17910239.075675007,
+          "root_displacement_max_m": 8.449646213533277e-23,
+          "balance": {
+            "force_residual_n": [
+              -0.0319931106608059,
+              0.021666253726595055,
+              0.34527314036963097
+            ],
+            "moment_residual_nm": [
+              0.49352045081714147,
+              -0.0542111009821066,
+              0.07356089478107604
+            ],
+            "coordinate_min_m": [
+              -0.000977682,
+              -0.001,
+              -0.09097
+            ],
+            "coordinate_max_m": [
+              1.50014,
+              5.001,
+              0.091021
+            ],
+            "expanded_nodes": 35333,
+            "method": "global expanded RF resultant, including applied forces and constraint forces",
+            "force_scaled_error": 4.889623457759235e-05,
+            "moment_scaled_error": 1.3978088018176224e-05
+          }
+        },
+        "max_buckling_utilization": 14.23104745221319
+      },
+      {
+        "name": "width_0.2_clamped",
+        "patch_width_fraction": 0.2,
+        "patch_support_radius_m": 1.5,
+        "root_support": "clamped",
+        "mapping": {
+          "input_force_n": [
+            0.0,
+            0.0,
+            5286.232715043292
+          ],
+          "input_moment_nm": [
+            11546.661246907395,
+            -1297.299107906545,
+            0.0
+          ],
+          "force_scale_n": 7162.102009885122,
+          "moment_scale_nm": 35810.51004942561,
+          "force_absolute_error_n": 5.4569682106375694e-12,
+          "moment_absolute_error_nm": 1.2732925824820995e-11,
+          "passed": true,
+          "origin_m": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "structure_mass_kg": 100.66578365321502,
+        "source_mesh_sha256": "96cd21452dcaee7030d24a48b65e3b6f5b20071977516c70b1153744abf0a3c0",
+        "changes_from_baseline": {
+          "tip_relative": 0.028995816294520305,
+          "peak_stress_relative": -0.0005313787060626796,
+          "screen_utilization_relative": -1.077168043317478e-06
+        },
+        "controlling_panel": {
+          "kc": 4.136814170898776,
+          "compression_half_waves": 1,
+          "ks_long_strip": 5.34,
+          "compression_critical_pa": 2960325.2722224207,
+          "shear_critical_pa": 5520155.8001379585,
+          "compression_ratio": 13.243431325711033,
+          "shear_ratio": 1.0134865048392654,
+          "interaction_utilization": 14.270586221202343,
+          "proportional_load_factor_to_buckling": 0.07507202079703446,
+          "screen_passed": false,
+          "sigma_longitudinal_pa": -39204864.44444445,
+          "tau_pa": 5594603.408050018,
+          "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization",
+          "panel": "upper_skin",
+          "bay": 0,
+          "y_start_m": 0.0,
+          "y_end_m": 0.5,
+          "width_m": 0.6009499915053726,
+          "thickness_m": 0.002,
+          "compression_element": 5688,
+          "shear_element": 6134,
+          "sampled_elements": 30,
+          "diagnostics": {
+            "compression_control_centroid_m": [
+              0.40794033333333335,
+              0.073002,
+              0.08938933333333332
+            ],
+            "shear_control_centroid_m": [
+              0.3977633333333333,
+              0.436226,
+              0.08941600000000001
+            ],
+            "compression_contribution": 13.243431325711033,
+            "shear_squared_contribution": 1.0271548954913103,
+            "max_coincident_utilization": 13.434056592633436,
+            "coincident_element": 5688,
+            "area_mean_sigma_pa": -28593111.541661702,
+            "area_mean_tau_pa": 1592335.7557932383,
+            "area_mean_screen": {
+              "kc": 4.136814170898776,
+              "compression_half_waves": 1,
+              "ks_long_strip": 5.34,
+              "compression_critical_pa": 2960325.2722224207,
+              "shear_critical_pa": 5520155.8001379585,
+              "compression_ratio": 9.658773584767543,
+              "shear_ratio": 0.28845848078299585,
+              "interaction_utilization": 9.741981879903177,
+              "proportional_load_factor_to_buckling": 0.10344063512684189,
+              "screen_passed": false,
+              "sigma_longitudinal_pa": -28593111.541661702,
+              "tau_pa": 1592335.7557932383,
+              "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization"
+            },
+            "purpose": "diagnostic stress averaging; does not replace the envelope acceptance screen"
+          }
+        },
+        "static": {
+          "tip_mean_z_m": 0.03560765978609626,
+          "peak_von_mises_pa": 39796062.18868368,
+          "bulk_von_mises_p95_pa": 18198989.65467033,
+          "root_displacement_max_m": 1.134419e-23,
+          "balance": {
+            "force_residual_n": [
+              0.01238092798630405,
+              -0.045883904371007374,
+              0.09852516977510598
+            ],
+            "moment_residual_nm": [
+              -0.9448282211108849,
+              0.3322177142919325,
+              0.01854822211489537
+            ],
+            "coordinate_min_m": [
+              -0.000977682,
+              -0.001,
+              -0.09097
+            ],
+            "coordinate_max_m": [
+              1.50014,
+              5.001,
+              0.091021
+            ],
+            "expanded_nodes": 35333,
+            "method": "global expanded RF resultant, including applied forces and constraint forces",
+            "force_scaled_error": 1.3756459994443208e-05,
+            "moment_scaled_error": 2.638410399089079e-05
+          }
+        },
+        "max_buckling_utilization": 14.270586221202343
+      },
+      {
+        "name": "width_0.2_translations_fixed",
+        "patch_width_fraction": 0.2,
+        "patch_support_radius_m": 1.5,
+        "root_support": "translations_fixed",
+        "mapping": {
+          "input_force_n": [
+            0.0,
+            0.0,
+            5286.232715043292
+          ],
+          "input_moment_nm": [
+            11546.661246907395,
+            -1297.299107906545,
+            0.0
+          ],
+          "force_scale_n": 7162.102009885122,
+          "moment_scale_nm": 35810.51004942561,
+          "force_absolute_error_n": 5.4569682106375694e-12,
+          "moment_absolute_error_nm": 1.2732925824820995e-11,
+          "passed": true,
+          "origin_m": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "structure_mass_kg": 100.66578365321502,
+        "source_mesh_sha256": "96cd21452dcaee7030d24a48b65e3b6f5b20071977516c70b1153744abf0a3c0",
+        "changes_from_baseline": {
+          "tip_relative": 0.029924394503672902,
+          "peak_stress_relative": -0.0030449108317696094,
+          "screen_utilization_relative": -0.002734942613257796
+        },
+        "controlling_panel": {
+          "kc": 4.136814170898776,
+          "compression_half_waves": 1,
+          "ks_long_strip": 5.34,
+          "compression_critical_pa": 2960325.2722224207,
+          "shear_critical_pa": 5520155.8001379585,
+          "compression_ratio": 13.254379822288497,
+          "shear_ratio": 0.9885304721333659,
+          "interaction_utilization": 14.231572316624712,
+          "proportional_load_factor_to_buckling": 0.0750316995653371,
+          "screen_passed": false,
+          "sigma_longitudinal_pa": -39237275.55555555,
+          "tau_pa": 5456842.219360114,
+          "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization",
+          "panel": "upper_skin",
+          "bay": 0,
+          "y_start_m": 0.0,
+          "y_end_m": 0.5,
+          "width_m": 0.6009499915053726,
+          "thickness_m": 0.002,
+          "compression_element": 5688,
+          "shear_element": 6134,
+          "sampled_elements": 30,
+          "diagnostics": {
+            "compression_control_centroid_m": [
+              0.40794033333333335,
+              0.073002,
+              0.08938933333333332
+            ],
+            "shear_control_centroid_m": [
+              0.3977633333333333,
+              0.436226,
+              0.08941600000000001
+            ],
+            "compression_contribution": 13.254379822288497,
+            "shear_squared_contribution": 0.9771924943362152,
+            "max_coincident_utilization": 13.485656486435126,
+            "coincident_element": 5688,
+            "area_mean_sigma_pa": -28560253.96683664,
+            "area_mean_tau_pa": 1590596.8376389076,
+            "area_mean_screen": {
+              "kc": 4.136814170898776,
+              "compression_half_waves": 1,
+              "ks_long_strip": 5.34,
+              "compression_critical_pa": 2960325.2722224207,
+              "shear_critical_pa": 5520155.8001379585,
+              "compression_ratio": 9.647674272427317,
+              "shear_ratio": 0.2881434682693477,
+              "interaction_utilization": 9.730700930733605,
+              "proportional_load_factor_to_buckling": 0.10355962943498065,
+              "screen_passed": false,
+              "sigma_longitudinal_pa": -28560253.96683664,
+              "tau_pa": 1590596.8376389076,
+              "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization"
+            },
+            "purpose": "diagnostic stress averaging; does not replace the envelope acceptance screen"
+          }
+        },
+        "static": {
+          "tip_mean_z_m": 0.03563979256684492,
+          "peak_von_mises_pa": 39695980.32652538,
+          "bulk_von_mises_p95_pa": 18182361.68208433,
+          "root_displacement_max_m": 7.706191147566821e-23,
+          "balance": {
+            "force_residual_n": [
+              -0.05202876569533595,
+              0.1533866145081564,
+              -0.24442395444040058
+            ],
+            "moment_residual_nm": [
+              -1.1469563332194843,
+              0.8070916929265477,
+              0.1649161081432191
+            ],
+            "coordinate_min_m": [
+              -0.000977682,
+              -0.001,
+              -0.09097
+            ],
+            "coordinate_max_m": [
+              1.50014,
+              5.001,
+              0.091021
+            ],
+            "expanded_nodes": 35333,
+            "method": "global expanded RF resultant, including applied forces and constraint forces",
+            "force_scaled_error": 3.412740479024831e-05,
+            "moment_scaled_error": 3.202848358307259e-05
+          }
+        },
+        "max_buckling_utilization": 14.231572316624712
+      }
+    ],
+    "representative_plates": {
+      "envelope_simple": {
+        "solver_version": "2.23",
+        "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+        "element": "S8R",
+        "input": {
+          "schema_version": 1,
+          "length_m": 0.5,
+          "width_m": 0.6009499915053726,
+          "thickness_m": 0.002,
+          "elastic_modulus_pa": 70000000000.0,
+          "poisson_ratio": 0.33,
+          "compression_pa": 39192910.0,
+          "shear_pa": 5605631.884775523,
+          "support": "simply_supported",
+          "divisions": 24,
+          "modes": 3
+        },
+        "nodes": 1529,
+        "elements": 480,
+        "factors": [
+          0.07512388689132028,
+          0.1440411163022942,
+          0.26865591208151995
+        ],
+        "first_factor": 0.07512388689132028,
+        "mode_checks": [
+          {
+            "max_normalized_transverse_amplitude": 0.00754553,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.00273618,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.00170112,
+            "edge_transverse_relative_residual": 0.0
+          }
+        ],
+        "native_reference_scale": 0.0007509294859649853,
+        "native_factors": [
+          100.0412,
+          191.8171,
+          357.7645
+        ],
+        "reference_membrane_strain": [
+          1.3874666201416672e-07,
+          -4.204444639865205e-07,
+          1.599585088069725e-07
+        ],
+        "analytical_membrane_strain": [
+          1.387466697246391e-07,
+          -4.204444537110276e-07,
+          1.5995850225024977e-07
+        ],
+        "critical_compression_pa": 2944323.7377816956,
+        "critical_shear_pa": 421116.85566625494,
+        "engineering_screen": {
+          "kc": 4.136814170898776,
+          "compression_half_waves": 1,
+          "ks_long_strip": 5.34,
+          "compression_critical_pa": 2960325.2722224207,
+          "shear_critical_pa": 5520155.8001379585,
+          "compression_ratio": 13.239393105804384,
+          "shear_ratio": 1.0154843609007247,
+          "interaction_utilization": 14.270601593038338,
+          "proportional_load_factor_to_buckling": 0.07509294859649852,
+          "screen_passed": false,
+          "sigma_longitudinal_pa": -39192910.0,
+          "tau_pa": 5605631.884775523,
+          "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization"
+        },
+        "reference_force_residual_n": [
+          -2.615963001773025e-15,
+          1.8041124150158794e-15,
+          0.0
+        ],
+        "reference_moment_residual_nm": [
+          0.0,
+          0.0,
+          2.7755575615628914e-15
+        ],
+        "analytical_compression_relative_error": null,
+        "physical_validation_passed": false,
+        "limits": [
+          "独立各向同性理想平板，四边横向简支或固支，均匀膜压缩/剪切",
+          "线性特征值为参考载荷的比例因子，模态振幅任意；不含初始缺陷、塑性、后屈曲和实际极限承载力",
+          "代表板载荷可来自半翼面板应力包络，但并非全翼特征值屈曲模型"
+        ]
+      },
+      "envelope_clamped": {
+        "solver_version": "2.23",
+        "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+        "element": "S8R",
+        "input": {
+          "schema_version": 1,
+          "length_m": 0.5,
+          "width_m": 0.6009499915053726,
+          "thickness_m": 0.002,
+          "elastic_modulus_pa": 70000000000.0,
+          "poisson_ratio": 0.33,
+          "compression_pa": 39192910.0,
+          "shear_pa": 5605631.884775523,
+          "support": "clamped",
+          "divisions": 24,
+          "modes": 3
+        },
+        "nodes": 1529,
+        "elements": 480,
+        "factors": [
+          0.19815917758976734,
+          0.27294356926048285,
+          0.47433241947643695
+        ],
+        "first_factor": 0.19815917758976734,
+        "mode_checks": [
+          {
+            "max_normalized_transverse_amplitude": 0.00504082,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.00208583,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.0020496,
+            "edge_transverse_relative_residual": 0.0
+          }
+        ],
+        "native_reference_scale": 0.0007509294859649853,
+        "native_factors": [
+          263.8852,
+          363.4743,
+          631.6604
+        ],
+        "reference_membrane_strain": [
+          1.3874666201416672e-07,
+          -4.204444639868242e-07,
+          1.5995850880692056e-07
+        ],
+        "analytical_membrane_strain": [
+          1.387466697246391e-07,
+          -4.204444537110276e-07,
+          1.5995850225024977e-07
+        ],
+        "critical_compression_pa": 7766434.812949768,
+        "critical_shear_pa": 1110807.4041580951,
+        "engineering_screen": {
+          "kc": 4.136814170898776,
+          "compression_half_waves": 1,
+          "ks_long_strip": 5.34,
+          "compression_critical_pa": 2960325.2722224207,
+          "shear_critical_pa": 5520155.8001379585,
+          "compression_ratio": 13.239393105804384,
+          "shear_ratio": 1.0154843609007247,
+          "interaction_utilization": 14.270601593038338,
+          "proportional_load_factor_to_buckling": 0.07509294859649852,
+          "screen_passed": false,
+          "sigma_longitudinal_pa": -39192910.0,
+          "tau_pa": 5605631.884775523,
+          "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization"
+        },
+        "reference_force_residual_n": [
+          -2.615963001773025e-15,
+          1.8041124150158794e-15,
+          0.0
+        ],
+        "reference_moment_residual_nm": [
+          0.0,
+          0.0,
+          2.7755575615628914e-15
+        ],
+        "analytical_compression_relative_error": null,
+        "physical_validation_passed": false,
+        "limits": [
+          "独立各向同性理想平板，四边横向简支或固支，均匀膜压缩/剪切",
+          "线性特征值为参考载荷的比例因子，模态振幅任意；不含初始缺陷、塑性、后屈曲和实际极限承载力",
+          "代表板载荷可来自半翼面板应力包络，但并非全翼特征值屈曲模型"
+        ]
+      },
+      "area_mean_simple": {
+        "solver_version": "2.23",
+        "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+        "element": "S8R",
+        "input": {
+          "schema_version": 1,
+          "length_m": 0.5,
+          "width_m": 0.6009499915053726,
+          "thickness_m": 0.002,
+          "elastic_modulus_pa": 70000000000.0,
+          "poisson_ratio": 0.33,
+          "compression_pa": 28603846.802674044,
+          "shear_pa": 1548463.0629539387,
+          "support": "simply_supported",
+          "divisions": 24,
+          "modes": 3
+        },
+        "nodes": 1529,
+        "elements": 480,
+        "factors": [
+          0.10316188588187036,
+          0.19841877097249497,
+          0.37528186130491226
+        ],
+        "first_factor": 0.10316188588187036,
+        "mode_checks": [
+          {
+            "max_normalized_transverse_amplitude": 0.00755351,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.0027243,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.00143477,
+            "edge_transverse_relative_residual": 0.0
+          }
+        ],
+        "native_reference_scale": 0.0010340687745593897,
+        "native_factors": [
+          99.76308,
+          191.8816,
+          362.9177
+        ],
+        "reference_membrane_strain": [
+          1.3944076883379503e-07,
+          -4.2254785143932536e-07,
+          6.084625964423649e-08
+        ],
+        "analytical_membrane_strain": [
+          1.3944076839436384e-07,
+          -4.2254778301322376e-07,
+          6.084625747445183e-08
+        ],
+        "critical_compression_pa": 2950826.779639962,
+        "critical_shear_pa": 159742.36979274568,
+        "engineering_screen": {
+          "kc": 4.136814170898776,
+          "compression_half_waves": 1,
+          "ks_long_strip": 5.34,
+          "compression_critical_pa": 2960325.2722224207,
+          "shear_critical_pa": 5520155.8001379585,
+          "compression_ratio": 9.66239996363647,
+          "shear_ratio": 0.28051075350359495,
+          "interaction_utilization": 9.741086246467626,
+          "proportional_load_factor_to_buckling": 0.10340687745593896,
+          "screen_passed": false,
+          "sigma_longitudinal_pa": -28603846.802674044,
+          "tau_pa": 1548463.0629539387,
+          "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization"
+        },
+        "reference_force_residual_n": [
+          -5.551115123125783e-17,
+          5.412337245047638e-15,
+          0.0
+        ],
+        "reference_moment_residual_nm": [
+          0.0,
+          0.0,
+          -2.736699755701011e-14
+        ],
+        "analytical_compression_relative_error": null,
+        "physical_validation_passed": false,
+        "limits": [
+          "独立各向同性理想平板，四边横向简支或固支，均匀膜压缩/剪切",
+          "线性特征值为参考载荷的比例因子，模态振幅任意；不含初始缺陷、塑性、后屈曲和实际极限承载力",
+          "代表板载荷可来自半翼面板应力包络，但并非全翼特征值屈曲模型"
+        ]
+      },
+      "envelope_half_reference": {
+        "solver_version": "2.23",
+        "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+        "element": "S8R",
+        "input": {
+          "schema_version": 1,
+          "length_m": 0.5,
+          "width_m": 0.6009499915053726,
+          "thickness_m": 0.002,
+          "elastic_modulus_pa": 70000000000.0,
+          "poisson_ratio": 0.33,
+          "compression_pa": 39192910.0,
+          "shear_pa": 5605631.884775523,
+          "support": "simply_supported",
+          "divisions": 24,
+          "modes": 3
+        },
+        "nodes": 1529,
+        "elements": 480,
+        "factors": [
+          0.07512467536728054,
+          0.14404134158113996,
+          0.2686564001856859
+        ],
+        "first_factor": 0.07512467536728054,
+        "mode_checks": [
+          {
+            "max_normalized_transverse_amplitude": 0.00754553,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.00273618,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.00170113,
+            "edge_transverse_relative_residual": 0.0
+          }
+        ],
+        "native_reference_scale": 0.00037546474298249264,
+        "native_factors": [
+          200.0845,
+          383.6348,
+          715.5303
+        ],
+        "reference_membrane_strain": [
+          6.937333471096703e-08,
+          -2.1022213199509967e-07,
+          7.99792532098508e-08
+        ],
+        "analytical_membrane_strain": [
+          6.937333486231955e-08,
+          -2.102222268555138e-07,
+          7.997925112512489e-08
+        ],
+        "critical_compression_pa": 2944354.6404490434,
+        "critical_shear_pa": 421121.27557223814,
+        "engineering_screen": {
+          "kc": 4.136814170898776,
+          "compression_half_waves": 1,
+          "ks_long_strip": 5.34,
+          "compression_critical_pa": 2960325.2722224207,
+          "shear_critical_pa": 5520155.8001379585,
+          "compression_ratio": 13.239393105804384,
+          "shear_ratio": 1.0154843609007247,
+          "interaction_utilization": 14.270601593038338,
+          "proportional_load_factor_to_buckling": 0.07509294859649852,
+          "screen_passed": false,
+          "sigma_longitudinal_pa": -39192910.0,
+          "tau_pa": 5605631.884775523,
+          "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization"
+        },
+        "reference_force_residual_n": [
+          -1.3079815008865125e-15,
+          9.020562075079397e-16,
+          0.0
+        ],
+        "reference_moment_residual_nm": [
+          0.0,
+          0.0,
+          1.3877787807814457e-15
+        ],
+        "analytical_compression_relative_error": null,
+        "physical_validation_passed": false,
+        "limits": [
+          "独立各向同性理想平板，四边横向简支或固支，均匀膜压缩/剪切",
+          "线性特征值为参考载荷的比例因子，模态振幅任意；不含初始缺陷、塑性、后屈曲和实际极限承载力",
+          "代表板载荷可来自半翼面板应力包络，但并非全翼特征值屈曲模型"
+        ]
+      },
+      "envelope_mesh32": {
+        "solver_version": "2.23",
+        "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+        "element": "S8R",
+        "input": {
+          "schema_version": 1,
+          "length_m": 0.5,
+          "width_m": 0.6009499915053726,
+          "thickness_m": 0.002,
+          "elastic_modulus_pa": 70000000000.0,
+          "poisson_ratio": 0.33,
+          "compression_pa": 39192910.0,
+          "shear_pa": 5605631.884775523,
+          "support": "simply_supported",
+          "divisions": 32,
+          "modes": 3
+        },
+        "nodes": 2711,
+        "elements": 864,
+        "factors": [
+          0.07512674042336695,
+          0.14403938916447645,
+          0.26863728903026807
+        ],
+        "first_factor": 0.07512674042336695,
+        "mode_checks": [
+          {
+            "max_normalized_transverse_amplitude": 0.00754542,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.00273311,
+            "edge_transverse_relative_residual": 0.0
+          },
+          {
+            "max_normalized_transverse_amplitude": 0.00170578,
+            "edge_transverse_relative_residual": 0.0
+          }
+        ],
+        "native_reference_scale": 0.0007509294859649853,
+        "native_factors": [
+          100.045,
+          191.8148,
+          357.7397
+        ],
+        "reference_membrane_strain": [
+          1.387466677405014e-07,
+          -4.2044391984050317e-07,
+          1.5995849620183157e-07
+        ],
+        "analytical_membrane_strain": [
+          1.387466697246391e-07,
+          -4.204444537110276e-07,
+          1.5995850225024977e-07
+        ],
+        "critical_compression_pa": 2944435.5760063827,
+        "critical_shear_pa": 421132.85151648,
+        "engineering_screen": {
+          "kc": 4.136814170898776,
+          "compression_half_waves": 1,
+          "ks_long_strip": 5.34,
+          "compression_critical_pa": 2960325.2722224207,
+          "shear_critical_pa": 5520155.8001379585,
+          "compression_ratio": 13.239393105804384,
+          "shear_ratio": 1.0154843609007247,
+          "interaction_utilization": 14.270601593038338,
+          "proportional_load_factor_to_buckling": 0.07509294859649852,
+          "screen_passed": false,
+          "sigma_longitudinal_pa": -39192910.0,
+          "tau_pa": 5605631.884775523,
+          "assumptions": "four simply supported edges; isotropic elastic flat panel; uniform envelope stresses; no tensile stabilization"
+        },
+        "reference_force_residual_n": [
+          1.7937040741600185e-15,
+          1.0436096431476471e-14,
+          0.0
+        ],
+        "reference_moment_residual_nm": [
+          0.0,
+          0.0,
+          -2.7894353493707058e-14
+        ],
+        "analytical_compression_relative_error": null,
+        "physical_validation_passed": false,
+        "limits": [
+          "独立各向同性理想平板，四边横向简支或固支，均匀膜压缩/剪切",
+          "线性特征值为参考载荷的比例因子，模态振幅任意；不含初始缺陷、塑性、后屈曲和实际极限承载力",
+          "代表板载荷可来自半翼面板应力包络，但并非全翼特征值屈曲模型"
+        ]
+      }
+    },
+    "limits": [
+      "相同几何、条带和质量的受控敏感性；映射带宽为高斯参数，实际截断半径为其 1.5 倍",
+      "translations_fixed 固定根部全部节点三向位移、释放壳局部转角；并非根部自由铰或真实连接刚度模型",
+      "代表板由膜应力包络/面积均值驱动，四边简支/固支分别是假设；单板特征值不作为全翼失稳或实际极限载荷",
+      "均值与同点指标仅解释包络保守性，不替代最大包络判据；本轮不自动增厚或回写结构质量"
+    ],
+    "risk_status": "local_buckling_not_cleared"
+  },
+  "preserved_failure": {
+    "input": "length .5 m, width .6 m, thickness .002 m, compression 39.19291 MPa, shear 5.60563 MPa, 16 divisions",
+    "unscaled_returned_factors": [
+      0.998579,
+      0.9985813,
+      1.116279
+    ],
+    "normalized_first_factor": 0.07528815052450458,
+    "cause": "native eigensolver search near shift 1 can miss lower critical mode under already supercritical reference load",
+    "local_evidence": "local/v015-plate-mixed"
+  },
+  "sources": [
+    {
+      "title": "CalculiX 2.23 manual",
+      "url": "https://www.dhondt.de/ccx_2.23.pdf",
+      "sections": [
+        "6.2.14",
+        "6.9.4",
+        "7.5",
+        "10.7"
+      ]
+    },
+    {
+      "title": "NACA TN3781",
+      "url": "https://ntrs.nasa.gov/citations/19930084505"
+    }
+  ],
+  "raw_artifacts": "Full nodal arrays, eigenmodes, DAT/FRD/INP and actual commands remain in artifact-hashed local service runs."
+}

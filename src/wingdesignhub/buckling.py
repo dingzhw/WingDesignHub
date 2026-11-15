@@ -87,7 +87,7 @@ def panel_screen(mesh,mesh_case,stress):
             s=np.mean([v for ip,v in by_element[e]],axis=0)
             # Global stress order: xx, yy, zz, xy, xz, yz.
             shear=s[3]*tangent[0]+s[5]*tangent[2]
-            panels[part,bay].append((float(s[1]),float(shear),e));covered+=area
+            panels[part,bay].append((float(s[1]),float(shear),e,float(area),cent.tolist()));covered+=area
     result=[]
     for (name,bay),values in panels.items():
         if not values:raise ValueError(f'面板 {name}/{bay} 缺少应力采样')
@@ -96,6 +96,15 @@ def panel_screen(mesh,mesh_case,stress):
         r=plate_screen(bounds[bay+1]-bounds[bay],widths[name],t,E,nu,compression[0],shear[1])
         r.update(panel=name,bay=bay,y_start_m=bounds[bay],y_end_m=bounds[bay+1],width_m=widths[name],thickness_m=t,
                  compression_element= compression[2],shear_element=shear[2],sampled_elements=len(values))
+        mean=np.average(np.array([v[:2] for v in values]),axis=0,weights=[v[3] for v in values])
+        coincident=max(values,key=lambda v:max(0.,-v[0])/r['compression_critical_pa']+(v[1]/r['shear_critical_pa'])**2)
+        r['diagnostics']={'compression_control_centroid_m':compression[4],'shear_control_centroid_m':shear[4],
+             'compression_contribution':r['compression_ratio'],'shear_squared_contribution':r['shear_ratio']**2,
+             'max_coincident_utilization':max(0.,-coincident[0])/r['compression_critical_pa']+(coincident[1]/r['shear_critical_pa'])**2,
+             'coincident_element':coincident[2],
+             'area_mean_sigma_pa':float(mean[0]),'area_mean_tau_pa':float(mean[1]),
+             'area_mean_screen':plate_screen(bounds[bay+1]-bounds[bay],widths[name],t,E,nu,float(mean[0]),float(mean[1])),
+             'purpose':'diagnostic stress averaging; does not replace the envelope acceptance screen'}
         result.append(r)
     return {'panels':result,'screen_passed':all(v['screen_passed'] for v in result),
             'max_interaction_utilization':max(v['interaction_utilization'] for v in result),
