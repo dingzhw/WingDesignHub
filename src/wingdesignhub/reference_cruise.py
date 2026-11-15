@@ -26,7 +26,7 @@ REFERENCE={
     'true_airspeed_mph':127.,'fuel_us_gal_h':7.6,'fuel_lb_us_gal':6.,
     'configuration':'wheel fairings installed, economy mixture leaned to peak EGT, still air',
     'interpretation':'speed uses chart gross weight 2550 lb; fuel is the same 65% rated-power example; whole flight-plan 2400 lb not compared',
-    'data_role':'independent handbook spot check; not calibration and not new flight-test data',
+    'data_role':'V0.1.8 independent spot check; V0.2.0 reclassified as calibration datum, legacy baseline only',
 }
 # Diagnostic bands chosen before the first evaluation; not certification limits.
 BANDS={'speed_relative':.10,'fuel_relative':.20}

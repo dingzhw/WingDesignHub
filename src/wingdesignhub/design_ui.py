@@ -15,16 +15,18 @@ from .fastga_interface import get_fastga_contract, reference_binding_preview
 def render(root):
     st.subheader('新建飞机方案')
     st.write('填写载荷和航程/航时，核对假设后，一键生成常规单发飞机的初步尺寸、重量、燃油和功率。')
-    base = DesignProject()
-    uploaded = st.file_uploader('打开需求方案（可选）', type='json', key='design_upload')
-    key = 'design_default'
+    from .project_ui import library,save_controls
+    base = library(root)
+    revision=st.session_state.get('workspace_revision',0)
+    uploaded = st.file_uploader('打开需求方案（可选）', type='json', key='design_upload_'+str(revision))
+    key = 'design_default_'+str(revision)
     if uploaded is not None:
         try:
             data = json.loads(uploaded.getvalue())
             base = DesignProject.from_dict(data)
-            if data.get('schema_version') == 1:
-                st.info('已升级旧需求格式并补充定尺寸假设，请重新核对确认。')
-            key = 'design_'+hashlib.sha256(uploaded.getvalue()).hexdigest()[:16]
+            if data.get('schema_version') in (1,2):
+                st.info('已升级旧需求格式，保持原耗油口径，请重新核对确认。')
+            key = 'design_'+hashlib.sha256(uploaded.getvalue()).hexdigest()[:16]+'_'+str(revision)
         except (ValueError, TypeError) as exc:
             st.error(f'需求方案无法读取：{exc}')
             return
@@ -86,6 +88,7 @@ def render(root):
                 st.session_state['sizing_result'] = sizing_service.run_sizing(p, root)
         if 'sizing_result' in st.session_state:
             sizing_ui.results(st.session_state['sizing_result'], p, root)
+        save_controls(p,root,st.session_state.get('sizing_result'))
         if st.button('检查并保存需求', key='prepare_design'):
             st.session_state['design_intent_result'] = design_service.prepare_design_project(p, root)
         if 'design_intent_result' in st.session_state:

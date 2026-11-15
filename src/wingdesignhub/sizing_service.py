@@ -28,5 +28,7 @@ def run_sizing(project,root):
     except Exception as exc:
         r.update(status='failed',error=str(exc));(work/'error.log').write_text(traceback.format_exc(),encoding='utf-8')
     r['finished_utc']=datetime.now(timezone.utc).isoformat()
+    from .design_report import design_report_html
+    (work/'report.html').write_text(design_report_html(p,r),encoding='utf-8')
     r['artifact_hashes']={f.relative_to(work).as_posix():sha256(f) for f in work.rglob('*') if f.is_file() and f.name!='result.json'}
     write_json(work/'result.json',r);return r

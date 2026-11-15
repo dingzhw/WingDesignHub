@@ -55,7 +55,7 @@ class DesignAssumptions:
 
 @dataclass(frozen=True)
 class DesignProject:
-    schema_version: int = 2
+    schema_version: int = 3
     name: str = '新飞机方案'
     payload_kg: float = 350.
     weight: WeightRequirement = field(default_factory=WeightRequirement)
@@ -72,9 +72,11 @@ class DesignProject:
         if not isinstance(data, dict):
             raise ValueError('方案必须是 JSON 对象')
         data = dict(data)
-        if type(data.get('schema_version')) is int and data['schema_version']==1:
-            if 'sizing' in data: raise ValueError('旧版本方案不得携带新版定尺寸字段')
-            data.update(schema_version=2, confirmation_sha256=None)
+        if type(data.get('schema_version')) is int and data['schema_version'] in (1,2):
+            if data['schema_version']==1 and 'sizing' in data: raise ValueError('旧版本方案不得携带新版定尺寸字段')
+            if data['schema_version']==2 and isinstance(data.get('sizing'),dict) and 'fuel_model' in data['sizing']:
+                raise ValueError('旧版本方案不得携带新版耗油模型字段')
+            data.update(schema_version=3, confirmation_sha256=None)
         if 'sizing' in data:
             data['sizing']=SizingAssumptions.from_dict(data['sizing'])
         for name, typ in (('weight', WeightRequirement), ('mission', MissionRequirement), ('assumptions', DesignAssumptions)):
@@ -85,7 +87,7 @@ class DesignProject:
         return obj
 
     def check_schema(self):
-        if type(self.schema_version) is not int or self.schema_version != 2:
+        if type(self.schema_version) is not int or self.schema_version != 3:
             raise ValueError('需求方案版本无效')
         if not isinstance(self.name, str) or not self.name.strip() or len(self.name) > 100:
             raise ValueError('方案名称须为 1–100 个字符')

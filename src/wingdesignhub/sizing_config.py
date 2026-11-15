@@ -15,6 +15,7 @@ class SizingAssumptions:
     cl_max_landing: float = 1.8
     propeller_efficiency: float = .8
     bsfc_kg_kwh: float = .30
+    fuel_model: str = 'constant_bsfc'
     cruise_power_fraction: float = .75
     seats: int = 4
     fuselage_length_m: float = 7.5
@@ -31,6 +32,8 @@ class SizingAssumptions:
         result=cls(**data);result.validate();return result
 
     def validate(self):
+        from .fuel_model import FUEL_MODELS
+        if self.fuel_model not in FUEL_MODELS:raise ValueError('耗油模型选项无效')
         limits={'stall_speed_m_s':(22,35),'climb_rate_m_s':(1,5),'aspect_ratio':(6,10),
                 'cd0':(.02,.05),'oswald_efficiency':(.65,.9),'cl_max_clean':(1.1,1.7),
                 'cl_max_landing':(1.4,2.2),'propeller_efficiency':(.65,.85),'bsfc_kg_kwh':(.23,.4),

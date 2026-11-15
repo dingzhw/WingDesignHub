@@ -11,7 +11,7 @@ from wingdesignhub.sizing import solve_design
 def test_schema_migration_invalidates_confirmation_and_keeps_requirements():
     data=DesignProject().confirmed().to_dict();data.pop('sizing');data['schema_version']=1
     p=DesignProject.from_dict(data)
-    assert p.schema_version==2 and p.payload_kg==350 and p.confirmation_sha256 is None
+    assert p.schema_version==3 and p.payload_kg==350 and p.confirmation_sha256 is None
     assert build_design_intent(p)['status']=='needs_confirmation'
     assert build_design_intent(p.confirmed())['status']=='requirements_ready'
     assert build_design_intent(replace(p.confirmed(),sizing=replace(p.sizing,cd0=.04)))['status']=='needs_confirmation'

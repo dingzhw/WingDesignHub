@@ -140,7 +140,14 @@ def compare_designs(records, projects=None, purpose='design_trade'):
              "root_moment_nm": r["outputs"]["beam"]["root_moment_nm"]} for r in records]
 
 
-def generate_report(record, path=None):
+def generate_report(record, path=None, project=None):
+    if record.get('mode') in ('overall_sizing','overall_comparison'):
+        if project is None or record.get('definition_sha256')!=project.definition_hash():
+            raise ValueError('总体报告需要与运行一致的需求定义')
+        from .design_report import design_report_html,comparison_report_html
+        text=(design_report_html(project,record) if record['mode']=='overall_sizing' else comparison_report_html(record.get('summary',{}),record))
+        if path:Path(path).write_text(text,encoding='utf-8')
+        return text
     text = f"# WingDesignHub 运行记录\n\n版本：{record['version']}\n\n任务：{record['mode']}\n\n状态：{record['status']}\n\n"
     text += "证据等级：接口与数值演示，尚未进行独立物理验证。\n\n"
     text += "## 模型假设\n\n" + "\n".join(f"- {a}" for a in record["assumptions"]) + "\n\n"

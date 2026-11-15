@@ -61,11 +61,18 @@ def show_results(r,request,root):
 def render(base,root):
     with st.expander('三方案比较与需求变化',expanded=False):
         st.write('以上方需求为起点，一次选择一个变化参数，形成 A/B/C 三个方案。其他条件保持一致。')
-        upload=st.file_uploader('打开三方案配置（可选）',type='json',key='comparison-upload')
+        upload=st.file_uploader('打开三方案配置（可选）',type='json',key='comparison-upload-'+str(st.session_state.get('workspace_revision',0)))
         try:
+            opened=st.session_state.get('opened_archive')
+            use_opened=False
+            if opened and isinstance(opened['project'],ComparisonRequest):
+                use_opened=st.checkbox('沿用存档中的三方案参数（取消后按上方需求重新调整）',value=True,key='archive_compare_'+opened['bundle_sha256'])
             if upload:
                 request=ComparisonRequest.from_dict(json.loads(upload.getvalue()))
                 st.info('当前比较采用导入的三个完整方案，不使用上方单方案表单。')
+            elif use_opened:
+                request=opened['project']
+                st.info('当前比较使用已打开的三方案完整需求；取消上方选项即可在界面调整比较参数。')
             else:
                 choices=['sizing.aspect_ratio','assumptions.cruise_speed_m_s','payload_kg']
                 if base.mission.range_m is not None:choices.append('mission.range_m')
@@ -89,8 +96,21 @@ def render(base,root):
                 with st.spinner('正在运行三个方案并核对比较条件……'):
                     st.session_state['comparison_result']=comparison_service.run_comparison(request,root)
             if 'comparison_result' in st.session_state:show_results(st.session_state['comparison_result'],request,root)
+            from .project_ui import save_controls
+            save_controls(request,root,st.session_state.get('comparison_result'),key='comparison')
         except (ValueError,TypeError,KeyError) as exc:st.error(str(exc))
     with st.expander('模型精度检查：公开同条件巡航点'):
+        st.caption('V0.2.0：65% 点已改为校准数据，55%/75% 仅为同源留出；外部资料条件差异单列。')
+        if st.button('核查耗油模型与留出数据',key='fuel-evidence'):
+            from .fuel_validation import run_fuel_validation
+            st.session_state['fuel_evidence']=run_fuel_validation(root)
+        if 'fuel_evidence' in st.session_state:
+            f=st.session_state['fuel_evidence']['summary']
+            st.dataframe([{'数据角色':r['role'],'功率比例':r['power_fraction'],'原耗油 gal/h':r['original_gal_h'],
+                          '参考耗油 gal/h':r['predicted_gal_h'],'公开值 gal/h':r['fuel_us_gal_h'],'偏差%':r['relative_error']*100} for r in f['rows']],hide_index=True)
+            for line in f['limits']:st.warning(line)
+            st.write(f['external_reference']['reason'])
+            st.download_button('下载耗油校准和验证记录',json.dumps(st.session_state['fuel_evidence'],ensure_ascii=False,indent=2),'fuel-validation.json')
         st.caption('Piper 原厂 VB-760 手册巡航点；核对重量、压力高度、实际温度、功率和混合比，保留偏差。')
         if st.button('计算公开巡航点对照',key='public-cruise'):
             from .reference_cruise import run_public_cruise

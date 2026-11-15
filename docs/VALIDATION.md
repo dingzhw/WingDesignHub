@@ -1,6 +1,6 @@
 # 验证方法与适用边界
 
-最新结果见 [V0.1.8 方案比较与公开对照](VALIDATION_V0.1.8.md)及 `validation/v0.1.8.json`。前序记录见 [V0.1.7](VALIDATION_V0.1.7.md)、[V0.1.6](VALIDATION_V0.1.6.md)、[V0.1.5](VALIDATION_V0.1.5.md)、[V0.1.4](VALIDATION_V0.1.4.md)、[V0.1.3](VALIDATION_V0.1.3.md)、[V0.1.2](VALIDATION_V0.1.2.md)和 [V0.1.1](VALIDATION_V0.1.1.md)。历史失败摘要保持原状，便于前后比较。
+最新结果见 [V0.2.0 总体流程阶段验证](VALIDATION_V0.2.0.md)、`validation/v0.2.0.json` 和[专业评审材料](REVIEW_V0.2.0.md)。前序记录见 [V0.1.8](VALIDATION_V0.1.8.md)、[V0.1.7](VALIDATION_V0.1.7.md)、[V0.1.6](VALIDATION_V0.1.6.md)、[V0.1.5](VALIDATION_V0.1.5.md)、[V0.1.4](VALIDATION_V0.1.4.md)、[V0.1.3](VALIDATION_V0.1.3.md)、[V0.1.2](VALIDATION_V0.1.2.md)和 [V0.1.1](VALIDATION_V0.1.1.md)。历史偏差和失败摘要保持原状，便于前后比较。
 
 ## V0.1.0 验证对象
 

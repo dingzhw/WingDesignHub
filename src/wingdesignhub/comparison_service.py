@@ -41,12 +41,17 @@ def _save(request,root,records=None):
                 write_json(work/f'plan-{i}-card.json',card)
                 (work/f'plan-{i}-card.html').write_text(card_html(card),encoding='utf-8')
             (work/'report.md').write_text(comparison_markdown(summary),encoding='utf-8')
+            from .design_report import comparison_report_html
+            (work/'report.html').write_text(comparison_report_html(summary,result),encoding='utf-8')
             with ZipFile(work/'scheme-cards.zip','w',compression=ZIP_DEFLATED) as archive:
                 for f in sorted(work.iterdir()):
                     if f.suffix in ('.html','.md') or f.name.endswith('-input.json') or f.name=='comparison.json':
                         archive.write(f,f.name)
     except Exception as exc:
         result.update(status='failed',error=str(exc));(work/'error.log').write_text(traceback.format_exc(),encoding='utf-8')
+    if not (work/'report.html').exists():
+        from .design_report import comparison_report_html
+        (work/'report.html').write_text(comparison_report_html(result.get('summary',{}),result),encoding='utf-8')
     result['finished_utc']=datetime.now(timezone.utc).isoformat()
     result['artifact_hashes']={p.name:sha256(p) for p in work.iterdir() if p.is_file() and p.name!='result.json'}
     write_json(work/'result.json',result);return result

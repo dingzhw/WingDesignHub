@@ -71,6 +71,7 @@ def constraints(mass, geo, p):
 
 
 def mission(mass, geo, installed_power, p, dt=30.):
+    from .fuel_model import fuel_flow, fuel_model_description
     if not math.isfinite(dt) or dt<=0: raise ValueError('任务积分步长须为正有限值')
     a=p.sizing;m=p.mission;h=p.assumptions.cruise_altitude_m;s=geo['wing_area_m2']
     climb_speed,loiter_speed,vs=speed_schedule(mass,geo,p)
@@ -97,35 +98,46 @@ def mission(mass, geo, installed_power, p, dt=30.):
         if distance<v*60:raise DesignDomainError('航程短于爬升/下降及最少 60 秒巡航所需距离')
         legs.append(('cruise',distance/v,v,h,h,0,True))
     if td:legs.append(('descent',td,climb_speed,h,0,-2.,True))
-    fuel_rate=a.bsfc_kg_kwh/3.6e6
-    taxi_out=installed_power*.1*300*fuel_rate
-    takeoff_roll=installed_power*.9*30*fuel_rate
+    taxi_out=fuel_flow(installed_power*.1,installed_power,'taxi',a)[0]*300
+    takeoff_roll=fuel_flow(installed_power*.9,installed_power,'takeoff',a)[0]*30
     current=mass-takeoff_roll;rows=[];worst_power=0.;max_cl=0.
-    cruise_fuel=cruise_time=0.
+    cruise_fuel=cruise_time=0.;cruise_models={};all_models={}
     for name,duration,speed,h0,h1,roc,counts_distance in legs:
         before=current;n=max(1,math.ceil(duration/dt));step=duration/n
+        models={};fractions=[]
         for i in range(n):
             z=h0+(h1-h0)*(i+.5)/n
             # Explicit midpoint integration of fuel burn with density at midpoint height.
             def rate(mm):
                 pw,cl,_=flight_power(mm,s,speed,z,roc,a)
                 pw=max(pw,.05*installed_power*density(z)/RHO0)
-                return pw*fuel_rate,pw,cl
-            r0,_,_=rate(current);r,pw,cl=rate(current-r0*step/2)
+                flow,method=fuel_flow(pw,installed_power,name,a)
+                return flow,pw,cl,method
+            r0,_,_,_=rate(current);r,pw,cl,method=rate(current-r0*step/2)
             current-=r*step
+            models[method]=models.get(method,0.)+r*step;fractions.append(pw/installed_power)
             if current<=0:raise DesignDomainError('任务耗油超过试算质量')
             worst_power=max(worst_power,pw/(installed_power*density(z)/RHO0));max_cl=max(max_cl,cl)
         burned=before-current
         rows.append({'segment':name,'duration_s':duration,'path_distance_m':math.sqrt(speed**2-roc**2)*duration if counts_distance else 0.,
-                     'fuel_kg':burned,'speed_m_s':speed,'start_mass_kg':before,'end_mass_kg':current})
-        if name in ('cruise','outbound','inbound'):cruise_fuel+=burned;cruise_time+=duration
+                     'fuel_kg':burned,'speed_m_s':speed,'start_mass_kg':before,'end_mass_kg':current,
+                     'fuel_by_method_kg':models,'rated_power_fraction_min':min(fractions),'rated_power_fraction_max':max(fractions)})
+        for method,value in models.items():all_models[method]=all_models.get(method,0.)+value
+        if name in ('cruise','outbound','inbound'):
+            cruise_fuel+=burned;cruise_time+=duration
+            for method,value in models.items():cruise_models[method]=cruise_models.get(method,0.)+value
     reserve=cruise_fuel/cruise_time*p.assumptions.reserve_duration_s
     taxi_in=taxi_out
     trip=sum(row['fuel_kg'] for row in rows)+takeoff_roll+taxi_in
     duration=sum(r['duration_s'] for r in rows);distance=sum(r['path_distance_m'] for r in rows)
+    for method,value in cruise_models.items():
+        all_models[method]=all_models.get(method,0.)+value/cruise_time*p.assumptions.reserve_duration_s
+    ground_method=fuel_flow(installed_power*.1,installed_power,'taxi',a)[1]
+    all_models[ground_method]=all_models.get(ground_method,0.)+taxi_out+taxi_in+takeoff_roll
     return {'segments':rows,'cruise_speed_used_m_s':v,'main_duration_s':duration,'route_distance_m':distance,
             'takeoff_roll_fuel_kg':takeoff_roll,'taxi_in_fuel_kg':taxi_in,'taxi_out_fuel_kg':taxi_out,
             'reserve_fuel_kg':reserve,'trip_fuel_from_takeoff_kg':trip,'takeoff_fuel_kg':trip+reserve,
             'block_fuel_kg':trip+reserve+taxi_out,'max_power_fraction':worst_power,'max_clean_cl':max_cl,
             'reserve_basis':'mean cruise fuel flow; not flown and not added to mission time/range',
-            'integration_step_s':dt}
+            'integration_step_s':dt,'fuel_model':fuel_model_description(a),'block_fuel_by_method_kg':all_models,
+            'economy_reference_fuel_fraction':all_models.get('economy_reference',0.)/(trip+reserve+taxi_out)}

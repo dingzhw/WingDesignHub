@@ -20,20 +20,20 @@ def test_main_entry_confirm_save_and_invalidate():
 
 def test_ui_weight_and_mission_relations():
     a = app()
-    a.selectbox[0].set_value('fixed').run()
+    next(x for x in a.selectbox if x.label=='起飞重量模式').set_value('fixed').run()
     assert any(x.label == '规定起飞重量（kg）' for x in a.number_input)
-    a.selectbox[1].set_value('transit_loiter').run()
+    next(x for x in a.selectbox if x.label=='任务类型').set_value('transit_loiter').run()
     assert any(x.label == '往返转场总航程（km）' for x in a.number_input)
     assert any(x.label == '额外留空时长（h）' for x in a.number_input)
-    a.selectbox[0].set_value('solve').run()
+    next(x for x in a.selectbox if x.label=='起飞重量模式').set_value('solve').run()
     assert not any(x.label == '规定起飞重量（kg）' for x in a.number_input)
-    a.selectbox[1].set_value('endurance_only').run()
+    next(x for x in a.selectbox if x.label=='任务类型').set_value('endurance_only').run()
     assert not any('航程（km）' in x.label for x in a.number_input)
     assert not a.exception
 
 
 def test_ui_conflicting_weight_is_not_success():
-    a = app();a.selectbox[0].set_value('upper_bound').run()
+    a = app();next(x for x in a.selectbox if x.label=='起飞重量模式').set_value('upper_bound').run()
     next(x for x in a.number_input if x.label.startswith('起飞重量上限')).set_value(300.).run()
     a.checkbox[0].check().run();a.button(key='prepare_design').click().run()
     assert not a.exception and a.error and not a.success

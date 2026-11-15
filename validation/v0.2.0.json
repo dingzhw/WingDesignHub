@@ -1,0 +1,951 @@
+{
+  "version": "0.2.0",
+  "date": "2026-11-15",
+  "baseline_commit": "83b5985ef52161509f97c14532ef90cfdc66757e",
+  "route_review": {
+    "aligned": true,
+    "product_step": "requirements -> sizing -> comparison -> save/reopen -> report",
+    "engineering_review": "pending_professional_review",
+    "next": "V0.3.0 aerodynamic and propulsion models inside existing workflow"
+  },
+  "verification": {
+    "software_stage_passed": true,
+    "physical_validation_passed": false,
+    "matrix_count": 24,
+    "stage_checks": {
+      "constant_bsfc_solve_range": true,
+      "constant_bsfc_solve_range_fuel_ledger": true,
+      "constant_bsfc_solve_endurance": true,
+      "constant_bsfc_solve_endurance_fuel_ledger": true,
+      "constant_bsfc_solve_same_route": true,
+      "constant_bsfc_solve_same_route_fuel_ledger": true,
+      "constant_bsfc_solve_loiter": true,
+      "constant_bsfc_solve_loiter_fuel_ledger": true,
+      "constant_bsfc_fixed_range": true,
+      "constant_bsfc_fixed_range_fuel_ledger": true,
+      "constant_bsfc_fixed_endurance": true,
+      "constant_bsfc_fixed_endurance_fuel_ledger": true,
+      "constant_bsfc_fixed_same_route": true,
+      "constant_bsfc_fixed_same_route_fuel_ledger": true,
+      "constant_bsfc_fixed_loiter": true,
+      "constant_bsfc_fixed_loiter_fuel_ledger": true,
+      "constant_bsfc_upper_bound_range": true,
+      "constant_bsfc_upper_bound_range_fuel_ledger": true,
+      "constant_bsfc_upper_bound_endurance": true,
+      "constant_bsfc_upper_bound_endurance_fuel_ledger": true,
+      "constant_bsfc_upper_bound_same_route": true,
+      "constant_bsfc_upper_bound_same_route_fuel_ledger": true,
+      "constant_bsfc_upper_bound_loiter": true,
+      "constant_bsfc_upper_bound_loiter_fuel_ledger": true,
+      "piper_economy_reference_solve_range": true,
+      "piper_economy_reference_solve_range_fuel_ledger": true,
+      "piper_economy_reference_solve_endurance": true,
+      "piper_economy_reference_solve_endurance_fuel_ledger": true,
+      "piper_economy_reference_solve_same_route": true,
+      "piper_economy_reference_solve_same_route_fuel_ledger": true,
+      "piper_economy_reference_solve_loiter": true,
+      "piper_economy_reference_solve_loiter_fuel_ledger": true,
+      "piper_economy_reference_fixed_range": true,
+      "piper_economy_reference_fixed_range_fuel_ledger": true,
+      "piper_economy_reference_fixed_endurance": true,
+      "piper_economy_reference_fixed_endurance_fuel_ledger": true,
+      "piper_economy_reference_fixed_same_route": true,
+      "piper_economy_reference_fixed_same_route_fuel_ledger": true,
+      "piper_economy_reference_fixed_loiter": true,
+      "piper_economy_reference_fixed_loiter_fuel_ledger": true,
+      "piper_economy_reference_upper_bound_range": true,
+      "piper_economy_reference_upper_bound_range_fuel_ledger": true,
+      "piper_economy_reference_upper_bound_endurance": true,
+      "piper_economy_reference_upper_bound_endurance_fuel_ledger": true,
+      "piper_economy_reference_upper_bound_same_route": true,
+      "piper_economy_reference_upper_bound_same_route_fuel_ledger": true,
+      "piper_economy_reference_upper_bound_loiter": true,
+      "piper_economy_reference_upper_bound_loiter_fuel_ledger": true,
+      "save_reopen_exact": true,
+      "recompute_identical": true,
+      "three_designs": true,
+      "comparison_reopen": true,
+      "fixed_excess": true,
+      "upper_excess": true,
+      "task_conflict": true,
+      "heldout_only": true,
+      "historical_bias_preserved": true,
+      "legacy_sizing_preserved": true,
+      "fastga_reference": true
+    },
+    "actual_record_count": 35,
+    "current_source_hashes_verified": true,
+    "artifact_hashes_verified": true
+  },
+  "tests": {
+    "full": {
+      "tests": 221,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": 174.432
+    },
+    "final_ui": {
+      "tests": 25,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": 94.009
+    }
+  },
+  "fuel_evidence": {
+    "status": "fuel_reference_checked_with_limits",
+    "source": {
+      "document": "Piper PA-28-181 VB-760, Fig.5-13 p.5-17; cruise example p.5-5",
+      "url": "https://www.summitaviationspokane.com/wp-content/uploads/2025/08/pa-28-181-archer-ii-poh.pdf",
+      "sha256": "0a51a23b0db5d4d1bbb063484a56d7ed12a0a1935da96e5c90e88dd13e1bd43c"
+    },
+    "rows": [
+      {
+        "id": "piper_vb760_economy_65",
+        "role": "calibration",
+        "rated_hp": 180.0,
+        "power_fraction": 0.65,
+        "fuel_us_gal_h": 7.6,
+        "fuel_lb_us_gal": 6.0,
+        "mixture": "best_economy",
+        "original_gal_h": 9.617322815100001,
+        "predicted_gal_h": 7.599999999999998,
+        "relative_error": -2.220446049250313e-16,
+        "diagnostic_limit_relative": null,
+        "holdout_pass": null
+      },
+      {
+        "id": "piper_vb760_economy_55",
+        "role": "same_source_holdout",
+        "rated_hp": 180.0,
+        "power_fraction": 0.55,
+        "fuel_us_gal_h": 6.3,
+        "fuel_lb_us_gal": 6.0,
+        "mixture": "best_economy",
+        "original_gal_h": 8.1377346897,
+        "predicted_gal_h": 6.430769230769229,
+        "relative_error": 0.02075702075702046,
+        "diagnostic_limit_relative": 0.05,
+        "holdout_pass": true
+      },
+      {
+        "id": "piper_vb760_economy_75",
+        "role": "same_source_holdout",
+        "rated_hp": 180.0,
+        "power_fraction": 0.75,
+        "fuel_us_gal_h": 8.8,
+        "fuel_lb_us_gal": 6.0,
+        "mixture": "best_economy",
+        "original_gal_h": 11.0969109405,
+        "predicted_gal_h": 8.769230769230766,
+        "relative_error": -0.0034965034965038777,
+        "diagnostic_limit_relative": 0.05,
+        "holdout_pass": true
+      }
+    ],
+    "calibrated_bsfc_kg_kwh": 0.23707221269730167,
+    "holdout_passed": true,
+    "calibration_ids": [
+      "piper_vb760_economy_65"
+    ],
+    "holdout_ids": [
+      "piper_vb760_economy_55",
+      "piper_vb760_economy_75"
+    ],
+    "external_reference": {
+      "id": "lycoming_o360_ac_65",
+      "role": "external_reference_conditions_unresolved",
+      "rated_hp": 180.0,
+      "power_fraction": 0.65,
+      "fuel_us_gal_h": 9.5,
+      "rpm": 2350,
+      "document": "Lycoming 60297-12, October 2005, p.3-12 (PDF 44), O-360-A/C series",
+      "url": "https://www.lycoming.com/sites/default/files/file/2025-11/60297-12%20-%20O-360%2C%20HO-360%2C%20IO-360%2C%20AIO-360%2C%20HIO-360%2C%20and%20TIO-360%20Series.pdf",
+      "sha256": "06142d8b252d818d7c3f46baf648dbe6a65c1b33df03332d5256d5af7bf12946",
+      "reason": "发动机族表列 economy cruise；与 Piper 峰值 EGT 的安装/混合比条件未完全对应，保留资料差异，不作为同条件通过点。"
+    },
+    "external_same_condition_validation_passed": null,
+    "independent_validation_data_available": false,
+    "physical_validation_passed": false,
+    "diagnosis": "原 26.5% 为统一 BSFC 与经济混合比点的差异；保留基础模型，增加有范围和数据角色的参考选项。",
+    "limits": [
+      "校准点误差不计为验证通过；55%/75% 仅为同手册留出检查。",
+      "Lycoming 外部资料的安装/混合比条件未对齐，独立试验资料仍缺。",
+      "新模型不改变极曲线或桨效率；V0.1.8 的速度偏差未通过调参消除。"
+    ]
+  },
+  "cases": [
+    {
+      "case": "constant_bsfc_solve_range",
+      "run_id": "70c7763ba61a4d49af0f07bc39157f71",
+      "status": "concept_checked_with_limits",
+      "mtow_kg": 1229.4159528684945,
+      "block_fuel_kg": 109.41544853610884,
+      "fuel_by_method_kg": {
+        "constant_bsfc": 109.41544853610999
+      },
+      "economy_fuel_fraction": 0.0,
+      "power_kw": 138.27258903943496,
+      "wing_area_m2": 13.948414959273704,
+      "iterations": 33,
+      "mass_budget_margin_kg": -0.06095529104072739,
+      "upper_bound_margin_kg": null,
+      "diagnostics": []
+    },
+    {
+      "case": "constant_bsfc_solve_endurance",
+      "run_id": "b98b1f99921944a7a91cabcb06db9b46",
+      "status": "concept_checked_with_limits",
+      "mtow_kg": 1239.6569955818084,
+      "block_fuel_kg": 114.77576473000437,
+      "fuel_by_method_kg": {
+        "constant_bsfc": 114.77576473000568
+      },
+      "economy_fuel_fraction": 0.0,
+      "power_kw": 139.42440058631573,
+      "wing_area_m2": 14.064605344673907,
+      "iterations": 33,
+      "mass_budget_margin_kg": -0.06710676720012998,
+      "upper_bound_margin_kg": null,
+      "diagnostics": []
+    },
+    {
+      "case": "constant_bsfc_solve_same_route",
+      "run_id": "3ddaa6780cea47079d38227e5f754eb1",
+      "status": "concept_checked_with_limits",
+      "mtow_kg": 1216.9631116023252,
+      "block_fuel_kg": 102.91092800638147,
+      "fuel_by_method_kg": {
+        "constant_bsfc": 102.91092800638032
+      },
+      "economy_fuel_fraction": 0.0,
+      "power_kw": 136.8720161912034,
+      "wing_area_m2": 13.807130476184621,
+      "iterations": 32,
+      "mass_budget_margin_kg": -0.06927969435673731,
+      "upper_bound_margin_kg": null,
+      "diagnostics": []
+    },
+    {
+      "case": "constant_bsfc_solve_loiter",
+      "run_id": "bf5fc2e7247e443bac33a19a91fcc585",
+      "status": "concept_checked_with_limits",
+      "mtow_kg": 1163.9921633245895,
+      "block_fuel_kg": 75.17859559179034,
+      "fuel_by_method_kg": {
+        "constant_bsfc": 75.17859559178822
+      },
+      "economy_fuel_fraction": 0.0,
+      "power_kw": 130.9143660198785,
+      "wing_area_m2": 13.206145296481887,
+      "iterations": 30,
+      "mass_budget_margin_kg": -0.06831395700805842,
+      "upper_bound_margin_kg": null,
+      "diagnostics": []
+    },
+    {
+      "case": "constant_bsfc_fixed_range",
+      "run_id": "48d9c082262d4ea09f2f413939844b7f",
+      "status": "concept_checked_with_limits",
+      "mtow_kg": 1400.0,
+      "block_fuel_kg": 124.59707196181338,
+      "fuel_by_method_kg": {
+        "constant_bsfc": 124.59707196181068
+      },
+      "economy_fuel_fraction": 0.0,
+      "power_kw": 157.45820135450575,
+      "wing_area_m2": 15.883786848072559,
+      "iterations": 4,
+      "mass_budget_margin_kg": 73.70164944017642,
+      "upper_bound_margin_kg": null,
+      "diagnostics": []
+    },
+    {
+      "case": "constant_bsfc_fixed_endurance",
+      "run_id": "f24f1e184fd343efa1654b549ecad95b",
+      "status": "concept_checked_with_limits",
+      "mtow_kg": 1400.0,
+      "block_fuel_kg": 129.62139623678112,
+      "fuel_by_method_kg": {
+        "constant_bsfc": 129.62139623678172
+      },
+      "economy_fuel_fraction": 0.0,
+      "power_kw": 157.45820135450575,
+      "wing_area_m2": 15.883786848072559,
+      "iterations": 4,
+      "mass_budget_margin_kg": 68.67732516520869,
+      "upper_bound_margin_kg": null,
+      "diagnostics": []
+    },
+    {
+      "case": "constant_bsfc_fixed_same_route",
+      "run_id": "51848d8b829b4a878715db04a610f246",
+      "status": "concept_checked_with_limits",
+      "mtow_kg": 1400.0,
+      "block_fuel_kg": 118.38920821456266,
+      "fuel_by_method_kg": {
+        "constant_bsfc": 118.38920821456486
+      },
+      "economy_fuel_fraction": 0.0,
+      "power_kw": 157.45820135450575,
+      "wing_area_m2": 15.883786848072559,
+      "iterations": 4,
+      "mass_budget_margin_kg": 79.90951318742714,
+      "upper_bound_margin_kg": null,
+      "diagnostics": []
+    },
+    {
+      "case": "constant_bsfc_fixed_loiter",
+      "run_id": "8a3c7a8274934f42a474a6e023d7acc8",
+      "status": "concept_checked_with_limits",
+      "mtow_kg": 1400.0,
+      "block_fuel_kg": 90.42160002855131,
+      "fuel_by_method_kg": {
+        "constant_bsfc": 90.42160002855074
+      },
+      "economy_fuel_fraction": 0.0,
+      "power_kw": 157.45820135450575,
+      "wing_area_m2": 15.883786848072559,
+      "iterations": 4,
+      "mass_budget_margin_kg": 107.87712137343851,
+      "upper_bound_margin_kg": null,
+      "diagnostics": []
+    },
+    {
+      "case": "constant_bsfc_upper_bound_range",
+      "run_id": "f8ab5892735d40548ec50e42434afd2d",
+      "status": "concept_checked_with_limits",
+      "mtow_kg": 1229.4159528684945,
+      "block_fuel_kg": 109.41544853610884,
+      "fuel_by_method_kg": {
+        "constant_bsfc": 109.41544853610999
+      },
+      "economy_fuel_fraction": 0.0,
+      "power_kw": 138.27258903943496,
+      "wing_area_m2": 13.948414959273704,
+      "iterations": 33,
+      "mass_budget_margin_kg": -0.06095529104072739,
+      "upper_bound_margin_kg": 270.5840471315055,
+      "diagnostics": []
+    },
+    {
+      "case": "constant_bsfc_upper_bound_endurance",
+      "run_id": "6e8ecf5178464d0ba13a874af70f2fb3",
+      "status": "concept_checked_with_limits",
+      "mtow_kg": 1239.6569955818084,
+      "block_fuel_kg": 114.77576473000437,
+      "fuel_by_method_kg": {
+        "constant_bsfc": 114.77576473000568
+      },
+      "economy_fuel_fraction": 0.0,
+      "power_kw": 139.42440058631573,
+      "wing_area_m2": 14.064605344673907,
+      "iterations": 33,
+      "mass_budget_margin_kg": -0.06710676720012998,
+      "upper_bound_margin_kg": 260.34300441819164,
+      "diagnostics": []
+    },
+    {
+      "case": "constant_bsfc_upper_bound_same_route",
+      "run_id": "73211046d9b444c18110fcea40480ed7",
+      "status": "concept_checked_with_limits",
+      "mtow_kg": 1216.9631116023252,
+      "block_fuel_kg": 102.91092800638147,
+      "fuel_by_method_kg": {
+        "constant_bsfc": 102.91092800638032
+      },
+      "economy_fuel_fraction": 0.0,
+      "power_kw": 136.8720161912034,
+      "wing_area_m2": 13.807130476184621,
+      "iterations": 32,
+      "mass_budget_margin_kg": -0.06927969435673731,
+      "upper_bound_margin_kg": 283.03688839767483,
+      "diagnostics": []
+    },
+    {
+      "case": "constant_bsfc_upper_bound_loiter",
+      "run_id": "c168190c8049419f980ffb1ad4cf2da7",
+      "status": "concept_checked_with_limits",
+      "mtow_kg": 1163.9921633245895,
+      "block_fuel_kg": 75.17859559179034,
+      "fuel_by_method_kg": {
+        "constant_bsfc": 75.17859559178822
+      },
+      "economy_fuel_fraction": 0.0,
+      "power_kw": 130.9143660198785,
+      "wing_area_m2": 13.206145296481887,
+      "iterations": 30,
+      "mass_budget_margin_kg": -0.06831395700805842,
+      "upper_bound_margin_kg": 336.00783667541054,
+      "diagnostics": []
+    },
+    {
+      "case": "piper_economy_reference_solve_range",
+      "run_id": "50a6f2db2158454c9879d71d1ff63e37",
+      "status": "concept_checked_with_limits",
+      "mtow_kg": 1183.3047476789511,
+      "block_fuel_kg": 85.29001824946424,
+      "fuel_by_method_kg": {
+        "off_reference_base_bsfc": 8.408822815749101,
+        "economy_reference": 76.88119543371484
+      },
+      "economy_fuel_fraction": 0.90140906300249,
+      "power_kw": 133.0864551598392,
+      "wing_area_m2": 13.425257420317672,
+      "iterations": 31,
+      "mass_budget_margin_kg": -0.06415481681551682,
+      "upper_bound_margin_kg": null,
+      "diagnostics": []
+    },
+    {
+      "case": "piper_economy_reference_solve_endurance",
+      "run_id": "2f449c0e1f034fb2b099ee1b366ae65f",
+      "status": "concept_checked_with_limits",
+      "mtow_kg": 1190.8361439409023,
+      "block_fuel_kg": 89.23826670450006,
+      "fuel_by_method_kg": {
+        "off_reference_base_bsfc": 8.457433043561181,
+        "economy_reference": 80.78083366093745
+      },
+      "economy_fuel_fraction": 0.9052263859901245,
+      "power_kw": 133.9335123806212,
+      "wing_area_m2": 13.510705343812818,
+      "iterations": 31,
+      "mass_budget_margin_kg": -0.06914556172159791,
+      "upper_bound_margin_kg": null,
+      "diagnostics": []
+    },
+    {
+      "case": "piper_economy_reference_solve_same_route",
+      "run_id": "6645dbf42c4c49aeacde1f85763f53d0",
+      "status": "concept_checked_with_limits",
+      "mtow_kg": 1216.9631116023252,
+      "block_fuel_kg": 102.91092800638147,
+      "fuel_by_method_kg": {
+        "off_reference_base_bsfc": 102.91092800638032
+      },
+      "economy_fuel_fraction": 0.0,
+      "power_kw": 136.8720161912034,
+      "wing_area_m2": 13.807130476184621,
+      "iterations": 32,
+      "mass_budget_margin_kg": -0.06927969435673731,
+      "upper_bound_margin_kg": null,
+      "diagnostics": []
+    },
+    {
+      "case": "piper_economy_reference_solve_loiter",
+      "run_id": "87350985908746be8b22467d19151f28",
+      "status": "concept_checked_with_limits",
+      "mtow_kg": 1140.7720455357855,
+      "block_fuel_kg": 62.99406651566611,
+      "fuel_by_method_kg": {
+        "off_reference_base_bsfc": 22.135707370891076,
+        "economy_reference": 40.85835914477622
+      },
+      "economy_fuel_fraction": 0.648606470493774,
+      "power_kw": 128.30279603254652,
+      "wing_area_m2": 12.942700009664387,
+      "iterations": 30,
+      "mass_budget_margin_kg": -0.053441248962599275,
+      "upper_bound_margin_kg": null,
+      "diagnostics": []
+    },
+    {
+      "case": "piper_economy_reference_fixed_range",
+      "run_id": "dab62ab92f4a4e2684197845064aff97",
+      "status": "concept_checked_with_limits",
+      "mtow_kg": 1400.0,
+      "block_fuel_kg": 100.90893811037562,
+      "fuel_by_method_kg": {
+        "off_reference_base_bsfc": 9.9487067597254,
+        "economy_reference": 90.96023135065079
+      },
+      "economy_fuel_fraction": 0.9014090630024985,
+      "power_kw": 157.45820135450575,
+      "wing_area_m2": 15.883786848072559,
+      "iterations": 4,
+      "mass_budget_margin_kg": 97.3897832916141,
+      "upper_bound_margin_kg": null,
+      "diagnostics": []
+    },
+    {
+      "case": "piper_economy_reference_fixed_endurance",
+      "run_id": "293045cc4dbc44258cf9eb6761b48f0e",
+      "status": "concept_checked_with_limits",
+      "mtow_kg": 1400.0,
+      "block_fuel_kg": 104.91248021146461,
+      "fuel_by_method_kg": {
+        "off_reference_base_bsfc": 9.942934904378632,
+        "economy_reference": 94.96954530708723
+      },
+      "economy_fuel_fraction": 0.9052263859901499,
+      "power_kw": 157.45820135450575,
+      "wing_area_m2": 15.883786848072559,
+      "iterations": 4,
+      "mass_budget_margin_kg": 93.3862411905252,
+      "upper_bound_margin_kg": null,
+      "diagnostics": []
+    },
+    {
+      "case": "piper_economy_reference_fixed_same_route",
+      "run_id": "fec5d4e0e0f24745b34d61d22f0cc12d",
+      "status": "concept_checked_with_limits",
+      "mtow_kg": 1400.0,
+      "block_fuel_kg": 118.38920821456266,
+      "fuel_by_method_kg": {
+        "off_reference_base_bsfc": 118.38920821456486
+      },
+      "economy_fuel_fraction": 0.0,
+      "power_kw": 157.45820135450575,
+      "wing_area_m2": 15.883786848072559,
+      "iterations": 4,
+      "mass_budget_margin_kg": 79.90951318742714,
+      "upper_bound_margin_kg": null,
+      "diagnostics": []
+    },
+    {
+      "case": "piper_economy_reference_fixed_loiter",
+      "run_id": "0a3f56e7f42b42a098ded2d7edf124b6",
+      "status": "concept_checked_with_limits",
+      "mtow_kg": 1400.0,
+      "block_fuel_kg": 77.30877826736446,
+      "fuel_by_method_kg": {
+        "off_reference_base_bsfc": 27.165804457184453,
+        "economy_reference": 50.142973810180294
+      },
+      "economy_fuel_fraction": 0.6486064704937643,
+      "power_kw": 157.45820135450575,
+      "wing_area_m2": 15.883786848072559,
+      "iterations": 4,
+      "mass_budget_margin_kg": 120.98994313462526,
+      "upper_bound_margin_kg": null,
+      "diagnostics": []
+    },
+    {
+      "case": "piper_economy_reference_upper_bound_range",
+      "run_id": "009589d5216741e88da88f054410d9b1",
+      "status": "concept_checked_with_limits",
+      "mtow_kg": 1183.3047476789511,
+      "block_fuel_kg": 85.29001824946424,
+      "fuel_by_method_kg": {
+        "off_reference_base_bsfc": 8.408822815749101,
+        "economy_reference": 76.88119543371484
+      },
+      "economy_fuel_fraction": 0.90140906300249,
+      "power_kw": 133.0864551598392,
+      "wing_area_m2": 13.425257420317672,
+      "iterations": 31,
+      "mass_budget_margin_kg": -0.06415481681551682,
+      "upper_bound_margin_kg": 316.6952523210489,
+      "diagnostics": []
+    },
+    {
+      "case": "piper_economy_reference_upper_bound_endurance",
+      "run_id": "8d883627453d4feab1839814d3f47ebf",
+      "status": "concept_checked_with_limits",
+      "mtow_kg": 1190.8361439409023,
+      "block_fuel_kg": 89.23826670450006,
+      "fuel_by_method_kg": {
+        "off_reference_base_bsfc": 8.457433043561181,
+        "economy_reference": 80.78083366093745
+      },
+      "economy_fuel_fraction": 0.9052263859901245,
+      "power_kw": 133.9335123806212,
+      "wing_area_m2": 13.510705343812818,
+      "iterations": 31,
+      "mass_budget_margin_kg": -0.06914556172159791,
+      "upper_bound_margin_kg": 309.1638560590977,
+      "diagnostics": []
+    },
+    {
+      "case": "piper_economy_reference_upper_bound_same_route",
+      "run_id": "6e94d13c908d48d580ebb98a99922938",
+      "status": "concept_checked_with_limits",
+      "mtow_kg": 1216.9631116023252,
+      "block_fuel_kg": 102.91092800638147,
+      "fuel_by_method_kg": {
+        "off_reference_base_bsfc": 102.91092800638032
+      },
+      "economy_fuel_fraction": 0.0,
+      "power_kw": 136.8720161912034,
+      "wing_area_m2": 13.807130476184621,
+      "iterations": 32,
+      "mass_budget_margin_kg": -0.06927969435673731,
+      "upper_bound_margin_kg": 283.03688839767483,
+      "diagnostics": []
+    },
+    {
+      "case": "piper_economy_reference_upper_bound_loiter",
+      "run_id": "0134dd250c2c4219aa8aaa1eab33afa1",
+      "status": "concept_checked_with_limits",
+      "mtow_kg": 1140.7720455357855,
+      "block_fuel_kg": 62.99406651566611,
+      "fuel_by_method_kg": {
+        "off_reference_base_bsfc": 22.135707370891076,
+        "economy_reference": 40.85835914477622
+      },
+      "economy_fuel_fraction": 0.648606470493774,
+      "power_kw": 128.30279603254652,
+      "wing_area_m2": 12.942700009664387,
+      "iterations": 30,
+      "mass_budget_margin_kg": -0.053441248962599275,
+      "upper_bound_margin_kg": 359.22795446421446,
+      "diagnostics": []
+    },
+    {
+      "case": "fixed_excess",
+      "run_id": "7f121cdc747141a68ae3f807a79c6f1f",
+      "status": "constraints_not_met",
+      "mtow_kg": 1000.0,
+      "block_fuel_kg": 72.07781293598319,
+      "fuel_by_method_kg": {
+        "off_reference_base_bsfc": 7.106219114089572,
+        "economy_reference": 64.97159382189346
+      },
+      "economy_fuel_fraction": 0.9014090630024915,
+      "power_kw": 112.47014382464697,
+      "wing_area_m2": 11.345562034337542,
+      "iterations": 4,
+      "mass_budget_margin_kg": -83.06858301320949,
+      "upper_bound_margin_kg": null,
+      "diagnostics": []
+    },
+    {
+      "case": "upper_excess",
+      "run_id": "17f70742fff64643b1b20e25e060cc3d",
+      "status": "constraints_not_met",
+      "mtow_kg": 1183.3047476789511,
+      "block_fuel_kg": 85.29001824946424,
+      "fuel_by_method_kg": {
+        "off_reference_base_bsfc": 8.408822815749101,
+        "economy_reference": 76.88119543371484
+      },
+      "economy_fuel_fraction": 0.90140906300249,
+      "power_kw": 133.0864551598392,
+      "wing_area_m2": 13.425257420317672,
+      "iterations": 31,
+      "mass_budget_margin_kg": -0.06415481681551682,
+      "upper_bound_margin_kg": -183.30474767895112,
+      "diagnostics": []
+    },
+    {
+      "case": "task_conflict",
+      "run_id": "07e37fce5ffe40648b34b891f3fe8c71",
+      "status": "out_of_domain",
+      "mtow_kg": null,
+      "block_fuel_kg": null,
+      "fuel_by_method_kg": null,
+      "economy_fuel_fraction": null,
+      "power_kw": null,
+      "wing_area_m2": null,
+      "iterations": 0,
+      "mass_budget_margin_kg": null,
+      "upper_bound_margin_kg": null,
+      "diagnostics": [
+        "同航段航程/航时要求需低于当前允许最小平飞速度；不能自动追加留空"
+      ]
+    }
+  ],
+  "comparison": {
+    "run_id": "9f9a29f2fd3a4afca46e33dbcd395268",
+    "child_runs": [
+      "54a568955bf945a783dc4b54a32ad812",
+      "f1f00254a47f42109d913d0779eb9ee8",
+      "5934f4a32d364c70821c3517d2961d00"
+    ],
+    "cards": [
+      {
+        "name": "piper_economy_reference_solve_range · A",
+        "metrics": {
+          "mtow_kg": 1183.3047476789511,
+          "owe_kg": 748.4116003842018,
+          "block_fuel_kg": 85.29001824946424,
+          "reserve_kg": 14.0537990327067,
+          "power_kw": 133.0864551598392,
+          "area_m2": 13.425257420317672,
+          "span_m": 10.034412322223087,
+          "duration_h": 3.81583197660797,
+          "route_km": 800.0,
+          "cg_x_m": 2.688930060718382
+        },
+        "checks": {
+          "mass_budget": true,
+          "mtow_upper_bound": true,
+          "fuel_capacity": true,
+          "landing_stall": true,
+          "power_available": true,
+          "clean_lift": true,
+          "range": true,
+          "endurance": true
+        }
+      },
+      {
+        "name": "piper_economy_reference_solve_range · B",
+        "metrics": {
+          "mtow_kg": 1178.1195329776438,
+          "owe_kg": 745.7080866374428,
+          "block_fuel_kg": 82.79635161754817,
+          "reserve_kg": 13.664744705072781,
+          "power_kw": 129.20295647443268,
+          "area_m2": 13.366428245262632,
+          "span_m": 10.501096753359466,
+          "duration_h": 3.81583197660797,
+          "route_km": 800.0,
+          "cg_x_m": 2.7012273848073716
+        },
+        "checks": {
+          "mass_budget": true,
+          "mtow_upper_bound": true,
+          "fuel_capacity": true,
+          "landing_stall": true,
+          "power_available": true,
+          "clean_lift": true,
+          "range": true,
+          "endurance": true
+        }
+      },
+      {
+        "name": "piper_economy_reference_solve_range · C",
+        "metrics": {
+          "mtow_kg": 1175.4904634171899,
+          "owe_kg": 745.0232968896003,
+          "block_fuel_kg": 80.84386463384077,
+          "reserve_kg": 13.36119511350995,
+          "power_kw": 126.17050297103923,
+          "area_m2": 13.336599973471913,
+          "span_m": 10.955792977290471,
+          "duration_h": 3.81583197660797,
+          "route_km": 800.0,
+          "cg_x_m": 2.711704045775273
+        },
+        "checks": {
+          "mass_budget": true,
+          "mtow_upper_bound": true,
+          "fuel_capacity": true,
+          "landing_stall": true,
+          "power_available": true,
+          "clean_lift": true,
+          "range": true,
+          "endurance": true
+        }
+      }
+    ]
+  },
+  "replay_run": "09459a6dd9374b64be141ee55d8921c1",
+  "fuel_run": "44ad488e05f44a37b2197c5ef4a27c21",
+  "legacy_cruise_run": "ee942cc986f54b809defd105d51adb23",
+  "fastga_reference": {
+    "run_id": "86a196d23ff1410790bf065dacca74e2",
+    "status": "executed_with_limits",
+    "outputs_kg": {
+      "data:weight:aircraft:MTOW": 1710.197080992762,
+      "data:weight:aircraft:OWE": 1081.0432731126027,
+      "data:mission:sizing:fuel": 249.15380788015943
+    },
+    "baseline_difference_kg": {
+      "data:weight:aircraft:MTOW": 0.0,
+      "data:weight:aircraft:OWE": 0.0,
+      "data:mission:sizing:fuel": 0.0
+    },
+    "domain_checks": [
+      {
+        "parameter": "elevator_chord_ratio",
+        "value": 0.34,
+        "lower": 0.1006849315068493,
+        "upper": 0.3,
+        "correlation": "delta_cd_plain_flap",
+        "within_range": false
+      },
+      {
+        "parameter": "horizontal_to_vertical_tail_area",
+        "value": 2.6241434319196837,
+        "lower": 8.16493161869e-05,
+        "upper": 1.975076546233926,
+        "correlation": "k_vh",
+        "within_range": false
+      },
+      {
+        "parameter": "takeoff_elevator_angle_deg",
+        "value": -0.3490658503988659,
+        "lower": -0.08,
+        "upper": 79.32,
+        "correlation": "ComputeSingleSlottedLiftEffectiveness",
+        "within_range": false
+      }
+    ]
+  },
+  "economy_step_check": {
+    "dt_s": [
+      30,
+      15
+    ],
+    "mtow_relative": 1.993483134121732e-08,
+    "fuel_relative": 1.4500155631758105e-07,
+    "evidence_sha256": "1cdd1f4b7f696b32b1851b45500f0dad418f0955d30492b1ee773d30cccb15ca"
+  },
+  "ui": {
+    "passed": true,
+    "single_run": "a0445eb72574413a9951e943c08cf889",
+    "comparison_run": "962a5fd4909a48f599394bf1a46b5702",
+    "observed_actions": [
+      "new design",
+      "economy model and confirmation",
+      "single sizing",
+      "three-design sizing",
+      "local save",
+      "download HTML and WDH",
+      "close tab",
+      "reopen app",
+      "open saved comparison",
+      "download historical report",
+      "import downloaded WDH"
+    ],
+    "checks": {
+      "single_report_bytes_match": true,
+      "reopened_report_bytes_match": true,
+      "downloaded_bundle_matches_records": true,
+      "single_saved": true,
+      "comparison_saved_and_reimported": true
+    },
+    "saved": [
+      {
+        "archive_id": "7b38faa0c5f345ce87a58ec1f06c3a13",
+        "kind": "comparison",
+        "bundle_sha256": "5a9802037bbae7913bbf535dcda012d5b056046b32fbc8ab882329df87c2b966",
+        "run_ids": [
+          "962a5fd4909a48f599394bf1a46b5702",
+          "03a8989055814b36ad6ac862f1d63d60",
+          "81781967049449e38d7c8ecbba189c1c",
+          "f9806e6ea8994c20b984ce6d74875bca"
+        ]
+      },
+      {
+        "archive_id": "7515e59cc6b64b84ba4c7f9900bf91b8",
+        "kind": "comparison",
+        "bundle_sha256": "6dcd175596462e899378b35fdd69f977a97715be35701959c33c96e5e404798b",
+        "run_ids": [
+          "962a5fd4909a48f599394bf1a46b5702",
+          "03a8989055814b36ad6ac862f1d63d60",
+          "81781967049449e38d7c8ecbba189c1c",
+          "f9806e6ea8994c20b984ce6d74875bca"
+        ]
+      },
+      {
+        "archive_id": "7d4010162fe945babaa01eb8745fbfb8",
+        "kind": "design",
+        "bundle_sha256": "ba003b06d6b779be409cea98b94593b255f475888e0edb2271b8ad88cb0a1976",
+        "run_ids": [
+          "a0445eb72574413a9951e943c08cf889"
+        ]
+      }
+    ],
+    "screenshot_sha256": "1b6afe86f46e80fb4ff6bb91062f30a4edc5ccab89ab3aa507501e44848a878f",
+    "html_print_preview": "not_executed_browser_file_protocol_blocked",
+    "final_ui_only_patch": {
+      "files": [
+        "project_ui.py"
+      ],
+      "change": "Chinese comparison archive status and metric units; separately AppTest verified"
+    },
+    "confirmation_origin": "synthetic workflow test, not user aircraft approval"
+  },
+  "evidence_hashes": {
+    "comparison.json": "217e23ec0e7c43832fb09fda052c810e549bfd71c61a8d58bd16aab86f7759c6",
+    "complete-comparison.wdh": "50db11c8c2848429764da710b2d31f3badb170d7522a9b9317445a8ddcb20176",
+    "complete-design.wdh": "92b9dbfe709fd2c38e7bcefb1c1081ecb44d8fe946a74279637c7a37a9457ff5",
+    "constant_bsfc_fixed_endurance.json": "aa0569567ce4f6d445b23728f6ddade612f29ea6be68bf533a48e5731350a453",
+    "constant_bsfc_fixed_loiter.json": "740387fb314e912f9cdbc7660ebc81e6942ed18bf04349eef674ef960aa0fd5d",
+    "constant_bsfc_fixed_range.json": "aedc75535f3bd144bd377bb165e4bd613bbee6acada7462056368e6f14e1dd69",
+    "constant_bsfc_fixed_same_route.json": "7231ec24977055ca0eca057fb943f0bc78be2cf681c80edce8ff919499318f1f",
+    "constant_bsfc_solve_endurance.json": "9362bd04012c2fef65f5b8e75e91431b8a4def3cb83893e7f0846bc347e6d9f1",
+    "constant_bsfc_solve_loiter.json": "17c8d7577fd6d938f640dd5a5957ea4b699fbcd8f7b5c589fddf1133d70268b0",
+    "constant_bsfc_solve_range.json": "c9e7877b6eb574c128c564b36cbe88695974d6e65aaaf83402c211463695536b",
+    "constant_bsfc_solve_same_route.json": "7acdbc2d9bf3ab02b9a00f07cefb27c6ca41890073af2a689a25f01608f82fc2",
+    "constant_bsfc_upper_bound_endurance.json": "474d1732e315bc2e0df084a05165628ae73ca7357131e5f12b5f288c7a111bca",
+    "constant_bsfc_upper_bound_loiter.json": "9bb3b5d7d98ff2bfa3d447b1471c8c5ce6b7d420e1d9591e89846cb725025b04",
+    "constant_bsfc_upper_bound_range.json": "6ada64b44937d2c7587b7d97bd7b642d4fab9ea34317ce584eedc81a14b2f17e",
+    "constant_bsfc_upper_bound_same_route.json": "9c640809d258bd1cdffe835fe0a91325710a8f48be18290b04afc7ca841fde5f",
+    "fastga_reference.json": "4112aece8bf4ae6d0350b0129c041ad56ca5ca03325fbd5038de4a029058f38d",
+    "fixed_excess.json": "76ad80b8a6b09aa97f322e14d7de55c58a35314299773a9a4de35a8b2338b1fd",
+    "fuel_evidence.json": "50cccf967d6072069de3237a72d74bdc6bc88fea92f58f8a91da2574b22df72b",
+    "legacy_cruise.json": "265b093d2c0d1f56eb0e924f94a96cddde1a93428c3398b06c39d1c2ee9c02aa",
+    "piper_economy_reference_fixed_endurance.json": "11fc8c24fff07b5117b822ec44c527aaad96f8270db630536426f9123f661b75",
+    "piper_economy_reference_fixed_loiter.json": "4d9c531035bab17fec423bed7be1a82feb17646aae8fd4ef65423e2d59655372",
+    "piper_economy_reference_fixed_range.json": "02180a116c64c36f157ab51c5332de9516e72b185b40df0b56204c8111216e96",
+    "piper_economy_reference_fixed_same_route.json": "40c537bafa744e891389cdf2a8184aef20c2f22ebcd28347cf73cea547a6d8dc",
+    "piper_economy_reference_solve_endurance.json": "40279bfd7619ea8be4c895127999f7b862f4d217e5c1d14f198e33856d910e64",
+    "piper_economy_reference_solve_loiter.json": "2c0f64b9b7b3b82d9edac409024cd0e08e8a359cbbfbc171051cd5d7ff628c08",
+    "piper_economy_reference_solve_range.json": "e838c203eee69bdfa3420affe183f8a3039a08a4d566ba2321d7e381561b51f7",
+    "piper_economy_reference_solve_same_route.json": "e7edb3cdc3029afe0c258208d1d5e19b65b253b5d6517bb3d40c97181e74e361",
+    "piper_economy_reference_upper_bound_endurance.json": "267620c74b22cfb5971d351f2df08a6513b5df7c69acfbf1aa57c1df1fcc9d87",
+    "piper_economy_reference_upper_bound_loiter.json": "c5ad0a9fdacbcb59b7796a1e98ca926b3a7295e83b902ab0babd643215037462",
+    "piper_economy_reference_upper_bound_range.json": "407a9e29897b0ea5e530b0083eb399696ac194494f367bd068d9f8e21d5e4e2b",
+    "piper_economy_reference_upper_bound_same_route.json": "5589e0dfd816917614548509fd9b5c4e53bb7f8e7f14d88a3b8ac82917e2c84b",
+    "replay.json": "019d3a6f61ecfae4b780cfeb761ceb19f5e10fbe070b21fc2dcefee8f5730f46",
+    "task_conflict.json": "35bdce42c9d21a264f988c5a204332e0b80f52a7a464f5de0ebdbc0d41e8cfd2",
+    "upper_excess.json": "b7b2d758386f78ba283afb89cfa22712f2a7821d510a90305244c1dea78d3c3c"
+  },
+  "source_hashes": {
+    "adapters.py": "b72ca7effe5311328a85bdc8b06ad583b9cabed91751094fa5019c2b2f6a29d5",
+    "box_comparison.py": "bf8e8a4c19e59c24e53a9cbbcc2add9ef42ece3343f902663795c52a44e783b5",
+    "buckling.py": "a473b5d91d835f3f100473e11aad1185f6597854e8cdd87960a4b22658399720",
+    "calculix_benchmark.py": "f3bab4818455864f4324f62a96f1fff25cdaf42f08e8b42b6d548c8e20a630ec",
+    "cli.py": "d912b2144c1377e5019409ec82962106340e22213eb59fdd37e9c3199b918087",
+    "comparison_service.py": "f8570e21dab2b69910159ced9d5bd56687c6749dcbcdfd20b30ab58eab48d766",
+    "comparison_ui.py": "6c52ae50f238f74410b5a315034456b8c0780664f18cf06b9cf12131f1e74729",
+    "design_cards.py": "252e80effbf34623f2d6bec7451adb9977ff45db48a5c4c2d74378d57da01dba",
+    "design_comparison.py": "0f057f8d30f0452bd65d564748cd9c048d92eddbb6b7fe5f2384b7df3cb287dd",
+    "design_report.py": "b89ba1f627deea0bb2e3264e8e8faa5fbcfb94bcf9f0d19505f229c8f965641a",
+    "design_service.py": "45abc8b6ac761c6c489fd27b0119b7e9258563f4548d6e86bae1d1bd2ad22c88",
+    "design_ui.py": "7b42e515ccf91c41928dd986d23eb30646ae1a28b155f1e0e37bc39b8f6b3831",
+    "fastga_compat.py": "6ba7f14ef2c6046533ef6cef6d93355a1db91255bab46c9746f1ae5a14a94fab",
+    "fastga_diagnostics.py": "bc93d372e3e5bb7f5dc4e068f4dfb3b14dfda42600ec8f84a3b51e06f631b887",
+    "fastga_interface.py": "cb0852101644a0a5a9e34fb2cfb2a249d9a148988dfdc05a0cf28f41021c7b69",
+    "fastga_mass.py": "c44a77b2f042ef8cf2834dcf0bf15a151bd30b95e1133da5a4878c7aa3077af8",
+    "fastga_worker.py": "a25185200db8ebb0222eb307f3852c7c83c15ed9c98c3c8b1bc92fed8958375f",
+    "fea_mesh.py": "f99f1817b20d85089a64d4248684c64a8ba7180268fe11b91a14ed415dc729e3",
+    "flight_loads.py": "4d9d7e8bcd24d59131337cbdb5953e90ed432853e5c6c4b359857a7395247890",
+    "flight_service.py": "72dcf0c2a247bd1ab560819a1a295141f459143377c964ecfac24129c4bc5645",
+    "flight_ui.py": "fb4b7a8a3ee36f1a3f01e65c719eed70c8150473f391047523d8d8ff74d0fa78",
+    "fuel_model.py": "2678359dc34e16e0aa7c881a479f25ed3645fb7bb9e6afd3697f82b945f0da66",
+    "fuel_validation.py": "1485a6bd9f9b870385fb5f475da73ba7a838e2eb0f1c38199c59732bfc8d64b4",
+    "mechanics.py": "aece8baec13b7d9a84e133720f82a33d70444a38c980b86cf727cbdab0973650",
+    "model.py": "345afae92c6b8dd09435ebb31ce234ddf40e0d5e615e8a2fca4f2e85cc058b11",
+    "oas_benchmark.py": "74d2900b9dbba587c701bd2fc92ba75a8bf09ec17678c03ac67c1f00cdff5c56",
+    "oas_wingbox.py": "e8d0b503f1f1ba3fb7d77abdda14d376820fff41ef32f1b5a97e187d0f2f737b",
+    "plate_buckling.py": "7448faec93a91382127a0ade183b69d26074062be66ddaab1607b249b1fd9c09",
+    "plate_service.py": "0c740429e6591a1b020a334beb344fe3f1a8325569498cfdd43da0b2d9fb7301",
+    "plate_ui.py": "47adf0c1efec842d669cb199dfa3f8dfb47d21e8bd67f9df846bbe0813e6b0d9",
+    "project_archive.py": "c55777707448f35e49a2cd0ba5b44ca2b658fcc4f0065558cfc618281b6d75d3",
+    "project_ui.py": "f43e737cab16e693e190b773c45a61938d8932df533d54a2a6164268c4c4b12c",
+    "reference_cruise.py": "7987b65965090c774f9043e126a10724fab4d48e3eb87120c33891cb3764242a",
+    "requirements.py": "af49146e331235fba487e736a5ae4ba04b40070d74e735bf1f44f670d010d4d9",
+    "service.py": "704299c2dfd3befd5f2d7845e29cce38dbcb2e8a947e4bb8e8489b831a4e9aef",
+    "shell_loads.py": "a06bdbb345ab2ac1cf18265eec95815accd6b3f2bb0732a7eaaee9c09208a397",
+    "shell_static.py": "1c23aabbf1395b4b2a7729b135428b130ff2d252397b3420bb3e287c7fee4da4",
+    "shell_validation.py": "30d6c706a44d32d131d0ab6c7f9e41508c82bd39aabe8f3cab26e28cab68be92",
+    "sizing.py": "5ebdff7ca091511d026bd907c4f06c2b76c86f2647dd743adedbdad931792687",
+    "sizing_config.py": "d4f58966878dd603a529866772ec13983ca62435bc0dcc8fd920ed5a6d2bc8c3",
+    "sizing_physics.py": "157be91854e9a4d722902b5ff3156316a33953115756f96b96b22d3a5ef3519d",
+    "sizing_service.py": "e13f8f8d9fc91be4e19d5c1d2b5607634a1760c9cfbd5196872060f86f08a41f",
+    "sizing_ui.py": "041b75b26a2c23cb89c92ef3276edbaf8ae067542dc4a3c7031b6375816486d5",
+    "sizing_worker.py": "8a1beb33e3764ed21660e8fd2dfea387fa371d0f7ea5d06d8ebb966726d15cbb",
+    "static_service.py": "941de7a411c9814b8c73883b248aecbb04ebb812cf380bafb7e3f5f7b39528f9",
+    "structural_sensitivity.py": "cf1527dafd494a67281b12414e4f223e13e31c76252ff2f1f7592bd3ce77e6fc",
+    "structure_service.py": "5703dd5d078b0af7dfb078b661beace113b627e97c304b9d612af39fe45ad12b",
+    "vsp_structure_worker.py": "ee7cfff132602d9b5c6875b54c956cbc6d381fd4ef0228cdb7455add725899bc",
+    "vsp_worker.py": "aba49475b1221a2ad13d73644a38f508bcecc093859184e78e782282a7f73abd",
+    "__init__.py": "ce615eac4fb3192bba5958d5873d9ee3e08fd96436e79fa2010798c31c26ef70",
+    "fastga_plugins/furniture.py": "45b5a219b73c6380a63418f0e64f1f66d189c7943147f39faa2e98d118f719bf",
+    "fastga_plugins/reserve.py": "ceb05f0f889a91b66bea34856f0dbcf0de594e895f16edf0cdbdef0bbe2b2cda",
+    "fastga_plugins/unusable_fuel.py": "724433d55934a868696f27553b9924c75f99ca6594df274045dfaf9bf5a00f21",
+    "fastga_plugins/__init__.py": "652c53dda99eb1a2b439a1aca6f0ec81c25fed142d761e63ddf46af578a41a17"
+  },
+  "limits": [
+    "same-source held-out fuel points are not independent experiments",
+    "independent same-condition physical fuel validation missing",
+    "trim, takeoff/landing distance, CG envelope and structural sizing mass feedback not implemented",
+    "HTML print preview not executed; professional review not signed"
+  ]
+}
