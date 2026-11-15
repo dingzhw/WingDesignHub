@@ -21,7 +21,7 @@ def write_json(path, value):
 
 def run_reference(root, name):
     import sys
-    if name not in ("fastga", "calculix", "oas", "vsp_structure"):
+    if name not in ("fastga", "calculix", "oas", "vsp_structure", "oas_wingbox", "shell_static"):
         raise ValueError("未注册的基准任务")
     root = Path(root).resolve()
     run_id = uuid4().hex
@@ -33,7 +33,7 @@ def run_reference(root, name):
               "worker_sha256": sha256(root/"scripts"/f"validate_{name}.py"),
               "physical_validation_passed": False}
     try:
-        execute([sys.executable, str(root/"scripts"/f"validate_{name}.py"), str(work)], work, timeout=600)
+        execute([sys.executable, "-X", "utf8", str(root/"scripts"/f"validate_{name}.py"), str(work)], work, timeout=600)
         result["summary"] = json.loads((work/"summary.json").read_text(encoding="utf-8"))
         result["status"] = result["summary"].get("status", "executed")
         if result["summary"].get("passed") is False:

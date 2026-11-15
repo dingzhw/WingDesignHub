@@ -1,6 +1,6 @@
 # WingDesignHub
 
-面向固定翼飞机概念设计的本地工程工作台。当前版本 **V0.1.2**：OpenAeroStruct 结构基准与 OpenVSP 结构网格接入版。
+面向固定翼飞机概念设计的本地工程工作台。当前版本 **V0.1.3**：代表半翼静力、守恒载荷映射与 OpenAeroStruct 官方翼盒接入版。
 
 目标是整合 FAST-GA/OpenMDAO、OpenVSP、AVL/XFOIL、CCBlade、OpenAeroStruct、CalculiX 等工具，逐步覆盖 AAA 的十个核心模块。当前提供合成机翼/梁案例、真实 OpenVSP/AVL 调用、载荷映射、计算记录和中文界面。完整整机设计与 AI 功能仍按路线图开发。
 
@@ -22,6 +22,10 @@ V0.1.2 新增两项结构入口：
 
 网格加密及翼展变化可在“公开基准算例”中一键复算。部分中心肋交线组合会产生退化单元，程序拒绝通过并显示诊断。详见 [V0.1.2 验证与适用范围](docs/VALIDATION_V0.1.2.md)。
 
+V0.1.3 新增“机翼静力”：保留默认方案，点击“一键生成并校核”，自动生成半翼网格、传递规定载荷并调用 CalculiX。默认半翼限制升力 5000 N、极限系数 1.5、根部全固支；最大网格边长 0.2 m。页面显示位移、积分点应力和规定限值下的屈服筛查裕度，可下载完整输入、三维结果和载荷记录。
+
+“公开基准算例”新增 OAS 官方翼盒与燃油卸载检查，以及代表半翼三档网格、正负/双倍载荷和 S6 解析梁验证。当前静力工况为独立合成输入，尚未覆盖全机载荷包线、屈曲、真实材料许用值或结构重量回写。详见 [V0.1.3 验证与适用范围](docs/VALIDATION_V0.1.3.md)。
+
 CalculiX 基准要求 2.23。其他电脑可从 [CalculiX Windows 项目](https://github.com/calculix/CalculiX-Windows)获取对应便携包，在“工具设置”填写 `bin/ccx.exe`，无需修改系统 PATH。完整数值及来源见 [V0.1.1 验证记录](docs/VALIDATION_V0.1.1.md)。
 
 首次在其他电脑部署：安装 Python 3 后双击 `Setup WingDesignHub.cmd`。脚本创建项目专用环境，不修改系统 PATH。OpenVSP、AVL 等外部软件需要单独配置；当前示范机的几何模板仅支持矩形 NACA0012 机翼。
@@ -39,6 +43,9 @@ CalculiX 基准要求 2.23。其他电脑可从 [CalculiX Windows 项目](https:
 .venv\Scripts\python.exe -m wingdesignhub.cli reference --benchmark oas
 .venv\Scripts\python.exe -m wingdesignhub.cli reference --benchmark vsp_structure
 .venv\Scripts\python.exe -m wingdesignhub.cli mesh --input examples/structure_mesh.json
+.venv\Scripts\python.exe -m wingdesignhub.cli static --input examples/wing_static.json
+.venv\Scripts\python.exe -m wingdesignhub.cli reference --benchmark oas_wingbox
+.venv\Scripts\python.exe -m wingdesignhub.cli reference --benchmark shell_static
 ```
 
 计算快照、日志和输入/代码/输出哈希保存在 `runs`；本机路径保存在 `local`，都不进入版本管理。当前不复用计算缓存，每次运行独立保存；后续缓存必须验证完整输入与软件版本。

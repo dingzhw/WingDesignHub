@@ -21,3 +21,7 @@ CalculiX 包来源：`https://raw.githubusercontent.com/calculix/CalculiX-Window
 V0.1.2 的 `oas_benchmark.py` 中 CRM 设置改编自 OpenAeroStruct **v2.12.1** 的 `tests/integration_tests/test_struct.py`，保留该版本参考质量与物理输入，新增结果记录、输入快照、失败判断和独立解析测试。原始源文件 SHA-256 为 `a4553c51f17df50f037d7bde6913c9a9d6761d6a26fa4d2926f9597852c9f40d`，原许可副本在 `third_party/OpenAeroStruct-LICENSE.txt`。改编文件明确标注来源与修改。
 
 OpenVSP 结构接口依据安装包 3.56.0 自带 API 测试及 [FEA API 文档](https://openvsp.org/pyapi_docs/3.56.0/groups/FEAMesh.html)。本项目调用 API 生成独立合成模型，未复制 OpenVSP 原生库或其他项目飞机数据。
+
+V0.1.3 的 `oas_wingbox.py` 改编自 [OpenAeroStruct v2.12.1 官方翼盒测试](https://github.com/mdolab/OpenAeroStruct/blob/v2.12.1/tests/integration_tests/test_wingbox_analysis.py)，原测试本地文件 SHA-256 为 `4ffb25a6be8df73cd383db146dbbcc0ba3f5041fb9aa19275c7c63e1920d791b`，沿用 Apache-2.0 许可副本。保留翼型坐标、几何、载荷、燃油、材料和优化参考值；显式给出 num_x=3，将虚部为零的物理坐标转为实数，记录并显式执行优化器原本的初值裁剪，补充燃油合力检查。上游完整测试也在本地原样执行；本轮未将其导数测试替代独立梯度精度验收。
+
+CalculiX 壳单元、输出和边界依据随包 2.23 手册（6.2.13–6.2.14、7.4、7.53、7.97、7.99、7.123；[官网](https://www.dhondt.de/)）。数值字段截断通过本机构型实际复现，并核对上游 [nodes.f](https://github.com/Dhondtguido/CalculiX/blob/master/src/nodes.f) 和 [cloads.f](https://github.com/Dhondtguido/CalculiX/blob/master/src/cloads.f) 中的 `f20.0` 读取规则。本项目未修改求解器二进制或上游源码。

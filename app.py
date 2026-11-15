@@ -9,13 +9,15 @@ from wingdesignhub.service import run_analysis, generate_report, run_reference
 from wingdesignhub.adapters import inventory, tool_paths
 from wingdesignhub.fea_mesh import StructureMeshCase
 from wingdesignhub.structure_service import run_structure_mesh
+from wingdesignhub.shell_static import StaticWingCase
+from wingdesignhub.static_service import run_wing_static
 
 ROOT = Path(__file__).resolve().parent
 st.set_page_config(page_title="WingDesignHub", page_icon="✈", layout="wide")
 st.title("✈ WingDesignHub")
 st.caption(f"V{__version__} · 固定翼概念设计工作台 · P0 计算与接口验证")
 st.info("当前可以运行合成机翼/梁验证。整机总体闭环与十模块完整功能按路线图接入。")
-page = st.sidebar.radio("工作区", ["开始计算", "结构网格", "公开基准算例", "工具设置", "验证与路线图"])
+page = st.sidebar.radio("工作区", ["开始计算", "结构网格", "机翼静力", "公开基准算例", "工具设置", "验证与路线图"])
 
 if page == "开始计算":
     base = WingCase()
@@ -137,11 +139,69 @@ elif page == "结构网格":
         with st.expander("完整检查记录"):
             st.json(r)
         st.download_button("下载网格检查记录",json.dumps(r,ensure_ascii=False,indent=2),"mesh-result.json")
+elif page == "机翼静力":
+    st.subheader("代表半翼静力校核")
+    st.write("规定均布条带载荷 → 守恒映射 → 根部固支 → CalculiX 线弹性静力。默认采用四内肋金属半翼。")
+    st.caption("载荷系数只乘一次。当前工况未计自重、燃油或发动机载荷；应力限值为用户规定的合成输入。")
+    st.caption("默认最大/最小网格边长为 0.2/0.02 m；公开基准另用 0.15/0.015 m 加密核对。")
+    base=StaticWingCase()
+    upload=st.file_uploader("打开静力方案（可选）",type="json")
+    if upload:
+        try:base=StaticWingCase.from_dict(json.loads(upload.getvalue()))
+        except (ValueError,TypeError) as exc:st.error(f"方案无法读取：{exc}");st.stop()
+    with st.form("wing_static"):
+        a,b,c=st.columns(3)
+        lift=a.number_input("半翼限制升力（N）",min_value=-20000.,max_value=20000.,value=float(base.limit_lift_n),step=500.)
+        factor=b.number_input("极限载荷系数",min_value=1.,max_value=2.,value=float(base.ultimate_factor),step=.1)
+        allowable=c.number_input("规定应力限值（MPa）",min_value=0.,value=base.stress_allowable_pa/1e6)
+        with st.expander("几何、布局与网格"):
+            st.caption(f"根部全固支；材料 E={base.mesh.elastic_modulus_pa/1e9:g} GPa、ν={base.mesh.poisson_ratio:g}、ρ={base.mesh.density_kg_m3:g} kg/m³。")
+            span=st.number_input("半翼展（m）",min_value=2.,max_value=12.,value=float(base.mesh.half_span_m))
+            chord=st.number_input("弦长（m）",min_value=.5,max_value=3.,value=float(base.mesh.chord_m))
+            xload=st.number_input("载荷弦向位置（%）",min_value=15.,max_value=80.,value=base.load_x_fraction*100)
+            skin=st.number_input("蒙皮厚度（mm）",min_value=0.,max_value=30.,value=base.mesh.skin_thickness_m*1000)
+            spar=st.number_input("梁腹板厚度（mm）",min_value=0.,max_value=30.,value=base.mesh.spar_thickness_m*1000)
+            rib=st.number_input("肋板厚度（mm）",min_value=0.,max_value=30.,value=base.mesh.rib_thickness_m*1000)
+            edge=st.number_input("最大网格边长（m）",min_value=.01,max_value=1.,value=float(base.mesh.max_edge_m),step=.01)
+            min_edge=st.number_input("最小网格边长（m）",min_value=.01,max_value=1.,value=float(base.mesh.min_edge_m),step=.01)
+            st.caption(f"前/后梁 {base.mesh.front_spar_fraction:.0%}/{base.mesh.rear_spar_fraction:.0%} 弦长，内翼肋 {base.mesh.rib_count} 道，条带 {base.strip_count} 个；其余输入随方案文件保留。")
+        clicked=st.form_submit_button("一键生成并校核",type="primary")
+    data=base.to_dict()
+    data.update(limit_lift_n=lift,ultimate_factor=factor,load_x_fraction=xload/100,stress_allowable_pa=allowable*1e6)
+    data["mesh"].update(half_span_m=span,chord_m=chord,skin_thickness_m=skin/1000,spar_thickness_m=spar/1000,
+                        rib_thickness_m=rib/1000,max_edge_m=edge,min_edge_m=min_edge)
+    st.download_button("保存静力方案",json.dumps(data,ensure_ascii=False,indent=2),"wing-static.json")
+    if clicked:
+        try:
+            with st.spinner("正在生成网格、映射载荷并求解……"):
+                st.session_state["static_result"]=run_wing_static(data,ROOT)
+        except (ValueError,TypeError) as exc:st.error(str(exc))
+    if "static_result" in st.session_state:
+        r=st.session_state["static_result"];st.caption(f"最近运行编号：{r['run_id']}。修改参数后需重新运行。")
+        if r["status"]=="failed":
+            st.error(r["error"])
+            if r.get("diagnostic"):st.code(r["diagnostic"],language=None)
+        else:
+            s=r["summary"]
+            if r["status"]=="executed_with_limits":st.warning("计算已完成，规定应力限值或小变形范围未满足。")
+            else:st.success("静力计算及数值检查通过；请结合以下适用范围使用。")
+            a,b,c=st.columns(3)
+            a.metric("平均翼尖竖向位移",f"{s['tip_mean_z_m']*1000:.3f} mm")
+            b.metric("积分点峰值等效应力",f"{s['peak_von_mises_pa']/1e6:.2f} MPa")
+            c.metric("规定限值下屈服筛查裕度",f"{s['yield_margin']:.3f}")
+            st.write(f"实际半翼竖向合力：{s['mapping']['input_force_n'][2]:.2f} N；根部等效弯矩由规定载荷求得，求解平衡另用展开模型核对。")
+            for limit in s["limits"]:st.caption(limit)
+            work=ROOT/"runs"/r["run_id"]
+            for label,name in (("下载完整求解输入","static/solve/wing.inp"),("下载三维结果文件","static/solve/wing.frd"),("下载载荷映射记录","static/loads.json")):
+                st.download_button(label,(work/name).read_bytes(),Path(name).name)
+        with st.expander("完整计算记录"):st.json(r)
+        st.download_button("下载静力检查记录",json.dumps(r,ensure_ascii=False,indent=2),"static-result.json")
 elif page == "公开基准算例":
     st.subheader("复现公开软件案例")
     st.write("算例保留上游默认条件，在独立目录运行。它们用来检查软件和方法，尚未与本工作台的飞机模型联算。")
     references = {"FAST-GA 总体案例":"fastga","CalculiX 悬臂梁基准":"calculix",
-                  "OpenAeroStruct 官方结构优化与管梁验证":"oas","OpenVSP 结构网格加密与翼展变化":"vsp_structure"}
+                  "OpenAeroStruct 官方结构优化与管梁验证":"oas","OpenVSP 结构网格加密与翼展变化":"vsp_structure",
+                  "OpenAeroStruct 官方翼盒与燃油卸载":"oas_wingbox","代表半翼静力与载荷响应验证":"shell_static"}
     ref = st.selectbox("选择案例", list(references))
     st.caption("各案例保留独立计算记录。FAST-GA 可能需要数分钟；结构网格基准比较两档网格和翼展变化。")
     if st.button("运行公开案例", type="primary"):
@@ -162,7 +222,15 @@ elif page == "公开基准算例":
             st.dataframe(pd.DataFrame([{"单元数":v["elements"],"端位移（mm）":v["tip_displacement_m"]*1000,
                                         "位移相对误差":v["relative_errors"]["tip"],"应力相对误差":v["relative_errors"]["stress_midpoint"]}
                                        for v in summary["straight_tube"]]),hide_index=True)
-        if "coarse" in summary:
+        if "official_wingbox" in summary:
+            w=summary["official_wingbox"]
+            st.metric("官方 uCRM 翼盒回归质量",f"{w['mass_kg']:.6f} kg")
+            st.caption(f"相对官方值误差 {w['mass_relative_error']:.3e}；含半翼燃油卸载 {w['half_wing_fuel_force_n']:.3f} N，未含屈曲约束。")
+        if "relative_mesh_differences" in summary:
+            st.dataframe(pd.DataFrame([{"工况":key,"翼尖位移 mm":summary[key]["tip_mean_z_m"]*1000,
+                "峰值应力 MPa":summary[key]["peak_von_mises_pa"]/1e6} for key in ("coarse","fine","refined","double_load","negative_load")]),hide_index=True)
+            st.write("0.2 m 与 0.15 m 网格差异",summary["relative_mesh_differences"])
+        if "coarse" in summary and "relative_mesh_differences" not in summary:
             st.dataframe(pd.DataFrame([{"方案":name,"节点数":summary[key]["metrics"]["nodes"],
                                         "单元数":summary[key]["metrics"]["elements"],
                                         "壳体材料量 kg":summary[key]["metrics"]["shell_material_mass_kg"]}

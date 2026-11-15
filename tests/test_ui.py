@@ -87,3 +87,31 @@ def test_mesh_benchmark_failure_never_claims_pass(monkeypatch):
     assert not app.exception and app.error and not app.success
     assert any('未通过验收' in item.value for item in app.warning)
     assert not any('检查通过' in item.value for item in app.caption)
+
+
+def test_static_page_failure_is_visible(monkeypatch):
+    from wingdesignhub import static_service
+    monkeypatch.setattr(static_service,'run_wing_static',lambda *args:{'run_id':'fixture','status':'failed',
+        'error':'静力检查失败','diagnostic':'展开几何超出预期厚度范围'})
+    app=AppTest.from_file(str(Path(__file__).resolve().parents[1]/'app.py')).run(timeout=30)
+    app.sidebar.radio[0].set_value('机翼静力').run();app.button[0].click().run(timeout=30)
+    assert not app.exception and app.error and not app.success
+    assert '展开几何' in app.code[0].value
+
+
+@pytest.mark.parametrize('status',['static_checked','executed_with_limits'])
+def test_static_page_outputs_and_limit_status(monkeypatch,status):
+    from uuid import uuid4
+    from wingdesignhub import static_service
+    root=Path(__file__).resolve().parents[1];run_id=uuid4().hex;work=root/'runs'/run_id
+    for name in ('static/solve/wing.inp','static/solve/wing.frd','static/loads.json'):
+        p=work/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text('UI fixture')
+    summary={'tip_mean_z_m':.06,'peak_von_mises_pa':60e6,'yield_margin':2.,
+             'mapping':{'input_force_n':[0.,0.,7500.]},'limits':['尚未校核屈曲']}
+    monkeypatch.setattr(static_service,'run_wing_static',lambda *args:{'run_id':run_id,'status':status,'summary':summary})
+    app=AppTest.from_file(str(root/'app.py')).run(timeout=30)
+    app.sidebar.radio[0].set_value('机翼静力').run();app.button[0].click().run(timeout=30)
+    assert not app.exception and len(app.metric)==3
+    assert len(app.get('download_button'))==5
+    assert bool(app.warning)==(status=='executed_with_limits')
+    assert bool(app.success)==(status=='static_checked')

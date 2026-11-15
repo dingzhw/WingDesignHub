@@ -1,0 +1,1476 @@
+{
+  "version": "0.1.3",
+  "date": "2026-11-15",
+  "baseline_commit": "de41b0ee9d0d3bece5bb2fcd9780e2141ed3cd91",
+  "tests": {
+    "passed": 70,
+    "failed": 0,
+    "seconds": 59.59,
+    "warning": "existing traitlets metadata deprecation",
+    "hosted_ci_native_skips": [
+      "OpenVSP mesh integration",
+      "OpenVSP-CalculiX static integration"
+    ]
+  },
+  "service_runs": {
+    "oas": {
+      "run_id": "79db8dedfd774f718767d358ff5b1ae2",
+      "status": "passed",
+      "artifact_integrity_checked": true
+    },
+    "benchmark": {
+      "run_id": "4c2ecd66e21b4601ad1ba8189f6daec7",
+      "status": "passed",
+      "artifact_integrity_checked": true
+    },
+    "default": {
+      "run_id": "b9338e1ea3774234bde42013f04163a5",
+      "status": "static_checked",
+      "artifact_integrity_checked": true
+    }
+  },
+  "oas_wingbox": {
+    "status": "passed",
+    "passed": true,
+    "official_wingbox": {
+      "reference": "https://github.com/mdolab/OpenAeroStruct/blob/v2.12.1/tests/integration_tests/test_wingbox_analysis.py",
+      "reference_mass_kg": 16932.20046986,
+      "mass_kg": 16932.20046985519,
+      "initial_mass_kg": 29239.299497466007,
+      "mass_relative_error": 2.8403915908839993e-13,
+      "reference_rtol": 1e-06,
+      "driver_success": true,
+      "failure_max": 2.2426505097428162e-14,
+      "initial_bound_handling": {
+        "spar": {
+          "original_m": [
+            0.004,
+            0.005,
+            0.005,
+            0.008,
+            0.008,
+            0.01
+          ],
+          "optimizer_start_m": [
+            0.01,
+            0.01,
+            0.01,
+            0.01,
+            0.01,
+            0.01
+          ]
+        },
+        "skin": {
+          "original_m": [
+            0.005,
+            0.01,
+            0.015,
+            0.02,
+            0.025,
+            0.026
+          ],
+          "optimizer_start_m": [
+            0.01,
+            0.01,
+            0.015,
+            0.02,
+            0.025,
+            0.026
+          ]
+        }
+      },
+      "spar_thickness_cp_m": [
+        0.01,
+        0.010421479440754196,
+        0.015734328606237594,
+        0.010000000000000002,
+        0.010000000000000005,
+        0.01000000000000002
+      ],
+      "skin_thickness_cp_m": [
+        0.012844509815482241,
+        0.01,
+        0.010000000000000035,
+        0.010000000000000085,
+        0.010000000000000129,
+        0.010000000000000167
+      ],
+      "tip_displacement_m_rad": [
+        0.7313530887715518,
+        0.5146702239558925,
+        5.201947549905946,
+        -0.29597111107070473,
+        -0.17629397802099886,
+        0.058851455125006794
+      ],
+      "half_wing_fuel_force_n": -122583.12500000001,
+      "expected_half_wing_fuel_force_n": -122583.125,
+      "full_wing_mass": true,
+      "wing_weight_ratio": 1.25,
+      "half_mesh_nodes": 4,
+      "fuel_increment_force_n": -4903.324999999997,
+      "expected_fuel_increment_force_n": -4903.325
+    },
+    "versions": {
+      "openaerostruct": "2.12.1",
+      "openmdao": "3.45.2",
+      "numpy": "2.5.4",
+      "scipy": "1.18.1"
+    },
+    "evidence_level": "upstream wingbox regression and independent fuel force balance",
+    "physical_validation_passed": false,
+    "buckling_checked": false,
+    "limits": [
+      "官方 uCRM 翼盒与合成六分量外载；未与本项目 OpenVSP 壳模型同构型对比",
+      "半翼计算、质量已含对称和 1.25 修正；燃油含 10000 kg 与 15000 kg 储备的半翼卸载",
+      "自重卸载关闭；优化只按官方应力失效约束，未包含局部/整体屈曲、疲劳或连接件校核",
+      "材料与 1.5 安全系数均为官方案例输入；不能视为目标飞机许用值",
+      "原始初值部分低于 0.01 m 优化下界，显式执行与上游优化器相同的裁剪并记录"
+    ]
+  },
+  "shell_static_benchmark": {
+    "status": "passed",
+    "passed": true,
+    "plate_beams": [
+      {
+        "solver_version": "2.23",
+        "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+        "element": "S6",
+        "nodes": 105,
+        "elements": 40,
+        "fixed_nodes": 5,
+        "root_displacement_max_m": 0.0,
+        "tip_mean_z_m": 7.1387128e-05,
+        "max_displacement_m": 7.138792e-05,
+        "peak_von_mises_pa": 113154.5551558011,
+        "bulk_von_mises_p95_pa": 96974.37622416603,
+        "stress_location": "expanded element integration points; bulk statistic uses 10%<element centroid y/span<90%",
+        "balance": {
+          "force_residual_n": [
+            -6.889313051587366e-11,
+            4.5532120997251964e-11,
+            6.00698442376757e-07
+          ],
+          "moment_residual_nm": [
+            2.2004251014340337e-06,
+            -2.921831384478102e-08,
+            5.4338958616011925e-11
+          ],
+          "coordinate_min_m": [
+            -0.05,
+            0.0,
+            -0.01
+          ],
+          "coordinate_max_m": [
+            0.05,
+            1.0,
+            0.01
+          ],
+          "expanded_nodes": 243,
+          "method": "global expanded RF resultant, including applied forces and constraint forces",
+          "force_scaled_error": 6.00698442376757e-07,
+          "moment_scaled_error": 2.2004251014340337e-06
+        },
+        "serialized_load_errors": {
+          "force_n": [
+            0.0,
+            0.0,
+            -4.007905118896815e-14
+          ],
+          "moment_nm": [
+            -4.007905118896815e-14,
+            8.673617379884035e-19,
+            0.0
+          ]
+        },
+        "root_resultant_from_prescribed_load_balance": {
+          "force_n": [
+            -0.0,
+            -0.0,
+            -1.0
+          ],
+          "moment_nm": [
+            -1.0,
+            -0.0,
+            -0.0
+          ],
+          "source": "negative prescribed resultant, not independently measured support reactions"
+        },
+        "span_elements": 10,
+        "analytical_tip_m": 7.142857142857141e-05,
+        "tip_relative_error": 0.0005802079999996934,
+        "threshold": 0.02,
+        "parameters_si": {
+          "length": 1.0,
+          "width": 0.1,
+          "thickness": 0.02,
+          "E": 70000000000.0,
+          "nu": 0.0,
+          "tip_force": 1.0
+        },
+        "passed": true
+      },
+      {
+        "solver_version": "2.23",
+        "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+        "element": "S6",
+        "nodes": 205,
+        "elements": 80,
+        "fixed_nodes": 5,
+        "root_displacement_max_m": 0.0,
+        "tip_mean_z_m": 7.143854800000001e-05,
+        "max_displacement_m": 7.143891e-05,
+        "peak_von_mises_pa": 115106.94718165243,
+        "bulk_von_mises_p95_pa": 97539.67614214803,
+        "stress_location": "expanded element integration points; bulk statistic uses 10%<element centroid y/span<90%",
+        "balance": {
+          "force_residual_n": [
+            5.324290417244714e-12,
+            -2.0434688216925472e-11,
+            -3.875074039427773e-09
+          ],
+          "moment_residual_nm": [
+            1.397182000845154e-06,
+            -3.370335381440437e-09,
+            8.214160962465482e-12
+          ],
+          "coordinate_min_m": [
+            -0.05,
+            0.0,
+            -0.01
+          ],
+          "coordinate_max_m": [
+            0.05,
+            1.0,
+            0.01
+          ],
+          "expanded_nodes": 473,
+          "method": "global expanded RF resultant, including applied forces and constraint forces",
+          "force_scaled_error": 3.875074039427773e-09,
+          "moment_scaled_error": 1.397182000845154e-06
+        },
+        "serialized_load_errors": {
+          "force_n": [
+            0.0,
+            0.0,
+            -4.007905118896815e-14
+          ],
+          "moment_nm": [
+            -4.007905118896815e-14,
+            8.673617379884035e-19,
+            0.0
+          ]
+        },
+        "root_resultant_from_prescribed_load_balance": {
+          "force_n": [
+            -0.0,
+            -0.0,
+            -1.0
+          ],
+          "moment_nm": [
+            -1.0,
+            -0.0,
+            -0.0
+          ],
+          "source": "negative prescribed resultant, not independently measured support reactions"
+        },
+        "span_elements": 20,
+        "analytical_tip_m": 7.142857142857141e-05,
+        "tip_relative_error": 0.00013967200000042368,
+        "threshold": 0.02,
+        "parameters_si": {
+          "length": 1.0,
+          "width": 0.1,
+          "thickness": 0.02,
+          "E": 70000000000.0,
+          "nu": 0.0,
+          "tip_force": 1.0
+        },
+        "passed": true
+      },
+      {
+        "solver_version": "2.23",
+        "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+        "element": "S6",
+        "nodes": 405,
+        "elements": 160,
+        "fixed_nodes": 5,
+        "root_displacement_max_m": 0.0,
+        "tip_mean_z_m": 7.144259599999999e-05,
+        "max_displacement_m": 7.144268e-05,
+        "peak_von_mises_pa": 115717.68813308784,
+        "bulk_von_mises_p95_pa": 97791.67155935225,
+        "stress_location": "expanded element integration points; bulk statistic uses 10%<element centroid y/span<90%",
+        "balance": {
+          "force_residual_n": [
+            -1.203002025246007e-11,
+            6.602848036442326e-11,
+            2.000075311092697e-06
+          ],
+          "moment_residual_nm": [
+            1.8003107030428733e-06,
+            2.7782759337915963e-08,
+            1.9306958444910677e-11
+          ],
+          "coordinate_min_m": [
+            -0.05,
+            0.0,
+            -0.01
+          ],
+          "coordinate_max_m": [
+            0.05,
+            1.0,
+            0.01
+          ],
+          "expanded_nodes": 933,
+          "method": "global expanded RF resultant, including applied forces and constraint forces",
+          "force_scaled_error": 2.000075311092697e-06,
+          "moment_scaled_error": 1.8003107030428733e-06
+        },
+        "serialized_load_errors": {
+          "force_n": [
+            0.0,
+            0.0,
+            -4.007905118896815e-14
+          ],
+          "moment_nm": [
+            -4.007905118896815e-14,
+            8.673617379884035e-19,
+            0.0
+          ]
+        },
+        "root_resultant_from_prescribed_load_balance": {
+          "force_n": [
+            -0.0,
+            -0.0,
+            -1.0
+          ],
+          "moment_nm": [
+            -1.0,
+            -0.0,
+            -0.0
+          ],
+          "source": "negative prescribed resultant, not independently measured support reactions"
+        },
+        "span_elements": 40,
+        "analytical_tip_m": 7.142857142857141e-05,
+        "tip_relative_error": 0.00019634400000012597,
+        "threshold": 0.02,
+        "parameters_si": {
+          "length": 1.0,
+          "width": 0.1,
+          "thickness": 0.02,
+          "E": 70000000000.0,
+          "nu": 0.0,
+          "tip_force": 1.0
+        },
+        "passed": true
+      }
+    ],
+    "coarse": {
+      "solver_version": "2.23",
+      "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+      "element": "S6",
+      "nodes": 6866,
+      "elements": 3558,
+      "fixed_nodes": 131,
+      "root_displacement_max_m": 1.096014e-23,
+      "tip_mean_z_m": 0.05973681152671756,
+      "max_displacement_m": 0.06015718004386035,
+      "peak_von_mises_pa": 63731541.127981104,
+      "bulk_von_mises_p95_pa": 32903403.53216128,
+      "stress_location": "expanded element integration points; bulk statistic uses 10%<element centroid y/span<90%",
+      "balance": {
+        "force_residual_n": [
+          0.04961427633914607,
+          -0.16029960729305137,
+          0.17856431288521513
+        ],
+        "moment_residual_nm": [
+          0.32599594641583485,
+          0.17456759536215147,
+          -0.2879800779515504
+        ],
+        "coordinate_min_m": [
+          -0.000922383,
+          -0.001,
+          -0.09091
+        ],
+        "coordinate_max_m": [
+          1.50013,
+          5.001,
+          0.090965
+        ],
+        "expanded_nodes": 19177,
+        "method": "global expanded RF resultant, including applied forces and constraint forces",
+        "force_scaled_error": 2.3808575051362017e-05,
+        "moment_scaled_error": 8.693225237755596e-06
+      },
+      "serialized_load_errors": {
+        "force_n": [
+          5.336737995964569e-13,
+          -1.7133516827527728e-13,
+          1.8189894035458565e-12
+        ],
+        "moment_nm": [
+          1.2732925824820995e-10,
+          2.546585164964199e-11,
+          -5.387634782749728e-13
+        ]
+      },
+      "root_resultant_from_prescribed_load_balance": {
+        "force_n": [
+          -0.0,
+          -0.0,
+          -7500.0
+        ],
+        "moment_nm": [
+          -18750.0,
+          4500.000000000001,
+          -0.0
+        ],
+        "source": "negative prescribed resultant, not independently measured support reactions"
+      },
+      "mapping": {
+        "input_force_n": [
+          0.0,
+          0.0,
+          7500.0
+        ],
+        "input_moment_nm": [
+          18750.0,
+          -4500.000000000001,
+          0.0
+        ],
+        "mapped_force_n": [
+          -3.7478700698478917e-13,
+          -3.524264213794481e-14,
+          7500.000000000006
+        ],
+        "mapped_moment_nm": [
+          18750.000000000142,
+          -4499.9999999999745,
+          -1.2148615446960775e-13
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "force_absolute_error_n": 6.366462912410498e-12,
+        "moment_absolute_error_nm": 1.418811734765768e-10,
+        "force_scaled_error": 8.48861721654733e-16,
+        "moment_scaled_error": 3.783497959375381e-15,
+        "force_scale_n": 7500.0,
+        "moment_scale_nm": 37500.0,
+        "max_patch_residual_scaled_units": 1.7053025658242404e-13,
+        "max_condition": 45.78815225455607,
+        "relative_threshold": 0.001,
+        "absolute_threshold": 1e-08,
+        "passed": true
+      },
+      "mesh_metrics": {
+        "nodes": 1662,
+        "elements": 3558,
+        "element_types": [
+          "S3"
+        ],
+        "connected_components": 1,
+        "orphan_nodes": 0,
+        "extent_m": [
+          1.5,
+          5.0,
+          0.179875
+        ],
+        "minimum_area_m2": 0.00040029446412659896,
+        "quality_min": 0.21551341405037808,
+        "quality_p05": 0.7910475148760634,
+        "parts": {
+          "Skin": {
+            "elements": 3094,
+            "area_m2": 15.644311438163957,
+            "mass_kg": 84.47928176608536
+          },
+          "FrontSpar": {
+            "elements": 162,
+            "area_m2": 0.8911399999999999,
+            "mass_kg": 7.218233999999999
+          },
+          "RearSpar": {
+            "elements": 110,
+            "area_m2": 0.61307,
+            "mass_kg": 4.965867
+          },
+          "Rib0": {
+            "elements": 48,
+            "area_m2": 0.18201856643599998,
+            "mass_kg": 0.9829002587543999
+          },
+          "Rib1": {
+            "elements": 48,
+            "area_m2": 0.1820176507795,
+            "mass_kg": 0.9828953142093
+          },
+          "Rib2": {
+            "elements": 48,
+            "area_m2": 0.182017397935,
+            "mass_kg": 0.982893948849
+          },
+          "Rib3": {
+            "elements": 48,
+            "area_m2": 0.1820186466245,
+            "mass_kg": 0.9829006917723001
+          }
+        },
+        "shell_material_mass_kg": 100.59497297967036,
+        "area_m2": 17.876593699938958
+      },
+      "load_definition": "limit half-wing force times ultimate_factor, applied once",
+      "boundary": "all six DOF fixed at every root-section shell node; no self weight, fuel, engine or thermal load",
+      "stress_allowable_pa": 200000000.0,
+      "yield_margin": 2.1381635601495086,
+      "displacement_span_ratio": 0.01203143600877207,
+      "physical_validation_passed": false,
+      "strength_certified": false,
+      "mesh_sensitivity_checked": false,
+      "limits": [
+        "规定均布条带合力；未计算全机机动/阵风载荷或配平",
+        "S3 曲面网格保留折面形状，插入共享中边节点形成 S6；未恢复精确曲面",
+        "线弹性小变形；未含屈曲、疲劳、塑性、连接件和制造余量",
+        "应力限值为合成输入；峰值含根部/交线局部效应，不能直接用于真实飞机定尺寸",
+        "根部等效合力矩由规定载荷求得；独立求解平衡检查采用全模型展开节点 RF"
+      ],
+      "status": "static_checked"
+    },
+    "fine": {
+      "solver_version": "2.23",
+      "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+      "element": "S6",
+      "nodes": 13208,
+      "elements": 6740,
+      "fixed_nodes": 187,
+      "root_displacement_max_m": 1.701629e-23,
+      "tip_mean_z_m": 0.059576499304812826,
+      "max_displacement_m": 0.060025760023211076,
+      "peak_von_mises_pa": 61748037.70181903,
+      "bulk_von_mises_p95_pa": 29612726.827439085,
+      "stress_location": "expanded element integration points; bulk statistic uses 10%<element centroid y/span<90%",
+      "balance": {
+        "force_residual_n": [
+          0.03198660907762541,
+          -0.004196796483802933,
+          -0.06297431628729284
+        ],
+        "moment_residual_nm": [
+          -1.6919425685069387,
+          0.32593640641623123,
+          0.05473190847413879
+        ],
+        "coordinate_min_m": [
+          -0.000977682,
+          -0.001,
+          -0.09097
+        ],
+        "coordinate_max_m": [
+          1.50014,
+          5.001,
+          0.091021
+        ],
+        "expanded_nodes": 35333,
+        "method": "global expanded RF resultant, including applied forces and constraint forces",
+        "force_scaled_error": 8.39657550497238e-06,
+        "moment_scaled_error": 4.5118468493518364e-05
+      },
+      "serialized_load_errors": {
+        "force_n": [
+          2.942763220603606e-14,
+          -1.8958879605124324e-13,
+          -3.456079866737127e-11
+        ],
+        "moment_nm": [
+          -1.0186340659856796e-10,
+          5.638867150992155e-11,
+          1.132031534484268e-12
+        ]
+      },
+      "root_resultant_from_prescribed_load_balance": {
+        "force_n": [
+          -0.0,
+          -0.0,
+          -7500.0
+        ],
+        "moment_nm": [
+          -18750.0,
+          4500.000000000001,
+          -0.0
+        ],
+        "source": "negative prescribed resultant, not independently measured support reactions"
+      },
+      "mapping": {
+        "input_force_n": [
+          0.0,
+          0.0,
+          7500.0
+        ],
+        "input_moment_nm": [
+          18750.0,
+          -4500.000000000001,
+          0.0
+        ],
+        "mapped_force_n": [
+          -1.2106505034581438e-13,
+          1.0873680428291621e-14,
+          7499.99999999999
+        ],
+        "mapped_moment_nm": [
+          18749.99999999994,
+          -4499.999999999979,
+          2.794804318528854e-13
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "force_absolute_error_n": 1.000444171950221e-11,
+        "moment_absolute_error_nm": 5.820766091346741e-11,
+        "force_scaled_error": 1.3339255626002948e-15,
+        "moment_scaled_error": 1.5522042910257975e-15,
+        "force_scale_n": 7500.0,
+        "moment_scale_nm": 37500.0,
+        "max_patch_residual_scaled_units": 2.8421709430404007e-13,
+        "max_condition": 45.18341631272382,
+        "relative_threshold": 0.001,
+        "absolute_threshold": 1e-08,
+        "passed": true
+      },
+      "mesh_metrics": {
+        "nodes": 3242,
+        "elements": 6740,
+        "element_types": [
+          "S3"
+        ],
+        "connected_components": 1,
+        "orphan_nodes": 0,
+        "extent_m": [
+          1.5,
+          5.0,
+          0.179991
+        ],
+        "minimum_area_m2": 9.776942790630133e-05,
+        "quality_min": 0.2249182562145136,
+        "quality_p05": 0.8170604931263435,
+        "parts": {
+          "Skin": {
+            "elements": 6212,
+            "area_m2": 15.656351870882963,
+            "mass_kg": 84.54430010276799
+          },
+          "FrontSpar": {
+            "elements": 162,
+            "area_m2": 0.8911399999999999,
+            "mass_kg": 7.218233999999999
+          },
+          "RearSpar": {
+            "elements": 110,
+            "area_m2": 0.61307,
+            "mass_kg": 4.965867
+          },
+          "Rib0": {
+            "elements": 64,
+            "area_m2": 0.182286920567,
+            "mass_kg": 0.9843493710618
+          },
+          "Rib1": {
+            "elements": 64,
+            "area_m2": 0.1822856974745,
+            "mass_kg": 0.9843427663623
+          },
+          "Rib2": {
+            "elements": 64,
+            "area_m2": 0.1822857025875,
+            "mass_kg": 0.9843427939725
+          },
+          "Rib3": {
+            "elements": 64,
+            "area_m2": 0.1822865961205,
+            "mass_kg": 0.9843476190507
+          }
+        },
+        "shell_material_mass_kg": 100.66578365321529,
+        "area_m2": 17.889706787632463
+      },
+      "load_definition": "limit half-wing force times ultimate_factor, applied once",
+      "boundary": "all six DOF fixed at every root-section shell node; no self weight, fuel, engine or thermal load",
+      "stress_allowable_pa": 200000000.0,
+      "yield_margin": 2.2389693250787825,
+      "displacement_span_ratio": 0.012005152004642215,
+      "physical_validation_passed": false,
+      "strength_certified": false,
+      "mesh_sensitivity_checked": false,
+      "limits": [
+        "规定均布条带合力；未计算全机机动/阵风载荷或配平",
+        "S3 曲面网格保留折面形状，插入共享中边节点形成 S6；未恢复精确曲面",
+        "线弹性小变形；未含屈曲、疲劳、塑性、连接件和制造余量",
+        "应力限值为合成输入；峰值含根部/交线局部效应，不能直接用于真实飞机定尺寸",
+        "根部等效合力矩由规定载荷求得；独立求解平衡检查采用全模型展开节点 RF"
+      ],
+      "status": "static_checked"
+    },
+    "refined": {
+      "solver_version": "2.23",
+      "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+      "element": "S6",
+      "nodes": 18508,
+      "elements": 9410,
+      "fixed_nodes": 205,
+      "root_displacement_max_m": 1.323489e-22,
+      "tip_mean_z_m": 0.059520221268292685,
+      "max_displacement_m": 0.05996499000303769,
+      "peak_von_mises_pa": 61996111.18175985,
+      "bulk_von_mises_p95_pa": 28306465.631962173,
+      "stress_location": "expanded element integration points; bulk statistic uses 10%<element centroid y/span<90%",
+      "balance": {
+        "force_residual_n": [
+          0.03609097679938004,
+          -0.07565990705211435,
+          1.054306365684444
+        ],
+        "moment_residual_nm": [
+          1.063192309200201,
+          -0.09068634977694548,
+          0.015091288514193573
+        ],
+        "coordinate_min_m": [
+          -0.000986926,
+          -0.001,
+          -0.091
+        ],
+        "coordinate_max_m": [
+          1.50014,
+          5.001,
+          0.091019
+        ],
+        "expanded_nodes": 48707,
+        "method": "global expanded RF resultant, including applied forces and constraint forces",
+        "force_scaled_error": 0.0001405741820912592,
+        "moment_scaled_error": 2.8351794912005357e-05
+      },
+      "serialized_load_errors": {
+        "force_n": [
+          1.344336317612993e-12,
+          3.1590962484839835e-13,
+          5.275069270282984e-11
+        ],
+        "moment_nm": [
+          1.382431946694851e-10,
+          -2.7284841053187847e-12,
+          -2.859735018234666e-12
+        ]
+      },
+      "root_resultant_from_prescribed_load_balance": {
+        "force_n": [
+          -0.0,
+          -0.0,
+          -7500.0
+        ],
+        "moment_nm": [
+          -18750.0,
+          4500.000000000001,
+          -0.0
+        ],
+        "source": "negative prescribed resultant, not independently measured support reactions"
+      },
+      "mapping": {
+        "input_force_n": [
+          0.0,
+          0.0,
+          7500.0
+        ],
+        "input_moment_nm": [
+          18750.0,
+          -4500.000000000001,
+          0.0
+        ],
+        "mapped_force_n": [
+          1.0620627641233504e-14,
+          5.446251089002985e-14,
+          7500.000000000065
+        ],
+        "mapped_moment_nm": [
+          18750.000000000036,
+          -4500.000000000004,
+          -7.072467611557443e-14
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "force_absolute_error_n": 6.45741238258779e-11,
+        "moment_absolute_error_nm": 3.637978807091713e-11,
+        "force_scaled_error": 8.60988317678372e-15,
+        "moment_scaled_error": 9.701276818911235e-16,
+        "force_scale_n": 7500.0,
+        "moment_scale_nm": 37500.0,
+        "max_patch_residual_scaled_units": 1.7053025658242404e-13,
+        "max_condition": 43.39761037183079,
+        "relative_threshold": 0.001,
+        "absolute_threshold": 1e-08,
+        "passed": true
+      },
+      "mesh_metrics": {
+        "nodes": 4557,
+        "elements": 9410,
+        "element_types": [
+          "S3"
+        ],
+        "connected_components": 1,
+        "orphan_nodes": 0,
+        "extent_m": [
+          1.5,
+          5.0,
+          0.18001899999999998
+        ],
+        "minimum_area_m2": 5.3481549380601705e-05,
+        "quality_min": 0.22810540921860512,
+        "quality_p05": 0.8276588317903266,
+        "parts": {
+          "Skin": {
+            "elements": 8724,
+            "area_m2": 15.658853286702263,
+            "mass_kg": 84.55780774819222
+          },
+          "FrontSpar": {
+            "elements": 174,
+            "area_m2": 0.8911399999999999,
+            "mass_kg": 7.218233999999999
+          },
+          "RearSpar": {
+            "elements": 142,
+            "area_m2": 0.61307,
+            "mass_kg": 4.965867
+          },
+          "Rib0": {
+            "elements": 94,
+            "area_m2": 0.182595014248,
+            "mass_kg": 0.9860130769392002
+          },
+          "Rib1": {
+            "elements": 92,
+            "area_m2": 0.182594658071,
+            "mass_kg": 0.9860111535834001
+          },
+          "Rib2": {
+            "elements": 94,
+            "area_m2": 0.182594892522,
+            "mass_kg": 0.9860124196188
+          },
+          "Rib3": {
+            "elements": 90,
+            "area_m2": 0.18259520503999999,
+            "mass_kg": 0.986014107216
+          }
+        },
+        "shell_material_mass_kg": 100.68595950554962,
+        "area_m2": 17.893443056583262
+      },
+      "load_definition": "limit half-wing force times ultimate_factor, applied once",
+      "boundary": "all six DOF fixed at every root-section shell node; no self weight, fuel, engine or thermal load",
+      "stress_allowable_pa": 200000000.0,
+      "yield_margin": 2.2260087961588613,
+      "displacement_span_ratio": 0.011992998000607538,
+      "physical_validation_passed": false,
+      "strength_certified": false,
+      "mesh_sensitivity_checked": false,
+      "limits": [
+        "规定均布条带合力；未计算全机机动/阵风载荷或配平",
+        "S3 曲面网格保留折面形状，插入共享中边节点形成 S6；未恢复精确曲面",
+        "线弹性小变形；未含屈曲、疲劳、塑性、连接件和制造余量",
+        "应力限值为合成输入；峰值含根部/交线局部效应，不能直接用于真实飞机定尺寸",
+        "根部等效合力矩由规定载荷求得；独立求解平衡检查采用全模型展开节点 RF"
+      ],
+      "status": "static_checked"
+    },
+    "double_load": {
+      "solver_version": "2.23",
+      "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+      "element": "S6",
+      "nodes": 6866,
+      "elements": 3558,
+      "fixed_nodes": 131,
+      "root_displacement_max_m": 2.233388e-23,
+      "tip_mean_z_m": 0.11947362595419847,
+      "max_displacement_m": 0.12031440008772067,
+      "peak_von_mises_pa": 127463101.76418974,
+      "bulk_von_mises_p95_pa": 65806799.5794264,
+      "stress_location": "expanded element integration points; bulk statistic uses 10%<element centroid y/span<90%",
+      "balance": {
+        "force_residual_n": [
+          -0.19787736256589772,
+          0.1527280977129824,
+          -1.521764014490691
+        ],
+        "moment_residual_nm": [
+          -3.528806417784111,
+          1.3121093323801856,
+          0.2377857329711064
+        ],
+        "coordinate_min_m": [
+          -0.000922383,
+          -0.001,
+          -0.09091
+        ],
+        "coordinate_max_m": [
+          1.50013,
+          5.001,
+          0.090965
+        ],
+        "expanded_nodes": 19177,
+        "method": "global expanded RF resultant, including applied forces and constraint forces",
+        "force_scaled_error": 0.0001014509342993794,
+        "moment_scaled_error": 4.705075223712148e-05
+      },
+      "serialized_load_errors": {
+        "force_n": [
+          -1.771680024909017e-12,
+          3.2412961203931445e-13,
+          1.2732925824820995e-11
+        ],
+        "moment_nm": [
+          3.128661774098873e-10,
+          9.094947017729282e-11,
+          1.0064171718227044e-13
+        ]
+      },
+      "root_resultant_from_prescribed_load_balance": {
+        "force_n": [
+          -0.0,
+          -0.0,
+          -15000.0
+        ],
+        "moment_nm": [
+          -37500.0,
+          9000.000000000002,
+          -0.0
+        ],
+        "source": "negative prescribed resultant, not independently measured support reactions"
+      },
+      "mapping": {
+        "input_force_n": [
+          0.0,
+          0.0,
+          15000.0
+        ],
+        "input_moment_nm": [
+          37500.0,
+          -9000.000000000002,
+          0.0
+        ],
+        "mapped_force_n": [
+          -7.495740139695783e-13,
+          -7.048528427588963e-14,
+          15000.000000000013
+        ],
+        "mapped_moment_nm": [
+          37500.000000000284,
+          -8999.999999999949,
+          -2.429723089392155e-13
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "force_absolute_error_n": 1.2732925824820995e-11,
+        "moment_absolute_error_nm": 2.837623469531536e-10,
+        "force_scaled_error": 8.48861721654733e-16,
+        "moment_scaled_error": 3.783497959375381e-15,
+        "force_scale_n": 15000.0,
+        "moment_scale_nm": 75000.0,
+        "max_patch_residual_scaled_units": 3.410605131648481e-13,
+        "max_condition": 45.78815225455607,
+        "relative_threshold": 0.001,
+        "absolute_threshold": 1e-08,
+        "passed": true
+      },
+      "mesh_metrics": {
+        "nodes": 1662,
+        "elements": 3558,
+        "element_types": [
+          "S3"
+        ],
+        "connected_components": 1,
+        "orphan_nodes": 0,
+        "extent_m": [
+          1.5,
+          5.0,
+          0.179875
+        ],
+        "minimum_area_m2": 0.00040029446412659896,
+        "quality_min": 0.21551341405037808,
+        "quality_p05": 0.7910475148760634,
+        "parts": {
+          "Skin": {
+            "elements": 3094,
+            "area_m2": 15.644311438163957,
+            "mass_kg": 84.47928176608536
+          },
+          "FrontSpar": {
+            "elements": 162,
+            "area_m2": 0.8911399999999999,
+            "mass_kg": 7.218233999999999
+          },
+          "RearSpar": {
+            "elements": 110,
+            "area_m2": 0.61307,
+            "mass_kg": 4.965867
+          },
+          "Rib0": {
+            "elements": 48,
+            "area_m2": 0.18201856643599998,
+            "mass_kg": 0.9829002587543999
+          },
+          "Rib1": {
+            "elements": 48,
+            "area_m2": 0.1820176507795,
+            "mass_kg": 0.9828953142093
+          },
+          "Rib2": {
+            "elements": 48,
+            "area_m2": 0.182017397935,
+            "mass_kg": 0.982893948849
+          },
+          "Rib3": {
+            "elements": 48,
+            "area_m2": 0.1820186466245,
+            "mass_kg": 0.9829006917723001
+          }
+        },
+        "shell_material_mass_kg": 100.59497297967036,
+        "area_m2": 17.876593699938958
+      },
+      "load_definition": "limit half-wing force times ultimate_factor, applied once",
+      "boundary": "all six DOF fixed at every root-section shell node; no self weight, fuel, engine or thermal load",
+      "stress_allowable_pa": 200000000.0,
+      "yield_margin": 0.5690815399267901,
+      "displacement_span_ratio": 0.024062880017544135,
+      "physical_validation_passed": false,
+      "strength_certified": false,
+      "mesh_sensitivity_checked": false,
+      "limits": [
+        "规定均布条带合力；未计算全机机动/阵风载荷或配平",
+        "S3 曲面网格保留折面形状，插入共享中边节点形成 S6；未恢复精确曲面",
+        "线弹性小变形；未含屈曲、疲劳、塑性、连接件和制造余量",
+        "应力限值为合成输入；峰值含根部/交线局部效应，不能直接用于真实飞机定尺寸",
+        "根部等效合力矩由规定载荷求得；独立求解平衡检查采用全模型展开节点 RF"
+      ],
+      "status": "static_checked"
+    },
+    "negative_load": {
+      "solver_version": "2.23",
+      "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+      "element": "S6",
+      "nodes": 6866,
+      "elements": 3558,
+      "fixed_nodes": 131,
+      "root_displacement_max_m": 1.096014e-23,
+      "tip_mean_z_m": -0.05973681152671756,
+      "max_displacement_m": 0.06015718004386035,
+      "peak_von_mises_pa": 63731541.127981104,
+      "bulk_von_mises_p95_pa": 32903403.53216128,
+      "stress_location": "expanded element integration points; bulk statistic uses 10%<element centroid y/span<90%",
+      "balance": {
+        "force_residual_n": [
+          -0.04961427633914607,
+          0.16029960729305137,
+          -0.17856431288521513
+        ],
+        "moment_residual_nm": [
+          -0.32599594641583485,
+          -0.17456759536215147,
+          0.2879800779515504
+        ],
+        "coordinate_min_m": [
+          -0.000922383,
+          -0.001,
+          -0.09091
+        ],
+        "coordinate_max_m": [
+          1.50013,
+          5.001,
+          0.090965
+        ],
+        "expanded_nodes": 19177,
+        "method": "global expanded RF resultant, including applied forces and constraint forces",
+        "force_scaled_error": 2.3808575051362017e-05,
+        "moment_scaled_error": 8.693225237755596e-06
+      },
+      "serialized_load_errors": {
+        "force_n": [
+          -5.336737995964569e-13,
+          1.7133516827527728e-13,
+          -1.8189894035458565e-12
+        ],
+        "moment_nm": [
+          -1.2732925824820995e-10,
+          -2.546585164964199e-11,
+          5.387634782749728e-13
+        ]
+      },
+      "root_resultant_from_prescribed_load_balance": {
+        "force_n": [
+          -0.0,
+          -0.0,
+          7500.0
+        ],
+        "moment_nm": [
+          18750.0,
+          -4500.000000000001,
+          -0.0
+        ],
+        "source": "negative prescribed resultant, not independently measured support reactions"
+      },
+      "mapping": {
+        "input_force_n": [
+          0.0,
+          0.0,
+          -7500.0
+        ],
+        "input_moment_nm": [
+          -18750.0,
+          4500.000000000001,
+          0.0
+        ],
+        "mapped_force_n": [
+          3.7478700698478917e-13,
+          3.524264213794481e-14,
+          -7500.000000000006
+        ],
+        "mapped_moment_nm": [
+          -18750.000000000142,
+          4499.9999999999745,
+          1.2148615446960775e-13
+        ],
+        "origin_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "force_absolute_error_n": 6.366462912410498e-12,
+        "moment_absolute_error_nm": 1.418811734765768e-10,
+        "force_scaled_error": 8.48861721654733e-16,
+        "moment_scaled_error": 3.783497959375381e-15,
+        "force_scale_n": 7500.0,
+        "moment_scale_nm": 37500.0,
+        "max_patch_residual_scaled_units": 1.7053025658242404e-13,
+        "max_condition": 45.78815225455607,
+        "relative_threshold": 0.001,
+        "absolute_threshold": 1e-08,
+        "passed": true
+      },
+      "mesh_metrics": {
+        "nodes": 1662,
+        "elements": 3558,
+        "element_types": [
+          "S3"
+        ],
+        "connected_components": 1,
+        "orphan_nodes": 0,
+        "extent_m": [
+          1.5,
+          5.0,
+          0.179875
+        ],
+        "minimum_area_m2": 0.00040029446412659896,
+        "quality_min": 0.21551341405037808,
+        "quality_p05": 0.7910475148760634,
+        "parts": {
+          "Skin": {
+            "elements": 3094,
+            "area_m2": 15.644311438163957,
+            "mass_kg": 84.47928176608536
+          },
+          "FrontSpar": {
+            "elements": 162,
+            "area_m2": 0.8911399999999999,
+            "mass_kg": 7.218233999999999
+          },
+          "RearSpar": {
+            "elements": 110,
+            "area_m2": 0.61307,
+            "mass_kg": 4.965867
+          },
+          "Rib0": {
+            "elements": 48,
+            "area_m2": 0.18201856643599998,
+            "mass_kg": 0.9829002587543999
+          },
+          "Rib1": {
+            "elements": 48,
+            "area_m2": 0.1820176507795,
+            "mass_kg": 0.9828953142093
+          },
+          "Rib2": {
+            "elements": 48,
+            "area_m2": 0.182017397935,
+            "mass_kg": 0.982893948849
+          },
+          "Rib3": {
+            "elements": 48,
+            "area_m2": 0.1820186466245,
+            "mass_kg": 0.9829006917723001
+          }
+        },
+        "shell_material_mass_kg": 100.59497297967036,
+        "area_m2": 17.876593699938958
+      },
+      "load_definition": "limit half-wing force times ultimate_factor, applied once",
+      "boundary": "all six DOF fixed at every root-section shell node; no self weight, fuel, engine or thermal load",
+      "stress_allowable_pa": 200000000.0,
+      "yield_margin": 2.1381635601495086,
+      "displacement_span_ratio": 0.01203143600877207,
+      "physical_validation_passed": false,
+      "strength_certified": false,
+      "mesh_sensitivity_checked": false,
+      "limits": [
+        "规定均布条带合力；未计算全机机动/阵风载荷或配平",
+        "S3 曲面网格保留折面形状，插入共享中边节点形成 S6；未恢复精确曲面",
+        "线弹性小变形；未含屈曲、疲劳、塑性、连接件和制造余量",
+        "应力限值为合成输入；峰值含根部/交线局部效应，不能直接用于真实飞机定尺寸",
+        "根部等效合力矩由规定载荷求得；独立求解平衡检查采用全模型展开节点 RF"
+      ],
+      "status": "static_checked"
+    },
+    "coarse_to_fine_differences": {
+      "tip_mean_z_m": 0.002690863407138505,
+      "bulk_von_mises_p95_pa": 0.11112373149213203,
+      "peak_von_mises_pa": 0.03212253376763809
+    },
+    "relative_mesh_differences": {
+      "tip_mean_z_m": 0.0009455280125129696,
+      "bulk_von_mises_p95_pa": 0.04614709630162907,
+      "peak_von_mises_pa": 0.004001436141914068
+    },
+    "mesh_comparison": "0.2/0.02 m versus 0.15/0.015 m; coarse 0.4 m stress statistic did not meet threshold",
+    "mesh_thresholds": {
+      "tip_mean_z_m": 0.05,
+      "bulk_von_mises_p95_pa": 0.1
+    },
+    "load_ratios": {
+      "double_displacement": 2.000000048559059,
+      "double_stress": 2.0000003061000435,
+      "negative_displacement": -1.0,
+      "negative_stress": 1.0
+    },
+    "physical_validation_passed": false,
+    "buckling_checked": false,
+    "limits": [
+      "规定均布条带合力；未计算全机机动/阵风载荷或配平",
+      "S3 曲面网格保留折面形状，插入共享中边节点形成 S6；未恢复精确曲面",
+      "线弹性小变形；未含屈曲、疲劳、塑性、连接件和制造余量",
+      "应力限值为合成输入；峰值含根部/交线局部效应，不能直接用于真实飞机定尺寸",
+      "根部等效合力矩由规定载荷求得；独立求解平衡检查采用全模型展开节点 RF",
+      "三档网格仅提供指定输出的敏感性证据；根部与交线峰值不作收敛验收"
+    ]
+  },
+  "default_static": {
+    "solver_version": "2.23",
+    "solver_sha256": "27a9426a1ee2f72c38fbe892e0ffaf38e14867628ffd0235770261b6f3ec9c5f",
+    "element": "S6",
+    "nodes": 13208,
+    "elements": 6740,
+    "fixed_nodes": 187,
+    "root_displacement_max_m": 1.701629e-23,
+    "tip_mean_z_m": 0.059576499304812826,
+    "max_displacement_m": 0.060025760023211076,
+    "peak_von_mises_pa": 61748037.70181903,
+    "bulk_von_mises_p95_pa": 29612726.827439085,
+    "stress_location": "expanded element integration points; bulk statistic uses 10%<element centroid y/span<90%",
+    "balance": {
+      "force_residual_n": [
+        0.03198660907762541,
+        -0.004196796483802933,
+        -0.06297431628729284
+      ],
+      "moment_residual_nm": [
+        -1.6919425685069387,
+        0.32593640641623123,
+        0.05473190847413879
+      ],
+      "coordinate_min_m": [
+        -0.000977682,
+        -0.001,
+        -0.09097
+      ],
+      "coordinate_max_m": [
+        1.50014,
+        5.001,
+        0.091021
+      ],
+      "expanded_nodes": 35333,
+      "method": "global expanded RF resultant, including applied forces and constraint forces",
+      "force_scaled_error": 8.39657550497238e-06,
+      "moment_scaled_error": 4.5118468493518364e-05
+    },
+    "serialized_load_errors": {
+      "force_n": [
+        2.942763220603606e-14,
+        -1.8958879605124324e-13,
+        -3.456079866737127e-11
+      ],
+      "moment_nm": [
+        -1.0186340659856796e-10,
+        5.638867150992155e-11,
+        1.132031534484268e-12
+      ]
+    },
+    "root_resultant_from_prescribed_load_balance": {
+      "force_n": [
+        -0.0,
+        -0.0,
+        -7500.0
+      ],
+      "moment_nm": [
+        -18750.0,
+        4500.000000000001,
+        -0.0
+      ],
+      "source": "negative prescribed resultant, not independently measured support reactions"
+    },
+    "mapping": {
+      "input_force_n": [
+        0.0,
+        0.0,
+        7500.0
+      ],
+      "input_moment_nm": [
+        18750.0,
+        -4500.000000000001,
+        0.0
+      ],
+      "mapped_force_n": [
+        -1.2106505034581438e-13,
+        1.0873680428291621e-14,
+        7499.99999999999
+      ],
+      "mapped_moment_nm": [
+        18749.99999999994,
+        -4499.999999999979,
+        2.794804318528854e-13
+      ],
+      "origin_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "force_absolute_error_n": 1.000444171950221e-11,
+      "moment_absolute_error_nm": 5.820766091346741e-11,
+      "force_scaled_error": 1.3339255626002948e-15,
+      "moment_scaled_error": 1.5522042910257975e-15,
+      "force_scale_n": 7500.0,
+      "moment_scale_nm": 37500.0,
+      "max_patch_residual_scaled_units": 2.8421709430404007e-13,
+      "max_condition": 45.18341631272382,
+      "relative_threshold": 0.001,
+      "absolute_threshold": 1e-08,
+      "passed": true
+    },
+    "mesh_metrics": {
+      "nodes": 3242,
+      "elements": 6740,
+      "element_types": [
+        "S3"
+      ],
+      "connected_components": 1,
+      "orphan_nodes": 0,
+      "extent_m": [
+        1.5,
+        5.0,
+        0.179991
+      ],
+      "minimum_area_m2": 9.776942790630133e-05,
+      "quality_min": 0.2249182562145136,
+      "quality_p05": 0.8170604931263435,
+      "parts": {
+        "Skin": {
+          "elements": 6212,
+          "area_m2": 15.656351870882963,
+          "mass_kg": 84.54430010276799
+        },
+        "FrontSpar": {
+          "elements": 162,
+          "area_m2": 0.8911399999999999,
+          "mass_kg": 7.218233999999999
+        },
+        "RearSpar": {
+          "elements": 110,
+          "area_m2": 0.61307,
+          "mass_kg": 4.965867
+        },
+        "Rib0": {
+          "elements": 64,
+          "area_m2": 0.182286920567,
+          "mass_kg": 0.9843493710618
+        },
+        "Rib1": {
+          "elements": 64,
+          "area_m2": 0.1822856974745,
+          "mass_kg": 0.9843427663623
+        },
+        "Rib2": {
+          "elements": 64,
+          "area_m2": 0.1822857025875,
+          "mass_kg": 0.9843427939725
+        },
+        "Rib3": {
+          "elements": 64,
+          "area_m2": 0.1822865961205,
+          "mass_kg": 0.9843476190507
+        }
+      },
+      "shell_material_mass_kg": 100.66578365321529,
+      "area_m2": 17.889706787632463
+    },
+    "load_definition": "limit half-wing force times ultimate_factor, applied once",
+    "boundary": "all six DOF fixed at every root-section shell node; no self weight, fuel, engine or thermal load",
+    "stress_allowable_pa": 200000000.0,
+    "yield_margin": 2.2389693250787825,
+    "displacement_span_ratio": 0.012005152004642215,
+    "physical_validation_passed": false,
+    "strength_certified": false,
+    "mesh_sensitivity_checked": false,
+    "limits": [
+      "规定均布条带合力；未计算全机机动/阵风载荷或配平",
+      "S3 曲面网格保留折面形状，插入共享中边节点形成 S6；未恢复精确曲面",
+      "线弹性小变形；未含屈曲、疲劳、塑性、连接件和制造余量",
+      "应力限值为合成输入；峰值含根部/交线局部效应，不能直接用于真实飞机定尺寸",
+      "根部等效合力矩由规定载荷求得；独立求解平衡检查采用全模型展开节点 RF"
+    ],
+    "status": "static_checked"
+  },
+  "upstream_test_sha256": "4ffb25a6be8df73cd383db146dbbcc0ba3f5041fb9aa19275c7c63e1920d791b",
+  "resolved_failure": {
+    "cause": "CalculiX reads the first 20 characters of numerical fields; general 15-digit formatting overflowed some fields",
+    "example_written_coordinate_m": -1.85000000000001e-05,
+    "example_solver_coordinate_m": -1.85,
+    "fix": "bounded .12e fields, serialized wrench check, expanded-coordinate envelope check"
+  },
+  "coarse_mesh_issue": {
+    "max_edge_m": 0.4,
+    "bulk_stress_relative_difference": 0.11112373149213203,
+    "threshold": 0.1,
+    "passed": false,
+    "release_default_max_edge_m": 0.2
+  },
+  "physical_validation_passed": false,
+  "buckling_checked": false,
+  "full_aircraft_chain_complete": false,
+  "post_validation_format_change": {
+    "file": "src/wingdesignhub/oas_wingbox.py",
+    "change": "remove trailing empty line only",
+    "ast_unchanged": true,
+    "validated_sha256": "8e6df93f9ddd6ee2cccf95ef59b15fc6b0dbb228f010114ff35d8ed232ce465b",
+    "release_sha256": "e8d0b503f1f1ba3fb7d77abdda14d376820fff41ef32f1b5a97e187d0f2f737b"
+  }
+}
