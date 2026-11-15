@@ -1,0 +1,73 @@
+{
+  "version": "0.1.0",
+  "date": "2026-11-15",
+  "test_suite": {
+    "passed": 21,
+    "command": "python -m pytest -q",
+    "ui": "Streamlit AppTest default workflow"
+  },
+  "openvsp_avl": {
+    "status": "success",
+    "geometry": {
+      "version": "OpenVSP 3.56.0",
+      "span_m": 10.0,
+      "area_m2": 15.0,
+      "airfoil": "NACA0012"
+    },
+    "aero_coefficients": {
+      "CLtot": 0.22787,
+      "CDff": 0.0025325,
+      "Cmtot": -0.05467,
+      "Sref": 15.0,
+      "Cref": 1.5,
+      "Bref": 10.0
+    },
+    "mapping_force_error_n": 4.547473508864641e-13,
+    "mapping_moment_error_nm": 9.094947017729282e-13,
+    "tip_displacement_m": 0.03883009275477598
+  },
+  "beam_uniform_max_relative_error": 1.0436622233100934e-11,
+  "fastga": {
+    "status": "executed",
+    "source_sha256": "fa81a18c904b5fe6925806d0b647ac99c24e68e9e25889c882b980ab6b7ed3ff",
+    "outputs_kg": {
+      "data:weight:aircraft:MTOW": 1710.197080992762,
+      "data:weight:aircraft:OWE": 1081.0432731126027,
+      "data:mission:sizing:fuel": 249.15380788015943
+    },
+    "physical_validation_passed": false,
+    "reference": "FAST-GA 1.4.0 bundled tutorial"
+  },
+  "fastga_unresolved": [
+    "duplicate mass-input warning",
+    "empirical method range clipping",
+    "independent reference-value assessment pending"
+  ],
+  "calculix_attempts": [
+    {
+      "solver": "CalculiX GE 2.10",
+      "element": "B32R",
+      "case": "square cantilever end load",
+      "tip_displacement_m": 0.0005074936,
+      "analytical_tip_m": 0.000457142857142857,
+      "relative_error": 0.11014225000000032,
+      "threshold": 0.02,
+      "solver_sha256": "a289ba149532f0e06f64597724f7a1dcf246607aec384810bf21155cefb4681f",
+      "physical_validation_passed": false,
+      "passed": false
+    },
+    {
+      "solver": "CalculiX GE 2.10",
+      "case": "square cantilever end load",
+      "tip_displacement_m": 0.0005018387,
+      "analytical_tip_m": 0.000457142857142857,
+      "relative_error": 0.09777215625000034,
+      "threshold": 0.02,
+      "solver_sha256": "a289ba149532f0e06f64597724f7a1dcf246607aec384810bf21155cefb4681f",
+      "physical_validation_passed": false,
+      "passed": false
+    }
+  ],
+  "physical_validation_passed": false,
+  "full_aircraft_chain_complete": false
+}

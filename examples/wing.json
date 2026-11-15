@@ -1,0 +1,16 @@
+{
+  "name": "公开合成机翼示例",
+  "schema_version": 1,
+  "span_m": 10.0,
+  "chord_m": 1.5,
+  "speed_m_s": 40.0,
+  "density_kg_m3": 1.225,
+  "alpha_deg": 3.0,
+  "elastic_modulus_pa": 70000000000.0,
+  "second_moment_m4": 0.000008,
+  "beam_depth_m": 0.2,
+  "uniform_load_n_m": 500.0,
+  "beam_elements": 40,
+  "aero_panels": 24,
+  "assumption": "公开合成数据；孤立矩形NACA0012机翼和等截面悬臂梁，非真实飞机结构。"
+}

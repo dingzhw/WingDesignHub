@@ -1,0 +1,18 @@
+# Local reference documents and existing review extracts
+/文档/
+/tmp/
+/.runtime/
+/.venv/
+/.bootstrap/
+/.cache/
+/runs/
+/local/
+/validation/local/
+*.egg-info/
+__pycache__/
+.pytest_cache/
+*.pyc
+.env
+.env.*
+dist/
+build/
