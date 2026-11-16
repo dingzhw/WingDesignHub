@@ -56,6 +56,8 @@ CCBlade 1.0.0通过独立Julia 1.12.4进程计算。先复算[官方教程](http
 
 完整本地回归**364 passed、0 skipped、441.710 s**，JUnit为`local/tests-v026-full01.xml`；新增21项覆盖单位、独立插值、缺点/越界、发动机原生接口、航迹平衡、可用功率回调、失败保存和UI状态。服务失败测试使用明确注入的合成记录，原生计算验证由上述阶段单独承担。
 
+首次GitHub CI在英文Windows上为331通过、32跳过、1失败；根因为新增UI测试的输入快照读取遗漏UTF-8，应用源码没有同项改动。补充提交只修正测试读取及记录，在模拟缺省CP1252条件下21项推进/界面检查全部通过。完整本地364项结果保留，计算源码与原生证据哈希未变；最后提交的云端状态见GitHub Actions及本机`local/v026-release-sync.json`。
+
 真实完成结果的AppTest操作11项通过，包含计算入口、功率警示、原参数保存、设置变更、新建清空和重开。回调返回既有真实运行，避免重复求解；另以实际浏览器打开存档`23ec1ccd59eb4b2e9425def3b25e0603`，核对94.78 kg、153.40 kW及原装机147.95 kW，导出报告SHA-256与原产物一致。证据为`local/v026-success-ui.json`、`local/v026-browser-evidence.json`、`local/v026-propulsion-ui.jpg`。下载事件工具等待约302 s，未用其评价软件计算性能；测试服务已关闭。真实CLI的2700 rpm负例返回`propeller_tip_mach_exceeded`和退出码1。
 
 ## 修复与适用范围

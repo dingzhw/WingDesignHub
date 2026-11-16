@@ -81,7 +81,7 @@ from wingdesignhub.service import get_results
 from wingdesignhub.propulsion_ui import render
 root=Path({str(root)!r})
 parent=get_results(root,{records[1]['run_id']!r})
-p=DesignProject.from_dict(json.loads((root/'runs'/parent['run_id']/'input.json').read_text()))
+p=DesignProject.from_dict(json.loads((root/'runs'/parent['run_id']/'input.json').read_text(encoding='utf-8')))
 render(p,root,parent)
 '''
     app=AppTest.from_string(code,default_timeout=30).run()

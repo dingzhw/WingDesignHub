@@ -1090,5 +1090,22 @@
     "fuel_model": "constant BSFC 0.3 kg/kWh for this case, unchanged",
     "all_weight_and_mission_native_cases": false
   },
-  "stage_script_sha256": "28841f08bc82c1f33c394cf092f6b68290a1e09d7bc127ebf6d841f0501ebb76"
+  "stage_script_sha256": "28841f08bc82c1f33c394cf092f6b68290a1e09d7bc127ebf6d841f0501ebb76",
+  "ci_first_attempt": {
+    "commit": "3fa48a12acf0c3e502d5988b70ef5a89c2fcc45b",
+    "url": "https://github.com/dingzhw/WingDesignHub/actions/runs/43833751244",
+    "passed": 331,
+    "skipped": 32,
+    "failed": 1,
+    "cause": "new UI test read UTF-8 input with default CP1252; production source unchanged",
+    "fix": "explicit UTF-8 in test snapshot read"
+  },
+  "cp1252_supplemental": {
+    "tests": 21,
+    "passed": 21,
+    "time_s": 8.632,
+    "method": "Path.read_text without encoding defaults to CP1252 for this test subprocess",
+    "junit_sha256": "bfe6ecfd85f5518032eb9530598d6369805b24e525f312b88166092610f36fa9",
+    "production_source_unchanged": true
+  }
 }
