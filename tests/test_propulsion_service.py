@@ -51,6 +51,14 @@ def fail_run(frozen,monkeypatch):
     return run_propulsion(p,root,records[1]['run_id'])
 
 
+@pytest.mark.parametrize('version',['0.2.4','99.0.0'])
+def test_frozen_parent_rejects_unsupported_version(frozen,version):
+    from wingdesignhub.propulsion_service import validate_parent
+    root,p,records=frozen
+    with pytest.raises(ValueError,match='已验收'):
+        validate_parent(p,{**records[1],'version':version},{})
+
+
 def test_failure_remains_traceable_and_saved_with_exact_frozen_parent(frozen,monkeypatch):
     root,p,records=frozen;r=fail_run(frozen,monkeypatch)
     assert r['status']=='propeller_thrust_unavailable' and 'summary' not in r

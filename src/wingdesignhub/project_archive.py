@@ -12,7 +12,7 @@ from .requirements import DesignProject
 from .design_comparison import ComparisonRequest
 from .service import get_results
 
-MAX_BYTES=512*1024*1024  # iterative native evidence is a bounded, lossless nested archive
+MAX_BYTES=1024*1024*1024  # three iterative native designs plus bounded source runs
 MAX_FILES=1024  # bounded trim evaluations include their original commands and outputs
 
 
@@ -34,6 +34,9 @@ def raw_definition(data,kind):
     if kind=='comparison':
         obj={'purpose':data['purpose'],'schema_version':data['schema_version'],
              'definitions':[raw_definition(p,'design') for p in data['projects']]}
+        if data['schema_version']==2:
+            request=ComparisonRequest.from_dict(data)
+            obj.update(analysis_model=request.analysis_model,analysis_options=request.options_dict())
         return digest(json.dumps(obj,sort_keys=True).encode())
     obj=dict(data);obj.pop('confirmation_sha256',None)
     def normalize(x):
@@ -46,7 +49,7 @@ def build_bundle(project,root,record=None,geometry_record=None,aero_record=None,
     kind='comparison' if isinstance(project,ComparisonRequest) else 'design'
     project.validate() if kind=='comparison' else project.check_schema()
     source=project.to_dict();files={'project.json':encoded(source)};ids=[];geometry_ids=[];aero_ids=[];trim_ids=[];drag_ids=[];feedback_ids=[]
-    propulsion_ids=[];coupled_ids=[]
+    propulsion_ids=[];coupled_ids=[];support_ids=[]
     if coupled_record is not None and (record is None or kind!='design'):raise ValueError('推进闭环须与来源总体一起保存')
     if propulsion_record is not None and feedback_record is None:raise ValueError('推进结果须与来源气动反馈一起保存')
     if feedback_record is not None and (record is None or kind!='design'):raise ValueError('气动反馈须与来源总体一起保存')
@@ -66,6 +69,9 @@ def build_bundle(project,root,record=None,geometry_record=None,aero_record=None,
         if kind=='design' and project.confirmation_sha256!=project.definition_hash():
             raise ValueError('当前需求尚未确认，不能附上旧计算结果')
         ids=[actual['run_id'],*actual.get('child_runs',[])]
+        if kind=='comparison' and project.analysis_model=='coupled':
+            from .comparison_archive import support_runs
+            support_ids=support_runs(root,ids[1:])
         if geometry_record is not None:
             gr=get_results(root,geometry_record['run_id'])
             if gr!=geometry_record or gr.get('mode')!='aircraft_geometry' or gr.get('parent_run_id')!=actual['run_id']:
@@ -101,7 +107,7 @@ def build_bundle(project,root,record=None,geometry_record=None,aero_record=None,
             if cr!=coupled_record or cr.get('mode')!='overall_propulsion' or cr.get('parent_run_id') not in [actual['run_id'],*feedback_ids]:
                 raise ValueError('推进闭环与来源总体或气动反馈不匹配')
             coupled_ids=[cr['run_id']]
-        for rid in ids+geometry_ids+aero_ids+trim_ids+drag_ids+feedback_ids+propulsion_ids+coupled_ids:
+        for rid in ids+geometry_ids+aero_ids+trim_ids+drag_ids+feedback_ids+propulsion_ids+coupled_ids+support_ids:
             r=get_results(root,rid);work=Path(root)/'runs'/rid
             for name in ['result.json',*r.get('artifact_hashes',{})]:
                 safe_name(name);p=(work/name).resolve()
@@ -114,6 +120,7 @@ def build_bundle(project,root,record=None,geometry_record=None,aero_record=None,
     manifest={'bundle_schema':1,'kind':kind,'name':name,'software_version':__version__,
               'created_utc':datetime.now(timezone.utc).isoformat(),'run_ids':ids,'geometry_run_ids':geometry_ids,'aero_run_ids':aero_ids,'trim_run_ids':trim_ids,'drag_run_ids':drag_ids,'feedback_run_ids':feedback_ids,'propulsion_run_ids':propulsion_ids,'coupled_run_ids':coupled_ids,
               'definition_sha256':project.definition_hash(),'files':{n:digest(b) for n,b in files.items()},
+              'support_run_ids':support_ids,
               'integrity_scope':'SHA-256 detects damaged contents; this is not a signed authenticity certificate'}
     stream=BytesIO()
     with ZipFile(stream,'w',ZIP_DEFLATED) as z:
@@ -124,7 +131,7 @@ def build_bundle(project,root,record=None,geometry_record=None,aero_record=None,
 
 def read_bundle(data):
     """Check all members in memory, with no extraction and no HTML execution."""
-    if not isinstance(data,bytes) or len(data)>MAX_BYTES:raise ValueError('方案包大小超出 512 MB 限制')
+    if not isinstance(data,bytes) or len(data)>MAX_BYTES:raise ValueError('方案包大小超出 1024 MB 限制')
     try:
         with ZipFile(BytesIO(data)) as z:
             infos=z.infolist();names=[safe_name(i.filename) for i in infos]
@@ -162,7 +169,11 @@ def read_bundle(data):
         coupled_ids=manifest.get('coupled_run_ids',[]);coupled_records=[]
         if len(coupled_ids)>1 or set(coupled_ids)&set(ids+geometry_ids+aero_ids+trim_ids+drag_ids+feedback_ids+propulsion_ids) or (coupled_ids and (kind!='design' or len(ids)!=1)):
             raise ValueError('方案包推进闭环运行列表无效')
-        for rid in ids+geometry_ids+aero_ids+trim_ids+drag_ids+feedback_ids+propulsion_ids+coupled_ids:
+        support_ids=manifest.get('support_run_ids',[]);support_records=[]
+        other_ids=ids+geometry_ids+aero_ids+trim_ids+drag_ids+feedback_ids+propulsion_ids+coupled_ids
+        if (len(support_ids)>6 or len(set(support_ids))!=len(support_ids) or set(support_ids)&set(other_ids) or
+            (support_ids and (kind!='comparison' or project.analysis_model!='coupled'))):raise ValueError('比较来源记录列表无效')
+        for rid in other_ids+support_ids:
             if UUID(rid).hex!=rid:raise ValueError('方案包运行编号无效')
             prefix=f'runs/{rid}/';r=json.loads(files[prefix+'result.json'])
             if r['run_id']!=rid:raise ValueError('方案包运行身份不符')
@@ -176,14 +187,15 @@ def read_bundle(data):
             summary_name='comparison.json' if run_kind=='comparison' else 'summary.json'
             if prefix+summary_name in files and json.loads(files[prefix+summary_name])!=r.get('summary'):
                 raise ValueError('方案包摘要与运行结果不符')
-            (coupled_records if rid in coupled_ids else propulsion_records if rid in propulsion_ids else feedback_records if rid in feedback_ids else drag_records if rid in drag_ids else trim_records if rid in trim_ids else aero_records if rid in aero_ids else geometry_records if rid in geometry_ids else records).append(r)
+            (support_records if rid in support_ids else coupled_records if rid in coupled_ids else propulsion_records if rid in propulsion_ids else feedback_records if rid in feedback_ids else drag_records if rid in drag_ids else trim_records if rid in trim_ids else aero_records if rid in aero_ids else geometry_records if rid in geometry_ids else records).append(r)
         if records:
             expected='overall_comparison' if kind=='comparison' else 'overall_sizing'
             if records[0]['mode']!=expected or records[0]['definition_sha256']!=manifest['definition_sha256']:
                 raise ValueError('方案包结果与需求不符')
             if records[0].get('child_runs',[])!=ids[1:]:raise ValueError('方案包子运行列表不符')
             for i,r in enumerate(records[1:]):
-                if r['mode']!='overall_sizing' or r['definition_sha256']!=raw_definition(source['projects'][i],'design'):
+                expected_modes=('overall_sizing','overall_propulsion') if kind=='comparison' and project.analysis_model=='coupled' else ('overall_sizing',)
+                if r['mode'] not in expected_modes or r['definition_sha256']!=raw_definition(source['projects'][i],'design'):
                     raise ValueError('方案包子运行与需求不符')
             for filename in ('report.html','report.md'):
                 if 'reports/'+filename in files and files['reports/'+filename]!=files[f'runs/{ids[0]}/{filename}']:
@@ -303,8 +315,11 @@ def read_bundle(data):
                         raise ValueError('方案包推进任务质量或CG不符')
         from .coupled_archive import check_coupled
         for r in coupled_records:check_coupled(r,records+feedback_records,files)
+        if kind=='comparison' and project.analysis_model=='coupled':
+            from .comparison_archive import check_comparison
+            check_comparison(project,records,support_records,files)
         current={p.relative_to(Path(__file__).parent).as_posix():digest(p.read_bytes()) for p in Path(__file__).parent.rglob('*.py')}
-        all_records=records+geometry_records+aero_records+trim_records+drag_records+feedback_records+propulsion_records+coupled_records
+        all_records=records+geometry_records+aero_records+trim_records+drag_records+feedback_records+propulsion_records+coupled_records+support_records
         compatible=all(r.get('version')==__version__ and r.get('source_hashes')==current for r in all_records)
         for r in all_records:
             for package,recorded in r.get('summary',{}).get('versions',{}).items():
@@ -312,6 +327,7 @@ def read_bundle(data):
                 except PackageNotFoundError:compatible=False
         return {'manifest':manifest,'input':source,'project':project,'records':records,'geometry_records':geometry_records,'aero_records':aero_records,'trim_records':trim_records,'drag_records':drag_records,'feedback_records':feedback_records,'propulsion_records':propulsion_records,'coupled_records':coupled_records,'files':files,
                 'migration_required':project.definition_hash()!=manifest['definition_sha256'],
+                'support_records':support_records,
                 'current_source_matches':compatible,'bundle_sha256':digest(data)}
     except (KeyError,TypeError,UnicodeError,json.JSONDecodeError,AttributeError) as exc:
         raise ValueError('方案包清单或记录格式无效') from exc

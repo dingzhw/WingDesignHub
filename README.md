@@ -1,10 +1,10 @@
 # WingDesignHub
 
-面向固定翼飞机概念设计的本地工程工作台。当前版本 **V0.2.7**：把发动机—CCBlade匹配和有界耗油图接回同一重量—燃油—功率迭代，更新发动机质量、携油/重心和全机原生几何，比较重新定尺寸前后的方案。
+面向固定翼飞机概念设计的本地工程工作台。当前版本 **V0.3.0**：把已经接通的气动—推进—总体闭环用于三方案比较，生成带约束、推进余量和耗油方法覆盖的方案卡，保存完整计算依赖并支持重开。目标始终是从少量需求得到可解释、可复算的初步飞机参数。
 
 目标是让用户给出有效载荷、航程/航时及可选起飞重量等少量需求，一键开展正向总体设计，形成初步技术参数、可行性诊断和方案比较。FAST-GA/OpenMDAO、OpenVSP、AVL/XFOIL、CCBlade、OpenAeroStruct、CalculiX 等工具支撑这一主流程，并逐步覆盖 AAA 十模块。
 
-默认首页“新建飞机方案”已能从少量需求生成初步构型、翼面积、重量、燃油和安装功率，并一键比较三个方案。计算采用 FAST-GA 原生部件重量、明确的概念极曲线与任务积分；输入、结果、报告可以一起保存，重开后复算。V0.2.0 交付软件阶段验证及专业评审材料，专业签署仍待完成。完整气动力/推进平衡、起降距离与结构质量回写按后续路线接入。详见 [产品主流程](docs/FORWARD_DESIGN.md)、[阶段验证](docs/VALIDATION_V0.2.0.md)与[评审材料](docs/REVIEW_V0.2.0.md)。
+默认首页“新建飞机方案”从少量需求生成初步构型、翼面积、重量、燃油和安装功率。初步计算采用概念气动/推进；增强计算接入实际几何、小迎角配平阻力及发动机/桨匹配，二者均复用 FAST-GA 原生部件重量与任务积分。三方案默认运行增强链，输入、结果和报告一起保存，重开后可查阅或重新计算。起降距离、完整操稳及结构定尺寸质量回写按后续路线接入。详见 [产品主流程](docs/FORWARD_DESIGN.md)、[阶段验证](docs/VALIDATION_V0.3.0.md)与[评审材料](docs/REVIEW_V0.3.0.md)。
 
 V0.2.1～V0.2.6 的独立几何、气动、配平、阻力、气动总体反馈和冻结构型推进复算入口继续保留。V0.2.7可从初步总体直接启动推进闭环，无需手动逐项运行工具；通用发动机耗油图内采用原生插值，低负荷和地面估算单列覆盖。见[推进闭环接口](docs/PROPULSION_COUPLING.md)、[本版验证](docs/VALIDATION_V0.2.7.md)、[冻结构型推进复算](docs/PROPULSION_INTERFACE.md)和[任务反馈接口](docs/AERO_FEEDBACK_INTERFACE.md)。
 
@@ -23,7 +23,7 @@ V0.2.1～V0.2.6 的独立几何、气动、配平、阻力、气动总体反馈�
 5. 点击“保存方案到本机”或“保存三方案到本机”。下次从顶部“打开本机方案”恢复输入和历史结果；重新运行产生新记录。也可以导出 `.wdh` 完整方案包，在另一台已配置电脑导入。
 6. 点击“导出可打印总体报告”或“导出可打印比较报告”，用浏览器打开 HTML，可打印或另存 PDF。报告包含需求、参数、约束、任务燃油账目、来源及诊断。
 
-耗油默认仍为原有统一假设。高级输入可选择“经济巡航参考”：65% 功率点用于校准，55%/75% 点为同源留出检查，独立试验资料仍缺；范围外继续使用基础耗油率。原约 26.5% 偏差及处理依据见 [耗油模型说明](docs/FUEL_MODEL.md)。完整操作和文件恢复规则见 [使用流程](docs/WORKFLOW.md)。
+初步计算默认采用原统一耗油率，高级输入可选择“经济巡航参考”：65% 功率点用于校准，55%/75% 点为同源留出。增强计算采用通用发动机耗油图，并单列低负荷和地面基础估算；实际覆盖见方案卡。原约 26.5% 偏差及旧模型处理依据见 [耗油模型说明](docs/FUEL_MODEL.md)，两类模型的证据不能混用。完整操作和文件恢复规则见 [使用流程](docs/WORKFLOW.md)。
 
 “检查并保存需求”只保存定义；“运行初步总体设计”才执行总体计算。已检查约束满足时仍明确显示模型边界，未收敛、超出适用域和约束超限分别显示。需求或假设改变后重新确认、计算；旧版需求导入后会补充定尺寸假设。单模块工具仍可从侧栏进入。
 
@@ -51,6 +51,8 @@ CalculiX 基准要求 2.23。其他电脑可从 [CalculiX Windows 项目](https:
 V0.2.6：Python `propulsion_service.run_propulsion(project, root, feedback_run_id, options)`，CLI `propulsion --feedback-run-id ID [--propulsion-options options.json]`；归档增加 `--propulsion-run-id ID`。`scripts/validate_propulsion.py local/new-validation FEEDBACK_ID`复算公开APC案例、原生桨图/任务、径向离散、步长、失败和档案。开发者首次部署需在本机`local/propulsion-tools.json`配置Julia、含CCBlade 1.0.0的项目环境与包目录，具体字段见[推进接口](docs/PROPULSION_INTERFACE.md)。本机已配置，普通使用不需要终端；未配置时显示明确提示，不自动修改共享Julia环境。
 
 V0.2.7：Python `coupled_service.run_coupled(project, root, seed_run_id, options)`，CLI `coupled --run-id ID [--coupled-options options.json]`；归档增加`--coupled-run-id ID`。`scripts/validate_coupled.py local/new-validation SEED_ID [--replay-run-id FROZEN_REPLAY_ID]`检查真实总体闭环、公开发动机/APC算例、离散精度和档案。种子可为已收敛初步总体或气动反馈，历史结果只作初值，新几何/气动重新计算。
+
+V0.3.0：三方案配置版本2显式选择`analysis_model="coupled"`和共同`analysis_options`；原`compare`、`compare-runs`及Python比较服务直接支持增强结果。界面默认增强模型，保留初步快速筛选。已完成方案可显式复用，方法/来源不一致会拒绝；失败卡片不使用初步结果代填。见[比较接口](docs/ENHANCED_COMPARISON.md)、[阶段验证](docs/VALIDATION_V0.3.0.md)和[专业评审材料](docs/REVIEW_V0.3.0.md)。
 
 V0.2.5：Python `feedback_service.run_aero_feedback(project, root, sizing_run_id, options)`，CLI `feedback --run-id ID [--feedback-options options.json]`；归档增加 `--feedback-run-id ID`。`MissionAeroTable.from_dict()` 重开工况表供有界查询。`scripts/validate_aero_feedback.py local/new-feedback-validation` 执行原生总体闭环、直接复算、任务步长、敏感性、失败诊断、档案及公开翼型检查。迭代的原始证据无损打包；方案包上限512 MB，首次保存/导出需要完整性检查时间。运行模型、比较口径和边界见[接口说明](docs/AERO_FEEDBACK_INTERFACE.md)。
 

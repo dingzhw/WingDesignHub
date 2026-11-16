@@ -8,13 +8,14 @@ from zipfile import ZipFile,ZIP_DEFLATED
 from . import __version__
 from .adapters import sha256
 from .requirements import DesignProject
-from .design_comparison import ComparisonRequest,summarize_comparison
+from .design_comparison import ComparisonRequest,summarize_comparison,check_record
 from .design_cards import card_html,comparison_markdown
 from .service import get_results,write_json
 from .sizing_service import run_sizing
+from .coupled_service import run_coupled
 
 
-def _save(request,root,records=None):
+def _save(request,root,records=None,on_progress=None,complete=False):
     request.validate();root=Path(root).resolve();work=root/'runs'/uuid4().hex;work.mkdir(parents=True)
     write_json(work/'input.json',request.to_dict())
     result={'run_id':work.name,'version':__version__,'mode':'overall_comparison','status':'running',
@@ -26,13 +27,27 @@ def _save(request,root,records=None):
         if any(p.confirmation_sha256!=p.definition_hash() for p in request.projects):
             result.update(status='needs_confirmation',error='三个方案均需核对确认后计算')
         else:
-            if records is None:
-                records=[]
-                for project in request.projects:
-                    r=run_sizing(project,root)
+            if records is None or complete:
+                records=list(records or [])
+                if len(records)>3:raise ValueError('最多复用三个已完成方案')
+                for p,r in zip(request.projects,records):
+                    check_record(request,p,r)
+                    if r['version']!=__version__ or r['source_hashes']!=result['source_hashes']:
+                        raise ValueError('复用记录源码或版本已改变，请重新计算')
+                result['child_runs']=[r['run_id'] for r in records]
+                for index,project in enumerate(request.projects[len(records):],len(records)):
+                    result['progress']={'scheme':index,'stage':'initial'};write_json(work/'result.json',result)
+                    if on_progress:on_progress(index,'initial',result['run_id'])
+                    seed=run_sizing(project,root);r=seed
+                    if request.analysis_model=='coupled' and seed.get('summary',{}).get('converged'):
+                        result['progress']={'scheme':index,'stage':'coupled','seed_run_id':seed['run_id']}
+                        write_json(work/'result.json',result)
+                        if on_progress:on_progress(index,'coupled',result['run_id'])
+                        r=run_coupled(project,root,seed['run_id'],request.options_dict())
                     records.append(get_results(root,r['run_id']))
                     # Checkpoint after each completed child; one failed solver does not hide the others.
                     result['child_runs']=[x['run_id'] for x in records];write_json(work/'result.json',result)
+                    if on_progress:on_progress(index,'completed',result['run_id'])
             summary=summarize_comparison(request,records)
             result.update(status=summary['status'],summary=summary,child_runs=[r['run_id'] for r in records])
             write_json(work/'comparison.json',summary)
@@ -57,13 +72,17 @@ def _save(request,root,records=None):
     write_json(work/'result.json',result);return result
 
 
-def run_comparison(request,root):
+def run_comparison(request,root,*,reuse_run_ids=(),on_progress=None):
     req=ComparisonRequest.from_dict(request) if isinstance(request,dict) else request
-    return _save(req,root)
+    records=[get_results(root,rid) for rid in reuse_run_ids]
+    return _save(req,root,records,on_progress,complete=True)
 
 
 def compare_sizing_runs(root,run_ids,purpose='design_trade'):
     if len(run_ids)!=3:raise ValueError('请选择三个总体运行编号')
     root=Path(root).resolve();records=[get_results(root,rid) for rid in run_ids]
     projects=[DesignProject.from_dict(json.loads((root/'runs'/rid/'input.json').read_text(encoding='utf-8'))) for rid in run_ids]
-    return _save(ComparisonRequest(tuple(projects),purpose),root,records)
+    coupled=any(r.get('mode')=='overall_propulsion' for r in records)
+    options=next((r['options'] for r in records if r.get('mode')=='overall_propulsion'),{})
+    request=ComparisonRequest(tuple(projects),purpose,2,'coupled',options) if coupled else ComparisonRequest(tuple(projects),purpose)
+    return _save(request,root,records)

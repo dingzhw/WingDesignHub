@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 import traceback
+from time import sleep
 from uuid import uuid4, UUID
 import numpy as np
 from . import __version__
@@ -16,7 +17,16 @@ def write_json(path, value):
     path = Path(path)
     temporary = path.with_suffix(path.suffix + ".tmp")
     temporary.write_text(json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False), encoding="utf-8")
-    temporary.replace(path)
+    # Windows readers/scanners may briefly deny replacement of an existing file.
+    # Keep the old result intact and retain the candidate on permanent failure.
+    for attempt in range(5):
+        try:
+            temporary.replace(path)
+            break
+        except PermissionError as exc:
+            if getattr(exc,'winerror',None) not in (5,32,33) or attempt==4:
+                raise
+            sleep(.05*2**attempt)
 
 
 def run_reference(root, name):
@@ -131,7 +141,10 @@ def get_results(root, run_id):
 def compare_designs(records, projects=None, purpose='design_trade'):
     if projects is not None:
         from .design_comparison import ComparisonRequest, summarize_comparison
-        return summarize_comparison(ComparisonRequest(tuple(projects),purpose),records)
+        enhanced=next((r for r in records if r.get('mode')=='overall_propulsion'),None)
+        request=(ComparisonRequest(tuple(projects),purpose,2,'coupled',enhanced['options']) if enhanced
+                 else ComparisonRequest(tuple(projects),purpose))
+        return summarize_comparison(request,records)
     if any(r["status"] != "success" for r in records):
         raise ValueError("仅比较成功运行")
     if len({(r["mode"], r["version"], json.dumps(r["source_hashes"], sort_keys=True)) for r in records}) > 1:

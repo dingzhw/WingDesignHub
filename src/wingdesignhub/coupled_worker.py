@@ -35,10 +35,19 @@ def main(work):
         with FastGAMassModel() as model:
             summary=solve_design(p,model,options.aero.max_iterations,options.aero.integration_step_s,
                                  feedback=feedback,initial_summary=parent['summary'])
+            if summary.get('status')=='out_of_domain':
+                from .propulsion_model import PropulsionError
+                write_json(work/'incomplete_summary.json',summary)
+                raise PropulsionError(summary.get('error_code','out_of_domain'),
+                    '; '.join(summary.get('diagnostics') or ['总体试算超出模型范围']),
+                    **summary.get('diagnostic_context',{}))
             write_json(work/'fastga_mass_inputs.json',model.last_inputs);write_json(work/'fastga_mass_interface.json',model.audit)
-            evidence={'mass_sources':model.audit.get('upstream_mass_source_hashes',{}),
-                      'engine':feedback.last['flight'].engine.evidence if feedback.last else None}
-            summary['model_signature']=hashlib.sha256(json.dumps(evidence,sort_keys=True).encode()).hexdigest()
+            from .coupled_identity import model_identity
+            last=feedback.last
+            geometry=json.loads((last['native'].geometry_work/'summary.json').read_text('utf-8'))
+            evidence,summary['model_signature']=model_identity(model.audit['upstream_mass_source_hashes'],
+                last['flight'].engine.evidence,last['flight'].propeller.data,last['native'].evidence(),
+                {k:geometry[k] for k in ('openvsp_version','native_binary_hashes','template_version')})
             write_json(work/'model_evidence.json',evidence)
         summary['versions']={n:version(n) for n in ('fast-oad-cs23','fast-oad-core','openmdao','numpy','wingdesignhub')}
         if 'geometry' in summary:

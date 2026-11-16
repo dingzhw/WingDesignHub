@@ -128,8 +128,9 @@ def test_ui_confirmation_change_and_three_cards(actual,monkeypatch):
     from streamlit.testing.v1 import AppTest
     from wingdesignhub import comparison_service
     root,req,r=actual
-    monkeypatch.setattr(comparison_service,'run_comparison',lambda q,root:r)
+    monkeypatch.setattr(comparison_service,'run_comparison',lambda q,root,**kw:r)
     a=AppTest.from_file(str(Path(__file__).resolve().parents[1]/'app.py')).run(timeout=30)
+    a.selectbox(key='comparison-model').set_value('initial').run()
     assert not a.exception and a.button(key='run-comparison').disabled
     next(c for c in a.checkbox if c.label.startswith('我已核对三个')).check().run()
     a.button(key='run-comparison').click().run()

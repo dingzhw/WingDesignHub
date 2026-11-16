@@ -40,8 +40,12 @@ def comparison_report_html(summary,record=None):
     text+='<p>'+escape(summary.get('interpretation','本次比较未形成有效结果，诊断保留在运行记录中。'))+'</p>'+table(['方案','状态','起飞重量 kg','翼面积 m²','安装功率 kW','总可用油 kg'],rows)
     text+='<h2>变化项</h2>'+table(['方案编号（0 为 A）','字段','基准','值'],[(d['scheme'],d['field'],d['base'],d['value']) for d in summary.get('differences',[])])
     text+='<h2>约束与证据</h2>'
+    text+='<p>'+escape(summary.get('analysis_label','初步总体（概念气动与推进）'))+'</p>'
+    if summary.get('analysis_options'):text+='<pre>'+escape(json.dumps(summary['analysis_options'],ensure_ascii=False,indent=2))+'</pre>'
     for c in summary.get('cards',[]):
         text+='<h3>'+escape(c['name'])+'</h3><p>'+escape('；'.join(c['diagnostics']))+'</p>'
         text+=table(['检查项','结果'],[(CHECK_LABELS.get(k,k),'满足' if v else '未满足') for k,v in c['checks'].items()])
+        if c.get('enhanced'):text+='<h4>推进与耗油覆盖</h4><pre>'+escape(json.dumps(c['enhanced'],ensure_ascii=False,indent=2))+'</pre>'
+        text+='<ul>'+''.join('<li>'+escape(x)+'</li>' for x in c.get('limits',[]))+'</ul>'
         text+='<pre>'+escape(json.dumps({'run_id':c['run_id'],'definition_sha256':c['definition_sha256'],'input':c['input']},ensure_ascii=False,indent=2))+'</pre>'
-    return text+'<p>概念模型；专业评审待签署。配平、起降距离和结构质量反馈尚未覆盖。完整子任务报告与假设保存在方案包中。</p></html>'
+    return text+'<p>概念模型；专业评审待签署。起降距离、操稳包线和结构质量反馈待完成；配平覆盖以各方案实际记录为准。完整子任务报告与假设保存在方案包中。</p></html>'

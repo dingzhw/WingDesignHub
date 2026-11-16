@@ -13,6 +13,11 @@ def feedback_bundle(project,root,record,geometry,aero,trim,drag,feedback,source_
     return archive.build_bundle(project,root,record,geometry,aero,trim,drag,feedback,propulsion,coupled)
 
 
+@st.cache_data(max_entries=1,show_spinner=False)
+def comparison_bundle(project,root,record,evidence_token):
+    return archive.build_bundle(project,root,record)
+
+
 def activate(parsed=None):
     for key in ('sizing_result','comparison_result','design_intent_result','archive_saved_note','aircraft_geometry_result','aircraft_aero_result','aircraft_trim_result','aircraft_drag_result','aero_feedback_result','propulsion_result','coupled_result'):
         st.session_state.pop(key,None)
@@ -54,7 +59,10 @@ def library(root):
                 st.write(labels.get(r['status'],r['status']))
                 s=r.get('summary',{})
                 if r['mode']=='overall_comparison' and 'cards' in s:
+                    st.caption(s.get('analysis_label','初步总体（概念气动与推进）'))
                     st.dataframe([{'方案':c['name'],'状态':c['status_label'],**{f'{METRICS[k][0]}（{METRICS[k][1]}）':v for k,v in c['metrics'].items()}} for c in s['cards']],hide_index=True)
+                    for c in s['cards']:
+                        if c.get('enhanced'):st.write(c['name']);st.json(c['enhanced'])
                 elif 'geometry' in s:
                     st.dataframe([{'指标':'设计起飞重量 kg','值':s['design_mtow_kg']},
                                   {'指标':'翼面积 m²','值':s['geometry']['wing_area_m2']},
@@ -138,6 +146,13 @@ def save_controls(project,root,record=None,key='design'):
             for r in (chosen,geometry,aero,trim,drag,feedback,propulsion,coupled):
                 if r is not None and get_results(root,r['run_id'])!=r:raise ValueError('当前运行记录已改变')
             data=feedback_bundle(project,str(root),chosen,geometry,aero,trim,drag,feedback,source_hashes(),propulsion,coupled)
+        elif chosen and isinstance(project,ComparisonRequest) and project.analysis_model=='coupled':
+            from .comparison_archive import support_runs
+            from .service import get_results
+            children=chosen.get('child_runs',[])
+            records=[get_results(root,rid) for rid in [chosen['run_id'],*children,*support_runs(root,children)]]
+            if records[0]!=chosen:raise ValueError('当前比较记录已改变')
+            data=comparison_bundle(project,str(root),chosen,records)
         else:data=archive.build_bundle(project,root,chosen,geometry,aero,trim,drag)
         if st.button('保存'+('三方案' if key=='comparison' else '方案')+'到本机',key=key+'_save_local'):
             index=archive.save_bundle(data,root)

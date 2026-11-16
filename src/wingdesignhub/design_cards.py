@@ -6,7 +6,8 @@ import math
 STATUS={'concept_checked_with_limits':'已收敛，已检查约束满足（概念模型）',
         'constraints_not_met':'已收敛，存在约束超限','not_converged':'未收敛',
         'out_of_domain':'模型范围或任务冲突','failed':'计算失败',
-        'needs_confirmation':'需求待确认','invalid_input':'需求无效'}
+        'needs_confirmation':'需求待确认','invalid_input':'需求无效',
+        'engine_sfc_out_of_domain':'发动机耗油图越界','propeller_tip_mach_exceeded':'桨尖马赫数超限'}
 METRICS={'mtow_kg':('设计起飞重量','kg'),'owe_kg':('空重（含不可用燃油）','kg'),
          'block_fuel_kg':('总可用燃油（含储备与滑行）','kg'),'reserve_kg':('其中储备燃油','kg'),
          'power_kw':('安装轴功率','kW'),'area_m2':('翼面积','m²'),'span_m':('翼展','m'),
@@ -36,7 +37,19 @@ def make_card(project,record):
         controls={'wing_area':s['geometry']['controlling_area_constraint'],'power':s['power']['controlling_power_constraint']}
     diagnostics=[d if isinstance(d,str) else d.get('message',str(d)) for d in s.get('diagnostics',[])]
     if record.get('error'):diagnostics.append(record['error'])
+    enhanced={}
+    if converged and 'propulsion_feedback' in s:
+        audit=s['propulsion_feedback']
+        enhanced={'engine_mass_kg':s['weights']['components_kg']['data:weight:propulsion:engine:mass'],
+                  'usable_tank_capacity_kg':s['geometry']['usable_tank_capacity_kg'],
+                  'max_power_fraction':s['mission']['max_power_fraction'],
+                  'minimum_torque_margin_nm':audit['minimum_torque_margin_nm'],
+                  'fuel_by_method_kg':s['mission']['block_fuel_by_method_kg'],
+                  'fuel_method_fraction':audit['fuel_method_fraction'],
+                  'trim_checked':s.get('trim_checked',False),'model_signature':s.get('model_signature')}
     return {'name':project.name,'run_id':record['run_id'],'status':status,'status_label':STATUS.get(status,status),
+            'analysis_model':'coupled' if record.get('mode')=='overall_propulsion' else 'initial',
+            'analysis_options':record.get('options',{}),'enhanced':enhanced,'parent_run_id':record.get('parent_run_id'),
             'eligible':eligible,'converged':converged,'metrics':metrics,'margins':margins,'controls':controls,
             'checks':s.get('checks',{}),'diagnostics':diagnostics,'input':project.to_dict(),
             'definition_sha256':project.definition_hash(),'software_version':record['version'],
@@ -68,6 +81,9 @@ def card_html(card):
     labels={'landing_stall':'着陆构型失速','cruise_lift':'巡航升力','fuel_volume':'油箱容量','cruise':'巡航需用功率',
             'climb_at_cruise_altitude':'巡航高度爬升','loiter':'留空需用功率'}
     control_text='；'.join(('翼面积' if k=='wing_area' else '功率')+'：'+labels.get(v,v) for k,v in card['controls'].items())
+    method='增强总体：AVL/XFOIL＋CCBlade/发动机，结构仍为经验重量。' if card.get('analysis_model')=='coupled' else '初步总体：概念气动与推进模型。'
+    enhanced='<h2>推进与模型覆盖</h2><pre>'+esc(json.dumps(card.get('enhanced',{}),ensure_ascii=False,indent=2))+'</pre>' if card.get('enhanced') else ''
+    enhanced+='<details><summary>共同分析设置</summary><pre>'+esc(json.dumps(card.get('analysis_options',{}),ensure_ascii=False,indent=2))+'</pre></details>'
     return f'''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>{esc(card['name'])} · 方案卡</title>
 <style>body{{font:16px/1.6 "Microsoft YaHei",sans-serif;max-width:960px;margin:35px auto;padding:0 24px;color:#24384a}}
 h1{{color:#163b52}}.status{{padding:12px;background:#fff2d4;border-left:4px solid #bb8200}}
@@ -75,10 +91,10 @@ table{{border-collapse:collapse;width:100%}}td,th{{padding:7px;border-bottom:1px
 svg{{width:100%;max-height:360px}}pre{{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}}
 @media print{{body{{margin:0;font-size:11pt}}details{{display:block}}pre{{font-size:8pt}}}}</style>
 <h1>{esc(card['name'])}</h1><p class="status">{esc(card['status_label'])}。数值结果用于初步方案研究。</p>
-<h2>规定需求</h2><p>{esc(stated)}</p>
+<p>{method}</p><h2>规定需求</h2><p>{esc(stated)}</p>
 <table><tr><th>计算输出</th><th>值</th><th>单位</th></tr>{rows}</table>{svg}
 <p>迭代 {card['iterations']} 轮；控制约束：{esc(control_text)}；余量（kg）：{esc(card['margins'])}</p>
-<p>检查：{esc(check_text)}</p><ul>{notes}</ul><h2>输入与假设快照</h2><pre>{assumptions}</pre>
+<p>检查：{esc(check_text)}</p>{enhanced}<ul>{notes}</ul><h2>输入与假设快照</h2><pre>{assumptions}</pre>
 <p>V{esc(card['software_version'])} · 运行 {esc(card['run_id'])}</p>
 <pre>定义 SHA-256：{esc(card['definition_sha256'])}\n求解器：{esc(card['solver_versions'])}</pre></html>'''
 
@@ -90,5 +106,6 @@ def comparison_markdown(summary):
         name=c['name'].replace('|','\\|').replace('\n',' ')
         lines.append('| '+' | '.join([name,c['status_label'],*vals])+' |')
     lines+=['','方案 1 为差分基准；未收敛或未满足约束的方案不参与有效结果差分。','',
-            '输入差异、完整假设与诊断见 comparison.json 及各方案卡。所有方案仍须配平、起降及结构校核。']
+            '分析方法：'+summary.get('analysis_label','初步总体（概念气动与推进）')+'。',
+            '输入差异、方法覆盖、完整假设与诊断见 comparison.json 及各方案卡。起降距离、操稳包线及结构质量反馈待完成；配平覆盖以各方案实际记录为准。']
     return '\n'.join(lines)+'\n'

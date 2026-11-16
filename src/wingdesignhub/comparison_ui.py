@@ -3,7 +3,7 @@ from dataclasses import replace
 from pathlib import Path
 import json
 import streamlit as st
-from .design_comparison import ComparisonRequest,PURPOSES,AXES
+from .design_comparison import ComparisonRequest,PURPOSES,AXES,MODELS
 from .design_cards import METRICS
 from . import comparison_service
 
@@ -27,6 +27,7 @@ def show_results(r,request,root):
     if r['status'] in ('failed','needs_confirmation'):
         st.error(r.get('error','比较未完成'));return
     s=r['summary'];st.write(s['interpretation'])
+    st.caption(s.get('analysis_label',MODELS['initial']))
     if r['status']=='comparison_incomplete':st.warning('部分方案未满足约束或未完成计算；保留诊断，仅比较有效结果。')
     else:st.success('三个方案已计算并生成方案卡；当前结论限于已检查的概念模型。')
     for col,card in zip(st.columns(3),s['cards']):
@@ -37,6 +38,9 @@ def show_results(r,request,root):
                 label,unit=METRICS[k];value=card['metrics'][k]
                 st.metric(label, '—' if value is None else f'{value:.2f} {unit}')
             for message in card['diagnostics']:st.write(message)
+            enhanced=card.get('enhanced',{})
+            if enhanced:
+                st.caption(f"任务最大需用/可用功率 {enhanced['max_power_fraction']:.4f}；最小轴扭矩余量 {enhanced['minimum_torque_margin_nm']:.2f} N·m")
             failed=[k for k,v in card['checks'].items() if not v]
             if failed:
                 from .sizing_ui import CHECKS
@@ -48,7 +52,7 @@ def show_results(r,request,root):
         st.dataframe(s['differences'],hide_index=True)
         for c in s['cards']:
             st.write(c['name']);st.json({'余量':c['margins'],'控制约束':c['controls'],'迭代残差':c['final_residuals'],
-                                       '运行编号':c['run_id'],'模型版本':c['solver_versions']})
+                                       '运行编号':c['run_id'],'模型版本':c['solver_versions'],'推进与耗油':c.get('enhanced',{})})
     work=Path(root)/'runs'/r['run_id']
     for i in range(1,4):
         for suffix,label in [('card.html','方案卡（可打印）'),('input.json','需求配置')]:
@@ -86,6 +90,18 @@ def render(base,root):
                     with col:values.append(divisor*st.number_input(f'方案 {"ABC"[i]} {AXES[axis]}（{unit}）',value=float(value/divisor*(1+.1*i)),
                         key=f'comparison-value-{base.definition_hash()}-{axis}-{i}'))
                 request=variants(base,axis,values)
+                model=st.selectbox('三方案计算方法',['coupled','initial'],format_func=MODELS.get,key='comparison-model')
+                if model=='coupled':
+                    from dataclasses import asdict
+                    from .propulsion_feedback import CoupledOptions
+                    options=asdict(CoupledOptions())
+                    st.caption('三个方案依次运行完整闭环，计算时间较长；每个已完成方案单独落盘。各方案共用以下设置。')
+                    with st.expander('三方案共同分析设置'):
+                        options['propeller']['rpm']=st.number_input('螺旋桨转速 rpm',2200.,2700.,2400.,50.,key='comparison-rpm')
+                        options['low_load_policy']=st.selectbox('低负荷耗油处理',['base_bsfc','reject'],format_func=lambda x:'基础耗油率估算并单列油量' if x=='base_bsfc' else '超出原生耗油图即停止',key='comparison-low-load')
+                        st.json(options)
+                    request=replace(request,schema_version=2,analysis_model=model,analysis_options=options)
+            st.caption('当前分析方法：'+MODELS[request.analysis_model])
             st.caption(PURPOSES[request.purpose]+'；A 为差分基准。没有自动“综合最优”排名。')
             st.dataframe(request.differences(),hide_index=True)
             confirmed=st.checkbox('我已核对三个方案的需求、变化项和共同假设',
@@ -94,7 +110,10 @@ def render(base,root):
             st.download_button('保存三方案配置',json.dumps(request.to_dict(),ensure_ascii=False,indent=2),'three-designs.json')
             if st.button('一键计算并比较三个方案',key='run-comparison',disabled=not confirmed):
                 with st.spinner('正在运行三个方案并核对比较条件……'):
-                    st.session_state['comparison_result']=comparison_service.run_comparison(request,root)
+                    progress=st.empty()
+                    def update(i,stage,rid):
+                        progress.info(f"方案 {'ABC'[i]}："+{'initial':'初步总体','coupled':'气动—推进—总体闭环','completed':'已保存结果'}[stage]+'；批次 '+rid)
+                    st.session_state['comparison_result']=comparison_service.run_comparison(request,root,on_progress=update)
             if 'comparison_result' in st.session_state:show_results(st.session_state['comparison_result'],request,root)
             from .project_ui import save_controls
             save_controls(request,root,st.session_state.get('comparison_result'),key='comparison')
