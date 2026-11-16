@@ -9,7 +9,7 @@ from .design_cards import STATUS,METRICS
 
 
 def activate(parsed=None):
-    for key in ('sizing_result','comparison_result','design_intent_result','archive_saved_note','aircraft_geometry_result','aircraft_aero_result','aircraft_trim_result'):
+    for key in ('sizing_result','comparison_result','design_intent_result','archive_saved_note','aircraft_geometry_result','aircraft_aero_result','aircraft_trim_result','aircraft_drag_result'):
         st.session_state.pop(key,None)
     for key in list(st.session_state):
         if key.startswith(('confirm_','comparison-confirm-')):st.session_state.pop(key,None)
@@ -72,6 +72,10 @@ def library(root):
                 from .trim_ui import show_files
                 prefix='runs/'+r['run_id']+'/'
                 show_files(r,{n[len(prefix):]:b for n,b in opened['files'].items() if n.startswith(prefix)},'archived_trim')
+            for r in opened.get('drag_records',[]):
+                from .drag_ui import show_files
+                prefix='runs/'+r['run_id']+'/'
+                show_files(r,{n[len(prefix):]:b for n,b in opened['files'].items() if n.startswith(prefix)},'archived_drag')
         p=opened['project']
         return p.projects[0] if isinstance(p,ComparisonRequest) else p
     return DesignProject()
@@ -89,10 +93,13 @@ def save_controls(project,root,record=None,key='design'):
     if not geometry or not aero or aero.get('parent_run_id')!=geometry['run_id']:aero=None
     trim=st.session_state.get('aircraft_trim_result') if key=='design' else None
     if not geometry or not trim or trim.get('parent_run_id')!=geometry['run_id']:trim=None
+    drag=st.session_state.get('aircraft_drag_result') if key=='design' else None
+    if not trim or not drag or drag.get('parent_run_id')!=trim['run_id']:drag=None
     st.caption('保存内容：需求、假设'+('、本次计算结果和报告'+('、全机几何'+('、气动与条带载荷。' if aero else '。') if geometry else '。') if chosen else '（草案，无当前有效计算结果）。'))
     try:
         if trim:st.caption('同时保存纵向配平、工况台账及全部迭代原始记录。')
-        data=archive.build_bundle(project,root,chosen,geometry,aero,trim)
+        if drag:st.caption('同时保存阻力账目、极曲线、面积和诊断记录。')
+        data=archive.build_bundle(project,root,chosen,geometry,aero,trim,drag)
         if st.button('保存'+('三方案' if key=='comparison' else '方案')+'到本机',key=key+'_save_local'):
             index=archive.save_bundle(data,root)
             st.session_state['archive_saved_note']='已保存 '+index['name']+'；可在页面顶部打开，原方案不会被覆盖。'

@@ -18,11 +18,14 @@ V0.1.7 新单发流程调用 FAST-GA 1.4.0 原生 `MassBreakdown(payload_from_np
 | OpenMDAO | https://github.com/OpenMDAO/OpenMDAO | FAST-GA/OAS 依赖 |
 | OpenVSP 3.56.0 | https://openvsp.org/ | 本机既有程序；主体 NOSA 1.3；Python 包中的 MIT 标记不替代主体许可 |
 | AVL | https://web.mit.edu/drela/Public/web/avl/ | 本机程序，GPL；独立运行与解析 |
+| XFOIL 6.99 | https://web.mit.edu/drela/Public/web/xfoil/ | 本机程序，GPL；独立进程、实际翼型与舵偏、极曲线缓存和严格查询 |
 | OpenAeroStruct 2.12.1 | https://github.com/mdolab/OpenAeroStruct | Apache-2.0；复现官方结构独立优化、调用 SpatialBeamAlone 并以解析管梁检查 |
 | CalculiX 2.23 | https://github.com/calculix/CalculiX-Windows | GPL；项目内 Windows x64 便携包；实际版本/二进制哈希随运行保存；旧 GE 2.10 仅保留用于失败对照 |
 | Python runtime | https://github.com/astral-sh/python-build-standalone | uv 管理的项目内 CPython 3.13.18；运行时及安装缓存不发布 |
 
 依赖精确版本见 requirements-lock.txt。OpenVSP 的四个本机接口包单独安装，禁止把本机路径写入公开锁文件。FAST-GA 随包公开数据仅在本地运行目录展开，发布其来源和核验摘要。
+
+V0.2.4 独立阻力方法对照采用 UIUC Low-Speed Airfoil Test program 的 E387(E) 清洁状态数据，来源为 Selig & McGranahan，*Wind Tunnel Aerodynamic Tests of Six Airfoils for Use on Small Wind Turbines*，NREL/SR-500-34515（修订版，2004年10月）。[数据入口及使用条件](https://m-selig.ae.illinois.edu/pd.html)、[公开数据](https://m-selig.ae.illinois.edu/pd/pub/lsat/vol4/e387_c_drg.txt)和[坐标](https://m-selig.ae.illinois.edu/ads/coord_seligFmt/e387.dat)。原始文件仅存本地，脚本固定哈希并记录少量比较点与误差；无数据校准或修改上游程序。UIUC 允许依其声明使用和转发数据，要求明确注明 LSAT 来源及保持原数据的自由分发；本项目不额外限制这些源数据，也不对其收费。
 
 `fastga_compat.py` 的 CSV 写入方法与 `fastga_plugins/furniture.py` 的分组来自 FAST-GA 1.4.0 的 `models/performances/mission/dynamic_equilibrium.py`、`models/weight/mass_breakdown/d_furniture/sum.py`，原文件声明 Copyright (C) 2025 ONERA & ISAE-SUPAERO、GPL-3.0-or-later。保留署名与许可，项目修改为 `DataFrame.map` 和单输入质量/正确导数。局部适配由上下文管理器恢复，不修改安装包；依赖升级需要复验。
 

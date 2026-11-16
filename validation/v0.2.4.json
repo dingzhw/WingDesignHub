@@ -1,0 +1,1506 @@
+{
+  "version": "0.2.4",
+  "passed": true,
+  "checks": {
+    "baseline_state": true,
+    "cache_only_state": true,
+    "panels_160_state": true,
+    "polar_refined_state": true,
+    "area_refined_state": true,
+    "body_mesh_refined_state": true,
+    "early_transition_state": true,
+    "strut_lower_state": true,
+    "strut_upper_state": true,
+    "missing_polar_state": true,
+    "mission_end_state": true,
+    "speed_65_state": true,
+    "panels_160_sensitivity": true,
+    "polar_refined_sensitivity": true,
+    "body_mesh_refined_sensitivity": true,
+    "area_MainWing": true,
+    "area_HorizontalTail": true,
+    "area_VerticalTail": true,
+    "symmetry_MainWing": true,
+    "symmetry_HorizontalTail": true,
+    "induced_once": true,
+    "sum_and_dimensions": true,
+    "no_legacy_cd0": true,
+    "cache_identical": true,
+    "transition_sensitivity": true,
+    "strut_sensitivity": true,
+    "fuel_state_to_drag": true,
+    "speed_to_reynolds": true,
+    "direct_strip_interpolation": true,
+    "xfoil_symmetric_0012": true,
+    "query_domain_100000.0_0.0": true,
+    "query_domain_3000000.0_0.21": true,
+    "archive_roundtrip": true,
+    "failed_archive": true,
+    "source_unchanged": true
+  },
+  "source_hashes": {
+    "adapters.py": "b72ca7effe5311328a85bdc8b06ad583b9cabed91751094fa5019c2b2f6a29d5",
+    "aero_report.py": "867ca0f8750c137e1dc1cf2a5f0ae836f7346ad411ea2d376a881dae35e5ba17",
+    "aero_service.py": "c5f0e176868e3af4e6b41a0ea86471a16243c176d113c7622b702e338d4ce61b",
+    "aero_ui.py": "753921056829bf7ece60a8de7919b7bdfff498cfac58252fdfc202c02b9a0c93",
+    "aircraft_aero.py": "d4865bc0c98a69d7fe8ebe62a3a6771c678ad138faf501de8da8b7033e4d50c7",
+    "aircraft_drag.py": "a38e0d984e183078acc87f6fcfbec8ecfb0d6679b630dc0d3d0eebe633bcafcf",
+    "aircraft_geometry.py": "4ce1c0f60574f4c4bcb2b9836bf92f5f7fa62c22d68a1fe9d9c3779e4a26b5f5",
+    "aircraft_trim.py": "a7232e46579c9a9c1651a175fa9359ebb93624c81d115d6e282c49a691fed7a3",
+    "aircraft_vsp_worker.py": "b906dffd66ac67688c99edcf85e01bd5ec2ec046d891014618295408f44fc438",
+    "avl_aircraft.py": "9880ba1c2dbc3e528d6d6ec41c8c91100ae73101960b07635eef41ca2707dd9e",
+    "box_comparison.py": "bf8e8a4c19e59c24e53a9cbbcc2add9ef42ece3343f902663795c52a44e783b5",
+    "buckling.py": "a473b5d91d835f3f100473e11aad1185f6597854e8cdd87960a4b22658399720",
+    "calculix_benchmark.py": "f3bab4818455864f4324f62a96f1fff25cdaf42f08e8b42b6d548c8e20a630ec",
+    "cli.py": "5c99564557983d5953a4df7b4c0c125eefc21ec9cb23c7d7f10ba78fb30c856b",
+    "comparison_service.py": "f8570e21dab2b69910159ced9d5bd56687c6749dcbcdfd20b30ab58eab48d766",
+    "comparison_ui.py": "6c52ae50f238f74410b5a315034456b8c0780664f18cf06b9cf12131f1e74729",
+    "design_cards.py": "252e80effbf34623f2d6bec7451adb9977ff45db48a5c4c2d74378d57da01dba",
+    "design_comparison.py": "0f057f8d30f0452bd65d564748cd9c048d92eddbb6b7fe5f2384b7df3cb287dd",
+    "design_report.py": "b89ba1f627deea0bb2e3264e8e8faa5fbcfb94bcf9f0d19505f229c8f965641a",
+    "design_service.py": "45abc8b6ac761c6c489fd27b0119b7e9258563f4548d6e86bae1d1bd2ad22c88",
+    "design_ui.py": "7b42e515ccf91c41928dd986d23eb30646ae1a28b155f1e0e37bc39b8f6b3831",
+    "drag_geometry_worker.py": "e7133fba5c37ce147126896783e2ca3115765638c3cbe2a6b9c95c8f349ff37f",
+    "drag_report.py": "865fc455ae89d3cfc51521644541e2e7156290418e039e2b0143658ce9ad295a",
+    "drag_service.py": "1562f1d3b7d4e8f629d8f395e567f1c22d0a78f3256a3d794430502c54b34a9f",
+    "drag_ui.py": "a1c8ba06ad4f5465cc510e456c2096bf83e0082e6632f37d33805fa7869d27d7",
+    "fastga_compat.py": "6ba7f14ef2c6046533ef6cef6d93355a1db91255bab46c9746f1ae5a14a94fab",
+    "fastga_diagnostics.py": "bc93d372e3e5bb7f5dc4e068f4dfb3b14dfda42600ec8f84a3b51e06f631b887",
+    "fastga_interface.py": "cb0852101644a0a5a9e34fb2cfb2a249d9a148988dfdc05a0cf28f41021c7b69",
+    "fastga_mass.py": "c44a77b2f042ef8cf2834dcf0bf15a151bd30b95e1133da5a4878c7aa3077af8",
+    "fastga_worker.py": "a25185200db8ebb0222eb307f3852c7c83c15ed9c98c3c8b1bc92fed8958375f",
+    "fea_mesh.py": "f99f1817b20d85089a64d4248684c64a8ba7180268fe11b91a14ed415dc729e3",
+    "flight_loads.py": "4d9d7e8bcd24d59131337cbdb5953e90ed432853e5c6c4b359857a7395247890",
+    "flight_service.py": "72dcf0c2a247bd1ab560819a1a295141f459143377c964ecfac24129c4bc5645",
+    "flight_state.py": "042fc1a50ae186487b5f6a978fbae8a7f86bce1ab0abef81cc5dc35129c1f98b",
+    "flight_ui.py": "fb4b7a8a3ee36f1a3f01e65c719eed70c8150473f391047523d8d8ff74d0fa78",
+    "fuel_model.py": "2678359dc34e16e0aa7c881a479f25ed3645fb7bb9e6afd3697f82b945f0da66",
+    "fuel_validation.py": "1485a6bd9f9b870385fb5f475da73ba7a838e2eb0f1c38199c59732bfc8d64b4",
+    "geometry_report.py": "423e78b7d2b730c13dfcae8fa2c75bf3b83884e99e1b2afba3eae6ddecd0891d",
+    "geometry_service.py": "5e0364787ca74ed408a0f36d7d8592a1dded5ce3985e0f5c7b6fe1ed8d1ca841",
+    "geometry_ui.py": "032934965f2cc934df8322022312fe7bf6eb59280f6fd231e2bc924b8dd61133",
+    "mechanics.py": "aece8baec13b7d9a84e133720f82a33d70444a38c980b86cf727cbdab0973650",
+    "model.py": "345afae92c6b8dd09435ebb31ce234ddf40e0d5e615e8a2fca4f2e85cc058b11",
+    "oas_benchmark.py": "74d2900b9dbba587c701bd2fc92ba75a8bf09ec17678c03ac67c1f00cdff5c56",
+    "oas_wingbox.py": "e8d0b503f1f1ba3fb7d77abdda14d376820fff41ef32f1b5a97e187d0f2f737b",
+    "plate_buckling.py": "7448faec93a91382127a0ade183b69d26074062be66ddaab1607b249b1fd9c09",
+    "plate_service.py": "0c740429e6591a1b020a334beb344fe3f1a8325569498cfdd43da0b2d9fb7301",
+    "plate_ui.py": "47adf0c1efec842d669cb199dfa3f8dfb47d21e8bd67f9df846bbe0813e6b0d9",
+    "project_archive.py": "f29d5e267401a025394b5e22da98e8a8570e0d12fe7e4d9b1e76820428f17f16",
+    "project_ui.py": "1a36e168433236a421eb87f2b77690e82eadacb519c279a85c8dd81ab4fafa36",
+    "reference_cruise.py": "7987b65965090c774f9043e126a10724fab4d48e3eb87120c33891cb3764242a",
+    "requirements.py": "af49146e331235fba487e736a5ae4ba04b40070d74e735bf1f44f670d010d4d9",
+    "service.py": "76e155024bf1aad2be5bc78b66ef89cd9a78608af27ac251f1c95b4b88a6018d",
+    "shell_loads.py": "a06bdbb345ab2ac1cf18265eec95815accd6b3f2bb0732a7eaaee9c09208a397",
+    "shell_static.py": "1c23aabbf1395b4b2a7729b135428b130ff2d252397b3420bb3e287c7fee4da4",
+    "shell_validation.py": "30d6c706a44d32d131d0ab6c7f9e41508c82bd39aabe8f3cab26e28cab68be92",
+    "sizing.py": "5ebdff7ca091511d026bd907c4f06c2b76c86f2647dd743adedbdad931792687",
+    "sizing_config.py": "d4f58966878dd603a529866772ec13983ca62435bc0dcc8fd920ed5a6d2bc8c3",
+    "sizing_physics.py": "157be91854e9a4d722902b5ff3156316a33953115756f96b96b22d3a5ef3519d",
+    "sizing_service.py": "e13f8f8d9fc91be4e19d5c1d2b5607634a1760c9cfbd5196872060f86f08a41f",
+    "sizing_ui.py": "166819405b2762ffe814b64f90d722590a2d0712c60874f24df6ab163599f162",
+    "sizing_worker.py": "8a1beb33e3764ed21660e8fd2dfea387fa371d0f7ea5d06d8ebb966726d15cbb",
+    "static_service.py": "941de7a411c9814b8c73883b248aecbb04ebb812cf380bafb7e3f5f7b39528f9",
+    "structural_sensitivity.py": "cf1527dafd494a67281b12414e4f223e13e31c76252ff2f1f7592bd3ce77e6fc",
+    "structure_service.py": "5703dd5d078b0af7dfb078b661beace113b627e97c304b9d612af39fe45ad12b",
+    "trim_report.py": "5793b363fb2eacf715f79cbf946c54ddf1fb04d56848195ebb056fab9e1971b8",
+    "trim_service.py": "c90a5ddee4f2db9c2c7b3cb7b3ac61ca806042f47d5687c0908c5df8f543da1d",
+    "trim_ui.py": "6a0ad7d511d915b437efd3b2ca29ddc19db5e52457c26c3e27cd21a06f912def",
+    "vsp_structure_worker.py": "ee7cfff132602d9b5c6875b54c956cbc6d381fd4ef0228cdb7455add725899bc",
+    "vsp_worker.py": "aba49475b1221a2ad13d73644a38f508bcecc093859184e78e782282a7f73abd",
+    "xfoil_polars.py": "4a2467de143290b0a962c5b3072b4b295001ebcd7a5ff68bd937e00429b1a926",
+    "__init__.py": "0fca16c813e9d2ac9a2f0fc61cc80a396fed840f6f3fdead55a6939469a4938e",
+    "fastga_plugins/furniture.py": "45b5a219b73c6380a63418f0e64f1f66d189c7943147f39faa2e98d118f719bf",
+    "fastga_plugins/reserve.py": "ceb05f0f889a91b66bea34856f0dbcf0de594e895f16edf0cdbdef0bbe2b2cda",
+    "fastga_plugins/unusable_fuel.py": "724433d55934a868696f27553b9924c75f99ca6594df274045dfaf9bf5a00f21",
+    "fastga_plugins/__init__.py": "652c53dda99eb1a2b439a1aca6f0ec81c25fed142d761e63ddf46af578a41a17"
+  },
+  "sizing_run_id": "75320905256848688c01f701d68929fc",
+  "geometry_run_id": "b4cad4c5324a47e0b0194bc59da092dc",
+  "trim_run_id": "41375c314fa246dc8e8dd937126022c7",
+  "cases": {
+    "baseline": {
+      "run_id": "11740c2a30934b7099b78343c67058fb",
+      "status": "drag_checked_with_limits",
+      "cd_total": 0.04021974899876207,
+      "drag_n": 1016.3568585630329,
+      "lift_to_drag": 11.863008422192728,
+      "components": {
+        "induced": 0.01050836339888221,
+        "profile": 0.006380419550809404,
+        "body": 0.02033096604907046,
+        "allowance": 0.003
+      },
+      "options": {
+        "panels": 240,
+        "re_stations": 3,
+        "cl_step": 0.1,
+        "ncrit": 9.0,
+        "trip_top": 1.0,
+        "trip_bottom": 1.0,
+        "area_samples": 12,
+        "geometry_tessellation": 1,
+        "strut_crossflow_cd": 1.2,
+        "junction_cd": 0.0015,
+        "cooling_cd": 0.001,
+        "roughness_cd": 0.0005,
+        "cache_only": false
+      },
+      "coverage": [
+        {
+          "surface": "MainWing",
+          "reynolds": [
+            3581256.394911774,
+            4540672.345107647,
+            5757115.121642469
+          ],
+          "cl_grid": [
+            0.0,
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6
+          ],
+          "flap_deg": 0.0,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 0,
+          "recovered_points": 0,
+          "foil_sha256": "a6a7b339df082df4a6caf4f905fe4707a22bc03712fb26beda2918891af80bf1"
+        },
+        {
+          "surface": "HorizontalTail",
+          "reynolds": [
+            2635170.450629918,
+            3365523.0741964444,
+            4298297.121630646
+          ],
+          "cl_grid": [
+            -0.2,
+            -0.1,
+            0.0
+          ],
+          "flap_deg": -6.465730050628133,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 0,
+          "recovered_points": 0,
+          "foil_sha256": "152c2c25cdb2fbb966747e4dd2d852bb7f5483693243cf4c182206a6f7bd0f20"
+        },
+        {
+          "surface": "VerticalTail",
+          "reynolds": [
+            2699683.811198991,
+            3483287.733137869,
+            4494338.7005162155
+          ],
+          "cl_grid": [
+            -0.1,
+            0.0,
+            0.1
+          ],
+          "flap_deg": 0.0,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 0,
+          "recovered_points": 0,
+          "foil_sha256": "83921c093f6fb18257e9fffbc61c4c37a58eafb5549a8a46f08e6e350b5e025b"
+        }
+      ]
+    },
+    "cache_only": {
+      "run_id": "b0d2c7e03c5d48b1bbfd1d78910f7782",
+      "status": "drag_checked_with_limits",
+      "cd_total": 0.04021974899876207,
+      "drag_n": 1016.3568585630329,
+      "lift_to_drag": 11.863008422192728,
+      "components": {
+        "induced": 0.01050836339888221,
+        "profile": 0.006380419550809404,
+        "body": 0.02033096604907046,
+        "allowance": 0.003
+      },
+      "options": {
+        "panels": 240,
+        "re_stations": 3,
+        "cl_step": 0.1,
+        "ncrit": 9.0,
+        "trip_top": 1.0,
+        "trip_bottom": 1.0,
+        "area_samples": 12,
+        "geometry_tessellation": 1,
+        "strut_crossflow_cd": 1.2,
+        "junction_cd": 0.0015,
+        "cooling_cd": 0.001,
+        "roughness_cd": 0.0005,
+        "cache_only": true
+      },
+      "coverage": [
+        {
+          "surface": "MainWing",
+          "reynolds": [
+            3581256.394911774,
+            4540672.345107647,
+            5757115.121642469
+          ],
+          "cl_grid": [
+            0.0,
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6
+          ],
+          "flap_deg": 0.0,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 3,
+          "recovered_points": 0,
+          "foil_sha256": "a6a7b339df082df4a6caf4f905fe4707a22bc03712fb26beda2918891af80bf1"
+        },
+        {
+          "surface": "HorizontalTail",
+          "reynolds": [
+            2635170.450629918,
+            3365523.0741964444,
+            4298297.121630646
+          ],
+          "cl_grid": [
+            -0.2,
+            -0.1,
+            0.0
+          ],
+          "flap_deg": -6.465730050628133,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 3,
+          "recovered_points": 0,
+          "foil_sha256": "152c2c25cdb2fbb966747e4dd2d852bb7f5483693243cf4c182206a6f7bd0f20"
+        },
+        {
+          "surface": "VerticalTail",
+          "reynolds": [
+            2699683.811198991,
+            3483287.733137869,
+            4494338.7005162155
+          ],
+          "cl_grid": [
+            -0.1,
+            0.0,
+            0.1
+          ],
+          "flap_deg": 0.0,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 3,
+          "recovered_points": 0,
+          "foil_sha256": "83921c093f6fb18257e9fffbc61c4c37a58eafb5549a8a46f08e6e350b5e025b"
+        }
+      ]
+    },
+    "panels_160": {
+      "run_id": "38ec5a8e3b8d49e1910ff69a02d7171b",
+      "status": "drag_checked_with_limits",
+      "cd_total": 0.040184691676820025,
+      "drag_n": 1015.4709567241191,
+      "lift_to_drag": 11.873357768874362,
+      "components": {
+        "induced": 0.01050836339888221,
+        "profile": 0.006345362228867354,
+        "body": 0.02033096604907046,
+        "allowance": 0.003
+      },
+      "options": {
+        "panels": 160,
+        "re_stations": 3,
+        "cl_step": 0.1,
+        "ncrit": 9.0,
+        "trip_top": 1.0,
+        "trip_bottom": 1.0,
+        "area_samples": 12,
+        "geometry_tessellation": 1,
+        "strut_crossflow_cd": 1.2,
+        "junction_cd": 0.0015,
+        "cooling_cd": 0.001,
+        "roughness_cd": 0.0005,
+        "cache_only": false
+      },
+      "coverage": [
+        {
+          "surface": "MainWing",
+          "reynolds": [
+            3581256.394911774,
+            4540672.345107647,
+            5757115.121642469
+          ],
+          "cl_grid": [
+            0.0,
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6
+          ],
+          "flap_deg": 0.0,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 0,
+          "recovered_points": 0,
+          "foil_sha256": "a6a7b339df082df4a6caf4f905fe4707a22bc03712fb26beda2918891af80bf1"
+        },
+        {
+          "surface": "HorizontalTail",
+          "reynolds": [
+            2635170.450629918,
+            3365523.0741964444,
+            4298297.121630646
+          ],
+          "cl_grid": [
+            -0.2,
+            -0.1,
+            0.0
+          ],
+          "flap_deg": -6.465730050628133,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 0,
+          "recovered_points": 0,
+          "foil_sha256": "152c2c25cdb2fbb966747e4dd2d852bb7f5483693243cf4c182206a6f7bd0f20"
+        },
+        {
+          "surface": "VerticalTail",
+          "reynolds": [
+            2699683.811198991,
+            3483287.733137869,
+            4494338.7005162155
+          ],
+          "cl_grid": [
+            -0.1,
+            0.0,
+            0.1
+          ],
+          "flap_deg": 0.0,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 0,
+          "recovered_points": 0,
+          "foil_sha256": "83921c093f6fb18257e9fffbc61c4c37a58eafb5549a8a46f08e6e350b5e025b"
+        }
+      ]
+    },
+    "polar_refined": {
+      "run_id": "10566bb8466a4e35a04a3470dce8ff99",
+      "status": "drag_checked_with_limits",
+      "cd_total": 0.040201574076906076,
+      "drag_n": 1015.8975765699315,
+      "lift_to_drag": 11.868371626395575,
+      "components": {
+        "induced": 0.01050836339888221,
+        "profile": 0.006362244628953405,
+        "body": 0.02033096604907046,
+        "allowance": 0.003
+      },
+      "options": {
+        "panels": 240,
+        "re_stations": 5,
+        "cl_step": 0.05,
+        "ncrit": 9.0,
+        "trip_top": 1.0,
+        "trip_bottom": 1.0,
+        "area_samples": 12,
+        "geometry_tessellation": 1,
+        "strut_crossflow_cd": 1.2,
+        "junction_cd": 0.0015,
+        "cooling_cd": 0.001,
+        "roughness_cd": 0.0005,
+        "cache_only": false
+      },
+      "coverage": [
+        {
+          "surface": "MainWing",
+          "reynolds": [
+            3581256.394911774,
+            4032531.6952400794,
+            4540672.345107647,
+            5112843.965978521,
+            5757115.121642469
+          ],
+          "cl_grid": [
+            0.05,
+            0.1,
+            0.15,
+            0.2,
+            0.25,
+            0.3,
+            0.35,
+            0.4,
+            0.45,
+            0.5,
+            0.55,
+            0.6
+          ],
+          "flap_deg": 0.0,
+          "mach": 0.18043530883564288,
+          "polar_count": 5,
+          "cache_hits": 0,
+          "recovered_points": 0,
+          "foil_sha256": "a6a7b339df082df4a6caf4f905fe4707a22bc03712fb26beda2918891af80bf1"
+        },
+        {
+          "surface": "HorizontalTail",
+          "reynolds": [
+            2635170.450629918,
+            2978040.7915331903,
+            3365523.0741964444,
+            3803421.899106137,
+            4298297.121630646
+          ],
+          "cl_grid": [
+            -0.2,
+            -0.15,
+            -0.1,
+            -0.05,
+            -0.0
+          ],
+          "flap_deg": -6.465730050628133,
+          "mach": 0.18043530883564288,
+          "polar_count": 5,
+          "cache_hits": 0,
+          "recovered_points": 0,
+          "foil_sha256": "152c2c25cdb2fbb966747e4dd2d852bb7f5483693243cf4c182206a6f7bd0f20"
+        },
+        {
+          "surface": "VerticalTail",
+          "reynolds": [
+            2699683.811198991,
+            3066557.5981710074,
+            3483287.733137869,
+            3956649.4492278355,
+            4494338.7005162155
+          ],
+          "cl_grid": [
+            -0.05,
+            0.0,
+            0.05
+          ],
+          "flap_deg": 0.0,
+          "mach": 0.18043530883564288,
+          "polar_count": 5,
+          "cache_hits": 0,
+          "recovered_points": 0,
+          "foil_sha256": "83921c093f6fb18257e9fffbc61c4c37a58eafb5549a8a46f08e6e350b5e025b"
+        }
+      ]
+    },
+    "area_refined": {
+      "run_id": "d39f46a967414bd18c79caa4d8f1e492",
+      "status": "drag_checked_with_limits",
+      "cd_total": 0.040218483689859995,
+      "drag_n": 1016.3248840874869,
+      "lift_to_drag": 11.86338164288095,
+      "components": {
+        "induced": 0.01050836339888221,
+        "profile": 0.006379154241907326,
+        "body": 0.02033096604907046,
+        "allowance": 0.003
+      },
+      "options": {
+        "panels": 240,
+        "re_stations": 3,
+        "cl_step": 0.1,
+        "ncrit": 9.0,
+        "trip_top": 1.0,
+        "trip_bottom": 1.0,
+        "area_samples": 24,
+        "geometry_tessellation": 1,
+        "strut_crossflow_cd": 1.2,
+        "junction_cd": 0.0015,
+        "cooling_cd": 0.001,
+        "roughness_cd": 0.0005,
+        "cache_only": false
+      },
+      "coverage": [
+        {
+          "surface": "MainWing",
+          "reynolds": [
+            3581256.394911774,
+            4540672.345107647,
+            5757115.121642469
+          ],
+          "cl_grid": [
+            0.0,
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6
+          ],
+          "flap_deg": 0.0,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 3,
+          "recovered_points": 0,
+          "foil_sha256": "a6a7b339df082df4a6caf4f905fe4707a22bc03712fb26beda2918891af80bf1"
+        },
+        {
+          "surface": "HorizontalTail",
+          "reynolds": [
+            2635170.450629918,
+            3382681.0598139428,
+            4342235.679551108
+          ],
+          "cl_grid": [
+            -0.2,
+            -0.1,
+            0.0
+          ],
+          "flap_deg": -6.465730050628133,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 1,
+          "recovered_points": 0,
+          "foil_sha256": "152c2c25cdb2fbb966747e4dd2d852bb7f5483693243cf4c182206a6f7bd0f20"
+        },
+        {
+          "surface": "VerticalTail",
+          "reynolds": [
+            2699683.811198991,
+            3483287.733137869,
+            4494338.7005162155
+          ],
+          "cl_grid": [
+            -0.1,
+            0.0,
+            0.1
+          ],
+          "flap_deg": 0.0,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 3,
+          "recovered_points": 0,
+          "foil_sha256": "83921c093f6fb18257e9fffbc61c4c37a58eafb5549a8a46f08e6e350b5e025b"
+        }
+      ]
+    },
+    "body_mesh_refined": {
+      "run_id": "b8832e9ffe2240c38cb06c3a63dc5d59",
+      "status": "drag_checked_with_limits",
+      "cd_total": 0.04034077895788004,
+      "drag_n": 1019.4152970690747,
+      "lift_to_drag": 11.827417155453599,
+      "components": {
+        "induced": 0.01050836339888221,
+        "profile": 0.006380419550809404,
+        "body": 0.020451996008188422,
+        "allowance": 0.003
+      },
+      "options": {
+        "panels": 240,
+        "re_stations": 3,
+        "cl_step": 0.1,
+        "ncrit": 9.0,
+        "trip_top": 1.0,
+        "trip_bottom": 1.0,
+        "area_samples": 12,
+        "geometry_tessellation": 2,
+        "strut_crossflow_cd": 1.2,
+        "junction_cd": 0.0015,
+        "cooling_cd": 0.001,
+        "roughness_cd": 0.0005,
+        "cache_only": false
+      },
+      "coverage": [
+        {
+          "surface": "MainWing",
+          "reynolds": [
+            3581256.394911774,
+            4540672.345107647,
+            5757115.121642469
+          ],
+          "cl_grid": [
+            0.0,
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6
+          ],
+          "flap_deg": 0.0,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 3,
+          "recovered_points": 0,
+          "foil_sha256": "a6a7b339df082df4a6caf4f905fe4707a22bc03712fb26beda2918891af80bf1"
+        },
+        {
+          "surface": "HorizontalTail",
+          "reynolds": [
+            2635170.450629918,
+            3365523.0741964444,
+            4298297.121630646
+          ],
+          "cl_grid": [
+            -0.2,
+            -0.1,
+            0.0
+          ],
+          "flap_deg": -6.465730050628133,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 3,
+          "recovered_points": 0,
+          "foil_sha256": "152c2c25cdb2fbb966747e4dd2d852bb7f5483693243cf4c182206a6f7bd0f20"
+        },
+        {
+          "surface": "VerticalTail",
+          "reynolds": [
+            2699683.811198991,
+            3483287.733137869,
+            4494338.7005162155
+          ],
+          "cl_grid": [
+            -0.1,
+            0.0,
+            0.1
+          ],
+          "flap_deg": 0.0,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 3,
+          "recovered_points": 0,
+          "foil_sha256": "83921c093f6fb18257e9fffbc61c4c37a58eafb5549a8a46f08e6e350b5e025b"
+        }
+      ]
+    },
+    "early_transition": {
+      "run_id": "fe5f66e0fede40379734a62a7f88f0ee",
+      "status": "drag_checked_with_limits",
+      "cd_total": 0.044732272115109925,
+      "drag_n": 1130.3887442136752,
+      "lift_to_drag": 10.66628629735142,
+      "components": {
+        "induced": 0.01050836339888221,
+        "profile": 0.010892942667157256,
+        "body": 0.02033096604907046,
+        "allowance": 0.003
+      },
+      "options": {
+        "panels": 240,
+        "re_stations": 3,
+        "cl_step": 0.1,
+        "ncrit": 9.0,
+        "trip_top": 0.05,
+        "trip_bottom": 0.05,
+        "area_samples": 12,
+        "geometry_tessellation": 1,
+        "strut_crossflow_cd": 1.2,
+        "junction_cd": 0.0015,
+        "cooling_cd": 0.001,
+        "roughness_cd": 0.0005,
+        "cache_only": false
+      },
+      "coverage": [
+        {
+          "surface": "MainWing",
+          "reynolds": [
+            3581256.394911774,
+            4540672.345107647,
+            5757115.121642469
+          ],
+          "cl_grid": [
+            0.0,
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6
+          ],
+          "flap_deg": 0.0,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 0,
+          "recovered_points": 0,
+          "foil_sha256": "a6a7b339df082df4a6caf4f905fe4707a22bc03712fb26beda2918891af80bf1"
+        },
+        {
+          "surface": "HorizontalTail",
+          "reynolds": [
+            2635170.450629918,
+            3365523.0741964444,
+            4298297.121630646
+          ],
+          "cl_grid": [
+            -0.2,
+            -0.1,
+            0.0
+          ],
+          "flap_deg": -6.465730050628133,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 0,
+          "recovered_points": 0,
+          "foil_sha256": "152c2c25cdb2fbb966747e4dd2d852bb7f5483693243cf4c182206a6f7bd0f20"
+        },
+        {
+          "surface": "VerticalTail",
+          "reynolds": [
+            2699683.811198991,
+            3483287.733137869,
+            4494338.7005162155
+          ],
+          "cl_grid": [
+            -0.1,
+            0.0,
+            0.1
+          ],
+          "flap_deg": 0.0,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 0,
+          "recovered_points": 0,
+          "foil_sha256": "83921c093f6fb18257e9fffbc61c4c37a58eafb5549a8a46f08e6e350b5e025b"
+        }
+      ]
+    },
+    "strut_lower": {
+      "run_id": "272e6638dde24c11b6110e93f3598b60",
+      "status": "drag_checked_with_limits",
+      "cd_total": 0.03604779609461453,
+      "drag_n": 910.9312143636416,
+      "lift_to_drag": 13.235960940815293,
+      "components": {
+        "induced": 0.01050836339888221,
+        "profile": 0.006380419550809404,
+        "body": 0.016159013144922917,
+        "allowance": 0.003
+      },
+      "options": {
+        "panels": 240,
+        "re_stations": 3,
+        "cl_step": 0.1,
+        "ncrit": 9.0,
+        "trip_top": 1.0,
+        "trip_bottom": 1.0,
+        "area_samples": 12,
+        "geometry_tessellation": 1,
+        "strut_crossflow_cd": 0.8,
+        "junction_cd": 0.0015,
+        "cooling_cd": 0.001,
+        "roughness_cd": 0.0005,
+        "cache_only": false
+      },
+      "coverage": [
+        {
+          "surface": "MainWing",
+          "reynolds": [
+            3581256.394911774,
+            4540672.345107647,
+            5757115.121642469
+          ],
+          "cl_grid": [
+            0.0,
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6
+          ],
+          "flap_deg": 0.0,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 3,
+          "recovered_points": 0,
+          "foil_sha256": "a6a7b339df082df4a6caf4f905fe4707a22bc03712fb26beda2918891af80bf1"
+        },
+        {
+          "surface": "HorizontalTail",
+          "reynolds": [
+            2635170.450629918,
+            3365523.0741964444,
+            4298297.121630646
+          ],
+          "cl_grid": [
+            -0.2,
+            -0.1,
+            0.0
+          ],
+          "flap_deg": -6.465730050628133,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 3,
+          "recovered_points": 0,
+          "foil_sha256": "152c2c25cdb2fbb966747e4dd2d852bb7f5483693243cf4c182206a6f7bd0f20"
+        },
+        {
+          "surface": "VerticalTail",
+          "reynolds": [
+            2699683.811198991,
+            3483287.733137869,
+            4494338.7005162155
+          ],
+          "cl_grid": [
+            -0.1,
+            0.0,
+            0.1
+          ],
+          "flap_deg": 0.0,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 3,
+          "recovered_points": 0,
+          "foil_sha256": "83921c093f6fb18257e9fffbc61c4c37a58eafb5549a8a46f08e6e350b5e025b"
+        }
+      ]
+    },
+    "strut_upper": {
+      "run_id": "b6297072a1c94e6f85e6704013e98649",
+      "status": "drag_checked_with_limits",
+      "cd_total": 0.044391701902909614,
+      "drag_n": 1121.7825027624244,
+      "lift_to_drag": 10.748117343064045,
+      "components": {
+        "induced": 0.01050836339888221,
+        "profile": 0.006380419550809404,
+        "body": 0.024502918953218003,
+        "allowance": 0.003
+      },
+      "options": {
+        "panels": 240,
+        "re_stations": 3,
+        "cl_step": 0.1,
+        "ncrit": 9.0,
+        "trip_top": 1.0,
+        "trip_bottom": 1.0,
+        "area_samples": 12,
+        "geometry_tessellation": 1,
+        "strut_crossflow_cd": 1.6,
+        "junction_cd": 0.0015,
+        "cooling_cd": 0.001,
+        "roughness_cd": 0.0005,
+        "cache_only": false
+      },
+      "coverage": [
+        {
+          "surface": "MainWing",
+          "reynolds": [
+            3581256.394911774,
+            4540672.345107647,
+            5757115.121642469
+          ],
+          "cl_grid": [
+            0.0,
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6
+          ],
+          "flap_deg": 0.0,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 3,
+          "recovered_points": 0,
+          "foil_sha256": "a6a7b339df082df4a6caf4f905fe4707a22bc03712fb26beda2918891af80bf1"
+        },
+        {
+          "surface": "HorizontalTail",
+          "reynolds": [
+            2635170.450629918,
+            3365523.0741964444,
+            4298297.121630646
+          ],
+          "cl_grid": [
+            -0.2,
+            -0.1,
+            0.0
+          ],
+          "flap_deg": -6.465730050628133,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 3,
+          "recovered_points": 0,
+          "foil_sha256": "152c2c25cdb2fbb966747e4dd2d852bb7f5483693243cf4c182206a6f7bd0f20"
+        },
+        {
+          "surface": "VerticalTail",
+          "reynolds": [
+            2699683.811198991,
+            3483287.733137869,
+            4494338.7005162155
+          ],
+          "cl_grid": [
+            -0.1,
+            0.0,
+            0.1
+          ],
+          "flap_deg": 0.0,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 3,
+          "recovered_points": 0,
+          "foil_sha256": "83921c093f6fb18257e9fffbc61c4c37a58eafb5549a8a46f08e6e350b5e025b"
+        }
+      ]
+    },
+    "missing_polar": {
+      "run_id": "749f6d261fa6429c9a7fcb087b544a3f",
+      "status": "polar_missing",
+      "error": "当前条件没有已验证极曲线缓存",
+      "context": {
+        "cache_key": "33e2509d1712db0a8da21998b79506e95f28f35680583dd705049e95fcb42e5a",
+        "conditions": {
+          "reynolds": 3581256.394911774,
+          "mach": 0.18043530883564288,
+          "cl_grid": [
+            0.0,
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6
+          ],
+          "ncrit": 8.0,
+          "trip_top": 1.0,
+          "trip_bottom": 1.0,
+          "flap_deg": 0.0,
+          "hinge_xc": 0.7,
+          "panels": 240
+        },
+        "surface": "MainWing",
+        "station": 0
+      }
+    },
+    "mission_end": {
+      "run_id": "6ee88945c51c4894836a3cf1897982bb",
+      "status": "drag_checked_with_limits",
+      "cd_total": 0.038757692410780954,
+      "drag_n": 979.410550398663,
+      "lift_to_drag": 11.40620282838412,
+      "components": {
+        "induced": 0.009131258099655003,
+        "profile": 0.006295468262055495,
+        "body": 0.02033096604907046,
+        "allowance": 0.003
+      },
+      "options": {
+        "panels": 240,
+        "re_stations": 3,
+        "cl_step": 0.1,
+        "ncrit": 9.0,
+        "trip_top": 1.0,
+        "trip_bottom": 1.0,
+        "area_samples": 12,
+        "geometry_tessellation": 1,
+        "strut_crossflow_cd": 1.2,
+        "junction_cd": 0.0015,
+        "cooling_cd": 0.001,
+        "roughness_cd": 0.0005,
+        "cache_only": false
+      },
+      "coverage": [
+        {
+          "surface": "MainWing",
+          "reynolds": [
+            3581256.394911774,
+            4540672.345107647,
+            5757115.121642469
+          ],
+          "cl_grid": [
+            0.0,
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6
+          ],
+          "flap_deg": 0.0,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 3,
+          "recovered_points": 0,
+          "foil_sha256": "a6a7b339df082df4a6caf4f905fe4707a22bc03712fb26beda2918891af80bf1"
+        },
+        {
+          "surface": "HorizontalTail",
+          "reynolds": [
+            2635170.450629918,
+            3365523.0741964444,
+            4298297.121630646
+          ],
+          "cl_grid": [
+            -0.2,
+            -0.1,
+            0.0
+          ],
+          "flap_deg": -6.142055353478175,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 0,
+          "recovered_points": 0,
+          "foil_sha256": "152c2c25cdb2fbb966747e4dd2d852bb7f5483693243cf4c182206a6f7bd0f20"
+        },
+        {
+          "surface": "VerticalTail",
+          "reynolds": [
+            2699683.811198991,
+            3483287.733137869,
+            4494338.7005162155
+          ],
+          "cl_grid": [
+            -0.1,
+            0.0,
+            0.1
+          ],
+          "flap_deg": 0.0,
+          "mach": 0.18043530883564288,
+          "polar_count": 3,
+          "cache_hits": 3,
+          "recovered_points": 0,
+          "foil_sha256": "83921c093f6fb18257e9fffbc61c4c37a58eafb5549a8a46f08e6e350b5e025b"
+        }
+      ]
+    },
+    "speed_65": {
+      "run_id": "7b32569659114ed0a42759d8cd1744df",
+      "status": "drag_checked_with_limits",
+      "cd_total": 0.037249326319489,
+      "drag_n": 1104.713093359506,
+      "lift_to_drag": 10.914190909608681,
+      "components": {
+        "induced": 0.007722220268984026,
+        "profile": 0.006297635562765568,
+        "body": 0.020229470487739404,
+        "allowance": 0.003
+      },
+      "options": {
+        "panels": 240,
+        "re_stations": 3,
+        "cl_step": 0.1,
+        "ncrit": 9.0,
+        "trip_top": 1.0,
+        "trip_bottom": 1.0,
+        "area_samples": 12,
+        "geometry_tessellation": 1,
+        "strut_crossflow_cd": 1.2,
+        "junction_cd": 0.0015,
+        "cooling_cd": 0.001,
+        "roughness_cd": 0.0005,
+        "cache_only": false
+      },
+      "coverage": [
+        {
+          "surface": "MainWing",
+          "reynolds": [
+            3879694.4278210886,
+            4919061.70719995,
+            6236874.715112676
+          ],
+          "cl_grid": [
+            0.0,
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5
+          ],
+          "flap_deg": 0.0,
+          "mach": 0.19547158457194644,
+          "polar_count": 3,
+          "cache_hits": 0,
+          "recovered_points": 1,
+          "foil_sha256": "a6a7b339df082df4a6caf4f905fe4707a22bc03712fb26beda2918891af80bf1"
+        },
+        {
+          "surface": "HorizontalTail",
+          "reynolds": [
+            2854767.988182411,
+            3645983.3303794805,
+            4656488.5484332
+          ],
+          "cl_grid": [
+            -0.2,
+            -0.1,
+            0.0
+          ],
+          "flap_deg": -5.367195841879867,
+          "mach": 0.19547158457194644,
+          "polar_count": 3,
+          "cache_hits": 0,
+          "recovered_points": 0,
+          "foil_sha256": "152c2c25cdb2fbb966747e4dd2d852bb7f5483693243cf4c182206a6f7bd0f20"
+        },
+        {
+          "surface": "VerticalTail",
+          "reynolds": [
+            2924657.46213224,
+            3773561.7108993568,
+            4868866.925559234
+          ],
+          "cl_grid": [
+            -0.1,
+            0.0
+          ],
+          "flap_deg": 0.0,
+          "mach": 0.19547158457194644,
+          "polar_count": 3,
+          "cache_hits": 0,
+          "recovered_points": 0,
+          "foil_sha256": "83921c093f6fb18257e9fffbc61c4c37a58eafb5549a8a46f08e6e350b5e025b"
+        }
+      ]
+    }
+  },
+  "sensitivities": {
+    "panels_160": 0.005494516726192833,
+    "polar_refined": 0.0028485465119129083,
+    "body_mesh_refined": 0.005952986140739691,
+    "exposed_MainWing": 0.0003580052668763489,
+    "exposed_HorizontalTail": 8.423195802509387e-05,
+    "exposed_VerticalTail": 1.7698570526247792e-05,
+    "direct_strip_cd": 0.0006041194417765183
+  },
+  "baseline_ledger": {
+    "cd_total": 0.04021974899876207,
+    "drag_n": 1016.3568585630329,
+    "rows": [
+      {
+        "component": "lifting_system",
+        "contribution": "induced",
+        "method": "AVL CDff at accepted trim",
+        "cd": 0.01050836339888221,
+        "drag_n": 265.54733628634546
+      },
+      {
+        "component": "MainWing",
+        "contribution": "profile",
+        "method": "XFOIL exposed strips",
+        "cd": 0.004628363687184332,
+        "exposed_area_m2": 12.2319157894915,
+        "drag_n": 116.95918782433651
+      },
+      {
+        "component": "HorizontalTail",
+        "contribution": "profile",
+        "method": "XFOIL exposed strips",
+        "cd": 0.0011557404943946775,
+        "exposed_area_m2": 3.540399201492154,
+        "drag_n": 29.20567152801514
+      },
+      {
+        "component": "VerticalTail",
+        "contribution": "profile",
+        "method": "XFOIL exposed strips",
+        "cd": 0.0005963153692303946,
+        "exposed_area_m2": 1.6507157849357272,
+        "drag_n": 15.068945741121189
+      },
+      {
+        "component": "Fuselage",
+        "contribution": "body",
+        "method": "Schlichting average Cf; Hoerner streamlined body FF",
+        "cf": 0.0025853460406947064,
+        "form_factor": 1.1390788771897116,
+        "reynolds": 26242849.172569733,
+        "fineness": 5.892556509887896,
+        "wet_area_m2": 20.216730311454302,
+        "cd": 0.004268335391747661,
+        "drag_n": 107.8612387706246
+      },
+      {
+        "component": "Spinner",
+        "contribution": "body",
+        "method": "Schlichting average Cf; Hoerner streamlined body FF",
+        "cf": 0.004112953535851686,
+        "form_factor": 3.8905706550017998,
+        "reynolds": 1574570.950354184,
+        "fineness": 1.5,
+        "wet_area_m2": 0.9127864965274243,
+        "cd": 0.0010471561741933909,
+        "drag_n": 26.46173549369581
+      },
+      {
+        "component": "NoseFairing",
+        "contribution": "body",
+        "method": "Schlichting average Cf; Hoerner streamlined body FF",
+        "cf": 0.003967403371989709,
+        "form_factor": 2.821404342172438,
+        "reynolds": 1924475.6059884473,
+        "fineness": 1.8,
+        "wet_area_m2": 1.0399929861138455,
+        "cd": 0.0008345978082761534,
+        "drag_n": 21.09036549704107
+      },
+      {
+        "component": "LeftFairing",
+        "contribution": "body",
+        "method": "Schlichting average Cf; Hoerner streamlined body FF",
+        "cf": 0.003967403371989709,
+        "form_factor": 2.821404342172438,
+        "reynolds": 1924475.6059884473,
+        "fineness": 1.8,
+        "wet_area_m2": 1.037390097055984,
+        "cd": 0.0008325089812053145,
+        "drag_n": 21.037580639535754
+      },
+      {
+        "component": "RightFairing",
+        "contribution": "body",
+        "method": "Schlichting average Cf; Hoerner streamlined body FF",
+        "cf": 0.003967403371989709,
+        "form_factor": 2.821404342172438,
+        "reynolds": 1924475.6059884473,
+        "fineness": 1.8,
+        "wet_area_m2": 1.037390097055984,
+        "cd": 0.0008325089812053145,
+        "drag_n": 21.037580639535754
+      },
+      {
+        "component": "NoseStrut",
+        "contribution": "body",
+        "method": "declared crossflow CD times exposed frontal area",
+        "projected_area_m2": 0.0254238527963962,
+        "crossflow_cd": 1.2,
+        "cd": 0.0021872466115149206,
+        "drag_n": 55.271928600309415
+      },
+      {
+        "component": "LeftStrut",
+        "contribution": "body",
+        "method": "declared crossflow CD times exposed frontal area",
+        "projected_area_m2": 0.060028236473798076,
+        "crossflow_cd": 1.2,
+        "cd": 0.005164306050463851,
+        "drag_n": 130.50250199893233
+      },
+      {
+        "component": "RightStrut",
+        "contribution": "body",
+        "method": "declared crossflow CD times exposed frontal area",
+        "projected_area_m2": 0.060028236473798076,
+        "crossflow_cd": 1.2,
+        "cd": 0.005164306050463851,
+        "drag_n": 130.50250199893233
+      },
+      {
+        "component": "junction",
+        "contribution": "allowance",
+        "method": "uncalibrated conceptual allowances, user-visible assumptions; no aircraft data fitted",
+        "cd": 0.0015,
+        "drag_n": 37.905141772303786
+      },
+      {
+        "component": "cooling",
+        "contribution": "allowance",
+        "method": "uncalibrated conceptual allowances, user-visible assumptions; no aircraft data fitted",
+        "cd": 0.001,
+        "drag_n": 25.27009451486919
+      },
+      {
+        "component": "roughness",
+        "contribution": "allowance",
+        "method": "uncalibrated conceptual allowances, user-visible assumptions; no aircraft data fitted",
+        "cd": 0.0005,
+        "drag_n": 12.635047257434595
+      }
+    ]
+  },
+  "public_independent_check": {
+    "role": "independent airfoil-method check, no calibration; not the project NACA airfoils or whole aircraft",
+    "report": "https://m-selig.ae.illinois.edu/uiuc_lsat/vol4/NREL-SR-500-34515.pdf",
+    "attribution": "UIUC Low-Speed Airfoil Test program; Selig & McGranahan, NREL/SR-500-34515, revised October 2004",
+    "conditions": "E387(E), clean model, measured Re and cl; nominal coordinates; Mach approximated; Ncrit=9 fixed before comparison, actual transition not matched",
+    "calibration_performed": false,
+    "sources": {
+      "e387.dat": {
+        "url": "https://m-selig.ae.illinois.edu/ads/coord_seligFmt/e387.dat",
+        "sha256": "98aa8a4076edbfd1c52e3a2d0cf17b1ef1cbc51ae5da3ab8e5361047b89ee523"
+      },
+      "e387_c_drg.txt": {
+        "url": "https://m-selig.ae.illinois.edu/pd/pub/lsat/vol4/e387_c_drg.txt",
+        "sha256": "ffd629b2baec8eca82d155081f0f0d9a0d8a496cf4ee0a7c300773d9ff55fb76"
+      }
+    },
+    "cases": [
+      {
+        "reynolds": 300289.0,
+        "mach_approximation": 0.04268831381924198,
+        "ncrit_assumption": 9.0,
+        "trip_top": 1.0,
+        "trip_bottom": 1.0,
+        "points": [
+          {
+            "experimental_alpha_deg": -1.11,
+            "cl": 0.288,
+            "experimental_cd": 0.0092,
+            "xfoil_cd": 0.00774,
+            "relative_cd_error": -0.15869565217391302
+          },
+          {
+            "experimental_alpha_deg": -0.04,
+            "cl": 0.393,
+            "experimental_cd": 0.0083,
+            "xfoil_cd": 0.00802,
+            "relative_cd_error": -0.03373493975903619
+          },
+          {
+            "experimental_alpha_deg": 1.02,
+            "cl": 0.502,
+            "experimental_cd": 0.0088,
+            "xfoil_cd": 0.00842,
+            "relative_cd_error": -0.04318181818181821
+          },
+          {
+            "experimental_alpha_deg": 1.96,
+            "cl": 0.61,
+            "experimental_cd": 0.0092,
+            "xfoil_cd": 0.00889,
+            "relative_cd_error": -0.033695652173913015
+          },
+          {
+            "experimental_alpha_deg": 3.02,
+            "cl": 0.714,
+            "experimental_cd": 0.0098,
+            "xfoil_cd": 0.00934,
+            "relative_cd_error": -0.04693877551020409
+          },
+          {
+            "experimental_alpha_deg": 4.0,
+            "cl": 0.817,
+            "experimental_cd": 0.0105,
+            "xfoil_cd": 0.00974,
+            "relative_cd_error": -0.07238095238095243
+          },
+          {
+            "experimental_alpha_deg": 5.06,
+            "cl": 0.935,
+            "experimental_cd": 0.0112,
+            "xfoil_cd": 0.01017,
+            "relative_cd_error": -0.09196428571428572
+          }
+        ],
+        "max_abs_relative_error": 0.15869565217391302
+      },
+      {
+        "reynolds": 500094.0,
+        "mach_approximation": 0.07109208,
+        "ncrit_assumption": 9.0,
+        "trip_top": 1.0,
+        "trip_bottom": 1.0,
+        "points": [
+          {
+            "experimental_alpha_deg": -1.09,
+            "cl": 0.276,
+            "experimental_cd": 0.0085,
+            "xfoil_cd": 0.00768,
+            "relative_cd_error": -0.0964705882352942
+          },
+          {
+            "experimental_alpha_deg": -0.04,
+            "cl": 0.388,
+            "experimental_cd": 0.0067,
+            "xfoil_cd": 0.00643,
+            "relative_cd_error": -0.040298507462686595
+          },
+          {
+            "experimental_alpha_deg": 0.88,
+            "cl": 0.497,
+            "experimental_cd": 0.0068,
+            "xfoil_cd": 0.00672,
+            "relative_cd_error": -0.0117647058823529
+          },
+          {
+            "experimental_alpha_deg": 1.97,
+            "cl": 0.613,
+            "experimental_cd": 0.0072,
+            "xfoil_cd": 0.00707,
+            "relative_cd_error": -0.01805555555555549
+          },
+          {
+            "experimental_alpha_deg": 2.98,
+            "cl": 0.72,
+            "experimental_cd": 0.0077,
+            "xfoil_cd": 0.0074,
+            "relative_cd_error": -0.038961038961038974
+          },
+          {
+            "experimental_alpha_deg": 4.02,
+            "cl": 0.833,
+            "experimental_cd": 0.0084,
+            "xfoil_cd": 0.00777,
+            "relative_cd_error": -0.07499999999999996
+          },
+          {
+            "experimental_alpha_deg": 5.08,
+            "cl": 0.941,
+            "experimental_cd": 0.0091,
+            "xfoil_cd": 0.00819,
+            "relative_cd_error": -0.10000000000000009
+          }
+        ],
+        "max_abs_relative_error": 0.10000000000000009
+      }
+    ],
+    "diagnostic_relative_band": 0.2,
+    "within_diagnostic_band": true,
+    "physical_validation_passed": false
+  },
+  "solver_sha256": "c17342f84ae260c2b11a74cd0e2fb8189a5f8954c6bb7a8467a0f27055c7faea",
+  "physical_validation_passed": false,
+  "calibration_performed": false,
+  "scope": "single inviscid trim state with viscous/profile and nonlifting drag; no mission replacement",
+  "release_verification": {
+    "local_regression": {
+      "tests": "315",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "time": "432.758"
+    },
+    "openvsp_installed_api_examples": {
+      "tests": "2",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "time": "2.537"
+    },
+    "ui": {
+      "checked_utc": "2026-11-16T04:30:37.095858+00:00",
+      "archive_id": "31f8cfb776d84117bf7d00be7654fe5e",
+      "sizing_run_id": "caa36a7307f04ee99f202da4c8abb4fe",
+      "geometry_run_id": "b9758089a806449da83b85ffad0092bf",
+      "trim_run_id": "4c62d4d6b59947c0937b8f2a6d6ad42c",
+      "drag_run_id": "28403372de8f4d29bb2b0185b3511e5d",
+      "browser_steps": [
+        "new",
+        "confirm",
+        "size",
+        "geometry",
+        "trim",
+        "drag",
+        "download_report",
+        "save",
+        "new_blank",
+        "reopen",
+        "view_historical_drag"
+      ],
+      "report_download_sha256": "441593611234720d8704d6d5c6deddc47ea80307eef3a898580fd5b5e76a8817",
+      "screenshot_sha256": "c3e03acf4994cf27dc3082604270f7fe9468f25dfefebdb0dd41988c88dc540e",
+      "archive_sha256": "eedc60104384a4edeed1bf22db6214bbd9e6ef616885290c4f65bab2cd48753c",
+      "historical_values_equal": true,
+      "report_print_preview_tested": false
+    },
+    "same_source_and_artifact_hashes_checked": true,
+    "junit_sha256": "b7c4b66c7a2c1a44bc3474f471de578d57dc2d87c4d3630594bb7dca059217e6"
+  }
+}

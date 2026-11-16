@@ -42,10 +42,11 @@ def raw_definition(data,kind):
     return digest(json.dumps(normalize(obj),ensure_ascii=False,sort_keys=True,allow_nan=False).encode())
 
 
-def build_bundle(project,root,record=None,geometry_record=None,aero_record=None,trim_record=None):
+def build_bundle(project,root,record=None,geometry_record=None,aero_record=None,trim_record=None,drag_record=None):
     kind='comparison' if isinstance(project,ComparisonRequest) else 'design'
     project.validate() if kind=='comparison' else project.check_schema()
-    source=project.to_dict();files={'project.json':encoded(source)};ids=[];geometry_ids=[];aero_ids=[];trim_ids=[]
+    source=project.to_dict();files={'project.json':encoded(source)};ids=[];geometry_ids=[];aero_ids=[];trim_ids=[];drag_ids=[]
+    if drag_record is not None and trim_record is None:raise ValueError('阻力结果须与来源配平一起保存')
     if trim_record is not None and geometry_record is None:raise ValueError('配平结果须与来源几何一起保存')
     if aero_record is not None and geometry_record is None:raise ValueError('气动结果须与来源几何一起保存')
     if geometry_record is not None and (record is None or kind!='design'):
@@ -76,7 +77,12 @@ def build_bundle(project,root,record=None,geometry_record=None,aero_record=None,
             if tr!=trim_record or tr.get('mode')!='aircraft_trim' or tr.get('parent_run_id')!=gr['run_id']:
                 raise ValueError('配平结果与几何运行不匹配')
             trim_ids=[tr['run_id']]
-        for rid in ids+geometry_ids+aero_ids+trim_ids:
+        if drag_record is not None:
+            dr=get_results(root,drag_record['run_id'])
+            if dr!=drag_record or dr.get('mode')!='aircraft_drag' or dr.get('parent_run_id')!=tr['run_id']:
+                raise ValueError('阻力结果与配平运行不匹配')
+            drag_ids=[dr['run_id']]
+        for rid in ids+geometry_ids+aero_ids+trim_ids+drag_ids:
             r=get_results(root,rid);work=Path(root)/'runs'/rid
             for name in ['result.json',*r.get('artifact_hashes',{})]:
                 safe_name(name);p=(work/name).resolve()
@@ -87,7 +93,7 @@ def build_bundle(project,root,record=None,geometry_record=None,aero_record=None,
             if p.is_file():files['reports/'+filename]=p.read_bytes()
     name=source['name'] if kind=='design' else source['projects'][0]['name']+' 等三方案'
     manifest={'bundle_schema':1,'kind':kind,'name':name,'software_version':__version__,
-              'created_utc':datetime.now(timezone.utc).isoformat(),'run_ids':ids,'geometry_run_ids':geometry_ids,'aero_run_ids':aero_ids,'trim_run_ids':trim_ids,
+              'created_utc':datetime.now(timezone.utc).isoformat(),'run_ids':ids,'geometry_run_ids':geometry_ids,'aero_run_ids':aero_ids,'trim_run_ids':trim_ids,'drag_run_ids':drag_ids,
               'definition_sha256':project.definition_hash(),'files':{n:digest(b) for n,b in files.items()},
               'integrity_scope':'SHA-256 detects damaged contents; this is not a signed authenticity certificate'}
     stream=BytesIO()
@@ -118,7 +124,7 @@ def read_bundle(data):
         source=json.loads(files['project.json']);kind=manifest['kind']
         project=ComparisonRequest.from_dict(source) if kind=='comparison' else DesignProject.from_dict(source)
         if raw_definition(source,kind)!=manifest['definition_sha256']:raise ValueError('方案包需求哈希不符')
-        records=[];geometry_records=[];aero_records=[];trim_records=[];ids=manifest['run_ids'];geometry_ids=manifest.get('geometry_run_ids',[]);aero_ids=manifest.get('aero_run_ids',[]);trim_ids=manifest.get('trim_run_ids',[])
+        records=[];geometry_records=[];aero_records=[];trim_records=[];drag_records=[];ids=manifest['run_ids'];geometry_ids=manifest.get('geometry_run_ids',[]);aero_ids=manifest.get('aero_run_ids',[]);trim_ids=manifest.get('trim_run_ids',[]);drag_ids=manifest.get('drag_run_ids',[])
         if len(set(ids))!=len(ids) or len(ids)>(4 if kind=='comparison' else 1):raise ValueError('方案包运行列表无效')
         if (len(geometry_ids)>1 or set(geometry_ids)&set(ids) or
                 (geometry_ids and (kind!='design' or len(ids)!=1))):raise ValueError('方案包几何运行列表无效')
@@ -126,7 +132,9 @@ def read_bundle(data):
             raise ValueError('方案包气动运行列表无效')
         if len(trim_ids)>1 or set(trim_ids)&set(ids+geometry_ids+aero_ids) or (trim_ids and not geometry_ids):
             raise ValueError('方案包配平运行列表无效')
-        for rid in ids+geometry_ids+aero_ids+trim_ids:
+        if len(drag_ids)>1 or set(drag_ids)&set(ids+geometry_ids+aero_ids+trim_ids) or (drag_ids and not trim_ids):
+            raise ValueError('方案包阻力运行列表无效')
+        for rid in ids+geometry_ids+aero_ids+trim_ids+drag_ids:
             if UUID(rid).hex!=rid:raise ValueError('方案包运行编号无效')
             prefix=f'runs/{rid}/';r=json.loads(files[prefix+'result.json'])
             if r['run_id']!=rid:raise ValueError('方案包运行身份不符')
@@ -140,7 +148,7 @@ def read_bundle(data):
             summary_name='comparison.json' if run_kind=='comparison' else 'summary.json'
             if prefix+summary_name in files and json.loads(files[prefix+summary_name])!=r.get('summary'):
                 raise ValueError('方案包摘要与运行结果不符')
-            (trim_records if rid in trim_ids else aero_records if rid in aero_ids else geometry_records if rid in geometry_ids else records).append(r)
+            (drag_records if rid in drag_ids else trim_records if rid in trim_ids else aero_records if rid in aero_ids else geometry_records if rid in geometry_ids else records).append(r)
         if records:
             expected='overall_comparison' if kind=='comparison' else 'overall_sizing'
             if records[0]['mode']!=expected or records[0]['definition_sha256']!=manifest['definition_sha256']:
@@ -204,13 +212,33 @@ def read_bundle(data):
                     raise ValueError('方案包配平结果与工况不一致')
                 accepted=files[prefix+t['final_evaluation']+'/evaluation_contract.json']
                 if json.loads(accepted)!=final:raise ValueError('方案包配平终态与实际求解工况不一致')
+        for r in drag_records:
+            from .aircraft_drag import make_drag_contract,finish_ledger
+            prefix=f'runs/{r["run_id"]}/';parent=trim_records[0];tp=f'runs/{parent["run_id"]}/';gp=f'runs/{geometry_ids[0]}/'
+            snapshot=files[prefix+'parent_result.json'];contract=json.loads(files[prefix+'drag_contract.json'])
+            final=json.loads(files[prefix+'final_aero_contract.json'])
+            if (r['mode']!='aircraft_drag' or r['parent_run_id']!=parent['run_id'] or r['geometry_run_id']!=geometry_ids[0] or
+                    r['sizing_run_id']!=ids[0] or r['definition_sha256']!=parent['definition_sha256'] or
+                    digest(snapshot)!=r['parent_result_sha256'] or json.loads(snapshot)!=parent or
+                    files[prefix+'final_aero_contract.json']!=files[tp+'final_aero_contract.json'] or
+                    files[prefix+'trim_strip_loads.json']!=files[tp+'strip_loads.json'] or
+                    files[prefix+'aircraft.vsp3']!=files[gp+'aircraft.vsp3'] or
+                    files[prefix+'geometry_contract.json']!=files[gp+'geometry_contract.json']):
+                raise ValueError('方案包阻力来源与配平/几何不一致')
+            if contract!=make_drag_contract(parent,final,r['options']):raise ValueError('方案包阻力工况或假设不一致')
+            if 'summary' in r:
+                s=r['summary'];ledger=json.loads(files[prefix+'drag_ledger.json'])
+                if (s['flow']!=contract['flow'] or s['references']!=contract['references'] or s['options']!=r['options'] or
+                        s['flight_state']!=contract['flight_state'] or s['ledger']!=ledger or
+                        ledger!=finish_ledger(ledger['rows'],s['flow']['dynamic_pressure_pa'],s['references']['area_m2'])):
+                    raise ValueError('方案包阻力账目与工况不一致')
         current={p.relative_to(Path(__file__).parent).as_posix():digest(p.read_bytes()) for p in Path(__file__).parent.rglob('*.py')}
-        compatible=all(r.get('version')==__version__ and r.get('source_hashes')==current for r in records+geometry_records+aero_records+trim_records)
-        for r in records+geometry_records+aero_records+trim_records:
+        compatible=all(r.get('version')==__version__ and r.get('source_hashes')==current for r in records+geometry_records+aero_records+trim_records+drag_records)
+        for r in records+geometry_records+aero_records+trim_records+drag_records:
             for package,recorded in r.get('summary',{}).get('versions',{}).items():
                 try:compatible=compatible and version(package)==recorded
                 except PackageNotFoundError:compatible=False
-        return {'manifest':manifest,'input':source,'project':project,'records':records,'geometry_records':geometry_records,'aero_records':aero_records,'trim_records':trim_records,'files':files,
+        return {'manifest':manifest,'input':source,'project':project,'records':records,'geometry_records':geometry_records,'aero_records':aero_records,'trim_records':trim_records,'drag_records':drag_records,'files':files,
                 'migration_required':project.definition_hash()!=manifest['definition_sha256'],
                 'current_source_matches':compatible,'bundle_sha256':digest(data)}
     except (KeyError,TypeError,UnicodeError,json.JSONDecodeError,AttributeError) as exc:

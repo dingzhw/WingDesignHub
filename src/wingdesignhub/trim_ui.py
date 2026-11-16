@@ -79,4 +79,6 @@ def render(project,root,geometry_record):
         try:
             record=get_results(root,record['run_id']);work=Path(root)/'runs'/record['run_id']
             show_files(record,{n:(work/n).read_bytes() for n in record['artifact_hashes']},'current_trim')
+            from .drag_ui import render as render_drag
+            render_drag(project,root,record)
         except (ValueError,OSError) as exc:st.error('配平记录检查失败：'+str(exc))
