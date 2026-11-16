@@ -1,12 +1,12 @@
 # WingDesignHub
 
-面向固定翼飞机概念设计的本地工程工作台。当前版本 **V0.2.2**：需求驱动的总体方案经 OpenVSP 全机几何接入 AVL 小迎角气动，支持工况/舵偏、条带载荷、配平准备接口、保存重开和报告导出。
+面向固定翼飞机概念设计的本地工程工作台。当前版本 **V0.2.3**：在需求→总体→OpenVSP→AVL 链上接通纵向升力面配平，统一工况质量/重心/燃油来源，提供实际残差、尾翼载荷、舵量余量、超限诊断、保存重开和报告。
 
 目标是让用户给出有效载荷、航程/航时及可选起飞重量等少量需求，一键开展正向总体设计，形成初步技术参数、可行性诊断和方案比较。FAST-GA/OpenMDAO、OpenVSP、AVL/XFOIL、CCBlade、OpenAeroStruct、CalculiX 等工具支撑这一主流程，并逐步覆盖 AAA 十模块。
 
-默认首页“新建飞机方案”已能从少量需求生成初步构型、翼面积、重量、燃油和安装功率，并一键比较三个方案。计算采用 FAST-GA 原生部件重量、明确的概念极曲线与任务积分；输入、结果、报告可以一起保存，重开后复算。V0.2.0 交付软件阶段验证及专业评审材料，专业签署仍待完成。全机配平、起降距离与结构质量回写按后续路线接入。详见 [产品主流程](docs/FORWARD_DESIGN.md)、[阶段验证](docs/VALIDATION_V0.2.0.md)与[评审材料](docs/REVIEW_V0.2.0.md)。
+默认首页“新建飞机方案”已能从少量需求生成初步构型、翼面积、重量、燃油和安装功率，并一键比较三个方案。计算采用 FAST-GA 原生部件重量、明确的概念极曲线与任务积分；输入、结果、报告可以一起保存，重开后复算。V0.2.0 交付软件阶段验证及专业评审材料，专业签署仍待完成。完整气动力/推进平衡、起降距离与结构质量回写按后续路线接入。详见 [产品主流程](docs/FORWARD_DESIGN.md)、[阶段验证](docs/VALIDATION_V0.2.0.md)与[评审材料](docs/REVIEW_V0.2.0.md)。
 
-V0.2.1 已生成并核验 12 部件全机外形；V0.2.2 使用其中的机翼、平尾和垂尾进行联合无黏计算。机身气动力、黏性阻力、动力影响及配平求解仍待接入；总体任务保持原概念极曲线。见[几何接口](docs/GEOMETRY_INTERFACE.md)、[气动接口与边界](docs/AERODYNAMICS_INTERFACE.md)和[本版验证](docs/VALIDATION_V0.2.2.md)。
+V0.2.1 已生成并核验 12 部件全机外形；V0.2.2 的固定迎角分析保留。V0.2.3 对机翼、平尾和垂尾求水平飞行 CL/Cm 平衡；机身、黏性与推进贡献仍待接入，轴向力尚未闭合，总体任务保持原概念极曲线。见[几何接口](docs/GEOMETRY_INTERFACE.md)、[气动接口](docs/AERODYNAMICS_INTERFACE.md)、[配平与状态接口](docs/TRIM_INTERFACE.md)和[本版验证](docs/VALIDATION_V0.2.3.md)。
 
 ## 普通用户
 
@@ -44,6 +44,8 @@ CalculiX 基准要求 2.23。其他电脑可从 [CalculiX Windows 项目](https:
 关闭浏览器后本地服务仍可供再次打开使用。双击 **关闭 WingDesignHub.cmd** 可关闭本项目服务。服务仅监听 127.0.0.1。
 
 ## 开发与验证
+
+V0.2.3：Python `trim_service.run_aircraft_trim(project, root, geometry_run_id, options)`；CLI `trim --geometry-run-id ID [--trim-options options.json]`。归档通过 `--trim-run-id ID` 保存完整配平记录。主界面“纵向配平”使用同一服务，无需先运行固定迎角分析。`scripts/validate_aircraft_trim.py local/new-trim-validation` 验证质量/CG/速度、三档网格、失败状态、原生配平对照与 MIT Vanilla 公开输入；已有原始文件按固定哈希读取，不自动改动第三方安装。方案包维持 50 MB 总大小限制，文件数上限 1024 以容纳迭代原始记录。
 
 V0.2.2：Python 服务 `aero_service.run_aircraft_aero(project, root, geometry_run_id, options)`；CLI `aero --geometry-run-id ID [--aero-options options.json]`。归档增加 `--aero-run-id ID`，与来源总体和几何一起保存。`scripts/validate_aircraft_aero.py local/new-aero-validation` 执行五组需求、三档气动离散、对称/参考点/导数及官方算例验证；首次获取公开输入需要网络，已有官方文件可按固定哈希复用。要求已验证的 AVL 3.40 MRF 输出。
 

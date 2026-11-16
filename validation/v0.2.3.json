@@ -1,0 +1,1768 @@
+{
+  "version": "0.2.3",
+  "passed": true,
+  "checks": {
+    "baseline_true_residuals": true,
+    "mission_end_true_residuals": true,
+    "cg_reference_true_residuals": true,
+    "cg_forward_true_residuals": true,
+    "cg_aft_true_residuals": true,
+    "lighter_same_cg_true_residuals": true,
+    "speed_65_true_residuals": true,
+    "coarse_true_residuals": true,
+    "fine_true_residuals": true,
+    "different_initial_true_residuals": true,
+    "elevator_limit_rejected": true,
+    "alpha_limit_rejected": true,
+    "iteration_limit_rejected": true,
+    "all_trials_in_domain": true,
+    "end_fuel_accounting": true,
+    "end_mass_changes_trim": true,
+    "fixed_mass_cg_sensitivity": true,
+    "cg_to_elevator_tail_drag": true,
+    "mass_to_trim": true,
+    "speed_to_trim": true,
+    "initial_guess_independence": true,
+    "mesh_alpha_deg": true,
+    "mesh_elevator_deg": true,
+    "mesh_induced_drag_n": true,
+    "native_trim_parity": true,
+    "fixed_mass_semantics": true,
+    "fixed_budget_not_ballast": true,
+    "upper_bound_mass_semantics": true,
+    "archive_roundtrip": true,
+    "failed_archive_roundtrip": true,
+    "public_native_parity": true,
+    "source_unchanged": true,
+    "no_mission_replacement": true
+  },
+  "source_hashes": {
+    "adapters.py": "b72ca7effe5311328a85bdc8b06ad583b9cabed91751094fa5019c2b2f6a29d5",
+    "aero_report.py": "867ca0f8750c137e1dc1cf2a5f0ae836f7346ad411ea2d376a881dae35e5ba17",
+    "aero_service.py": "c5f0e176868e3af4e6b41a0ea86471a16243c176d113c7622b702e338d4ce61b",
+    "aero_ui.py": "753921056829bf7ece60a8de7919b7bdfff498cfac58252fdfc202c02b9a0c93",
+    "aircraft_aero.py": "d4865bc0c98a69d7fe8ebe62a3a6771c678ad138faf501de8da8b7033e4d50c7",
+    "aircraft_geometry.py": "4ce1c0f60574f4c4bcb2b9836bf92f5f7fa62c22d68a1fe9d9c3779e4a26b5f5",
+    "aircraft_trim.py": "a7232e46579c9a9c1651a175fa9359ebb93624c81d115d6e282c49a691fed7a3",
+    "aircraft_vsp_worker.py": "b906dffd66ac67688c99edcf85e01bd5ec2ec046d891014618295408f44fc438",
+    "avl_aircraft.py": "9880ba1c2dbc3e528d6d6ec41c8c91100ae73101960b07635eef41ca2707dd9e",
+    "box_comparison.py": "bf8e8a4c19e59c24e53a9cbbcc2add9ef42ece3343f902663795c52a44e783b5",
+    "buckling.py": "a473b5d91d835f3f100473e11aad1185f6597854e8cdd87960a4b22658399720",
+    "calculix_benchmark.py": "f3bab4818455864f4324f62a96f1fff25cdaf42f08e8b42b6d548c8e20a630ec",
+    "cli.py": "b40da1d71eb5a237f011ad3c770370cd3f23660539d585d2090ed117add6ef20",
+    "comparison_service.py": "f8570e21dab2b69910159ced9d5bd56687c6749dcbcdfd20b30ab58eab48d766",
+    "comparison_ui.py": "6c52ae50f238f74410b5a315034456b8c0780664f18cf06b9cf12131f1e74729",
+    "design_cards.py": "252e80effbf34623f2d6bec7451adb9977ff45db48a5c4c2d74378d57da01dba",
+    "design_comparison.py": "0f057f8d30f0452bd65d564748cd9c048d92eddbb6b7fe5f2384b7df3cb287dd",
+    "design_report.py": "b89ba1f627deea0bb2e3264e8e8faa5fbcfb94bcf9f0d19505f229c8f965641a",
+    "design_service.py": "45abc8b6ac761c6c489fd27b0119b7e9258563f4548d6e86bae1d1bd2ad22c88",
+    "design_ui.py": "7b42e515ccf91c41928dd986d23eb30646ae1a28b155f1e0e37bc39b8f6b3831",
+    "fastga_compat.py": "6ba7f14ef2c6046533ef6cef6d93355a1db91255bab46c9746f1ae5a14a94fab",
+    "fastga_diagnostics.py": "bc93d372e3e5bb7f5dc4e068f4dfb3b14dfda42600ec8f84a3b51e06f631b887",
+    "fastga_interface.py": "cb0852101644a0a5a9e34fb2cfb2a249d9a148988dfdc05a0cf28f41021c7b69",
+    "fastga_mass.py": "c44a77b2f042ef8cf2834dcf0bf15a151bd30b95e1133da5a4878c7aa3077af8",
+    "fastga_worker.py": "a25185200db8ebb0222eb307f3852c7c83c15ed9c98c3c8b1bc92fed8958375f",
+    "fea_mesh.py": "f99f1817b20d85089a64d4248684c64a8ba7180268fe11b91a14ed415dc729e3",
+    "flight_loads.py": "4d9d7e8bcd24d59131337cbdb5953e90ed432853e5c6c4b359857a7395247890",
+    "flight_service.py": "72dcf0c2a247bd1ab560819a1a295141f459143377c964ecfac24129c4bc5645",
+    "flight_state.py": "042fc1a50ae186487b5f6a978fbae8a7f86bce1ab0abef81cc5dc35129c1f98b",
+    "flight_ui.py": "fb4b7a8a3ee36f1a3f01e65c719eed70c8150473f391047523d8d8ff74d0fa78",
+    "fuel_model.py": "2678359dc34e16e0aa7c881a479f25ed3645fb7bb9e6afd3697f82b945f0da66",
+    "fuel_validation.py": "1485a6bd9f9b870385fb5f475da73ba7a838e2eb0f1c38199c59732bfc8d64b4",
+    "geometry_report.py": "423e78b7d2b730c13dfcae8fa2c75bf3b83884e99e1b2afba3eae6ddecd0891d",
+    "geometry_service.py": "5e0364787ca74ed408a0f36d7d8592a1dded5ce3985e0f5c7b6fe1ed8d1ca841",
+    "geometry_ui.py": "032934965f2cc934df8322022312fe7bf6eb59280f6fd231e2bc924b8dd61133",
+    "mechanics.py": "aece8baec13b7d9a84e133720f82a33d70444a38c980b86cf727cbdab0973650",
+    "model.py": "345afae92c6b8dd09435ebb31ce234ddf40e0d5e615e8a2fca4f2e85cc058b11",
+    "oas_benchmark.py": "74d2900b9dbba587c701bd2fc92ba75a8bf09ec17678c03ac67c1f00cdff5c56",
+    "oas_wingbox.py": "e8d0b503f1f1ba3fb7d77abdda14d376820fff41ef32f1b5a97e187d0f2f737b",
+    "plate_buckling.py": "7448faec93a91382127a0ade183b69d26074062be66ddaab1607b249b1fd9c09",
+    "plate_service.py": "0c740429e6591a1b020a334beb344fe3f1a8325569498cfdd43da0b2d9fb7301",
+    "plate_ui.py": "47adf0c1efec842d669cb199dfa3f8dfb47d21e8bd67f9df846bbe0813e6b0d9",
+    "project_archive.py": "a457dfc3adb5f3fc6a000ae5a746745ed9c5c137206bfb1ebe4000422f97317f",
+    "project_ui.py": "a3dd88f0c2c2f8d0dd1643557ff81863ef1d1717a9968d32a78c628bf22998f0",
+    "reference_cruise.py": "7987b65965090c774f9043e126a10724fab4d48e3eb87120c33891cb3764242a",
+    "requirements.py": "af49146e331235fba487e736a5ae4ba04b40070d74e735bf1f44f670d010d4d9",
+    "service.py": "f3f13a1ac249d6d028e4704ed961e8e36aec76c303ecdbf90e5c08ba0c67a88f",
+    "shell_loads.py": "a06bdbb345ab2ac1cf18265eec95815accd6b3f2bb0732a7eaaee9c09208a397",
+    "shell_static.py": "1c23aabbf1395b4b2a7729b135428b130ff2d252397b3420bb3e287c7fee4da4",
+    "shell_validation.py": "30d6c706a44d32d131d0ab6c7f9e41508c82bd39aabe8f3cab26e28cab68be92",
+    "sizing.py": "5ebdff7ca091511d026bd907c4f06c2b76c86f2647dd743adedbdad931792687",
+    "sizing_config.py": "d4f58966878dd603a529866772ec13983ca62435bc0dcc8fd920ed5a6d2bc8c3",
+    "sizing_physics.py": "157be91854e9a4d722902b5ff3156316a33953115756f96b96b22d3a5ef3519d",
+    "sizing_service.py": "e13f8f8d9fc91be4e19d5c1d2b5607634a1760c9cfbd5196872060f86f08a41f",
+    "sizing_ui.py": "166819405b2762ffe814b64f90d722590a2d0712c60874f24df6ab163599f162",
+    "sizing_worker.py": "8a1beb33e3764ed21660e8fd2dfea387fa371d0f7ea5d06d8ebb966726d15cbb",
+    "static_service.py": "941de7a411c9814b8c73883b248aecbb04ebb812cf380bafb7e3f5f7b39528f9",
+    "structural_sensitivity.py": "cf1527dafd494a67281b12414e4f223e13e31c76252ff2f1f7592bd3ce77e6fc",
+    "structure_service.py": "5703dd5d078b0af7dfb078b661beace113b627e97c304b9d612af39fe45ad12b",
+    "trim_report.py": "5793b363fb2eacf715f79cbf946c54ddf1fb04d56848195ebb056fab9e1971b8",
+    "trim_service.py": "c90a5ddee4f2db9c2c7b3cb7b3ac61ca806042f47d5687c0908c5df8f543da1d",
+    "trim_ui.py": "a491bf84a18ad3c280d5dc03e2b8fadfc098ca3993dd533e5c862c3ea7f1d8a3",
+    "vsp_structure_worker.py": "ee7cfff132602d9b5c6875b54c956cbc6d381fd4ef0228cdb7455add725899bc",
+    "vsp_worker.py": "aba49475b1221a2ad13d73644a38f508bcecc093859184e78e782282a7f73abd",
+    "__init__.py": "49585b32001161e5d5de0a7de8124e01fd8365dfe8ff38e9f8372b5eae2b1a29",
+    "fastga_plugins/furniture.py": "45b5a219b73c6380a63418f0e64f1f66d189c7943147f39faa2e98d118f719bf",
+    "fastga_plugins/reserve.py": "ceb05f0f889a91b66bea34856f0dbcf0de594e895f16edf0cdbdef0bbe2b2cda",
+    "fastga_plugins/unusable_fuel.py": "724433d55934a868696f27553b9924c75f99ca6594df274045dfaf9bf5a00f21",
+    "fastga_plugins/__init__.py": "652c53dda99eb1a2b439a1aca6f0ec81c25fed142d761e63ddf46af578a41a17"
+  },
+  "sizing_run_id": "db4f118b089a4fb8b8e98a3a6da452fb",
+  "geometry_run_id": "8fb54e78ad514754a6774ce465210c02",
+  "cases": {
+    "baseline": {
+      "run_id": "7a06cc7f2cc74c86a0ca2d5ea04329e9",
+      "status": "trim_checked_with_limits",
+      "flight_state": {
+        "schema_version": 1,
+        "mass_state": "takeoff",
+        "operating_mass_kg": 1229.4769081595352,
+        "cg_geometry_m": [
+          2.6863648801077433,
+          0.0,
+          0.0
+        ],
+        "design_mtow_kg": 1229.4159528684945,
+        "configured_takeoff_mass_kg": 1229.4769081595352,
+        "unallocated_mass_budget_kg": -0.06095529104072739,
+        "fuel_burned_from_takeoff_kg": 0.0,
+        "remaining_usable_fuel_kg": 109.06976706351026,
+        "component_ledger": [
+          {
+            "component": "airframe",
+            "mass_kg": 314.0370583082376,
+            "x_m": 3.3
+          },
+          {
+            "component": "propulsion",
+            "mass_kg": 211.94887807177952,
+            "x_m": 0.8999999999999999
+          },
+          {
+            "component": "systems",
+            "mass_kg": 196.86391204401377,
+            "x_m": 3.0
+          },
+          {
+            "component": "furniture",
+            "mass_kg": 43.618912574020094,
+            "x_m": 3.0
+          },
+          {
+            "component": "unusable_fuel",
+            "mass_kg": 3.9383800979740746,
+            "x_m": 2.9250000000000003
+          },
+          {
+            "component": "payload",
+            "mass_kg": 350.0,
+            "x_m": 2.9250000000000003
+          },
+          {
+            "component": "takeoff_fuel",
+            "mass_kg": 109.06976706351026,
+            "x_m": 2.9250000000000003
+          }
+        ],
+        "source": "existing fixed-station component ledger; fuel at wing quarter chord",
+        "phase": "takeoff",
+        "scope": "conceptual x-CG; y=z=0 assumption; no payload relocation, tank distribution or CG envelope validation",
+        "mass_budget_allocated_as_ballast": false,
+        "unusable_fuel_in_empty_mass_once": true
+      },
+      "options": {
+        "mass_state": "takeoff",
+        "mass_kg": null,
+        "cg_x_m": null,
+        "source_note": "",
+        "speed_m_s": null,
+        "altitude_m": null,
+        "mesh_level": 2,
+        "alpha_min_deg": -6.0,
+        "alpha_max_deg": 6.0,
+        "elevator_min_deg": -10.0,
+        "elevator_max_deg": 10.0,
+        "initial_alpha_deg": 3.0,
+        "initial_elevator_deg": 0.0,
+        "max_iterations": 12
+      },
+      "alpha_deg": 4.332156412358676,
+      "elevator_deg": -6.465730050628133,
+      "residual_cl": 9.959752855781545e-09,
+      "residual_cm": -7.512278148158469e-08,
+      "evaluation_count": 3,
+      "induced_drag_n": 265.54733628634546,
+      "surface_loads": {
+        "MainWing": {
+          "lift_n": 13201.414623430397,
+          "pitch_moment_about_cg_nm": -4637.588823253907
+        },
+        "HorizontalTail": {
+          "lift_n": -1144.364650343794,
+          "pitch_moment_about_cg_nm": 4637.586180448625
+        },
+        "VerticalTail": {
+          "lift_n": 9.381310076639763e-33,
+          "pitch_moment_about_cg_nm": -2.501542174856083e-31
+        }
+      },
+      "margins_deg": {
+        "alpha_lower": 10.332156412358676,
+        "alpha_upper": 1.6678435876413236,
+        "elevator_lower": 3.5342699493718666,
+        "elevator_upper": 16.46573005062813
+      },
+      "active_bounds": [],
+      "Cma_per_rad": -2.31246992835936,
+      "reference_area_m2": 13.948414959273704,
+      "force_checks_passed": true
+    },
+    "mission_end": {
+      "run_id": "862f726d01e94ada95b6ca678e64c7bf",
+      "status": "trim_checked_with_limits",
+      "flight_state": {
+        "schema_version": 1,
+        "mass_state": "mission_end",
+        "operating_mass_kg": 1139.1612264952876,
+        "cg_geometry_m": [
+          2.66744526362079,
+          0.0,
+          0.0
+        ],
+        "design_mtow_kg": 1229.4159528684945,
+        "configured_takeoff_mass_kg": 1229.4769081595352,
+        "unallocated_mass_budget_kg": -0.06095529104072739,
+        "fuel_burned_from_takeoff_kg": 90.31568166424766,
+        "remaining_usable_fuel_kg": 18.754085399262593,
+        "component_ledger": [
+          {
+            "component": "airframe",
+            "mass_kg": 314.0370583082376,
+            "x_m": 3.3
+          },
+          {
+            "component": "propulsion",
+            "mass_kg": 211.94887807177952,
+            "x_m": 0.8999999999999999
+          },
+          {
+            "component": "systems",
+            "mass_kg": 196.86391204401377,
+            "x_m": 3.0
+          },
+          {
+            "component": "furniture",
+            "mass_kg": 43.618912574020094,
+            "x_m": 3.0
+          },
+          {
+            "component": "unusable_fuel",
+            "mass_kg": 3.9383800979740746,
+            "x_m": 2.9250000000000003
+          },
+          {
+            "component": "payload",
+            "mass_kg": 350.0,
+            "x_m": 2.9250000000000003
+          },
+          {
+            "component": "takeoff_fuel",
+            "mass_kg": 18.754085399262593,
+            "x_m": 2.9250000000000003
+          }
+        ],
+        "source": "existing fixed-station component ledger; fuel at wing quarter chord",
+        "phase": "end of airborne mission, before taxi-in",
+        "scope": "conceptual x-CG; y=z=0 assumption; no payload relocation, tank distribution or CG envelope validation",
+        "mass_budget_allocated_as_ballast": false,
+        "unusable_fuel_in_empty_mass_once": true
+      },
+      "options": {
+        "mass_state": "mission_end",
+        "mass_kg": null,
+        "cg_x_m": null,
+        "source_note": "",
+        "speed_m_s": null,
+        "altitude_m": null,
+        "mesh_level": 2,
+        "alpha_min_deg": -6.0,
+        "alpha_max_deg": 6.0,
+        "elevator_min_deg": -10.0,
+        "elevator_max_deg": 10.0,
+        "initial_alpha_deg": 3.0,
+        "initial_elevator_deg": 0.0,
+        "max_iterations": 12
+      },
+      "alpha_deg": 3.911588159000084,
+      "elevator_deg": -6.142055353478175,
+      "residual_cl": -2.0460363958640926e-09,
+      "residual_cm": -2.516934902163648e-08,
+      "evaluation_count": 3,
+      "induced_drag_n": 230.74775521794672,
+      "surface_loads": {
+        "MainWing": {
+          "lift_n": 12338.110240347976,
+          "pitch_moment_about_cg_nm": -4714.534220864003
+        },
+        "HorizontalTail": {
+          "lift_n": -1166.7548502414961,
+          "pitch_moment_about_cg_nm": 4714.533335411053
+        },
+        "VerticalTail": {
+          "lift_n": -7.466641300290532e-33,
+          "pitch_moment_about_cg_nm": 7.767971723464103e-32
+        }
+      },
+      "margins_deg": {
+        "alpha_lower": 9.911588159000084,
+        "alpha_upper": 2.088411840999916,
+        "elevator_lower": 3.8579446465218252,
+        "elevator_upper": 16.142055353478174
+      },
+      "active_bounds": [],
+      "Cma_per_rad": -2.398430015873861,
+      "reference_area_m2": 13.948414959273704,
+      "force_checks_passed": true
+    },
+    "cg_reference": {
+      "run_id": "dc828186656c43c99c6f2ee4c57d9bc6",
+      "status": "trim_checked_with_limits",
+      "flight_state": {
+        "schema_version": 1,
+        "mass_state": "explicit",
+        "operating_mass_kg": 1229.4159528684945,
+        "cg_geometry_m": [
+          2.6863648801077433,
+          0.0,
+          0.0
+        ],
+        "design_mtow_kg": 1229.4159528684945,
+        "configured_takeoff_mass_kg": 1229.4769081595352,
+        "unallocated_mass_budget_kg": -0.06095529104072739,
+        "fuel_burned_from_takeoff_kg": null,
+        "remaining_usable_fuel_kg": null,
+        "component_ledger": null,
+        "source": "fixed mass CG sensitivity",
+        "phase": "explicit",
+        "scope": "conceptual x-CG; y=z=0 assumption; no payload relocation, tank distribution or CG envelope validation",
+        "mass_budget_allocated_as_ballast": false,
+        "unusable_fuel_in_empty_mass_once": true
+      },
+      "options": {
+        "mass_state": "explicit",
+        "mass_kg": 1229.4159528684945,
+        "cg_x_m": 2.6863648801077433,
+        "source_note": "fixed mass CG sensitivity",
+        "speed_m_s": null,
+        "altitude_m": null,
+        "mesh_level": 2,
+        "alpha_min_deg": -6.0,
+        "alpha_max_deg": 6.0,
+        "elevator_min_deg": -10.0,
+        "elevator_max_deg": 10.0,
+        "initial_alpha_deg": 3.0,
+        "initial_elevator_deg": 0.0,
+        "max_iterations": 12
+      },
+      "alpha_deg": 4.331851950896499,
+      "elevator_deg": -6.465368984460154,
+      "residual_cl": 9.939753242704796e-09,
+      "residual_cm": -7.507250100735607e-08,
+      "evaluation_count": 3,
+      "induced_drag_n": 265.5218799371742,
+      "surface_loads": {
+        "MainWing": {
+          "lift_n": 13200.794146863009,
+          "pitch_moment_about_cg_nm": -4637.478181305326
+        },
+        "HorizontalTail": {
+          "lift_n": -1144.3419414866817,
+          "pitch_moment_about_cg_nm": 4637.4755402689
+        },
+        "VerticalTail": {
+          "lift_n": -7.648842892670816e-33,
+          "pitch_moment_about_cg_nm": -2.2460861477378125e-31
+        }
+      },
+      "margins_deg": {
+        "alpha_lower": 10.3318519508965,
+        "alpha_upper": 1.6681480491035012,
+        "elevator_lower": 3.534631015539846,
+        "elevator_upper": 16.465368984460156
+      },
+      "active_bounds": [],
+      "Cma_per_rad": -2.312478991255005,
+      "reference_area_m2": 13.948414959273704,
+      "force_checks_passed": true
+    },
+    "cg_forward": {
+      "run_id": "5cbc1a9e20a74c94ad295e6bb17a1d03",
+      "status": "trim_checked_with_limits",
+      "flight_state": {
+        "schema_version": 1,
+        "mass_state": "explicit",
+        "operating_mass_kg": 1229.4159528684945,
+        "cg_geometry_m": [
+          2.547149684981836,
+          0.0,
+          0.0
+        ],
+        "design_mtow_kg": 1229.4159528684945,
+        "configured_takeoff_mass_kg": 1229.4769081595352,
+        "unallocated_mass_budget_kg": -0.06095529104072739,
+        "fuel_burned_from_takeoff_kg": null,
+        "remaining_usable_fuel_kg": null,
+        "component_ledger": null,
+        "source": "fixed mass CG sensitivity",
+        "phase": "explicit",
+        "scope": "conceptual x-CG; y=z=0 assumption; no payload relocation, tank distribution or CG envelope validation",
+        "mass_budget_allocated_as_ballast": false,
+        "unusable_fuel_in_empty_mass_once": true
+      },
+      "options": {
+        "mass_state": "explicit",
+        "mass_kg": 1229.4159528684945,
+        "cg_x_m": 2.547149684981836,
+        "source_note": "fixed mass CG sensitivity",
+        "speed_m_s": null,
+        "altitude_m": null,
+        "mesh_level": 2,
+        "alpha_min_deg": -6.0,
+        "alpha_max_deg": 6.0,
+        "elevator_min_deg": -10.0,
+        "elevator_max_deg": 10.0,
+        "initial_alpha_deg": 3.0,
+        "initial_elevator_deg": 0.0,
+        "max_iterations": 12
+      },
+      "alpha_deg": 4.573680149162908,
+      "elevator_deg": -8.152288547291535,
+      "residual_cl": 5.408223785474675e-08,
+      "residual_cm": -1.181065273775372e-07,
+      "evaluation_count": 3,
+      "induced_drag_n": 280.09724684272686,
+      "surface_loads": {
+        "MainWing": {
+          "lift_n": 13649.506335304166,
+          "pitch_moment_about_cg_nm": -6611.038886138325
+        },
+        "HorizontalTail": {
+          "lift_n": -1593.0530144430822,
+          "pitch_moment_about_cg_nm": 6611.034731172968
+        },
+        "VerticalTail": {
+          "lift_n": -8.07482723992666e-33,
+          "pitch_moment_about_cg_nm": -3.5615447027471803e-31
+        }
+      },
+      "margins_deg": {
+        "alpha_lower": 10.573680149162907,
+        "alpha_upper": 1.4263198508370918,
+        "elevator_lower": 1.8477114527084648,
+        "elevator_upper": 18.152288547291533
+      },
+      "active_bounds": [],
+      "Cma_per_rad": -2.845680873798597,
+      "reference_area_m2": 13.948414959273704,
+      "force_checks_passed": true
+    },
+    "cg_aft": {
+      "run_id": "f653714fd9f547158d2649ba0a9c1de2",
+      "status": "trim_checked_with_limits",
+      "flight_state": {
+        "schema_version": 1,
+        "mass_state": "explicit",
+        "operating_mass_kg": 1229.4159528684945,
+        "cg_geometry_m": [
+          2.825580075233651,
+          0.0,
+          0.0
+        ],
+        "design_mtow_kg": 1229.4159528684945,
+        "configured_takeoff_mass_kg": 1229.4769081595352,
+        "unallocated_mass_budget_kg": -0.06095529104072739,
+        "fuel_burned_from_takeoff_kg": null,
+        "remaining_usable_fuel_kg": null,
+        "component_ledger": null,
+        "source": "fixed mass CG sensitivity",
+        "phase": "explicit",
+        "scope": "conceptual x-CG; y=z=0 assumption; no payload relocation, tank distribution or CG envelope validation",
+        "mass_budget_allocated_as_ballast": false,
+        "unusable_fuel_in_empty_mass_once": true
+      },
+      "options": {
+        "mass_state": "explicit",
+        "mass_kg": 1229.4159528684945,
+        "cg_x_m": 2.825580075233651,
+        "source_note": "fixed mass CG sensitivity",
+        "speed_m_s": null,
+        "altitude_m": null,
+        "mesh_level": 2,
+        "alpha_min_deg": -6.0,
+        "alpha_max_deg": 6.0,
+        "elevator_min_deg": -10.0,
+        "elevator_max_deg": 10.0,
+        "initial_alpha_deg": 3.0,
+        "initial_elevator_deg": 0.0,
+        "max_iterations": 12
+      },
+      "alpha_deg": 4.090108466479824,
+      "elevator_deg": -4.778265786397408,
+      "residual_cl": -1.7998307511035705e-08,
+      "residual_cm": -3.71639124960299e-08,
+      "evaluation_count": 3,
+      "induced_drag_n": 254.9246978961131,
+      "surface_loads": {
+        "MainWing": {
+          "lift_n": 12751.842209883354,
+          "pitch_moment_about_cg_nm": -2787.1272744260987
+        },
+        "HorizontalTail": {
+          "lift_n": -695.3907105044653,
+          "pitch_moment_about_cg_nm": 2787.1259670066665
+        },
+        "VerticalTail": {
+          "lift_n": -8.531082065726296e-32,
+          "pitch_moment_about_cg_nm": 5.7981623101678565e-31
+        }
+      },
+      "margins_deg": {
+        "alpha_lower": 10.090108466479824,
+        "alpha_upper": 1.9098915335201756,
+        "elevator_lower": 5.221734213602592,
+        "elevator_upper": 14.778265786397409
+      },
+      "active_bounds": [],
+      "Cma_per_rad": -1.779275657025011,
+      "reference_area_m2": 13.948414959273704,
+      "force_checks_passed": true
+    },
+    "lighter_same_cg": {
+      "run_id": "ec429a80ef9a4224ac7530fcc7e64f6e",
+      "status": "trim_checked_with_limits",
+      "flight_state": {
+        "schema_version": 1,
+        "mass_state": "explicit",
+        "operating_mass_kg": 1106.474357581645,
+        "cg_geometry_m": [
+          2.6863648801077433,
+          0.0,
+          0.0
+        ],
+        "design_mtow_kg": 1229.4159528684945,
+        "configured_takeoff_mass_kg": 1229.4769081595352,
+        "unallocated_mass_budget_kg": -0.06095529104072739,
+        "fuel_burned_from_takeoff_kg": null,
+        "remaining_usable_fuel_kg": null,
+        "component_ledger": null,
+        "source": "mass sensitivity at fixed CG",
+        "phase": "explicit",
+        "scope": "conceptual x-CG; y=z=0 assumption; no payload relocation, tank distribution or CG envelope validation",
+        "mass_budget_allocated_as_ballast": false,
+        "unusable_fuel_in_empty_mass_once": true
+      },
+      "options": {
+        "mass_state": "explicit",
+        "mass_kg": 1106.474357581645,
+        "cg_x_m": 2.6863648801077433,
+        "source_note": "mass sensitivity at fixed CG",
+        "speed_m_s": null,
+        "altitude_m": null,
+        "mesh_level": 2,
+        "alpha_min_deg": -6.0,
+        "alpha_max_deg": 6.0,
+        "elevator_min_deg": -10.0,
+        "elevator_max_deg": 10.0,
+        "initial_alpha_deg": 3.0,
+        "initial_elevator_deg": 0.0,
+        "max_iterations": 12
+      },
+      "alpha_deg": 3.717965408002484,
+      "elevator_deg": -5.734913940502335,
+      "residual_cl": -3.4807638993328283e-09,
+      "residual_cm": -1.368930656331369e-08,
+      "evaluation_count": 3,
+      "induced_drag_n": 216.70584149297096,
+      "surface_loads": {
+        "MainWing": {
+          "lift_n": 11948.302197900903,
+          "pitch_moment_about_cg_nm": -4410.185754859254
+        },
+        "HorizontalTail": {
+          "lift_n": -1097.495527082098,
+          "pitch_moment_about_cg_nm": 4410.185273272031
+        },
+        "VerticalTail": {
+          "lift_n": -2.453706696158101e-32,
+          "pitch_moment_about_cg_nm": 3.3972618444218783e-31
+        }
+      },
+      "margins_deg": {
+        "alpha_lower": 9.717965408002485,
+        "alpha_upper": 2.282034591997516,
+        "elevator_lower": 4.265086059497665,
+        "elevator_upper": 15.734913940502334
+      },
+      "active_bounds": [],
+      "Cma_per_rad": -2.330739647490775,
+      "reference_area_m2": 13.948414959273704,
+      "force_checks_passed": true
+    },
+    "speed_65": {
+      "run_id": "3147d274591a407184b24508611ae40f",
+      "status": "trim_checked_with_limits",
+      "flight_state": {
+        "schema_version": 1,
+        "mass_state": "takeoff",
+        "operating_mass_kg": 1229.4769081595352,
+        "cg_geometry_m": [
+          2.6863648801077433,
+          0.0,
+          0.0
+        ],
+        "design_mtow_kg": 1229.4159528684945,
+        "configured_takeoff_mass_kg": 1229.4769081595352,
+        "unallocated_mass_budget_kg": -0.06095529104072739,
+        "fuel_burned_from_takeoff_kg": 0.0,
+        "remaining_usable_fuel_kg": 109.06976706351026,
+        "component_ledger": [
+          {
+            "component": "airframe",
+            "mass_kg": 314.0370583082376,
+            "x_m": 3.3
+          },
+          {
+            "component": "propulsion",
+            "mass_kg": 211.94887807177952,
+            "x_m": 0.8999999999999999
+          },
+          {
+            "component": "systems",
+            "mass_kg": 196.86391204401377,
+            "x_m": 3.0
+          },
+          {
+            "component": "furniture",
+            "mass_kg": 43.618912574020094,
+            "x_m": 3.0
+          },
+          {
+            "component": "unusable_fuel",
+            "mass_kg": 3.9383800979740746,
+            "x_m": 2.9250000000000003
+          },
+          {
+            "component": "payload",
+            "mass_kg": 350.0,
+            "x_m": 2.9250000000000003
+          },
+          {
+            "component": "takeoff_fuel",
+            "mass_kg": 109.06976706351026,
+            "x_m": 2.9250000000000003
+          }
+        ],
+        "source": "existing fixed-station component ledger; fuel at wing quarter chord",
+        "phase": "takeoff",
+        "scope": "conceptual x-CG; y=z=0 assumption; no payload relocation, tank distribution or CG envelope validation",
+        "mass_budget_allocated_as_ballast": false,
+        "unusable_fuel_in_empty_mass_once": true
+      },
+      "options": {
+        "mass_state": "takeoff",
+        "mass_kg": null,
+        "cg_x_m": null,
+        "source_note": "",
+        "speed_m_s": 65.0,
+        "altitude_m": null,
+        "mesh_level": 2,
+        "alpha_min_deg": -6.0,
+        "alpha_max_deg": 6.0,
+        "elevator_min_deg": -10.0,
+        "elevator_max_deg": 10.0,
+        "initial_alpha_deg": 3.0,
+        "initial_elevator_deg": 0.0,
+        "max_iterations": 12
+      },
+      "alpha_deg": 3.412939999665301,
+      "elevator_deg": -5.367195841879867,
+      "residual_cl": -4.050700663782436e-09,
+      "residual_cm": -8.744830450047036e-09,
+      "evaluation_count": 3,
+      "induced_drag_n": 229.01992287816094,
+      "surface_loads": {
+        "MainWing": {
+          "lift_n": 13319.907338170622,
+          "pitch_moment_about_cg_nm": -5051.72311850712
+        },
+        "HorizontalTail": {
+          "lift_n": -1262.8577369006164,
+          "pitch_moment_about_cg_nm": 5051.722757455655
+        },
+        "VerticalTail": {
+          "lift_n": 1.1843983920190174e-31,
+          "pitch_moment_about_cg_nm": -9.411678517765023e-31
+        }
+      },
+      "margins_deg": {
+        "alpha_lower": 9.412939999665301,
+        "alpha_upper": 2.587060000334699,
+        "elevator_lower": 4.632804158120133,
+        "elevator_upper": 15.367195841879866
+      },
+      "active_bounds": [],
+      "Cma_per_rad": -2.34223205076968,
+      "reference_area_m2": 13.948414959273704,
+      "force_checks_passed": true
+    },
+    "coarse": {
+      "run_id": "3db27613572444a69c308a25f36df30b",
+      "status": "trim_checked_with_limits",
+      "flight_state": {
+        "schema_version": 1,
+        "mass_state": "takeoff",
+        "operating_mass_kg": 1229.4769081595352,
+        "cg_geometry_m": [
+          2.6863648801077433,
+          0.0,
+          0.0
+        ],
+        "design_mtow_kg": 1229.4159528684945,
+        "configured_takeoff_mass_kg": 1229.4769081595352,
+        "unallocated_mass_budget_kg": -0.06095529104072739,
+        "fuel_burned_from_takeoff_kg": 0.0,
+        "remaining_usable_fuel_kg": 109.06976706351026,
+        "component_ledger": [
+          {
+            "component": "airframe",
+            "mass_kg": 314.0370583082376,
+            "x_m": 3.3
+          },
+          {
+            "component": "propulsion",
+            "mass_kg": 211.94887807177952,
+            "x_m": 0.8999999999999999
+          },
+          {
+            "component": "systems",
+            "mass_kg": 196.86391204401377,
+            "x_m": 3.0
+          },
+          {
+            "component": "furniture",
+            "mass_kg": 43.618912574020094,
+            "x_m": 3.0
+          },
+          {
+            "component": "unusable_fuel",
+            "mass_kg": 3.9383800979740746,
+            "x_m": 2.9250000000000003
+          },
+          {
+            "component": "payload",
+            "mass_kg": 350.0,
+            "x_m": 2.9250000000000003
+          },
+          {
+            "component": "takeoff_fuel",
+            "mass_kg": 109.06976706351026,
+            "x_m": 2.9250000000000003
+          }
+        ],
+        "source": "existing fixed-station component ledger; fuel at wing quarter chord",
+        "phase": "takeoff",
+        "scope": "conceptual x-CG; y=z=0 assumption; no payload relocation, tank distribution or CG envelope validation",
+        "mass_budget_allocated_as_ballast": false,
+        "unusable_fuel_in_empty_mass_once": true
+      },
+      "options": {
+        "mass_state": "takeoff",
+        "mass_kg": null,
+        "cg_x_m": null,
+        "source_note": "",
+        "speed_m_s": null,
+        "altitude_m": null,
+        "mesh_level": 1,
+        "alpha_min_deg": -6.0,
+        "alpha_max_deg": 6.0,
+        "elevator_min_deg": -10.0,
+        "elevator_max_deg": 10.0,
+        "initial_alpha_deg": 3.0,
+        "initial_elevator_deg": 0.0,
+        "max_iterations": 12
+      },
+      "alpha_deg": 4.341842334152391,
+      "elevator_deg": -6.58662133948128,
+      "residual_cl": 8.962863173866964e-09,
+      "residual_cm": -6.752827506895098e-08,
+      "evaluation_count": 3,
+      "induced_drag_n": 267.0767244466481,
+      "surface_loads": {
+        "MainWing": {
+          "lift_n": 13196.839257395743,
+          "pitch_moment_about_cg_nm": -4634.597880898072
+        },
+        "HorizontalTail": {
+          "lift_n": -1139.7893095006366,
+          "pitch_moment_about_cg_nm": 4634.595505266092
+        },
+        "VerticalTail": {
+          "lift_n": -2.0895012563901948e-33,
+          "pitch_moment_about_cg_nm": -1.9031955826151473e-31
+        }
+      },
+      "margins_deg": {
+        "alpha_lower": 10.34184233415239,
+        "alpha_upper": 1.6581576658476092,
+        "elevator_lower": 3.4133786605187204,
+        "elevator_upper": 16.58662133948128
+      },
+      "active_bounds": [],
+      "Cma_per_rad": -2.309646046112534,
+      "reference_area_m2": 13.948414959273704,
+      "force_checks_passed": true
+    },
+    "fine": {
+      "run_id": "ed07c84e954e4b009bfa4610f9a13f34",
+      "status": "trim_checked_with_limits",
+      "flight_state": {
+        "schema_version": 1,
+        "mass_state": "takeoff",
+        "operating_mass_kg": 1229.4769081595352,
+        "cg_geometry_m": [
+          2.6863648801077433,
+          0.0,
+          0.0
+        ],
+        "design_mtow_kg": 1229.4159528684945,
+        "configured_takeoff_mass_kg": 1229.4769081595352,
+        "unallocated_mass_budget_kg": -0.06095529104072739,
+        "fuel_burned_from_takeoff_kg": 0.0,
+        "remaining_usable_fuel_kg": 109.06976706351026,
+        "component_ledger": [
+          {
+            "component": "airframe",
+            "mass_kg": 314.0370583082376,
+            "x_m": 3.3
+          },
+          {
+            "component": "propulsion",
+            "mass_kg": 211.94887807177952,
+            "x_m": 0.8999999999999999
+          },
+          {
+            "component": "systems",
+            "mass_kg": 196.86391204401377,
+            "x_m": 3.0
+          },
+          {
+            "component": "furniture",
+            "mass_kg": 43.618912574020094,
+            "x_m": 3.0
+          },
+          {
+            "component": "unusable_fuel",
+            "mass_kg": 3.9383800979740746,
+            "x_m": 2.9250000000000003
+          },
+          {
+            "component": "payload",
+            "mass_kg": 350.0,
+            "x_m": 2.9250000000000003
+          },
+          {
+            "component": "takeoff_fuel",
+            "mass_kg": 109.06976706351026,
+            "x_m": 2.9250000000000003
+          }
+        ],
+        "source": "existing fixed-station component ledger; fuel at wing quarter chord",
+        "phase": "takeoff",
+        "scope": "conceptual x-CG; y=z=0 assumption; no payload relocation, tank distribution or CG envelope validation",
+        "mass_budget_allocated_as_ballast": false,
+        "unusable_fuel_in_empty_mass_once": true
+      },
+      "options": {
+        "mass_state": "takeoff",
+        "mass_kg": null,
+        "cg_x_m": null,
+        "source_note": "",
+        "speed_m_s": null,
+        "altitude_m": null,
+        "mesh_level": 3,
+        "alpha_min_deg": -6.0,
+        "alpha_max_deg": 6.0,
+        "elevator_min_deg": -10.0,
+        "elevator_max_deg": 10.0,
+        "initial_alpha_deg": 3.0,
+        "initial_elevator_deg": 0.0,
+        "max_iterations": 12
+      },
+      "alpha_deg": 4.330277911985689,
+      "elevator_deg": -6.361308322992629,
+      "residual_cl": 1.0996060284540476e-08,
+      "residual_cm": -8.109087044905205e-08,
+      "evaluation_count": 3,
+      "induced_drag_n": 265.6816321054721,
+      "surface_loads": {
+        "MainWing": {
+          "lift_n": 13202.121181206061,
+          "pitch_moment_about_cg_nm": -4632.334218648664
+        },
+        "HorizontalTail": {
+          "lift_n": -1145.0711819318722,
+          "pitch_moment_about_cg_nm": 4632.3313658871375
+        },
+        "VerticalTail": {
+          "lift_n": -8.574959364965577e-32,
+          "pitch_moment_about_cg_nm": -2.150083686947425e-31
+        }
+      },
+      "margins_deg": {
+        "alpha_lower": 10.33027791198569,
+        "alpha_upper": 1.6697220880143107,
+        "elevator_lower": 3.6386916770073707,
+        "elevator_upper": 16.361308322992627
+      },
+      "active_bounds": [],
+      "Cma_per_rad": -2.312118079751579,
+      "reference_area_m2": 13.948414959273704,
+      "force_checks_passed": true
+    },
+    "different_initial": {
+      "run_id": "ec23b1fa23d5454297f7a54f5beaff59",
+      "status": "trim_checked_with_limits",
+      "flight_state": {
+        "schema_version": 1,
+        "mass_state": "takeoff",
+        "operating_mass_kg": 1229.4769081595352,
+        "cg_geometry_m": [
+          2.6863648801077433,
+          0.0,
+          0.0
+        ],
+        "design_mtow_kg": 1229.4159528684945,
+        "configured_takeoff_mass_kg": 1229.4769081595352,
+        "unallocated_mass_budget_kg": -0.06095529104072739,
+        "fuel_burned_from_takeoff_kg": 0.0,
+        "remaining_usable_fuel_kg": 109.06976706351026,
+        "component_ledger": [
+          {
+            "component": "airframe",
+            "mass_kg": 314.0370583082376,
+            "x_m": 3.3
+          },
+          {
+            "component": "propulsion",
+            "mass_kg": 211.94887807177952,
+            "x_m": 0.8999999999999999
+          },
+          {
+            "component": "systems",
+            "mass_kg": 196.86391204401377,
+            "x_m": 3.0
+          },
+          {
+            "component": "furniture",
+            "mass_kg": 43.618912574020094,
+            "x_m": 3.0
+          },
+          {
+            "component": "unusable_fuel",
+            "mass_kg": 3.9383800979740746,
+            "x_m": 2.9250000000000003
+          },
+          {
+            "component": "payload",
+            "mass_kg": 350.0,
+            "x_m": 2.9250000000000003
+          },
+          {
+            "component": "takeoff_fuel",
+            "mass_kg": 109.06976706351026,
+            "x_m": 2.9250000000000003
+          }
+        ],
+        "source": "existing fixed-station component ledger; fuel at wing quarter chord",
+        "phase": "takeoff",
+        "scope": "conceptual x-CG; y=z=0 assumption; no payload relocation, tank distribution or CG envelope validation",
+        "mass_budget_allocated_as_ballast": false,
+        "unusable_fuel_in_empty_mass_once": true
+      },
+      "options": {
+        "mass_state": "takeoff",
+        "mass_kg": null,
+        "cg_x_m": null,
+        "source_note": "",
+        "speed_m_s": null,
+        "altitude_m": null,
+        "mesh_level": 2,
+        "alpha_min_deg": -6.0,
+        "alpha_max_deg": 6.0,
+        "elevator_min_deg": -10.0,
+        "elevator_max_deg": 10.0,
+        "initial_alpha_deg": 0.0,
+        "initial_elevator_deg": -3.0,
+        "max_iterations": 12
+      },
+      "alpha_deg": 4.332149788895609,
+      "elevator_deg": -6.4656619620004925,
+      "residual_cl": 3.034140274027486e-07,
+      "residual_cm": -2.125046362988492e-06,
+      "evaluation_count": 3,
+      "induced_drag_n": 265.54711060597197,
+      "surface_loads": {
+        "MainWing": {
+          "lift_n": 13201.403014075817,
+          "pitch_moment_about_cg_nm": -4637.586913968136
+        },
+        "HorizontalTail": {
+          "lift_n": -1144.34562537196,
+          "pitch_moment_about_cg_nm": 4637.512155237897
+        },
+        "VerticalTail": {
+          "lift_n": -8.436777170566785e-33,
+          "pitch_moment_about_cg_nm": 2.19589356671861e-31
+        }
+      },
+      "margins_deg": {
+        "alpha_lower": 10.33214978889561,
+        "alpha_upper": 1.6678502111043914,
+        "elevator_lower": 3.5343380379995075,
+        "elevator_upper": 16.465661962000492
+      },
+      "active_bounds": [],
+      "Cma_per_rad": -2.312469840011812,
+      "reference_area_m2": 13.948414959273704,
+      "force_checks_passed": true
+    },
+    "elevator_limited": {
+      "run_id": "b3ae9a24897f4a659a0d7c335abf05f9",
+      "status": "trim_bounds_exceeded",
+      "flight_state": {
+        "schema_version": 1,
+        "mass_state": "takeoff",
+        "operating_mass_kg": 1229.4769081595352,
+        "cg_geometry_m": [
+          2.6863648801077433,
+          0.0,
+          0.0
+        ],
+        "design_mtow_kg": 1229.4159528684945,
+        "configured_takeoff_mass_kg": 1229.4769081595352,
+        "unallocated_mass_budget_kg": -0.06095529104072739,
+        "fuel_burned_from_takeoff_kg": 0.0,
+        "remaining_usable_fuel_kg": 109.06976706351026,
+        "component_ledger": [
+          {
+            "component": "airframe",
+            "mass_kg": 314.0370583082376,
+            "x_m": 3.3
+          },
+          {
+            "component": "propulsion",
+            "mass_kg": 211.94887807177952,
+            "x_m": 0.8999999999999999
+          },
+          {
+            "component": "systems",
+            "mass_kg": 196.86391204401377,
+            "x_m": 3.0
+          },
+          {
+            "component": "furniture",
+            "mass_kg": 43.618912574020094,
+            "x_m": 3.0
+          },
+          {
+            "component": "unusable_fuel",
+            "mass_kg": 3.9383800979740746,
+            "x_m": 2.9250000000000003
+          },
+          {
+            "component": "payload",
+            "mass_kg": 350.0,
+            "x_m": 2.9250000000000003
+          },
+          {
+            "component": "takeoff_fuel",
+            "mass_kg": 109.06976706351026,
+            "x_m": 2.9250000000000003
+          }
+        ],
+        "source": "existing fixed-station component ledger; fuel at wing quarter chord",
+        "phase": "takeoff",
+        "scope": "conceptual x-CG; y=z=0 assumption; no payload relocation, tank distribution or CG envelope validation",
+        "mass_budget_allocated_as_ballast": false,
+        "unusable_fuel_in_empty_mass_once": true
+      },
+      "options": {
+        "mass_state": "takeoff",
+        "mass_kg": null,
+        "cg_x_m": null,
+        "source_note": "",
+        "speed_m_s": null,
+        "altitude_m": null,
+        "mesh_level": 2,
+        "alpha_min_deg": -6.0,
+        "alpha_max_deg": 6.0,
+        "elevator_min_deg": -1.0,
+        "elevator_max_deg": 1.0,
+        "initial_alpha_deg": 3.0,
+        "initial_elevator_deg": 0.0,
+        "max_iterations": 12
+      },
+      "alpha_deg": 2.94618933962603,
+      "elevator_deg": -1.0,
+      "residual_cl": -0.056556644281453294,
+      "residual_cm": -0.1298771609107038,
+      "evaluation_count": 5,
+      "induced_drag_n": 190.91954224120997,
+      "surface_loads": {
+        "MainWing": {
+          "lift_n": 10489.909338262672,
+          "pitch_moment_about_cg_nm": -4145.580061336371
+        },
+        "HorizontalTail": {
+          "lift_n": 137.94863670387466,
+          "pitch_moment_about_cg_nm": -423.47396303012465
+        },
+        "VerticalTail": {
+          "lift_n": -8.007749563931965e-33,
+          "pitch_moment_about_cg_nm": 4.574684607472934e-32
+        }
+      },
+      "margins_deg": {
+        "alpha_lower": 8.94618933962603,
+        "alpha_upper": 3.05381066037397,
+        "elevator_lower": 0.0,
+        "elevator_upper": 2.0
+      },
+      "active_bounds": [
+        "elevator_lower"
+      ],
+      "Cma_per_rad": -2.341882201270019,
+      "reference_area_m2": 13.948414959273704,
+      "force_checks_passed": true
+    },
+    "alpha_limited": {
+      "run_id": "8decb18fae694483aae47ae76ede4b7c",
+      "status": "trim_bounds_exceeded",
+      "flight_state": {
+        "schema_version": 1,
+        "mass_state": "takeoff",
+        "operating_mass_kg": 1229.4769081595352,
+        "cg_geometry_m": [
+          2.6863648801077433,
+          0.0,
+          0.0
+        ],
+        "design_mtow_kg": 1229.4159528684945,
+        "configured_takeoff_mass_kg": 1229.4769081595352,
+        "unallocated_mass_budget_kg": -0.06095529104072739,
+        "fuel_burned_from_takeoff_kg": 0.0,
+        "remaining_usable_fuel_kg": 109.06976706351026,
+        "component_ledger": [
+          {
+            "component": "airframe",
+            "mass_kg": 314.0370583082376,
+            "x_m": 3.3
+          },
+          {
+            "component": "propulsion",
+            "mass_kg": 211.94887807177952,
+            "x_m": 0.8999999999999999
+          },
+          {
+            "component": "systems",
+            "mass_kg": 196.86391204401377,
+            "x_m": 3.0
+          },
+          {
+            "component": "furniture",
+            "mass_kg": 43.618912574020094,
+            "x_m": 3.0
+          },
+          {
+            "component": "unusable_fuel",
+            "mass_kg": 3.9383800979740746,
+            "x_m": 2.9250000000000003
+          },
+          {
+            "component": "payload",
+            "mass_kg": 350.0,
+            "x_m": 2.9250000000000003
+          },
+          {
+            "component": "takeoff_fuel",
+            "mass_kg": 109.06976706351026,
+            "x_m": 2.9250000000000003
+          }
+        ],
+        "source": "existing fixed-station component ledger; fuel at wing quarter chord",
+        "phase": "takeoff",
+        "scope": "conceptual x-CG; y=z=0 assumption; no payload relocation, tank distribution or CG envelope validation",
+        "mass_budget_allocated_as_ballast": false,
+        "unusable_fuel_in_empty_mass_once": true
+      },
+      "options": {
+        "mass_state": "takeoff",
+        "mass_kg": null,
+        "cg_x_m": null,
+        "source_note": "",
+        "speed_m_s": null,
+        "altitude_m": null,
+        "mesh_level": 2,
+        "alpha_min_deg": -6.0,
+        "alpha_max_deg": 3.0,
+        "elevator_min_deg": -10.0,
+        "elevator_max_deg": 10.0,
+        "initial_alpha_deg": 3.0,
+        "initial_elevator_deg": 0.0,
+        "max_iterations": 12
+      },
+      "alpha_deg": 3.0,
+      "elevator_deg": -3.8378077461994686,
+      "residual_cl": -0.08962680080577773,
+      "residual_cm": -0.03534863488676699,
+      "evaluation_count": 6,
+      "induced_drag_n": 170.69817721303403,
+      "surface_loads": {
+        "MainWing": {
+          "lift_n": 10512.771392435536,
+          "pitch_moment_about_cg_nm": -4142.751207449959
+        },
+        "HorizontalTail": {
+          "lift_n": -720.5993984601889,
+          "pitch_moment_about_cg_nm": 2899.1928993322626
+        },
+        "VerticalTail": {
+          "lift_n": 8.996305557677856e-33,
+          "pitch_moment_about_cg_nm": 1.1077282462888808e-31
+        }
+      },
+      "margins_deg": {
+        "alpha_lower": 9.0,
+        "alpha_upper": 0.0,
+        "elevator_lower": 6.162192253800532,
+        "elevator_upper": 13.837807746199468
+      },
+      "active_bounds": [
+        "alpha_upper"
+      ],
+      "Cma_per_rad": -2.348793844482996,
+      "reference_area_m2": 13.948414959273704,
+      "force_checks_passed": true
+    },
+    "iteration_limited": {
+      "run_id": "3d147a43b8d149d08e58f8a4050b5745",
+      "status": "trim_not_converged",
+      "flight_state": {
+        "schema_version": 1,
+        "mass_state": "takeoff",
+        "operating_mass_kg": 1229.4769081595352,
+        "cg_geometry_m": [
+          2.6863648801077433,
+          0.0,
+          0.0
+        ],
+        "design_mtow_kg": 1229.4159528684945,
+        "configured_takeoff_mass_kg": 1229.4769081595352,
+        "unallocated_mass_budget_kg": -0.06095529104072739,
+        "fuel_burned_from_takeoff_kg": 0.0,
+        "remaining_usable_fuel_kg": 109.06976706351026,
+        "component_ledger": [
+          {
+            "component": "airframe",
+            "mass_kg": 314.0370583082376,
+            "x_m": 3.3
+          },
+          {
+            "component": "propulsion",
+            "mass_kg": 211.94887807177952,
+            "x_m": 0.8999999999999999
+          },
+          {
+            "component": "systems",
+            "mass_kg": 196.86391204401377,
+            "x_m": 3.0
+          },
+          {
+            "component": "furniture",
+            "mass_kg": 43.618912574020094,
+            "x_m": 3.0
+          },
+          {
+            "component": "unusable_fuel",
+            "mass_kg": 3.9383800979740746,
+            "x_m": 2.9250000000000003
+          },
+          {
+            "component": "payload",
+            "mass_kg": 350.0,
+            "x_m": 2.9250000000000003
+          },
+          {
+            "component": "takeoff_fuel",
+            "mass_kg": 109.06976706351026,
+            "x_m": 2.9250000000000003
+          }
+        ],
+        "source": "existing fixed-station component ledger; fuel at wing quarter chord",
+        "phase": "takeoff",
+        "scope": "conceptual x-CG; y=z=0 assumption; no payload relocation, tank distribution or CG envelope validation",
+        "mass_budget_allocated_as_ballast": false,
+        "unusable_fuel_in_empty_mass_once": true
+      },
+      "options": {
+        "mass_state": "takeoff",
+        "mass_kg": null,
+        "cg_x_m": null,
+        "source_note": "",
+        "speed_m_s": null,
+        "altitude_m": null,
+        "mesh_level": 2,
+        "alpha_min_deg": -6.0,
+        "alpha_max_deg": 6.0,
+        "elevator_min_deg": -10.0,
+        "elevator_max_deg": 10.0,
+        "initial_alpha_deg": 3.0,
+        "initial_elevator_deg": 0.0,
+        "max_iterations": 1
+      },
+      "alpha_deg": 4.3329614145664985,
+      "elevator_deg": -6.471015879914467,
+      "residual_cl": 4.449945145590384e-06,
+      "residual_cm": 0.0001473264735085827,
+      "evaluation_count": 2,
+      "induced_drag_n": 265.5910701274645,
+      "surface_loads": {
+        "MainWing": {
+          "lift_n": 13202.919348782834,
+          "pitch_moment_about_cg_nm": -4637.845568093595
+        },
+        "HorizontalTail": {
+          "lift_n": -1145.7571768457128,
+          "pitch_moment_about_cg_nm": 4643.028485643994
+        },
+        "VerticalTail": {
+          "lift_n": 1.198643602159142e-32,
+          "pitch_moment_about_cg_nm": 4.597658249603973e-34
+        }
+      },
+      "margins_deg": {
+        "alpha_lower": 10.332961414566498,
+        "alpha_upper": 1.6670385854335015,
+        "elevator_lower": 3.528984120085533,
+        "elevator_upper": 16.471015879914468
+      },
+      "active_bounds": [],
+      "Cma_per_rad": -2.312466499768146,
+      "reference_area_m2": 13.948414959273704,
+      "force_checks_passed": true
+    },
+    "fixed": {
+      "run_id": "bb85536180854149bf3c79c88ab7a56a",
+      "status": "trim_checked_with_limits",
+      "flight_state": {
+        "schema_version": 1,
+        "mass_state": "takeoff",
+        "operating_mass_kg": 1383.3115738233143,
+        "cg_geometry_m": [
+          2.6535499234003157,
+          0.0,
+          0.0
+        ],
+        "design_mtow_kg": 1500.0,
+        "configured_takeoff_mass_kg": 1383.3115738233143,
+        "unallocated_mass_budget_kg": 116.68842617668565,
+        "fuel_burned_from_takeoff_kg": 0.0,
+        "remaining_usable_fuel_kg": 133.0750997768825,
+        "component_ledger": [
+          {
+            "component": "airframe",
+            "mass_kg": 376.55675386680286,
+            "x_m": 3.3
+          },
+          {
+            "component": "propulsion",
+            "mass_kg": 264.56510333178653,
+            "x_m": 0.8999999999999999
+          },
+          {
+            "component": "systems",
+            "mass_kg": 205.73175973224724,
+            "x_m": 3.0
+          },
+          {
+            "component": "furniture",
+            "mass_kg": 48.07515855105578,
+            "x_m": 3.0
+          },
+          {
+            "component": "unusable_fuel",
+            "mass_kg": 5.307698564539529,
+            "x_m": 2.9250000000000003
+          },
+          {
+            "component": "payload",
+            "mass_kg": 350.0,
+            "x_m": 2.9250000000000003
+          },
+          {
+            "component": "takeoff_fuel",
+            "mass_kg": 133.0750997768825,
+            "x_m": 2.9250000000000003
+          }
+        ],
+        "source": "existing fixed-station component ledger; fuel at wing quarter chord",
+        "phase": "takeoff",
+        "scope": "conceptual x-CG; y=z=0 assumption; no payload relocation, tank distribution or CG envelope validation",
+        "mass_budget_allocated_as_ballast": false,
+        "unusable_fuel_in_empty_mass_once": true
+      },
+      "options": {
+        "mass_state": "takeoff",
+        "mass_kg": null,
+        "cg_x_m": null,
+        "source_note": "",
+        "speed_m_s": null,
+        "altitude_m": null,
+        "mesh_level": 2,
+        "alpha_min_deg": -6.0,
+        "alpha_max_deg": 6.0,
+        "elevator_min_deg": -10.0,
+        "elevator_max_deg": 10.0,
+        "initial_alpha_deg": 3.0,
+        "initial_elevator_deg": 0.0,
+        "max_iterations": 12
+      },
+      "alpha_deg": 3.9295176401460346,
+      "elevator_deg": -5.896276515378681,
+      "residual_cl": -4.2281035894653485e-09,
+      "residual_cm": -5.239982781013452e-09,
+      "evaluation_count": 3,
+      "induced_drag_n": 279.04204872614395,
+      "surface_loads": {
+        "MainWing": {
+          "lift_n": 15065.938854447655,
+          "pitch_moment_about_cg_nm": -6179.916810791655
+        },
+        "HorizontalTail": {
+          "lift_n": -1500.286539373415,
+          "pitch_moment_about_cg_nm": 6179.916562357108
+        },
+        "VerticalTail": {
+          "lift_n": 1.7606045937490327e-32,
+          "pitch_moment_about_cg_nm": 1.6601314984782072e-32
+        }
+      },
+      "margins_deg": {
+        "alpha_lower": 9.929517640146035,
+        "alpha_upper": 2.0704823598539654,
+        "elevator_lower": 4.103723484621319,
+        "elevator_upper": 15.89627651537868
+      },
+      "active_bounds": [],
+      "Cma_per_rad": -2.344385271435906,
+      "reference_area_m2": 17.018343051506314,
+      "force_checks_passed": true
+    },
+    "upper_bound": {
+      "run_id": "350f14d4181b4316beac547a8ec5e8a2",
+      "status": "trim_checked_with_limits",
+      "flight_state": {
+        "schema_version": 1,
+        "mass_state": "takeoff",
+        "operating_mass_kg": 1229.4769081595352,
+        "cg_geometry_m": [
+          2.6863648801077433,
+          0.0,
+          0.0
+        ],
+        "design_mtow_kg": 1229.4159528684945,
+        "configured_takeoff_mass_kg": 1229.4769081595352,
+        "unallocated_mass_budget_kg": -0.06095529104072739,
+        "fuel_burned_from_takeoff_kg": 0.0,
+        "remaining_usable_fuel_kg": 109.06976706351026,
+        "component_ledger": [
+          {
+            "component": "airframe",
+            "mass_kg": 314.0370583082376,
+            "x_m": 3.3
+          },
+          {
+            "component": "propulsion",
+            "mass_kg": 211.94887807177952,
+            "x_m": 0.8999999999999999
+          },
+          {
+            "component": "systems",
+            "mass_kg": 196.86391204401377,
+            "x_m": 3.0
+          },
+          {
+            "component": "furniture",
+            "mass_kg": 43.618912574020094,
+            "x_m": 3.0
+          },
+          {
+            "component": "unusable_fuel",
+            "mass_kg": 3.9383800979740746,
+            "x_m": 2.9250000000000003
+          },
+          {
+            "component": "payload",
+            "mass_kg": 350.0,
+            "x_m": 2.9250000000000003
+          },
+          {
+            "component": "takeoff_fuel",
+            "mass_kg": 109.06976706351026,
+            "x_m": 2.9250000000000003
+          }
+        ],
+        "source": "existing fixed-station component ledger; fuel at wing quarter chord",
+        "phase": "takeoff",
+        "scope": "conceptual x-CG; y=z=0 assumption; no payload relocation, tank distribution or CG envelope validation",
+        "mass_budget_allocated_as_ballast": false,
+        "unusable_fuel_in_empty_mass_once": true
+      },
+      "options": {
+        "mass_state": "takeoff",
+        "mass_kg": null,
+        "cg_x_m": null,
+        "source_note": "",
+        "speed_m_s": null,
+        "altitude_m": null,
+        "mesh_level": 2,
+        "alpha_min_deg": -6.0,
+        "alpha_max_deg": 6.0,
+        "elevator_min_deg": -10.0,
+        "elevator_max_deg": 10.0,
+        "initial_alpha_deg": 3.0,
+        "initial_elevator_deg": 0.0,
+        "max_iterations": 12
+      },
+      "alpha_deg": 4.332156412358676,
+      "elevator_deg": -6.465730050628133,
+      "residual_cl": 9.959752855781545e-09,
+      "residual_cm": -7.512278148158469e-08,
+      "evaluation_count": 3,
+      "induced_drag_n": 265.54733628634546,
+      "surface_loads": {
+        "MainWing": {
+          "lift_n": 13201.414623430397,
+          "pitch_moment_about_cg_nm": -4637.588823253907
+        },
+        "HorizontalTail": {
+          "lift_n": -1144.364650343794,
+          "pitch_moment_about_cg_nm": 4637.586180448625
+        },
+        "VerticalTail": {
+          "lift_n": 9.381310076639763e-33,
+          "pitch_moment_about_cg_nm": -2.501542174856083e-31
+        }
+      },
+      "margins_deg": {
+        "alpha_lower": 10.332156412358676,
+        "alpha_upper": 1.6678435876413236,
+        "elevator_lower": 3.5342699493718666,
+        "elevator_upper": 16.46573005062813
+      },
+      "active_bounds": [],
+      "Cma_per_rad": -2.31246992835936,
+      "reference_area_m2": 13.948414959273704,
+      "force_checks_passed": true
+    }
+  },
+  "mesh_sensitivity": {
+    "alpha_deg": {
+      "coarse": 4.341842334152391,
+      "standard": 4.332156412358676,
+      "fine": 4.330277911985689,
+      "standard_to_fine_relative": 0.00043380596145749153
+    },
+    "elevator_deg": {
+      "coarse": -6.58662133948128,
+      "standard": -6.465730050628133,
+      "fine": -6.361308322992629,
+      "standard_to_fine_relative": 0.01641513385824691
+    },
+    "induced_drag_n": {
+      "coarse": 267.0767244466481,
+      "standard": 265.54733628634546,
+      "fine": 265.6816321054721,
+      "standard_to_fine_relative": 0.000505476491025624
+    }
+  },
+  "native_reference": {
+    "alpha_deg": 4.332156665308609,
+    "elevator_deg": -6.465732557954858,
+    "coefficients": {
+      "Sref": 13.9484149592737,
+      "Cref": 1.39215195125908,
+      "Bref": 10.2280551521075,
+      "Xref": 2.68636488010774,
+      "Yref": 0.0,
+      "Zref": 0.0,
+      "Alpha": 4.332156665308609,
+      "pb/2V": -0.0,
+      "p'b/2V": -0.0,
+      "Beta": 0.0,
+      "qc/2V": 0.0,
+      "Mach": 0.1804353088356429,
+      "rb/2V": -0.0,
+      "r'b/2V": -0.0,
+      "CXtot": 0.02549268077426522,
+      "Cltot": 6.314392580655216e-18,
+      "Cl'tot": 6.29093865028353e-18,
+      "CYtot": 1.102415110872231e-18,
+      "Cmtot": -4.972133815783764e-13,
+      "CZtot": -0.4765631261561618,
+      "Cntot": -7.165961058620648e-20,
+      "Cn'tot": -5.484338253534649e-19,
+      "CLtot": 0.4771272111511048,
+      "CDtot": 0.01057895854805441,
+      "CDvis": 0.0,
+      "CDind": 0.01057895854805441,
+      "CLff": 0.4779176291589313,
+      "CDff": 0.01050836375999537,
+      "CYff": 3.350071965253056e-19,
+      "e": 0.9224861777777694
+    },
+    "residual_cl": 6.566969190657801e-14,
+    "residual_cm": -4.972133815783764e-13,
+    "method": "native AVL A C target / D2 PM 0"
+  },
+  "public_example": {
+    "sources": {
+      "vanilla.avl": {
+        "sha256": "28ccdc714456379de6e3f5f5edacfedf45a915484fb4bac646f335c864d339b2",
+        "url": "https://web.mit.edu/drela/Public/web/avl/runs/vanilla.avl"
+      },
+      "sd7037.dat": {
+        "sha256": "29aa7f654a66adcbfcec0a25b00beeb86df185ad869de632366b68c28ce60d96",
+        "url": "https://web.mit.edu/drela/Public/web/avl/runs/sd7037.dat"
+      }
+    },
+    "target_cl": 0.5,
+    "outer_solution": {
+      "status": "trim_checked_with_limits",
+      "converged": true,
+      "diagnostic": "实际升力与俯仰矩残差达到门槛",
+      "active_bounds": [],
+      "solution": [
+        0.6780600237020267,
+        3.578082261228296
+      ],
+      "residuals": [
+        -6.229042635030879e-07,
+        3.822671656335264e-07
+      ],
+      "history": [
+        {
+          "evaluation": 0,
+          "iteration": 0,
+          "alpha_deg": 3.0,
+          "elevator_deg": 0.0,
+          "residual_cl": 0.1781667985787404,
+          "residual_cm": 0.06263452656018069,
+          "step_scale": 0.0,
+          "accepted": true,
+          "evaluation_id": "eval_00"
+        },
+        {
+          "evaluation": 1,
+          "iteration": 1,
+          "alpha_deg": 0.6624519658024677,
+          "elevator_deg": 3.708199094480717,
+          "residual_cl": -0.0004684049082600006,
+          "residual_cm": -0.003418656287429468,
+          "step_scale": 1.0,
+          "accepted": true,
+          "evaluation_id": "eval_01"
+        },
+        {
+          "evaluation": 2,
+          "iteration": 2,
+          "alpha_deg": 0.6780600237020267,
+          "elevator_deg": 3.578082261228296,
+          "residual_cl": -6.229042635030879e-07,
+          "residual_cm": 3.822671656335264e-07,
+          "step_scale": 1.0,
+          "accepted": true,
+          "evaluation_id": "eval_02"
+        }
+      ],
+      "tolerances": {
+        "absolute_cl": 1e-05,
+        "absolute_cm": 1e-05
+      },
+      "margins_deg": {
+        "alpha_lower": 6.6780600237020264,
+        "alpha_upper": 5.3219399762979736,
+        "elevator_lower": 13.578082261228296,
+        "elevator_upper": 6.421917738771704
+      }
+    },
+    "native_coefficients": {
+      "Sref": 9.0,
+      "Cref": 0.9,
+      "Bref": 10.0,
+      "Xref": 0.5,
+      "Yref": 0.0,
+      "Zref": 0.0,
+      "Alpha": 0.678066326772611,
+      "pb/2V": -0.0,
+      "p'b/2V": -0.0,
+      "Beta": 0.0,
+      "qc/2V": 0.0,
+      "Mach": 0.0,
+      "rb/2V": -0.0,
+      "r'b/2V": -0.0,
+      "CXtot": -0.001410468585068926,
+      "Cltot": 3.455587167473669e-17,
+      "Cl'tot": 3.454649625521244e-17,
+      "CYtot": 1.249223701577137e-17,
+      "Cmtot": -5.244395195891371e-12,
+      "CZtot": -0.5000517087930998,
+      "Cntot": -5.877520893910288e-19,
+      "Cn'tot": -9.966525011487983e-19,
+      "CLtot": 0.5000000000060064,
+      "CDtot": 0.00732808859950244,
+      "CDvis": 0.0,
+      "CDind": 0.00732808859950244,
+      "CLff": 0.4982460557647435,
+      "CDff": 0.007319394878897324,
+      "CYff": 2.696668524186718e-17,
+      "e": 0.9716395802931536
+    },
+    "native_elevator_deg": 3.578092541541761,
+    "angle_differences_deg": [
+      -6.3030705843569734e-06,
+      -1.0280313464949842e-05
+    ],
+    "role": "unmodified MIT vanilla input; same-solver independent control path, not physical validation",
+    "passed": true
+  },
+  "solver_sha256": "88a84deca2daeb8ef3a0407520814e941c9bfdd5cdd8a2de450d122a88b4f42d",
+  "physical_validation_passed": false,
+  "calibration_performed": false,
+  "scope": "lifting-surface longitudinal trim and conceptual mass/CG ledger; axial balance and mission feedback excluded",
+  "regression": {
+    "tests": "291",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "time": "427.160"
+  },
+  "ui": {
+    "complete_workflow_checked": true,
+    "saved_archive_id": "a3207bb8365a47468de4ae6464f5b29e",
+    "trim_run_id": "2d76c0b6b1f34f6a8392e9abbf725318",
+    "report_and_state_download_hashes_match": true,
+    "reopened_same_results": true,
+    "print_preview_executed": false
+  }
+}

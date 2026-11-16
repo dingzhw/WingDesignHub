@@ -83,6 +83,11 @@ def parse_derivatives(text):
     return d
 
 
+def controls_match(actual,expected):
+    # MRF E-format rounds arbitrary solved deflections to its printed precision.
+    return actual.keys()==expected.keys() and all(math.isclose(actual[k],v,rel_tol=1e-12,abs_tol=1e-12) for k,v in expected.items())
+
+
 def dimensional_loads(surfaces,total,contract):
     """Project strips without inventing unreported spanwise forces or local moments."""
     r=contract['references'];q=contract['flow']['dynamic_pressure_pa'];a=math.radians(total['Alpha'])
@@ -146,7 +151,7 @@ def solve(contract,executable,work):
     checks=[{'name':'readback/'+k,'passed':math.isclose(total[k],v,rel_tol=1e-10,abs_tol=1e-10)} for k,v in pairs.items()]
     raw=(work/'total.mrf').read_text('ascii').split('CONTROL\n',1)[1].split('DESIGN')[0].strip().splitlines()
     controls={line.split()[1]:float(line.split()[0]) for line in raw[1:]}
-    checks.append({'name':'controls_readback','passed':controls=={c['name']:o[c['name']+'_deg'] for c in contract['controls']}})
+    checks.append({'name':'controls_readback','passed':controls_match(controls,{c['name']:o[c['name']+'_deg'] for c in contract['controls']})})
     checks.append({'name':'five_surface_copies','passed':len(surfaces)==5 and
         {s['name'] for s in surfaces}=={'MainWing','MainWing (YDUP)','HorizontalTail','HorizontalTail (YDUP)','VerticalTail'}})
     checks.append({'name':'three_control_derivatives','passed':len(derivatives['CLd'])==len(derivatives['Cmd'])==3})

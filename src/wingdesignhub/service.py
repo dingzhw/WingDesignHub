@@ -141,11 +141,11 @@ def compare_designs(records, projects=None, purpose='design_trade'):
 
 
 def generate_report(record, path=None, project=None, root=None):
-    if record.get('mode') in ('aircraft_geometry','aircraft_aero'):
+    if record.get('mode') in ('aircraft_geometry','aircraft_aero','aircraft_trim'):
         if root is None or get_results(root,record['run_id'])!=record:
-            raise ValueError('几何报告需要完整且一致的本地运行记录')
+            raise ValueError('报告需要完整且一致的本地运行记录')
         report=Path(root)/'runs'/record['run_id']/'report.html'
-        if not report.is_file():raise ValueError('本次几何未完成报告生成，请查看失败日志')
+        if not report.is_file():raise ValueError('本次运行未完成报告生成，请查看失败日志')
         text=report.read_text('utf-8')
         if path:Path(path).write_text(text,encoding='utf-8')
         return text

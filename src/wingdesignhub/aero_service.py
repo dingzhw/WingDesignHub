@@ -13,7 +13,7 @@ from .aircraft_aero import make_contract
 from .avl_aircraft import solve
 
 
-def run_aircraft_aero(project,root,geometry_run_id,options=None):
+def checked_geometry_source(project,root,geometry_run_id):
     p=DesignProject.from_dict(project) if isinstance(project,dict) else project;p.check_schema()
     root=Path(root).resolve();parent=get_results(root,geometry_run_id);pw=root/'runs'/geometry_run_id
     if parent.get('run_id')!=geometry_run_id or parent.get('mode')!='aircraft_geometry' or parent.get('status')!='geometry_checked_with_limits':
@@ -37,6 +37,11 @@ def run_aircraft_aero(project,root,geometry_run_id,options=None):
         interface['references']!=parent['summary']['references'] or
         json.loads((sw/'summary.json').read_text('utf-8'))!=sizing['summary']):
         raise ValueError('气动接口与已验证几何不一致')
+    return p,root,parent,pw,sizing,interface
+
+
+def run_aircraft_aero(project,root,geometry_run_id,options=None):
+    p,root,parent,pw,sizing,interface=checked_geometry_source(project,root,geometry_run_id)
     contract=make_contract(interface,p,sizing['summary'],options)
     work=root/'runs'/uuid4().hex;work.mkdir(parents=True)
     write_json(work/'input.json',p.to_dict());write_json(work/'aero_contract.json',contract)

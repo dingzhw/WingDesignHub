@@ -52,4 +52,6 @@ def render(project,root,sizing_record):
             show_files(record,files,'current_geometry')
             from .aero_ui import render as render_aero
             render_aero(project,root,record)
+            from .trim_ui import render as render_trim
+            render_trim(project,root,record)
         except (ValueError,OSError) as exc:st.error('几何记录检查失败：'+str(exc))

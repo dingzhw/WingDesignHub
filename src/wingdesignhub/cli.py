@@ -21,13 +21,15 @@ from .comparison_service import run_comparison, compare_sizing_runs
 
 def main():
     parser = argparse.ArgumentParser(description="WingDesignHub 开发与自动化入口")
-    parser.add_argument("action", choices=["run", "doctor", "reference", "mesh", "static", "flight", "plate", "prepare", "size", "geometry", "aero", "compare", "compare-runs", "cruise-check", "fuel-check", "archive-save", "archive-open", "report", "fastga-reference", "fastga-contract"])
+    parser.add_argument("action", choices=["run", "doctor", "reference", "mesh", "static", "flight", "plate", "prepare", "size", "geometry", "aero", "trim", "compare", "compare-runs", "cruise-check", "fuel-check", "archive-save", "archive-open", "report", "fastga-reference", "fastga-contract"])
     parser.add_argument("--root", type=Path, default=Path.cwd())
     parser.add_argument("--input", type=Path)
     parser.add_argument("--run-ids", nargs=3)
     parser.add_argument("--run-id")
     parser.add_argument("--geometry-run-id")
     parser.add_argument("--aero-run-id")
+    parser.add_argument("--trim-run-id")
+    parser.add_argument("--trim-options",type=Path,help='TrimOptions JSON; input remains the design project')
     parser.add_argument("--aero-options",type=Path,help='AeroOptions JSON; input remains the design project')
     parser.add_argument("--tessellation",type=int,choices=[1,2],default=1)
     parser.add_argument("--output",type=Path)
@@ -40,6 +42,13 @@ def main():
         parser.error("公开参考任务保留固定输入，不接受自定义需求覆盖；请用 prepare 保存需求。")
     if args.action == "doctor":
         result = inventory(args.root)
+    elif args.action == 'trim':
+        from .trim_service import run_aircraft_trim
+        if not args.geometry_run_id:parser.error('trim 需要 --geometry-run-id 已检查几何运行')
+        path=args.input or args.root/'runs'/args.geometry_run_id/'input.json'
+        project=DesignProject.from_dict(json.loads(path.read_text('utf-8')))
+        options=json.loads(args.trim_options.read_text('utf-8')) if args.trim_options else None
+        result=run_aircraft_trim(project,args.root,args.geometry_run_id,options)
     elif args.action == 'aero':
         from .aero_service import run_aircraft_aero
         if not args.geometry_run_id:parser.error('aero 需要 --geometry-run-id 已检查几何运行')
@@ -80,7 +89,8 @@ def main():
             else:
                 geometry=get_results(args.root,args.geometry_run_id) if args.geometry_run_id else None
                 aero=get_results(args.root,args.aero_run_id) if args.aero_run_id else None
-                data=build_bundle(project,args.root,record,geometry,aero);result={'status':'archive_saved',**save_bundle(data,args.root)}
+                trim=get_results(args.root,args.trim_run_id) if args.trim_run_id else None
+                data=build_bundle(project,args.root,record,geometry,aero,trim);result={'status':'archive_saved',**save_bundle(data,args.root)}
                 if args.output:
                     with args.output.open('xb') as f:f.write(data)
     elif args.action == "compare":
@@ -117,7 +127,7 @@ def main():
         case = WingCase.from_dict(json.loads(args.input.read_text(encoding="utf-8"))) if args.input else WingCase()
         result = run_analysis(case, args.root, args.mode)
     print(json.dumps(result, ensure_ascii=False, indent=2))
-    return 1 if result.get("status") in ("failed", "invalid_input", "needs_confirmation", "out_of_domain", "not_converged", "constraints_not_met", "comparison_incomplete", "model_discrepancy") else 0
+    return 1 if result.get("status") in ("failed", "invalid_input", "needs_confirmation", "out_of_domain", "not_converged", "constraints_not_met", "comparison_incomplete", "model_discrepancy", "trim_not_converged", "trim_bounds_exceeded", "trim_jacobian_singular") else 0
 
 
 if __name__ == "__main__":
