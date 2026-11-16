@@ -60,4 +60,6 @@ def render(project,root,parent):
         try:
             r=get_results(root,r['run_id']);work=Path(root)/'runs'/r['run_id']
             show_files(r,{n:(work/n).read_bytes() for n in ('report.html','report.md','aircraft_parameters.json','aero_table.json') if n in r['artifact_hashes']},'current_feedback')
+            from .propulsion_ui import render as propulsion_render
+            propulsion_render(project,root,r)
         except (ValueError,OSError) as exc:st.error('反馈记录检查失败：'+str(exc))

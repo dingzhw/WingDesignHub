@@ -2,6 +2,10 @@
 
 本项目原创代码采用 GPL-3.0-only，与首期 FAST-GA 集成路线保持一致。第三方程序不重新授权、不作为本仓库二进制分发。
 
+V0.2.6复用[CCBlade.jl官方教程](https://flow.byu.edu/CCBlade.jl/stable/tutorial/)及本机1.0.0包的APC thin electric 10×5几何、17点公开试验表和NACA4412剖面，原资料只读，保留来源/哈希与逐点误差。教程引用UIUC Propeller Data Site，数据为上游方法公开对照，不作为本机全尺寸桨独立验证。MIT原许可副本见`third_party/CCBlade-LICENSE.md`（Copyright 2017 Andrew Ning）。Julia适配和有界查询独立实现；全尺寸叶片独立合成、翼型由本项目XFOIL生成，没有复用其他项目飞机或旋翼数据。Julia 1.12.4/CCBlade 1.0.0为既有只读环境，未安装或升级共享依赖。
+
+发动机复用[FAST-GA v1.4.0 BasicICEngine](https://github.com/supaero-aircraft-design/FAST-GA/blob/v1.4.0/src/fastga/models/propulsion/fuel_propulsion/basicIC_engine/basicIC_engine.py)的`read_map/compute_max_power`和随包`FourCylindersAtmospheric.csv`，保持上游源码与GPL许可。转速功率比例由原图计算，耗油仍使用原先选定的项目方法；没有将通用图谱标为某款发动机实测标定。Python与Julia源码、原图、工作脚本及运行版本哈希随证据保存。
+
 V0.2.1 依据 [OpenVSP 3.56 Python API](https://openvsp.org/pyapi_docs/3.56.0/)和随包 API 测试，独立实现常规单发几何模板与接口；选定随包算例原样运行并记录实际哈希，原生库和测试源码保持只读、不进入本仓库。三维预览使用已锁定的 Plotly 6.9.0（MIT），新增直接依赖声明，环境已有包不升级。输出飞机与外形模板为本项目公开合成算例。
 
 V0.2.0 耗油参考依据 Piper VB-760 的 Fig.5-13（打印页 5-17，PDF 80）经济混合比表值，来源为[原厂手册公开镜像](https://www.summitaviationspokane.com/wp-content/uploads/2025/08/pa-28-181-archer-ii-poh.pdf)。另核对 [Lycoming 官方 60297-12 手册](https://www.lycoming.com/sites/default/files/file/2025-11/60297-12%20-%20O-360%2C%20HO-360%2C%20IO-360%2C%20AIO-360%2C%20HIO-360%2C%20and%20TIO-360%20Series.pdf) 3-7、3-12 页的混合比示意和发动机族表值。仅发布少量事实、原文件哈希、来源和独立实现的换算；不分发原手册或图页，不将原厂文字作为本项目许可内容。数据角色和条件差异见 [FUEL_MODEL](FUEL_MODEL.md)。本版没有新增第三方运行依赖。

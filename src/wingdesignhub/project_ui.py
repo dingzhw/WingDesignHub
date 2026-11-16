@@ -9,12 +9,12 @@ from .design_cards import STATUS,METRICS
 
 
 @st.cache_data(max_entries=2,show_spinner=False)
-def feedback_bundle(project,root,record,geometry,aero,trim,drag,feedback,source_token):
-    return archive.build_bundle(project,root,record,geometry,aero,trim,drag,feedback)
+def feedback_bundle(project,root,record,geometry,aero,trim,drag,feedback,source_token,propulsion=None):
+    return archive.build_bundle(project,root,record,geometry,aero,trim,drag,feedback,propulsion)
 
 
 def activate(parsed=None):
-    for key in ('sizing_result','comparison_result','design_intent_result','archive_saved_note','aircraft_geometry_result','aircraft_aero_result','aircraft_trim_result','aircraft_drag_result','aero_feedback_result'):
+    for key in ('sizing_result','comparison_result','design_intent_result','archive_saved_note','aircraft_geometry_result','aircraft_aero_result','aircraft_trim_result','aircraft_drag_result','aero_feedback_result','propulsion_result'):
         st.session_state.pop(key,None)
     for key in list(st.session_state):
         if key.startswith(('confirm_','comparison-confirm-')):st.session_state.pop(key,None)
@@ -45,7 +45,7 @@ def library(root):
         m=opened['manifest']
         st.info('已打开存档：'+m['name']+'。需求已载入下方；存档结果可在下面查看，重新运行会生成新记录。')
         if opened['migration_required']:st.warning('存档需求已迁移，请重新核对确认；历史结果保留原版本。')
-        elif not opened['current_source_matches']:st.warning('存档使用的模型或软件与当前版本不同；历史结果仅供查阅。')
+        elif not opened['current_source_matches']:st.warning('存档包含与当前版本不同的来源记录，按原版本查阅；推进复算会单独核查冻结气动接口。')
         with st.expander('查看存档结果和导出报告'):
             if not opened['records']:st.write('这是需求草案，尚无计算结果。')
             for r in opened['records'][:1]:
@@ -85,6 +85,12 @@ def library(root):
                 from .feedback_ui import show_files
                 prefix='runs/'+r['run_id']+'/'
                 show_files(r,{n[len(prefix):]:b for n,b in opened['files'].items() if n.startswith(prefix)},'archived_feedback')
+                from .propulsion_ui import render as propulsion_render
+                propulsion_render(opened['project'],root,r,'archive_propulsion',archived=opened)
+            for r in opened.get('propulsion_records',[]):
+                from .propulsion_ui import show_files
+                prefix='runs/'+r['run_id']+'/'
+                show_files(r,{n[len(prefix):]:b for n,b in opened['files'].items() if n.startswith(prefix)},'archived_propulsion_result')
         p=opened['project']
         return p.projects[0] if isinstance(p,ComparisonRequest) else p
     return DesignProject()
@@ -111,13 +117,16 @@ def save_controls(project,root,record=None,key='design'):
         feedback=st.session_state.get('aero_feedback_result') if key=='design' else None
         if not chosen or not feedback or feedback.get('parent_run_id')!=chosen['run_id']:feedback=None
         if feedback:st.caption('同时保存气动驱动任务、总体反馈结果及原生计算证据包。')
+        propulsion=st.session_state.get('propulsion_result') if key=='design' else None
+        if not feedback or not propulsion or propulsion.get('parent_run_id')!=feedback['run_id']:propulsion=None
+        if propulsion:st.caption('同时保存发动机/螺旋桨图谱、推进任务复算及原始输出。')
         if feedback:
             # Verify mutable disk inputs before reusing the large portable byte stream.
             from .service import get_results
             from .geometry_service import source_hashes
-            for r in (chosen,geometry,aero,trim,drag,feedback):
+            for r in (chosen,geometry,aero,trim,drag,feedback,propulsion):
                 if r is not None and get_results(root,r['run_id'])!=r:raise ValueError('当前运行记录已改变')
-            data=feedback_bundle(project,str(root),chosen,geometry,aero,trim,drag,feedback,source_hashes())
+            data=feedback_bundle(project,str(root),chosen,geometry,aero,trim,drag,feedback,source_hashes(),propulsion)
         else:data=archive.build_bundle(project,root,chosen,geometry,aero,trim,drag)
         if st.button('保存'+('三方案' if key=='comparison' else '方案')+'到本机',key=key+'_save_local'):
             index=archive.save_bundle(data,root)

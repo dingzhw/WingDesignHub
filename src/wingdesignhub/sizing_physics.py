@@ -101,7 +101,7 @@ def mission_legs(mass, geo, p, schedule=None):
     return legs,v
 
 
-def mission(mass, geo, installed_power, p, dt=30., *, flight_model=None, schedule=None):
+def mission(mass, geo, installed_power, p, dt=30., *, flight_model=None, schedule=None, available_power=None):
     from .fuel_model import fuel_flow, fuel_model_description
     if not math.isfinite(dt) or dt<=0: raise ValueError('任务积分步长须为正有限值')
     a=p.sizing;s=geo['wing_area_m2'];legs,v=mission_legs(mass,geo,p,schedule)
@@ -118,7 +118,9 @@ def mission(mass, geo, installed_power, p, dt=30., *, flight_model=None, schedul
             # Explicit midpoint integration of fuel burn with density at midpoint height.
             def rate(mm):
                 pw,cl,_=power_at(mm,s,speed,z,roc,a)
-                idle=.05*installed_power*density(z)/RHO0
+                available=available_power(z) if available_power is not None else installed_power*density(z)/RHO0
+                if not math.isfinite(available) or available<=0:raise DesignDomainError('可用功率必须为正有限值')
+                idle=.05*available
                 if flight_model is not None and pw<idle:
                     raise DesignDomainError('下降所需功率低于当前怠速假设；需要阻力/推进模型支持，不能保持航迹而静默增加推力')
                 pw=max(pw,idle)
@@ -128,7 +130,8 @@ def mission(mass, geo, installed_power, p, dt=30., *, flight_model=None, schedul
             current-=r*step
             models[method]=models.get(method,0.)+r*step;fractions.append(pw/installed_power)
             if current<=0:raise DesignDomainError('任务耗油超过试算质量')
-            worst_power=max(worst_power,pw/(installed_power*density(z)/RHO0));max_cl=max(max_cl,cl)
+            available=available_power(z) if available_power is not None else installed_power*density(z)/RHO0
+            worst_power=max(worst_power,pw/available);max_cl=max(max_cl,cl)
         burned=before-current
         rows.append({'segment':name,'duration_s':duration,'path_distance_m':math.sqrt(speed**2-roc**2)*duration if counts_distance else 0.,
                      'fuel_kg':burned,'speed_m_s':speed,'start_mass_kg':before,'end_mass_kg':current,
