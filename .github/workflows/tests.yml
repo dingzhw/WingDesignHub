@@ -13,4 +13,4 @@ jobs:
       - run: python -m pip install -r requirements-lock.txt
       - run: python -m pip install --no-deps -e .
       - run: python -m pytest -q
-        timeout-minutes: 5
+        timeout-minutes: 10

@@ -37,7 +37,9 @@ def test_calculate_compare_save_close_reopen_and_recompute(actual,tmp_path):
 def test_reports_contain_inputs_fuel_ledger_and_review_boundaries(actual):
     root,req,r=actual;child=get_results(root,r['child_runs'][0]);p=req.projects[0]
     html=generate_report(child,project=p)
-    for token in ('任务与燃油账目','质量与站位','收敛证据','专业评审待签署','55%','校准','经济参考燃油覆盖',child['run_id']):assert token in html
+    for token in ('任务与燃油账目','质量与站位','收敛证据','专业评审待签署','55%','校准','耗油方法','总可用油 kg',child['run_id']):assert token in html
+    for method,value in child['summary']['mission']['block_fuel_by_method_kg'].items():
+        assert method in html and format(value,'.5g') in html
     assert 'piper_economy_reference' in html and 'off_reference_base_bsfc' in html
     with pytest.raises(ValueError,match='一致'):generate_report(child,project=replace(p,payload_kg=400))
 

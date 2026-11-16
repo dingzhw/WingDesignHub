@@ -15,7 +15,8 @@ METRICS={'mtow_kg':('设计起飞重量','kg'),'owe_kg':('空重（含不可用�
 CHECK_LABELS={'mass_budget':'质量预算或闭合残差','mtow_upper_bound':'起飞重量上限',
               'fuel_capacity':'油箱容量','landing_stall':'着陆构型失速速度','power_available':'任务可用功率',
               'clean_lift':'净构型升力','range':'规定航程','endurance':'最低航时或留空时间',
-              'aero_table_accuracy':'气动表直接复算','mission_step_accuracy':'任务积分步长'}
+              'aero_table_accuracy':'气动表直接复算','mission_step_accuracy':'任务积分步长',
+              'propeller_table_accuracy':'桨图直接复算','shaft_torque_balance':'发动机与桨轴扭矩一致性'}
 
 
 def make_card(project,record):
@@ -42,7 +43,7 @@ def make_card(project,record):
             'solver_versions':s.get('versions',{}),'iterations':len(s.get('iterations',[])),
             'final_residuals':s.get('iterations',[{}])[-1].get('residuals',{}) if s.get('iterations') else {},
             'geometry':s.get('geometry') if converged else None,
-            'limits':s.get('limits',[])+(['CG 为站位估算；气动任务表已接入，起降距离和结构质量回写尚未接通。'] if 'aerodynamic_feedback' in s else ['CG 为站位估算；配平、起降距离和结构质量回写尚未接通。']),
+            'limits':s.get('limits',[])+(['CG 为站位估算；气动任务表已接入，起降距离和结构质量回写尚未接通。'] if 'aerodynamic_feedback' in s or 'propulsion_feedback' in s else ['CG 为站位估算；配平、起降距离和结构质量回写尚未接通。']),
             'physical_validation_passed':False}
 
 

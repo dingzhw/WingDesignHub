@@ -9,12 +9,12 @@ from .design_cards import STATUS,METRICS
 
 
 @st.cache_data(max_entries=2,show_spinner=False)
-def feedback_bundle(project,root,record,geometry,aero,trim,drag,feedback,source_token,propulsion=None):
-    return archive.build_bundle(project,root,record,geometry,aero,trim,drag,feedback,propulsion)
+def feedback_bundle(project,root,record,geometry,aero,trim,drag,feedback,source_token,propulsion=None,coupled=None):
+    return archive.build_bundle(project,root,record,geometry,aero,trim,drag,feedback,propulsion,coupled)
 
 
 def activate(parsed=None):
-    for key in ('sizing_result','comparison_result','design_intent_result','archive_saved_note','aircraft_geometry_result','aircraft_aero_result','aircraft_trim_result','aircraft_drag_result','aero_feedback_result','propulsion_result'):
+    for key in ('sizing_result','comparison_result','design_intent_result','archive_saved_note','aircraft_geometry_result','aircraft_aero_result','aircraft_trim_result','aircraft_drag_result','aero_feedback_result','propulsion_result','coupled_result'):
         st.session_state.pop(key,None)
     for key in list(st.session_state):
         if key.startswith(('confirm_','comparison-confirm-')):st.session_state.pop(key,None)
@@ -91,6 +91,14 @@ def library(root):
                 from .propulsion_ui import show_files
                 prefix='runs/'+r['run_id']+'/'
                 show_files(r,{n[len(prefix):]:b for n,b in opened['files'].items() if n.startswith(prefix)},'archived_propulsion_result')
+            for r in opened.get('coupled_records',[]):
+                from .coupled_ui import show_files
+                prefix='runs/'+r['run_id']+'/'
+                show_files(r,{n[len(prefix):]:b for n,b in opened['files'].items() if n.startswith(prefix)},'archived_coupled_result')
+            if opened['manifest']['kind']=='design' and opened['records']:
+                from .coupled_ui import render as coupled_render
+                seeds=opened.get('feedback_records') or opened['records']
+                coupled_render(opened['project'],root,seeds[0],'archive_coupled',archived=opened)
         p=opened['project']
         return p.projects[0] if isinstance(p,ComparisonRequest) else p
     return DesignProject()
@@ -120,13 +128,16 @@ def save_controls(project,root,record=None,key='design'):
         propulsion=st.session_state.get('propulsion_result') if key=='design' else None
         if not feedback or not propulsion or propulsion.get('parent_run_id')!=feedback['run_id']:propulsion=None
         if propulsion:st.caption('同时保存发动机/螺旋桨图谱、推进任务复算及原始输出。')
-        if feedback:
+        coupled=st.session_state.get('coupled_result') if key=='design' else None
+        if not chosen or not coupled or coupled.get('parent_run_id') not in [chosen['run_id'],*( [feedback['run_id']] if feedback else [])]:coupled=None
+        if coupled:st.caption('同时保存推进闭环、发动机/携油/几何联动及全部原生计算证据。')
+        if feedback or coupled:
             # Verify mutable disk inputs before reusing the large portable byte stream.
             from .service import get_results
             from .geometry_service import source_hashes
-            for r in (chosen,geometry,aero,trim,drag,feedback,propulsion):
+            for r in (chosen,geometry,aero,trim,drag,feedback,propulsion,coupled):
                 if r is not None and get_results(root,r['run_id'])!=r:raise ValueError('当前运行记录已改变')
-            data=feedback_bundle(project,str(root),chosen,geometry,aero,trim,drag,feedback,source_hashes(),propulsion)
+            data=feedback_bundle(project,str(root),chosen,geometry,aero,trim,drag,feedback,source_hashes(),propulsion,coupled)
         else:data=archive.build_bundle(project,root,chosen,geometry,aero,trim,drag)
         if st.button('保存'+('三方案' if key=='comparison' else '方案')+'到本机',key=key+'_save_local'):
             index=archive.save_bundle(data,root)

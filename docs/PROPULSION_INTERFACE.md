@@ -1,4 +1,6 @@
-# V0.2.6 发动机与螺旋桨任务复算
+# 冻结构型的发动机与螺旋桨任务复算
+
+这是V0.2.6建立并继续保留的对照入口。V0.2.7新增的耗油图和总体重新定尺寸使用独立[推进闭环入口](PROPULSION_COUPLING.md)，两类结果分别保存。
 
 主入口在气动反馈结果后提供“运行推进模型任务复算”，已保存的本机气动方案也可直接使用。Python接口为`propulsion_service.run_propulsion(project, root, feedback_run_id, options)`；CLI为`propulsion --feedback-run-id ID [--propulsion-options options.json]`。新记录模式为`propulsion_replay`，保留原总体与气动运行。
 

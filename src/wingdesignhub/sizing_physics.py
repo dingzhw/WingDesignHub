@@ -101,13 +101,20 @@ def mission_legs(mass, geo, p, schedule=None):
     return legs,v
 
 
-def mission(mass, geo, installed_power, p, dt=30., *, flight_model=None, schedule=None, available_power=None):
+def mission(mass, geo, installed_power, p, dt=30., *, flight_model=None, schedule=None, available_power=None,
+            fuel_flow_model=None, fuel_description=None):
     from .fuel_model import fuel_flow, fuel_model_description
     if not math.isfinite(dt) or dt<=0: raise ValueError('任务积分步长须为正有限值')
     a=p.sizing;s=geo['wing_area_m2'];legs,v=mission_legs(mass,geo,p,schedule)
     power_at=flight_model or flight_power
-    taxi_out=fuel_flow(installed_power*.1,installed_power,'taxi',a)[0]*300
-    takeoff_roll=fuel_flow(installed_power*.9,installed_power,'takeoff',a)[0]*30
+    def flow_at(power,segment,height):
+        value,method=(fuel_flow_model(power,installed_power,segment,a,height) if fuel_flow_model is not None
+                      else fuel_flow(power,installed_power,segment,a))
+        if not math.isfinite(value) or value<0 or not isinstance(method,str):raise DesignDomainError('耗油接口须返回非负有限kg/s和方法标识')
+        return value,method
+    taxi_rate,taxi_method=flow_at(installed_power*.1,'taxi',0.)
+    takeoff_rate,takeoff_method=flow_at(installed_power*.9,'takeoff',0.)
+    taxi_out=taxi_rate*300;takeoff_roll=takeoff_rate*30
     current=mass-takeoff_roll;rows=[];worst_power=0.;max_cl=0.
     cruise_fuel=cruise_time=0.;cruise_models={};all_models={}
     for name,duration,speed,h0,h1,roc,counts_distance in legs:
@@ -124,7 +131,7 @@ def mission(mass, geo, installed_power, p, dt=30., *, flight_model=None, schedul
                 if flight_model is not None and pw<idle:
                     raise DesignDomainError('下降所需功率低于当前怠速假设；需要阻力/推进模型支持，不能保持航迹而静默增加推力')
                 pw=max(pw,idle)
-                flow,method=fuel_flow(pw,installed_power,name,a)
+                flow,method=flow_at(pw,name,z)
                 return flow,pw,cl,method
             r0,_,_,_=rate(current);r,pw,cl,method=rate(current-r0*step/2)
             current-=r*step
@@ -146,12 +153,12 @@ def mission(mass, geo, installed_power, p, dt=30., *, flight_model=None, schedul
     duration=sum(r['duration_s'] for r in rows);distance=sum(r['path_distance_m'] for r in rows)
     for method,value in cruise_models.items():
         all_models[method]=all_models.get(method,0.)+value/cruise_time*p.assumptions.reserve_duration_s
-    ground_method=fuel_flow(installed_power*.1,installed_power,'taxi',a)[1]
-    all_models[ground_method]=all_models.get(ground_method,0.)+taxi_out+taxi_in+takeoff_roll
+    all_models[taxi_method]=all_models.get(taxi_method,0.)+taxi_out+taxi_in
+    all_models[takeoff_method]=all_models.get(takeoff_method,0.)+takeoff_roll
     return {'segments':rows,'cruise_speed_used_m_s':v,'main_duration_s':duration,'route_distance_m':distance,
             'takeoff_roll_fuel_kg':takeoff_roll,'taxi_in_fuel_kg':taxi_in,'taxi_out_fuel_kg':taxi_out,
             'reserve_fuel_kg':reserve,'trip_fuel_from_takeoff_kg':trip,'takeoff_fuel_kg':trip+reserve,
             'block_fuel_kg':trip+reserve+taxi_out,'max_power_fraction':worst_power,'max_clean_cl':max_cl,
             'reserve_basis':'mean cruise fuel flow; not flown and not added to mission time/range',
-            'integration_step_s':dt,'fuel_model':fuel_model_description(a),'block_fuel_by_method_kg':all_models,
+            'integration_step_s':dt,'fuel_model':fuel_description if fuel_description is not None else fuel_model_description(a),'block_fuel_by_method_kg':all_models,
             'economy_reference_fuel_fraction':all_models.get('economy_reference',0.)/(trip+reserve+taxi_out)}

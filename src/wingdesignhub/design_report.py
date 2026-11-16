@@ -14,14 +14,15 @@ def table(headers,rows):
 
 def design_report_html(project,record):
     card=make_card(project,record);s=record.get('summary',{});sections=[]
-    coverage='气动配平/阻力任务表与燃油、功率迭代已接通；起降距离、操稳重心包线和结构定尺寸质量反馈尚未覆盖。' if 'aerodynamic_feedback' in s else '配平、起降距离、操稳重心包线和结构定尺寸质量反馈尚未覆盖。'
+    coverage='气动配平/阻力任务表与燃油、功率迭代已接通；起降距离、操稳重心包线和结构定尺寸质量反馈尚未覆盖。' if 'aerodynamic_feedback' in s or 'propulsion_feedback' in s else '配平、起降距离、操稳重心包线和结构定尺寸质量反馈尚未覆盖。'
     sections.append('<h2>工程覆盖与评审状态</h2><p>本报告保留实际计算状态、诊断及已检查约束；专业评审待签署。'+coverage+'</p>')
     if s.get('converged') and 'geometry' in s:
         ms=s['mission'];fuel=ms.get('fuel_model',{})
         sections += ['<h2>任务与燃油账目</h2>',table(['任务段','时长 s','航迹 m','耗油 kg','使用方法'],[
             (r['segment'],r['duration_s'],r['path_distance_m'],r['fuel_kg'],json.dumps(r.get('fuel_by_method_kg',{}),ensure_ascii=False)) for r in ms['segments']]),
             table(['账目','燃油 kg'],[(label,ms[key]) for key,label in [('taxi_out_fuel_kg','出场滑行'),('takeoff_roll_fuel_kg','起飞地面段'),('taxi_in_fuel_kg','返场滑行'),('reserve_fuel_kg','额外储备（不作为已飞段）'),('takeoff_fuel_kg','起飞携带可用油'),('block_fuel_kg','总可用油')]]),
-            '<p>耗油模型：'+escape(fuel.get('label','历史统一耗油率'))+'；经济参考燃油覆盖比例 '+f"{ms.get('economy_reference_fuel_fraction',0):.1%}"+'。基础值和校准来源见完整假设。</p>',
+            '<p>耗油模型：'+escape(fuel.get('label','历史统一耗油率'))+'；方法覆盖按下表逐项记账，数据角色与来源见完整假设。</p>',
+            table(['耗油方法','总可用油 kg'],list(ms.get('block_fuel_by_method_kg',{}).items())),
             '<ul>'+''.join('<li>'+escape(x)+'</li>' for x in fuel.get('limits',[]))+'</ul>',
             '<h2>质量与站位</h2>',table(['部件','质量 kg','站位 x m'],[(r['component'],r['mass_kg'],r['x_m']) for r in s['cg']['rows']]),
             '<h2>收敛证据</h2><pre>'+escape(json.dumps(s['iterations'][-1],ensure_ascii=False,indent=2))+'</pre>']

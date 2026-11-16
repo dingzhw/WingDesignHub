@@ -1,0 +1,1691 @@
+{
+  "version": "0.2.7",
+  "passed": true,
+  "checks": {
+    "overall_converged": true,
+    "all_constraints_and_direct_checks": true,
+    "parent_unchanged": true,
+    "same_source_frozen": true,
+    "power_enters_engine_mass": true,
+    "engine_and_geometry_changed": true,
+    "loaded_mass_closure": true,
+    "fuel_methods_close": true,
+    "native_geometry_area": true,
+    "force_balance": true,
+    "shaft_balance": true,
+    "power_overrun_resolved": true,
+    "fixed_original_models_reproduced": true,
+    "fixed_and_redesign_separate": true,
+    "radial96_accuracy": true,
+    "official_propeller_diagnostic_band": true,
+    "official_engine_and_mass": true,
+    "archive_reopen": true,
+    "report": true
+  },
+  "run_id": "8ce60f7ec07c424b9534098c12018c8a",
+  "parent_run_id": "3d7439bd2dd449f1812ada88a952b26d",
+  "archive_id": "214772a440a942399af65203fd6ad8a7",
+  "summary": {
+    "status": "concept_checked_with_limits",
+    "converged": true,
+    "checks": {
+      "mass_budget": true,
+      "mtow_upper_bound": true,
+      "fuel_capacity": true,
+      "landing_stall": true,
+      "power_available": true,
+      "clean_lift": true,
+      "range": true,
+      "endurance": true,
+      "aero_table_accuracy": true,
+      "propeller_table_accuracy": true,
+      "mission_step_accuracy": true,
+      "shaft_torque_balance": true
+    },
+    "iterations": [
+      {
+        "iteration": 1,
+        "design_mtow_kg": 1240.6667193568617,
+        "required_loaded_mass_kg": 1220.8993440361462,
+        "block_fuel_kg": 82.51225058398911,
+        "installed_power_w": 151549.56483249046,
+        "wing_area_m2": 14.07606122840132,
+        "owe_kg": 788.7659673642385,
+        "cg_x_m": 2.660344174470155,
+        "residuals": {
+          "mass_closure_fraction": -0.0159328649767945,
+          "fuel_capacity_kg": 113.12346382600212,
+          "power_weight_coupling": 0.024340450628139942,
+          "dry_weight_coupling": 0.007049769820850482,
+          "mission_initial_mass_kg": -1.0899384506046772e-08
+        },
+        "stable_rounds": 0
+      },
+      {
+        "iteration": 2,
+        "design_mtow_kg": 1225.841187866325,
+        "required_loaded_mass_kg": 1220.6121976231177,
+        "block_fuel_kg": 82.5584972500627,
+        "installed_power_w": 151629.91279492364,
+        "wing_area_m2": 13.907857241183413,
+        "owe_kg": 788.4327751550423,
+        "cg_x_m": 2.6527874927294235,
+        "residuals": {
+          "mass_closure_fraction": -0.004265634321121842,
+          "fuel_capacity_kg": 109.58104687768456,
+          "power_weight_coupling": 0.006509362897652249,
+          "dry_weight_coupling": 0.0019205472528482925,
+          "mission_initial_mass_kg": -7.787775757606141e-09,
+          "max_state_change": 0.011949648732595852,
+          "cg_change_mac": 0.005435966963578237
+        },
+        "stable_rounds": 0
+      },
+      {
+        "iteration": 3,
+        "design_mtow_kg": 1221.9194451839194,
+        "required_loaded_mass_kg": 1220.5640926049848,
+        "block_fuel_kg": 82.56549708111106,
+        "installed_power_w": 151646.09032582794,
+        "wing_area_m2": 13.86336286629747,
+        "owe_kg": 788.3777107496884,
+        "cg_x_m": 2.6507405285605037,
+        "residuals": {
+          "mass_closure_fraction": -0.0011091996156347016,
+          "fuel_capacity_kg": 108.6527382360691,
+          "power_weight_coupling": 0.00172629828134796,
+          "dry_weight_coupling": 0.0005118559544410317,
+          "mission_initial_mass_kg": -7.038806870696135e-09,
+          "max_state_change": 0.003199225740841527,
+          "cg_change_mac": 0.0014748631822810508
+        },
+        "stable_rounds": 0
+      },
+      {
+        "iteration": 4,
+        "design_mtow_kg": 1220.9029307497185,
+        "required_loaded_mass_kg": 1220.561746042423,
+        "block_fuel_kg": 82.56911330939279,
+        "installed_power_w": 151653.46317473942,
+        "wing_area_m2": 13.851829938725444,
+        "owe_kg": 788.371766390967,
+        "cg_x_m": 2.6501984716710982,
+        "residuals": {
+          "mass_closure_fraction": -0.0002794527711437191,
+          "fuel_capacity_kg": 108.4105600476431,
+          "power_weight_coupling": 0.0004796562651727676,
+          "dry_weight_coupling": 0.00014240565818934847,
+          "mission_initial_mass_kg": -6.855771061964333e-09,
+          "max_state_change": 0.0008318997117259253,
+          "cg_change_mac": 0.0003907212953786746
+        },
+        "stable_rounds": 0
+      },
+      {
+        "iteration": 5,
+        "design_mtow_kg": 1220.647042219247,
+        "required_loaded_mass_kg": 1220.569191430153,
+        "block_fuel_kg": 82.57004564923585,
+        "installed_power_w": 151656.54776192104,
+        "wing_area_m2": 13.848926739529103,
+        "owe_kg": 788.3782871503219,
+        "cg_x_m": 2.6500505330662536,
+        "residuals": {
+          "mass_closure_fraction": -6.377829659287329e-05,
+          "fuel_capacity_kg": 108.3495898300825,
+          "power_weight_coupling": 0.0001402130899508247,
+          "dry_weight_coupling": 4.164264416783858e-05,
+          "mission_initial_mass_kg": -6.80279299558606e-09,
+          "max_state_change": 0.00020958957835770509,
+          "cg_change_mac": 0.00010664714872558626
+        },
+        "stable_rounds": 0
+      },
+      {
+        "iteration": 6,
+        "design_mtow_kg": 1220.5886541274265,
+        "required_loaded_mass_kg": 1220.5775920033338,
+        "block_fuel_kg": 82.57155215587154,
+        "installed_power_w": 151658.02289141514,
+        "wing_area_m2": 13.848264293811289,
+        "owe_kg": 788.385184904691,
+        "cg_x_m": 2.6500093118889434,
+        "residuals": {
+          "mass_closure_fraction": -9.062941929883953e-06,
+          "fuel_capacity_kg": 108.33438489198265,
+          "power_weight_coupling": 4.477670508329368e-05,
+          "dry_weight_coupling": 1.3299757996021455e-05,
+          "mission_initial_mass_kg": -6.787104211980477e-09,
+          "max_state_change": 4.783372244465678e-05,
+          "cg_change_mac": 2.9716558278013575e-05
+        },
+        "stable_rounds": 1
+      },
+      {
+        "iteration": 7,
+        "design_mtow_kg": 1220.580357534357,
+        "required_loaded_mass_kg": 1220.5831279154236,
+        "block_fuel_kg": 82.57174400264218,
+        "installed_power_w": 151658.5600800562,
+        "wing_area_m2": 13.848170164299944,
+        "owe_kg": 788.3905303129815,
+        "cg_x_m": 2.649997190782614,
+        "residuals": {
+          "mass_closure_fraction": 2.269724438387611e-06,
+          "fuel_capacity_kg": 108.33224660792034,
+          "power_weight_coupling": 1.4735945003563344e-05,
+          "dry_weight_coupling": 4.37704727995758e-06,
+          "mission_initial_mass_kg": -6.777327143936418e-09,
+          "max_state_change": 6.797206447362036e-06,
+          "cg_change_mac": 8.738197458388397e-06
+        },
+        "stable_rounds": 2
+      },
+      {
+        "iteration": 8,
+        "design_mtow_kg": 1220.582435320157,
+        "required_loaded_mass_kg": 1220.585576820901,
+        "block_fuel_kg": 82.5709719542633,
+        "installed_power_w": 151657.72606411623,
+        "wing_area_m2": 13.848193737947632,
+        "owe_kg": 788.3937491817982,
+        "cg_x_m": 2.649993529283564,
+        "residuals": {
+          "mass_closure_fraction": 2.57377187574066e-06,
+          "fuel_capacity_kg": 108.33350611839121,
+          "power_weight_coupling": 1.8153748583271678e-06,
+          "dry_weight_coupling": 5.39228190876706e-07,
+          "mission_initial_mass_kg": -6.791651685489342e-09,
+          "max_state_change": 9.350031154098382e-06,
+          "cg_change_mac": 2.639600181088437e-06
+        },
+        "stable_rounds": 3
+      }
+    ],
+    "design_mtow_kg": 1220.582435320157,
+    "required_loaded_mass_kg": 1220.585576820901,
+    "weight_mode": {
+      "mode": "solve",
+      "value_kg": null
+    },
+    "convergence_thresholds": {
+      "state_relative": 0.0001,
+      "mass_relative": 0.0001,
+      "cg_mac": 0.001,
+      "consecutive_rounds": 3
+    },
+    "landing_stall_numerical_relative_tolerance": 4.9998750062396624e-05,
+    "mass_budget_margin_kg": -0.003141500744050063,
+    "ramp_mass_design_kg": 1220.9615796353173,
+    "upper_bound_margin_kg": null,
+    "geometry": {
+      "wing_area_m2": 13.848193737947632,
+      "wing_span_m": 10.19124393951039,
+      "root_chord_m": 1.6985406565850647,
+      "tip_chord_m": 1.0191243939510388,
+      "mac_m": 1.3871415362111361,
+      "wing_quarter_x_m": 2.9250000000000003,
+      "horizontal_tail_area_m2": 3.984172834010156,
+      "vertical_tail_area_m2": 1.6726556504299201,
+      "tail_arm_m": 3.375,
+      "fuselage_length_m": 7.5,
+      "fuselage_width_m": 1.2,
+      "fuselage_height_m": 1.35,
+      "tank_capacity_kg": 194.8004878292393,
+      "usable_tank_capacity_kg": 190.9044780726545,
+      "capacity_sizing_margin_fraction": 0.02,
+      "sizing_areas_m2": {
+        "landing_stall": 13.848193737947632,
+        "cruise_lift": 5.899127211548265,
+        "fuel_volume": 8.025529795042702
+      },
+      "controlling_area_constraint": "landing_stall",
+      "engine_count": 1,
+      "configuration": "low_wing_conventional_tail_fixed_tricycle_metal",
+      "axes": "x aft from nose, y right, z up"
+    },
+    "power": {
+      "installed_power_w": 151657.72606411623,
+      "power_constraints_w": {
+        "cruise": 125734.70878989546,
+        "climb_at_cruise_altitude": 148684.04516089827,
+        "loiter": 120899.0365074244
+      },
+      "controlling_power_constraint": "climb_at_cruise_altitude",
+      "clean_stall_at_altitude_m_s": 35.02624323988459,
+      "landing_stall_m_s": 28.000036032860976,
+      "basis": "resized sea-level rated engine at selected RPM; 2% constraint sizing margin"
+    },
+    "mission": {
+      "segments": [
+        {
+          "segment": "climb",
+          "duration_s": 666.6666666666666,
+          "path_distance_m": 39022.19085710517,
+          "fuel_kg": 5.851268694521423,
+          "speed_m_s": 58.610115196941656,
+          "start_mass_kg": 1220.2443469440484,
+          "end_mass_kg": 1214.393078249527,
+          "fuel_by_method_kg": {
+            "native_engine_sfc_map": 5.851268694521122
+          },
+          "rated_power_fraction_min": 0.7298883634664945,
+          "rated_power_fraction_max": 0.768368360107512
+        },
+        {
+          "segment": "cruise",
+          "duration_s": 11706.697128134103,
+          "path_distance_m": 702401.8276880461,
+          "fuel_kg": 58.49391301544529,
+          "speed_m_s": 60.0,
+          "start_mass_kg": 1214.393078249527,
+          "end_mass_kg": 1155.8991652340817,
+          "fuel_by_method_kg": {
+            "native_engine_sfc_map": 58.49391301544572
+          },
+          "rated_power_fraction_min": 0.451849805511412,
+          "rated_power_fraction_max": 0.4629601450799211
+        },
+        {
+          "segment": "descent",
+          "duration_s": 1000.0,
+          "path_distance_m": 58575.98145484863,
+          "fuel_kg": 3.635398650327943,
+          "speed_m_s": 58.610115196941656,
+          "start_mass_kg": 1155.8991652340817,
+          "end_mass_kg": 1152.2637665837537,
+          "fuel_by_method_kg": {
+            "engine_map_low_load_base_bsfc": 3.635398650327977
+          },
+          "rated_power_fraction_min": 0.26580002617938797,
+          "rated_power_fraction_max": 0.31181402717360496
+        }
+      ],
+      "cruise_speed_used_m_s": 60.0,
+      "main_duration_s": 13373.363794800769,
+      "route_distance_m": 800000.0,
+      "takeoff_roll_fuel_kg": 0.3412298836442615,
+      "taxi_in_fuel_kg": 0.37914431516029057,
+      "taxi_out_fuel_kg": 0.37914431516029057,
+      "reserve_fuel_kg": 13.49087308000381,
+      "trip_fuel_from_takeoff_kg": 68.7009545590992,
+      "takeoff_fuel_kg": 82.19182763910301,
+      "block_fuel_kg": 82.5709719542633,
+      "max_power_fraction": 0.9727613037616555,
+      "max_clean_cl": 0.4946970701124542,
+      "reserve_basis": "mean cruise fuel flow; not flown and not added to mission time/range",
+      "integration_step_s": 30.0,
+      "fuel_model": {
+        "provider": "FAST-GA 1.4.0 BasicICEngine native map and compute_max_power",
+        "source_sha256": "841bc4947900d3a3bf4eb9dd8fba42cc8ca2b7807bb3588f518529b10bcffa81",
+        "map_sha256": "466839d6647a0884df528e6ab824235aa85ad1b98a487457a1279eae26636cec",
+        "rpm": 2400.0,
+        "sea_level_power_fraction": [
+          0.8817204324892585,
+          0.8978494646853472,
+          0.9086021530016146,
+          0.92473118525157,
+          0.9354838732266803,
+          0.9462365616057924,
+          0.956989249805348,
+          0.9677419381485493,
+          0.9731182820732593,
+          0.9892473145566384,
+          1.0
+        ],
+        "fuel": "native FAST-GA 1.4.0 torque/RPM SFC with explicit domain guards",
+        "physical_validation_passed": false,
+        "sfc_units": "g/kWh",
+        "pme_bounds_bar": [
+          8.08191746,
+          20.6280777
+        ],
+        "equivalent_volume_m3": 0.006535475756726523,
+        "volume_role": "upstream scaling coordinate; not measured displacement",
+        "mixture_factors": {
+          "climb": 1.15,
+          "level_and_descent": 1.0
+        },
+        "low_load_policy": "base_bsfc",
+        "ground_policy": "declared base BSFC; no ground propeller matching",
+        "calibration_ids": [],
+        "data_role": "upstream generic map; no target-engine calibration or independent physical validation",
+        "model": "native_engine_sfc_map",
+        "label": "原生发动机耗油图＋显式低负荷/地面估算",
+        "base_bsfc_kg_kwh": 0.3,
+        "limits": [
+          "耗油图为上游通用图，转速/扭矩插值不代表具体发动机标定。",
+          "高度只影响可用功率；图内按实际轴扭矩查询，上游没有单独的高度/温度SFC修正。",
+          "爬升按上游富油系数1.15，平飞/下降为1；低负荷及地面基础估算单列覆盖。"
+        ]
+      },
+      "block_fuel_by_method_kg": {
+        "native_engine_sfc_map": 77.83605478997075,
+        "engine_map_low_load_base_bsfc": 3.635398650327977,
+        "engine_map_ground_base_bsfc": 1.0995185139648427
+      },
+      "economy_reference_fuel_fraction": 0.0
+    },
+    "weights": {
+      "owe_kg": 788.3937491817982,
+      "native_owe_kg": 784.4977394252134,
+      "unusable_fuel_added_once_kg": 3.896009756584786,
+      "categories_kg": {
+        "airframe": 312.0299278014602,
+        "propulsion": 232.43582880296694,
+        "systems": 196.56660898453885,
+        "furniture": 43.46537383624727,
+        "unusable_fuel": 3.896009756584786
+      },
+      "components_kg": {
+        "data:weight:airframe:mass": 312.0299278014602,
+        "data:weight:airframe:horizontal_tail:mass": 17.047537805659996,
+        "data:weight:airframe:vertical_tail:mass": 9.435629392334661,
+        "data:weight:airframe:flight_controls:mass": 17.04874644842341,
+        "data:weight:airframe:fuselage:mass": 109.45576203075724,
+        "data:weight:airframe:landing_gear:main:mass": 29.463628454374774,
+        "data:weight:airframe:landing_gear:front:mass": 13.242476771011907,
+        "data:weight:airframe:paint:mass": 0.0,
+        "data:weight:airframe:wing:mass": 116.3361468988982,
+        "data:weight:furniture:mass": 43.46537383624727,
+        "data:weight:furniture:passenger_seats:mass": 43.46537383624727,
+        "data:weight:propulsion:engine:mass": 209.36587860533652,
+        "data:weight:propulsion:fuel_lines:mass": 23.069950197630426,
+        "data:weight:propulsion:mass": 232.43582880296694,
+        "data:weight:propulsion:unusable_fuel:mass": 3.896009756584786,
+        "data:weight:systems:life_support:insulation:mass": 0.0,
+        "data:weight:systems:life_support:air_conditioning:mass": 38.50831599105753,
+        "data:weight:systems:life_support:de_icing:mass": 0.0,
+        "data:weight:systems:life_support:internal_lighting:mass": 0.0,
+        "data:weight:systems:life_support:seat_installation:mass": 0.0,
+        "data:weight:systems:life_support:fixed_oxygen:mass": 8.402526570819315,
+        "data:weight:systems:life_support:security_kits:mass": 0.0,
+        "data:weight:systems:avionics:mass": 59.874192840000006,
+        "data:weight:systems:power:electric_systems:mass": 81.2374965354209,
+        "data:weight:systems:power:hydraulic_systems:mass": 8.5440770472411,
+        "data:weight:systems:recording:mass": 0.0,
+        "data:weight:systems:mass": 196.56660898453885
+      }
+    },
+    "cg": {
+      "rows": [
+        {
+          "component": "airframe",
+          "mass_kg": 312.0299278014602,
+          "x_m": 3.3
+        },
+        {
+          "component": "propulsion",
+          "mass_kg": 232.43582880296694,
+          "x_m": 0.8999999999999999
+        },
+        {
+          "component": "systems",
+          "mass_kg": 196.56660898453885,
+          "x_m": 3.0
+        },
+        {
+          "component": "furniture",
+          "mass_kg": 43.46537383624727,
+          "x_m": 3.0
+        },
+        {
+          "component": "unusable_fuel",
+          "mass_kg": 3.896009756584786,
+          "x_m": 2.9250000000000003
+        },
+        {
+          "component": "payload",
+          "mass_kg": 350.0,
+          "x_m": 2.9250000000000003
+        },
+        {
+          "component": "takeoff_fuel",
+          "mass_kg": 82.19182763910301,
+          "x_m": 2.9250000000000003
+        }
+      ],
+      "loaded_mass_kg": 1220.585576820901,
+      "cg_x_m": 2.649993529283564,
+      "end_cg_x_m": 2.633591533212942,
+      "cg_mac_fraction": 0.05174591882844616,
+      "stations_source": "conceptual fixed component stations; no trim/CG envelope validation"
+    },
+    "method": "FAST-GA mass and engine maps + native AVL/XFOIL + CCBlade + shared overall iteration",
+    "physical_validation_passed": false,
+    "trim_checked": true,
+    "limits": [
+      "需求驱动的重量—燃油—功率迭代：每轮FAST-GA经验重量、OpenVSP外形、AVL配平/XFOIL阻力重算；发动机按连续额定功率定尺寸，尚未离散选具体商品发动机。",
+      "推进采用规定转速、理想恒速变距、轴向均匀入流；CCBlade合成桨叶，直径继承模板。桨图缺点及边界不跨越，桨尖Mach≤0.75，无滑流/安装损失或调速器瞬态。",
+      "通用发动机转速/高度功率与扭矩/RPM耗油图来自FAST-GA 1.4.0；图内爬升富油系数1.15，其他空中段为1，尚无目标型号独立台架标定。",
+      "低负荷可显式采用基础BSFC并单列油量，或严格拒绝；地面/滑跑用基础BSFC。高负荷和转速耗油图越界拒绝；高度只修正可用功率。",
+      "气动沿既有小迎角、单向黏性阻力叠加边界；推力沿航迹通过CG，无动力俯仰矩。任务为标准大气、无风的准定常直线段。",
+      "储备以平均巡航油耗携带一次，不增加已飞航时/航程；固定重量保留规定设计值，实际装载及剩余预算单列，上限模式不裁剪结果。",
+      "部件站位及外形比例是概念假设；经验发动机重量、携油及翼面积联动，不包含真实发动机包络适配、结构定尺寸回写、起降距离或操稳包线。"
+    ],
+    "propulsion_feedback": {
+      "options": {
+        "aero": {
+          "schedule_cl_ceiling": 0.5,
+          "mass_stations": 2,
+          "altitude_stations": 3,
+          "integration_step_s": 30.0,
+          "max_iterations": 40,
+          "drag": {
+            "panels": 240,
+            "re_stations": 3,
+            "cl_step": 0.1,
+            "ncrit": 9.0,
+            "trip_top": 1.0,
+            "trip_bottom": 1.0,
+            "area_samples": 12,
+            "geometry_tessellation": 1,
+            "strut_crossflow_cd": 1.2,
+            "junction_cd": 0.0015,
+            "cooling_cd": 0.001,
+            "roughness_cd": 0.0005,
+            "cache_only": false
+          }
+        },
+        "propeller": {
+          "rpm": 2400.0,
+          "blades": 3,
+          "root_chord_m": 0.18,
+          "tip_chord_m": 0.08,
+          "reference_pitch_deg": 20.0,
+          "collective_min_deg": -8.0,
+          "collective_max_deg": 16.0,
+          "collective_step_deg": 1.0,
+          "radial_stations": 48,
+          "altitude_stations": 3,
+          "integration_step_s": 30.0
+        },
+        "low_load_policy": "base_bsfc"
+      },
+      "native_iterations": 8,
+      "unique_propeller_maps": 1,
+      "speed_schedule_m_s": [
+        58.610115196941656,
+        58.610115196941656,
+        35.02624323988459
+      ],
+      "direct_aero_checks": [
+        {
+          "mass_kg": 1194.5432277795096,
+          "speed_m_s": 58.610115196941656,
+          "altitude_m": 500.0,
+          "roc_m_s": 3.0,
+          "interpolated_cd": 0.038104952998865266,
+          "direct_cd": 0.0380179243131491,
+          "relative_cd_error": 0.0022891487972704905,
+          "point_directory": "point_016",
+          "passed": true
+        },
+        {
+          "mass_kg": 1214.3606908139961,
+          "speed_m_s": 58.610115196941656,
+          "altitude_m": 1500.0,
+          "roc_m_s": 3.0,
+          "interpolated_cd": 0.040375538676896916,
+          "direct_cd": 0.04028992055070891,
+          "relative_cd_error": 0.002125050757552316,
+          "point_directory": "point_017",
+          "passed": true
+        },
+        {
+          "mass_kg": 1204.4519592967529,
+          "speed_m_s": 60.0,
+          "altitude_m": 2000.0,
+          "roc_m_s": 0.0,
+          "interpolated_cd": 0.04026768581913011,
+          "direct_cd": 0.04023598702498676,
+          "relative_cd_error": 0.0007878219595722769,
+          "point_directory": "point_018",
+          "passed": true
+        },
+        {
+          "mass_kg": 1194.5432277795096,
+          "speed_m_s": 58.610115196941656,
+          "altitude_m": 500.0,
+          "roc_m_s": -2.0,
+          "interpolated_cd": 0.03811717931488046,
+          "direct_cd": 0.038030369418274895,
+          "relative_cd_error": 0.002282646682991496,
+          "point_directory": "point_019",
+          "passed": true
+        },
+        {
+          "mass_kg": 1214.3606908139961,
+          "speed_m_s": 58.610115196941656,
+          "altitude_m": 1500.0,
+          "roc_m_s": -2.0,
+          "interpolated_cd": 0.040391860336459244,
+          "direct_cd": 0.0403054269522429,
+          "relative_cd_error": 0.002144460206779497,
+          "point_directory": "point_020",
+          "passed": true
+        },
+        {
+          "mass_kg": 1204.4519592967529,
+          "speed_m_s": 58.610115196941656,
+          "altitude_m": 2000.0,
+          "roc_m_s": 0.0,
+          "interpolated_cd": 0.041357285668199135,
+          "direct_cd": 0.041320910649065457,
+          "relative_cd_error": 0.0008803053602233213,
+          "point_directory": "point_021",
+          "passed": true
+        }
+      ],
+      "direct_propeller_checks": [
+        {
+          "passed": true,
+          "speed_m_s": 58.610115196941656,
+          "altitude_m": 500.0,
+          "collective_deg": -0.7218374924686748,
+          "relative_thrust_error": 0.0009158338921594344,
+          "relative_power_error": 0.001532639273819858,
+          "predicted": {
+            "thrust_n": 1671.9401986541247,
+            "torque_nm": 455.5852733156578,
+            "shaft_power_w": 114501.06781857347,
+            "efficiency": 0.8558226531195736,
+            "collective_deg": -0.7218374924686748,
+            "rpm": 2400.0,
+            "advance_ratio": 0.7711857262755482
+          },
+          "direct": {
+            "thrust_n": 1670.4089791545334,
+            "torque_nm": 454.8870254332002,
+            "shaft_power_w": 114325.57898514041,
+            "efficiency": 0.856351339423157
+          }
+        },
+        {
+          "passed": true,
+          "speed_m_s": 58.610115196941656,
+          "altitude_m": 1500.0,
+          "collective_deg": -0.3523657148471261,
+          "relative_thrust_error": 0.0009395425546929737,
+          "relative_power_error": 0.0015827330355859814,
+          "predicted": {
+            "thrust_n": 1622.621001376259,
+            "torque_nm": 444.1729856194195,
+            "shaft_power_w": 111632.84708360104,
+            "efficiency": 0.8519177490870421,
+            "collective_deg": -0.3523657148471261,
+            "rpm": 2400.0,
+            "advance_ratio": 0.7711857262755482
+          },
+          "direct": {
+            "thrust_n": 1621.0964798953275,
+            "torque_nm": 443.46997836156476,
+            "shaft_power_w": 111456.16208866531,
+            "efficiency": 0.8524665630998272
+          }
+        },
+        {
+          "passed": true,
+          "speed_m_s": 60.0,
+          "altitude_m": 2000.0,
+          "collective_deg": -1.975581577780102,
+          "relative_thrust_error": 6.465144655853905e-06,
+          "relative_power_error": 0.00011142423829413328,
+          "predicted": {
+            "thrust_n": 1013.0242126104373,
+            "torque_nm": 278.9784075951277,
+            "shaft_power_w": 70114.92126488258,
+            "efficiency": 0.8668832776265121,
+            "collective_deg": -1.975581577780102,
+            "rpm": 2400.0,
+            "advance_ratio": 0.7894736842105263
+          },
+          "direct": {
+            "thrust_n": 1013.0307619585117,
+            "torque_nm": 278.94732263856093,
+            "shaft_power_w": 70107.10876318759,
+            "efficiency": 0.8669854853496188
+          }
+        },
+        {
+          "passed": true,
+          "speed_m_s": 58.610115196941656,
+          "altitude_m": 500.0,
+          "collective_deg": -4.044345376773003,
+          "relative_thrust_error": 0.0008821373712845082,
+          "relative_power_error": 0.0012248697213388393,
+          "predicted": {
+            "thrust_n": 659.1172044521418,
+            "torque_nm": 181.22050872574349,
+            "shaft_power_w": 45545.68151140806,
+            "efficiency": 0.8481799810493579,
+            "collective_deg": -4.044345376773003,
+            "rpm": 2400.0,
+            "advance_ratio": 0.7711857262755482
+          },
+          "direct": {
+            "thrust_n": 658.535772534038,
+            "torque_nm": 180.9985372117197,
+            "shaft_power_w": 45489.893985186995,
+            "efficiency": 0.8484710362722617
+          }
+        },
+        {
+          "passed": true,
+          "speed_m_s": 58.610115196941656,
+          "altitude_m": 1500.0,
+          "collective_deg": -4.008593067481828,
+          "relative_thrust_error": 0.0008803495692124574,
+          "relative_power_error": 0.0009192763373802038,
+          "predicted": {
+            "thrust_n": 609.8578735469202,
+            "torque_nm": 167.6842743188999,
+            "shaft_power_w": 42143.654745823325,
+            "efficiency": 0.8481428684323893,
+            "collective_deg": -4.008593067481828,
+            "rpm": 2400.0,
+            "advance_ratio": 0.7711857262755482
+          },
+          "direct": {
+            "thrust_n": 609.3209854306624,
+            "torque_nm": 167.5301261333678,
+            "shaft_power_w": 42104.91308124477,
+            "efficiency": 0.8481759142714599
+          }
+        },
+        {
+          "passed": true,
+          "speed_m_s": 58.610115196941656,
+          "altitude_m": 2000.0,
+          "collective_deg": -2.4452806441956354,
+          "relative_thrust_error": 2.95050264067509e-05,
+          "relative_power_error": 0.001232754355846355,
+          "predicted": {
+            "thrust_n": 992.9998318769059,
+            "torque_nm": 268.1926305292408,
+            "shaft_power_w": 67404.15982540675,
+            "efficiency": 0.863445738179972,
+            "collective_deg": -2.4452806441956354,
+            "rpm": 2400.0,
+            "advance_ratio": 0.7711857262755482
+          },
+          "direct": {
+            "thrust_n": 993.0291303631673,
+            "torque_nm": 267.8620148957499,
+            "shaft_power_w": 67321.06705377981,
+            "efficiency": 0.8645369758920991
+          }
+        }
+      ],
+      "timestep_half_relative_fuel_error": 1.367242028482707e-07,
+      "engine": {
+        "provider": "FAST-GA 1.4.0 BasicICEngine native map and compute_max_power",
+        "source_sha256": "841bc4947900d3a3bf4eb9dd8fba42cc8ca2b7807bb3588f518529b10bcffa81",
+        "map_sha256": "466839d6647a0884df528e6ab824235aa85ad1b98a487457a1279eae26636cec",
+        "rpm": [
+          2200.0,
+          2250.0,
+          2300.0,
+          2350.0,
+          2400.0,
+          2450.0,
+          2500.0,
+          2550.0,
+          2600.0,
+          2650.0,
+          2700.0
+        ],
+        "sea_level_power_fraction": [
+          0.8817204324892585,
+          0.8978494646853472,
+          0.9086021530016146,
+          0.92473118525157,
+          0.9354838732266803,
+          0.9462365616057924,
+          0.956989249805348,
+          0.9677419381485493,
+          0.9731182820732593,
+          0.9892473145566384,
+          1.0
+        ],
+        "fuel": "native FAST-GA 1.4.0 torque/RPM SFC with explicit domain guards",
+        "physical_validation_passed": false,
+        "sfc_units": "g/kWh",
+        "pme_bounds_bar": [
+          8.08191746,
+          20.6280777
+        ],
+        "equivalent_volume_m3": 0.006535475756726523,
+        "volume_role": "upstream scaling coordinate; not measured displacement",
+        "mixture_factors": {
+          "climb": 1.15,
+          "level_and_descent": 1.0
+        },
+        "low_load_policy": "base_bsfc",
+        "ground_policy": "declared base BSFC; no ground propeller matching",
+        "calibration_ids": [],
+        "data_role": "upstream generic map; no target-engine calibration or independent physical validation"
+      },
+      "propeller": {
+        "rpm": 2400.0,
+        "diameter_m": 1.9,
+        "blades": 3,
+        "options": {
+          "rpm": 2400.0,
+          "blades": 3,
+          "root_chord_m": 0.18,
+          "tip_chord_m": 0.08,
+          "reference_pitch_deg": 20.0,
+          "collective_min_deg": -8.0,
+          "collective_max_deg": 16.0,
+          "collective_step_deg": 1.0,
+          "radial_stations": 48,
+          "altitude_stations": 3,
+          "integration_step_s": 30.0
+        },
+        "metadata": {
+          "julia_version": "1.12.4",
+          "ccblade_version": "1.0.0",
+          "package_sources": {
+            "src/airfoils.jl": "1830c15d8d0c946916f1a8942de04af827591db4bd7ec4ff21739befc4548e89",
+            "src/CCBlade.jl": "3a377560a80d2a7a4fc9fe0f68a7c8c19af2e1f0c2020a5881b3916ffc38ace6",
+            "Project.toml": "e2482d155ba81550e49ccd6a6b11e9b1bab2c0f8a8916e03e7ebbe5d765aeef3",
+            "LICENSE.md": "b72c0e118614427c6b92d21a9a1b64a540f0df9501b6a8014a3542e11434565d"
+          },
+          "worker_sha256": "99dc9456c448b4fa1da20d5c28d6cd484ffb21aa17cad664c1f1356fe02faca4",
+          "julia_sha256": "30595db4f0203fa7434687556ac1289886f0cc90f2150f42ac8b55e8b0564d7c",
+          "environment_sha256": {
+            "Project.toml": "3c893ba98500ff9cbd411bb107d5e03f585bff8db77970a303aeaabb5d2e2be0",
+            "Manifest.toml": "a903728c6877e2b45d2a8bac86554ae57c662e640fc9df3a4fa7966de85bb8fc"
+          }
+        },
+        "geometry_role": "independent synthetic full-scale blade; diameter inherited from aircraft, not a scaled APC propeller",
+        "max_tip_mach": 0.7403434706347601
+      },
+      "minimum_torque_margin_nm": 12.299077823371078,
+      "efficiency_range": [
+        0.8473905803865698,
+        0.8670036543560926
+      ],
+      "fuel_method_fraction": {
+        "native_engine_sfc_map": 0.9426563954350051,
+        "engine_map_low_load_base_bsfc": 0.04402756276554008,
+        "engine_map_ground_base_bsfc": 0.01331604179945798
+      },
+      "physical_validation_passed": false,
+      "checks": {
+        "aero_table_accuracy": true,
+        "propeller_table_accuracy": true,
+        "mission_step_accuracy": true,
+        "shaft_torque_balance": true
+      },
+      "limits": [
+        "需求驱动的重量—燃油—功率迭代：每轮FAST-GA经验重量、OpenVSP外形、AVL配平/XFOIL阻力重算；发动机按连续额定功率定尺寸，尚未离散选具体商品发动机。",
+        "推进采用规定转速、理想恒速变距、轴向均匀入流；CCBlade合成桨叶，直径继承模板。桨图缺点及边界不跨越，桨尖Mach≤0.75，无滑流/安装损失或调速器瞬态。",
+        "通用发动机转速/高度功率与扭矩/RPM耗油图来自FAST-GA 1.4.0；图内爬升富油系数1.15，其他空中段为1，尚无目标型号独立台架标定。",
+        "低负荷可显式采用基础BSFC并单列油量，或严格拒绝；地面/滑跑用基础BSFC。高负荷和转速耗油图越界拒绝；高度只修正可用功率。",
+        "气动沿既有小迎角、单向黏性阻力叠加边界；推力沿航迹通过CG，无动力俯仰矩。任务为标准大气、无风的准定常直线段。",
+        "储备以平均巡航油耗携带一次，不增加已飞航时/航程；固定重量保留规定设计值，实际装载及剩余预算单列，上限模式不裁剪结果。",
+        "部件站位及外形比例是概念假设；经验发动机重量、携油及翼面积联动，不包含真实发动机包络适配、结构定尺寸回写、起降距离或操稳包线。"
+      ]
+    },
+    "model_signature": "92be37d6c5a0b009eaf7a3b870ab583cd7d18355553342d55a0cb1b297e16ca3",
+    "versions": {
+      "fast-oad-cs23": "1.4.0",
+      "fast-oad-core": "1.11.0",
+      "openmdao": "3.45.2",
+      "numpy": "2.5.4",
+      "wingdesignhub": "0.2.7"
+    },
+    "redesign_comparison": {
+      "basis": "same requirements; both designs resized with their recorded models; original design is retained",
+      "comparison_type": "redesign",
+      "rows": [
+        {
+          "quantity": "设计起飞重量",
+          "unit": "kg",
+          "before": 1240.6667193568617,
+          "after": 1220.582435320157,
+          "relative_change": -0.016188299180875942
+        },
+        {
+          "quantity": "实际起飞装载",
+          "unit": "kg",
+          "before": 1240.6904024735597,
+          "after": 1220.585576820901,
+          "relative_change": -0.016204546768940786
+        },
+        {
+          "quantity": "总可用燃油",
+          "unit": "kg",
+          "before": 102.29723430761229,
+          "after": 82.5709719542633,
+          "relative_change": -0.19283280224401034
+        },
+        {
+          "quantity": "储备油",
+          "unit": "kg",
+          "before": 16.97450876271625,
+          "after": 13.49087308000381,
+          "relative_change": -0.20522748147882142
+        },
+        {
+          "quantity": "安装额定轴功率",
+          "unit": "W",
+          "before": 147948.43329633048,
+          "after": 151657.72606411623,
+          "relative_change": 0.025071524484185037
+        },
+        {
+          "quantity": "翼面积",
+          "unit": "m²",
+          "before": 14.07606122840132,
+          "after": 13.848193737947632,
+          "relative_change": -0.016188299180875942
+        },
+        {
+          "quantity": "翼展",
+          "unit": "m",
+          "before": 10.27474862042911,
+          "after": 10.19124393951039,
+          "relative_change": -0.008127175077810578
+        },
+        {
+          "quantity": "可用油箱容量",
+          "unit": "kg",
+          "before": 195.63571440999124,
+          "after": 190.9044780726545,
+          "relative_change": -0.024183909117031277
+        },
+        {
+          "quantity": "空重",
+          "unit": "kg",
+          "before": 788.7630392491883,
+          "after": 788.3937491817982,
+          "relative_change": -0.00046818885902877305
+        },
+        {
+          "quantity": "动力系统质量",
+          "unit": "kg",
+          "before": 227.1185367754646,
+          "after": 232.43582880296694,
+          "relative_change": 0.02341196849449223
+        },
+        {
+          "quantity": "发动机质量",
+          "unit": "kg",
+          "before": 203.63489175280188,
+          "after": 209.36587860533652,
+          "relative_change": 0.02814344242877409
+        },
+        {
+          "quantity": "起飞重心站位",
+          "unit": "m",
+          "before": 2.664570650576833,
+          "after": 2.649993529283564,
+          "relative_change": -0.005470720504300974
+        }
+      ]
+    }
+  },
+  "fixed_comparison": {
+    "basis": "same original geometry, mass/CG, carried fuel, speeds and installed engine; only named models replaced",
+    "reoptimized": false,
+    "source_feedback_id": "3d7439bd2dd449f1812ada88a952b26d",
+    "source_propulsion_id": "45e7ee676bfd41c9a08149a7dc873ab6",
+    "rows": [
+      {
+        "model": "constant_efficiency",
+        "block_fuel_kg": 102.2972343071195,
+        "max_power_fraction": 0.9733697476380193,
+        "installed_power_w": 147948.43329633048,
+        "carried_fuel_margin_kg": 4.927898089590599e-10,
+        "fuel_by_method_kg": {
+          "constant_bsfc": 102.29723430711785
+        }
+      },
+      {
+        "model": "ccblade_original_bsfc",
+        "block_fuel_kg": 94.78306779816857,
+        "max_power_fraction": 1.0083451549780156,
+        "installed_power_w": 147948.43329633048,
+        "carried_fuel_margin_kg": 7.514166509443712,
+        "fuel_by_method_kg": {
+          "constant_bsfc": 94.78306779817
+        }
+      },
+      {
+        "model": "ccblade_native_sfc",
+        "block_fuel_kg": 82.34493426158299,
+        "max_power_fraction": 1.0086041218659976,
+        "installed_power_w": 147948.43329633048,
+        "carried_fuel_margin_kg": 19.952300046029293,
+        "fuel_by_method_kg": {
+          "native_engine_sfc_map": 77.63030314975356,
+          "engine_map_low_load_base_bsfc": 3.642004970429931,
+          "engine_map_ground_base_bsfc": 1.072626141398396
+        }
+      }
+    ],
+    "legacy_reproduced": true,
+    "v026_reproduced": true
+  },
+  "force_residual_n": 1.1368683772161603e-13,
+  "shaft_residual_w": 1.4551915228366852e-11,
+  "radial_convergence": [
+    {
+      "all_valid": true,
+      "relative_errors": {
+        "thrust_n": 0.0024387014234343862,
+        "shaft_power_w": 0.0028739160757913496
+      },
+      "passed": true
+    },
+    {
+      "all_valid": true,
+      "relative_errors": {
+        "thrust_n": 0.0023952973811109946,
+        "shaft_power_w": 0.002829029788855353
+      },
+      "passed": true
+    },
+    {
+      "all_valid": true,
+      "relative_errors": {
+        "thrust_n": 0.002393580543539553,
+        "shaft_power_w": 0.002827601551038228
+      },
+      "passed": true
+    },
+    {
+      "all_valid": true,
+      "relative_errors": {
+        "thrust_n": 0.002391857889547655,
+        "shaft_power_w": 0.0028261951220531767
+      },
+      "passed": true
+    },
+    {
+      "all_valid": true,
+      "relative_errors": {
+        "thrust_n": 0.0023901108246024982,
+        "shaft_power_w": 0.0028248029454842616
+      },
+      "passed": true
+    },
+    {
+      "all_valid": true,
+      "relative_errors": {
+        "thrust_n": 0.002070455022772144,
+        "shaft_power_w": 0.002623856033359573
+      },
+      "passed": true
+    }
+  ],
+  "official": {
+    "role": "official published benchmark and its experimental comparison; not independent of upstream method development",
+    "sources": {
+      "tutorial": {
+        "url": "https://flow.byu.edu/CCBlade.jl/stable/tutorial/",
+        "sha256": "f93635c9f769435421badf4b34417453443227e48b4c7480024086e9456df753"
+      },
+      "airfoil_sha256": "4c73d618c69df184fa819d92114ecb0dc36e2543a7854bd664fdb51b2af0247a"
+    },
+    "conditions": {
+      "propeller": "APC thin electric 10x5",
+      "diameter_m": 0.254,
+      "rpm": 5400.0,
+      "density_kg_m3": 1.225,
+      "airfoil": "upstream NACA4412 AlphaAF, no added Re/Mach corrections"
+    },
+    "rows": [
+      {
+        "advance_ratio": 0.113,
+        "ct": {
+          "experimental": 0.0912,
+          "computed": 0.08775315683931774,
+          "relative_error": -0.037794332902217787
+        },
+        "cp": {
+          "experimental": 0.0381,
+          "computed": 0.03516124275746458,
+          "relative_error": -0.07713273602455173
+        },
+        "efficiency": {
+          "experimental": 0.271,
+          "computed": 0.2820180956413367,
+          "relative_error": 0.04065717948832703
+        }
+      },
+      {
+        "advance_ratio": 0.145,
+        "ct": {
+          "experimental": 0.089,
+          "computed": 0.08444007244142775,
+          "relative_error": -0.05123514110755334
+        },
+        "cp": {
+          "experimental": 0.0386,
+          "computed": 0.03529282679003052,
+          "relative_error": -0.08567806243444254
+        },
+        "efficiency": {
+          "experimental": 0.335,
+          "computed": 0.3469206526541433,
+          "relative_error": 0.035584037773561894
+        }
+      },
+      {
+        "advance_ratio": 0.174,
+        "ct": {
+          "experimental": 0.0864,
+          "computed": 0.08131809910314103,
+          "relative_error": -0.05881829741734923
+        },
+        "cp": {
+          "experimental": 0.0389,
+          "computed": 0.035327647006090715,
+          "relative_error": -0.09183426719561139
+        },
+        "efficiency": {
+          "experimental": 0.387,
+          "computed": 0.40051773732643725,
+          "relative_error": 0.034929553815083336
+        }
+      },
+      {
+        "advance_ratio": 0.2,
+        "ct": {
+          "experimental": 0.0834,
+          "computed": 0.07819706488002227,
+          "relative_error": -0.06238531318918139
+        },
+        "cp": {
+          "experimental": 0.0389,
+          "computed": 0.035202768591641,
+          "relative_error": -0.09504450921231344
+        },
+        "efficiency": {
+          "experimental": 0.429,
+          "computed": 0.44426656202597875,
+          "relative_error": 0.03558639166894806
+        }
+      },
+      {
+        "advance_ratio": 0.233,
+        "ct": {
+          "experimental": 0.0786,
+          "computed": 0.07400623393130548,
+          "relative_error": -0.05844486092486667
+        },
+        "cp": {
+          "experimental": 0.0387,
+          "computed": 0.034883865381666684,
+          "relative_error": -0.0986081296726955
+        },
+        "efficiency": {
+          "experimental": 0.474,
+          "computed": 0.4943102582621627,
+          "relative_error": 0.042848646122706224
+        }
+      },
+      {
+        "advance_ratio": 0.26,
+        "ct": {
+          "experimental": 0.0734,
+          "computed": 0.0702636241657858,
+          "relative_error": -0.04272991599746878
+        },
+        "cp": {
+          "experimental": 0.0378,
+          "computed": 0.034419214707538115,
+          "relative_error": -0.08943876435084352
+        },
+        "efficiency": {
+          "experimental": 0.505,
+          "computed": 0.5307658073646675,
+          "relative_error": 0.05102140072211392
+        }
+      },
+      {
+        "advance_ratio": 0.291,
+        "ct": {
+          "experimental": 0.0662,
+          "computed": 0.06572982799032966,
+          "relative_error": -0.007102296218585158
+        },
+        "cp": {
+          "experimental": 0.036,
+          "computed": 0.033685487052498075,
+          "relative_error": -0.06429202631949782
+        },
+        "efficiency": {
+          "experimental": 0.536,
+          "computed": 0.5678225734238703,
+          "relative_error": 0.05937047280572805
+        }
+      },
+      {
+        "advance_ratio": 0.316,
+        "ct": {
+          "experimental": 0.0612,
+          "computed": 0.06202065326679925,
+          "relative_error": 0.013409367104562975
+        },
+        "cp": {
+          "experimental": 0.0347,
+          "computed": 0.032981553958694246,
+          "relative_error": -0.04952294067163565
+        },
+        "efficiency": {
+          "experimental": 0.557,
+          "computed": 0.5942268959447318,
+          "relative_error": 0.06683464262967997
+        }
+      },
+      {
+        "advance_ratio": 0.346,
+        "ct": {
+          "experimental": 0.0543,
+          "computed": 0.057229249692227535,
+          "relative_error": 0.05394566652352739
+        },
+        "cp": {
+          "experimental": 0.0323,
+          "computed": 0.03187784610168269,
+          "relative_error": -0.01306978013366289
+        },
+        "efficiency": {
+          "experimental": 0.58,
+          "computed": 0.6211624314374709,
+          "relative_error": 0.07096970937494973
+        }
+      },
+      {
+        "advance_ratio": 0.375,
+        "ct": {
+          "experimental": 0.0489,
+          "computed": 0.052442198478461204,
+          "relative_error": 0.07243759669654826
+        },
+        "cp": {
+          "experimental": 0.0305,
+          "computed": 0.03060839453716773,
+          "relative_error": 0.0035539192514011386
+        },
+        "efficiency": {
+          "experimental": 0.603,
+          "computed": 0.6424977437331045,
+          "relative_error": 0.06550206257562952
+        }
+      },
+      {
+        "advance_ratio": 0.401,
+        "ct": {
+          "experimental": 0.0451,
+          "computed": 0.04803618696984509,
+          "relative_error": 0.06510392394334996
+        },
+        "cp": {
+          "experimental": 0.0291,
+          "computed": 0.029301257419656435,
+          "relative_error": 0.006916062531148848
+        },
+        "efficiency": {
+          "experimental": 0.62,
+          "computed": 0.6573953704111631,
+          "relative_error": 0.06031511356639219
+        }
+      },
+      {
+        "advance_ratio": 0.432,
+        "ct": {
+          "experimental": 0.0401,
+          "computed": 0.04247746888527026,
+          "relative_error": 0.059288500879557615
+        },
+        "cp": {
+          "experimental": 0.0272,
+          "computed": 0.027434743283751624,
+          "relative_error": 0.008630267784986323
+        },
+        "efficiency": {
+          "experimental": 0.635,
+          "computed": 0.6688696288732834,
+          "relative_error": 0.053337998225643
+        }
+      },
+      {
+        "advance_ratio": 0.466,
+        "ct": {
+          "experimental": 0.0345,
+          "computed": 0.03616953636889892,
+          "relative_error": 0.0483923585188093
+        },
+        "cp": {
+          "experimental": 0.025,
+          "computed": 0.025066036734749844,
+          "relative_error": 0.002641469389993656
+        },
+        "efficiency": {
+          "experimental": 0.644,
+          "computed": 0.6724239705808883,
+          "relative_error": 0.04413660028088251
+        }
+      },
+      {
+        "advance_ratio": 0.493,
+        "ct": {
+          "experimental": 0.0297,
+          "computed": 0.030963654650182377,
+          "relative_error": 0.04254729461893514
+        },
+        "cp": {
+          "experimental": 0.0229,
+          "computed": 0.02290673214795874,
+          "relative_error": 0.0002939802602071051
+        },
+        "efficiency": {
+          "experimental": 0.64,
+          "computed": 0.666401547105889,
+          "relative_error": 0.041252417352951376
+        }
+      },
+      {
+        "advance_ratio": 0.519,
+        "ct": {
+          "experimental": 0.0254,
+          "computed": 0.025673899616531007,
+          "relative_error": 0.01078344946972476
+        },
+        "cp": {
+          "experimental": 0.021,
+          "computed": 0.02051546340342457,
+          "relative_error": -0.023073171265496795
+        },
+        "efficiency": {
+          "experimental": 0.63,
+          "computed": 0.6494980707457644,
+          "relative_error": 0.030949318644070356
+        }
+      },
+      {
+        "advance_ratio": 0.548,
+        "ct": {
+          "experimental": 0.0204,
+          "computed": 0.0196174777837857,
+          "relative_error": -0.03835893216736763
+        },
+        "cp": {
+          "experimental": 0.0188,
+          "computed": 0.017677666187805093,
+          "relative_error": -0.05969860703164409
+        },
+        "efficiency": {
+          "experimental": 0.595,
+          "computed": 0.608133319823105,
+          "relative_error": 0.02207280642538656
+        }
+      },
+      {
+        "advance_ratio": 0.581,
+        "ct": {
+          "experimental": 0.0145,
+          "computed": 0.012514401165612673,
+          "relative_error": -0.13693785064740194
+        },
+        "cp": {
+          "experimental": 0.0162,
+          "computed": 0.014162283522239045,
+          "relative_error": -0.12578496776302184
+        },
+        "efficiency": {
+          "experimental": 0.52,
+          "computed": 0.5133965201165133,
+          "relative_error": -0.012698999775936026
+        }
+      }
+    ],
+    "diagnostic_band": 0.2,
+    "all_within_band": true,
+    "physical_validation_of_aircraft_propeller": false,
+    "metadata": {
+      "julia_version": "1.12.4",
+      "ccblade_version": "1.0.0",
+      "package_sources": {
+        "src/airfoils.jl": "1830c15d8d0c946916f1a8942de04af827591db4bd7ec4ff21739befc4548e89",
+        "src/CCBlade.jl": "3a377560a80d2a7a4fc9fe0f68a7c8c19af2e1f0c2020a5881b3916ffc38ace6",
+        "Project.toml": "e2482d155ba81550e49ccd6a6b11e9b1bab2c0f8a8916e03e7ebbe5d765aeef3",
+        "LICENSE.md": "b72c0e118614427c6b92d21a9a1b64a540f0df9501b6a8014a3542e11434565d"
+      },
+      "worker_sha256": "99dc9456c448b4fa1da20d5c28d6cd484ffb21aa17cad664c1f1356fe02faca4",
+      "julia_sha256": "30595db4f0203fa7434687556ac1289886f0cc90f2150f42ac8b55e8b0564d7c",
+      "environment_sha256": {
+        "Project.toml": "3c893ba98500ff9cbd411bb107d5e03f585bff8db77970a303aeaabb5d2e2be0",
+        "Manifest.toml": "a903728c6877e2b45d2a8bac86554ae57c662e640fc9df3a4fa7966de85bb8fc"
+      }
+    }
+  },
+  "engine": {
+    "source_url": "https://raw.githubusercontent.com/supaero-aircraft-design/FAST-GA/v1.4.0/src/fastga/models/propulsion/fuel_propulsion/basicIC_engine/unitary_tests/test_basicIC_engine.py",
+    "source_sha256": "f1658cecf67d66eb16e838b741b27220ca48feade048ad1f3c944ba4d2c61af5",
+    "role": "upstream numerical regression and same-map implementation identity; not independent target-engine experiment",
+    "official_tests": [
+      {
+        "test": "test_compute_flight_points",
+        "passed": true
+      },
+      {
+        "test": "test_engine_weight",
+        "passed": true
+      },
+      {
+        "test": "test_engine_dim",
+        "passed": true
+      }
+    ],
+    "sfc_node_count": 330,
+    "sfc_node_max_relative_error": 8.881784197001252e-16,
+    "installed_mass_checks": [
+      {
+        "rated_power_w": 140000.0,
+        "expected_installed_engine_mass_kg": 191.36439833668902,
+        "actual_installed_engine_mass_kg": 191.36439833668902,
+        "relative_error": 0.0,
+        "passed": true
+      },
+      {
+        "rated_power_w": 150000.0,
+        "expected_installed_engine_mass_kg": 206.80570742690844,
+        "actual_installed_engine_mass_kg": 206.80570742690844,
+        "relative_error": 0.0,
+        "passed": true
+      },
+      {
+        "rated_power_w": 160000.0,
+        "expected_installed_engine_mass_kg": 222.24701651712783,
+        "actual_installed_engine_mass_kg": 222.24701651712786,
+        "relative_error": 2.220446049250313e-16,
+        "passed": true
+      }
+    ],
+    "engine": {
+      "provider": "FAST-GA 1.4.0 BasicICEngine native map and compute_max_power",
+      "source_sha256": "841bc4947900d3a3bf4eb9dd8fba42cc8ca2b7807bb3588f518529b10bcffa81",
+      "map_sha256": "466839d6647a0884df528e6ab824235aa85ad1b98a487457a1279eae26636cec",
+      "rpm": [
+        2200.0,
+        2250.0,
+        2300.0,
+        2350.0,
+        2400.0,
+        2450.0,
+        2500.0,
+        2550.0,
+        2600.0,
+        2650.0,
+        2700.0
+      ],
+      "sea_level_power_fraction": [
+        0.8817204324892585,
+        0.8978494646853472,
+        0.9086021530016146,
+        0.92473118525157,
+        0.9354838732266803,
+        0.9462365616057924,
+        0.956989249805348,
+        0.9677419381485493,
+        0.9731182820732593,
+        0.9892473145566384,
+        1.0
+      ],
+      "fuel": "native FAST-GA 1.4.0 torque/RPM SFC with explicit domain guards",
+      "physical_validation_passed": false,
+      "sfc_units": "g/kWh",
+      "pme_bounds_bar": [
+        8.08191746,
+        20.6280777
+      ],
+      "equivalent_volume_m3": 0.006894974283302679,
+      "volume_role": "upstream scaling coordinate; not measured displacement",
+      "mixture_factors": {
+        "climb": 1.15,
+        "level_and_descent": 1.0
+      },
+      "low_load_policy": "base_bsfc",
+      "ground_policy": "declared base BSFC; no ground propeller matching",
+      "calibration_ids": [],
+      "data_role": "upstream generic map; no target-engine calibration or independent physical validation"
+    },
+    "calibration_ids": [],
+    "independent_target_engine_validation": false,
+    "passed": true
+  },
+  "source_hashes": {
+    "adapters.py": "b72ca7effe5311328a85bdc8b06ad583b9cabed91751094fa5019c2b2f6a29d5",
+    "aero_feedback.py": "e658ef9ec3c6b29dd546cbdf21aec037f689fdaff95f97628181ac666d0feb23",
+    "aero_report.py": "867ca0f8750c137e1dc1cf2a5f0ae836f7346ad411ea2d376a881dae35e5ba17",
+    "aero_service.py": "c5f0e176868e3af4e6b41a0ea86471a16243c176d113c7622b702e338d4ce61b",
+    "aero_ui.py": "753921056829bf7ece60a8de7919b7bdfff498cfac58252fdfc202c02b9a0c93",
+    "aircraft_aero.py": "38fe036640af07e409dc58372ad548486f6c0e8462729e3e8773ee2b5e811360",
+    "aircraft_drag.py": "343843c812215be0fadced137fa70bf4895af85630fd102e6e12dc98bb065d5d",
+    "aircraft_geometry.py": "6e8e23d13bb76830e1bd80b2a1a77094ad01b2e61537b8629fe14c654d3e6e23",
+    "aircraft_trim.py": "95221b7eb977d557553089fd011598047e27b64e65dcadba9f9ddb9aedcb40e4",
+    "aircraft_vsp_worker.py": "b906dffd66ac67688c99edcf85e01bd5ec2ec046d891014618295408f44fc438",
+    "avl_aircraft.py": "9880ba1c2dbc3e528d6d6ec41c8c91100ae73101960b07635eef41ca2707dd9e",
+    "box_comparison.py": "bf8e8a4c19e59c24e53a9cbbcc2add9ef42ece3343f902663795c52a44e783b5",
+    "buckling.py": "a473b5d91d835f3f100473e11aad1185f6597854e8cdd87960a4b22658399720",
+    "calculix_benchmark.py": "f3bab4818455864f4324f62a96f1fff25cdaf42f08e8b42b6d548c8e20a630ec",
+    "ccblade_adapter.py": "9d5416f5bed4269ce5fd35bd0ece0688056b2db6ce712d90e40925c425534b3b",
+    "ccblade_benchmark.py": "34ab2197a16efb2eddf221d1f84b793c92cca3fcd4b2ab3f70322f6dd66c020f",
+    "cli.py": "597577f42c32fd244ec226a806a49850fd6e773af1a9a5a6520e87ba0e847dd5",
+    "comparison_service.py": "f8570e21dab2b69910159ced9d5bd56687c6749dcbcdfd20b30ab58eab48d766",
+    "comparison_ui.py": "6c52ae50f238f74410b5a315034456b8c0780664f18cf06b9cf12131f1e74729",
+    "coupled_archive.py": "7db2093cd7ae9f421e1dc68b0df58769acea6754303262d7dded3ef3ea9452da",
+    "coupled_report.py": "5bbe6f67cebaedaa798035d1ede0bd2a2d48fe27d29263ee144c9e1911f20cb4",
+    "coupled_service.py": "56636e12f8977ba95a654730629b923fd14adc3a2dd23c62c4226cf39ac60dfb",
+    "coupled_ui.py": "55caf4de5654b24be53735a085a03ea406ffaf519299abc6b0484a7cc11490a1",
+    "coupled_worker.py": "d643e479aee192e781162ed8fe56b2d4fea7cf03b1959f3e4c387d608bf40817",
+    "design_cards.py": "21cf249b115b2eb5fd200a624d9c50a3d266a60fbd662fd0e71905b806a47516",
+    "design_comparison.py": "0f057f8d30f0452bd65d564748cd9c048d92eddbb6b7fe5f2384b7df3cb287dd",
+    "design_report.py": "b7c3d49eecc0bb4c13c3deaf6b03c5099325e2c46744f7d84829206fbd7f722b",
+    "design_service.py": "45abc8b6ac761c6c489fd27b0119b7e9258563f4548d6e86bae1d1bd2ad22c88",
+    "design_ui.py": "7b42e515ccf91c41928dd986d23eb30646ae1a28b155f1e0e37bc39b8f6b3831",
+    "drag_geometry_worker.py": "e7133fba5c37ce147126896783e2ca3115765638c3cbe2a6b9c95c8f349ff37f",
+    "drag_report.py": "865fc455ae89d3cfc51521644541e2e7156290418e039e2b0143658ce9ad295a",
+    "drag_service.py": "1562f1d3b7d4e8f629d8f395e567f1c22d0a78f3256a3d794430502c54b34a9f",
+    "drag_ui.py": "a1c8ba06ad4f5465cc510e456c2096bf83e0082e6632f37d33805fa7869d27d7",
+    "engine_fuel.py": "753966d653278cef4e628987c8ff1e16b1dfc0476f1b356e6039e307a21d6f3b",
+    "fastga_compat.py": "6ba7f14ef2c6046533ef6cef6d93355a1db91255bab46c9746f1ae5a14a94fab",
+    "fastga_diagnostics.py": "bc93d372e3e5bb7f5dc4e068f4dfb3b14dfda42600ec8f84a3b51e06f631b887",
+    "fastga_interface.py": "cb0852101644a0a5a9e34fb2cfb2a249d9a148988dfdc05a0cf28f41021c7b69",
+    "fastga_mass.py": "c44a77b2f042ef8cf2834dcf0bf15a151bd30b95e1133da5a4878c7aa3077af8",
+    "fastga_worker.py": "a25185200db8ebb0222eb307f3852c7c83c15ed9c98c3c8b1bc92fed8958375f",
+    "fea_mesh.py": "f99f1817b20d85089a64d4248684c64a8ba7180268fe11b91a14ed415dc729e3",
+    "feedback_evidence.py": "6281502e90d637e5c940e59ba6b64dfe2873447947adc9dfb130b9382b97ed07",
+    "feedback_native.py": "e5f48bf040cbb17b08195a038573776948da0f4f900fc17ff2dc4c23db074bc8",
+    "feedback_report.py": "3d430acb4157fc0cea1398eaf7b4ccc55502beccba39298981248a485b262625",
+    "feedback_service.py": "27f503b645134e1976c14e10876f86f662801172451d3fc3c443ebf4e37a6d49",
+    "feedback_ui.py": "dd585a3d1682c5cfd1912c88baf25765cb932fc54ef77e9ea17edec64348279c",
+    "feedback_worker.py": "1b69898a18eb1b7aaed1162c996c79c337b16d1407ac3fe155e1c53c0c364612",
+    "flight_loads.py": "4d9d7e8bcd24d59131337cbdb5953e90ed432853e5c6c4b359857a7395247890",
+    "flight_service.py": "72dcf0c2a247bd1ab560819a1a295141f459143377c964ecfac24129c4bc5645",
+    "flight_state.py": "042fc1a50ae186487b5f6a978fbae8a7f86bce1ab0abef81cc5dc35129c1f98b",
+    "flight_ui.py": "fb4b7a8a3ee36f1a3f01e65c719eed70c8150473f391047523d8d8ff74d0fa78",
+    "fuel_model.py": "2678359dc34e16e0aa7c881a479f25ed3645fb7bb9e6afd3697f82b945f0da66",
+    "fuel_validation.py": "1485a6bd9f9b870385fb5f475da73ba7a838e2eb0f1c38199c59732bfc8d64b4",
+    "geometry_report.py": "423e78b7d2b730c13dfcae8fa2c75bf3b83884e99e1b2afba3eae6ddecd0891d",
+    "geometry_service.py": "5e0364787ca74ed408a0f36d7d8592a1dded5ce3985e0f5c7b6fe1ed8d1ca841",
+    "geometry_ui.py": "032934965f2cc934df8322022312fe7bf6eb59280f6fd231e2bc924b8dd61133",
+    "mechanics.py": "aece8baec13b7d9a84e133720f82a33d70444a38c980b86cf727cbdab0973650",
+    "model.py": "345afae92c6b8dd09435ebb31ce234ddf40e0d5e615e8a2fca4f2e85cc058b11",
+    "oas_benchmark.py": "74d2900b9dbba587c701bd2fc92ba75a8bf09ec17678c03ac67c1f00cdff5c56",
+    "oas_wingbox.py": "e8d0b503f1f1ba3fb7d77abdda14d376820fff41ef32f1b5a97e187d0f2f737b",
+    "plate_buckling.py": "7448faec93a91382127a0ade183b69d26074062be66ddaab1607b249b1fd9c09",
+    "plate_service.py": "0c740429e6591a1b020a334beb344fe3f1a8325569498cfdd43da0b2d9fb7301",
+    "plate_ui.py": "47adf0c1efec842d669cb199dfa3f8dfb47d21e8bd67f9df846bbe0813e6b0d9",
+    "project_archive.py": "b65f1a7d3a2a7b54af7d5d34c696a4e145756ccbbbf6b89d23af383359722e2b",
+    "project_ui.py": "beab6842e69e2c54bcee7970afd0c0605de156cfb694eed5ba434ff177110c76",
+    "propulsion_feedback.py": "bc7a89d9d44db96d90f00cb7c998b601cadf21114e8fdc3d3d76e4d79d991b60",
+    "propulsion_model.py": "5165440160107be26f49a43f3fdbaae1d103e3e012424111697d4a2d448dc167",
+    "propulsion_report.py": "85c46d94966087e75c915a8323db5d1d52ba72e74c2ad81b218ddf8046e5a6e7",
+    "propulsion_service.py": "3ef2c9fc9b806e1b99adde091dd0aa5c4ec7d2875cac0186f3d4986558fc3138",
+    "propulsion_ui.py": "a43c79fb0f02a5f6d8c4a79b1e3550fe9ebfd8203071b724c9225858b2fb0730",
+    "reference_cruise.py": "7987b65965090c774f9043e126a10724fab4d48e3eb87120c33891cb3764242a",
+    "requirements.py": "af49146e331235fba487e736a5ae4ba04b40070d74e735bf1f44f670d010d4d9",
+    "service.py": "c1366ae1f2f92cbd82e0c66be2102bbff7298475099839cc04485cb9c07f0bc3",
+    "shell_loads.py": "a06bdbb345ab2ac1cf18265eec95815accd6b3f2bb0732a7eaaee9c09208a397",
+    "shell_static.py": "1c23aabbf1395b4b2a7729b135428b130ff2d252397b3420bb3e287c7fee4da4",
+    "shell_validation.py": "30d6c706a44d32d131d0ab6c7f9e41508c82bd39aabe8f3cab26e28cab68be92",
+    "sizing.py": "a4ea073e287dbc1e41f0877275bdf832ec5734f0a80de9149fb465d33952c10b",
+    "sizing_config.py": "d4f58966878dd603a529866772ec13983ca62435bc0dcc8fd920ed5a6d2bc8c3",
+    "sizing_physics.py": "6a8a3a55bb1a5af0aa8613f36ca1f998e3962d7c18b0ca3555c9ff0b94a1f68b",
+    "sizing_service.py": "e13f8f8d9fc91be4e19d5c1d2b5607634a1760c9cfbd5196872060f86f08a41f",
+    "sizing_ui.py": "160d8b12a05f700eabfdcc161e91593b5470d42591e854c3766dac9a63418d90",
+    "sizing_worker.py": "8a1beb33e3764ed21660e8fd2dfea387fa371d0f7ea5d06d8ebb966726d15cbb",
+    "static_service.py": "941de7a411c9814b8c73883b248aecbb04ebb812cf380bafb7e3f5f7b39528f9",
+    "structural_sensitivity.py": "cf1527dafd494a67281b12414e4f223e13e31c76252ff2f1f7592bd3ce77e6fc",
+    "structure_service.py": "5703dd5d078b0af7dfb078b661beace113b627e97c304b9d612af39fe45ad12b",
+    "trim_report.py": "5793b363fb2eacf715f79cbf946c54ddf1fb04d56848195ebb056fab9e1971b8",
+    "trim_service.py": "c90a5ddee4f2db9c2c7b3cb7b3ac61ca806042f47d5687c0908c5df8f543da1d",
+    "trim_ui.py": "6a0ad7d511d915b437efd3b2ca29ddc19db5e52457c26c3e27cd21a06f912def",
+    "vsp_structure_worker.py": "ee7cfff132602d9b5c6875b54c956cbc6d381fd4ef0228cdb7455add725899bc",
+    "vsp_worker.py": "aba49475b1221a2ad13d73644a38f508bcecc093859184e78e782282a7f73abd",
+    "xfoil_polars.py": "8aa40f8fc96973cd173f319b02940efa90fdb5137aba441c36090d419567aeda",
+    "__init__.py": "bdb9278f57ed2e7f0686aa2ab49536ec706646df5f0d32304e6b901971d07429",
+    "fastga_plugins/furniture.py": "45b5a219b73c6380a63418f0e64f1f66d189c7943147f39faa2e98d118f719bf",
+    "fastga_plugins/reserve.py": "ceb05f0f889a91b66bea34856f0dbcf0de594e895f16edf0cdbdef0bbe2b2cda",
+    "fastga_plugins/unusable_fuel.py": "724433d55934a868696f27553b9924c75f99ca6594df274045dfaf9bf5a00f21",
+    "fastga_plugins/__init__.py": "652c53dda99eb1a2b439a1aca6f0ec81c25fed142d761e63ddf46af578a41a17"
+  },
+  "worker_sha256": "99dc9456c448b4fa1da20d5c28d6cd484ffb21aa17cad664c1f1356fe02faca4",
+  "physical_validation_passed": false,
+  "ui": {
+    "method": "AppTest actions; callbacks return existing real native records, without duplicate solver execution",
+    "run_id": "8ce60f7ec07c424b9534098c12018c8a",
+    "archive_id": "9fff83621b17401ea280684b562d56be",
+    "checks": {
+      "one_click_entry_from_initial": true,
+      "actual_record_identity": true,
+      "success_visible": true,
+      "actual_fuel_visible": true,
+      "actual_power_visible": true,
+      "changed_settings_visible": true,
+      "save_actual_results": true,
+      "stored_original_options": true,
+      "reset_clears_result": true,
+      "reopen_actual_result": true,
+      "reopened_entry_present": true,
+      "unchanged_native_record": true
+    },
+    "passed": true
+  },
+  "cli": {
+    "run_id": "8ce60f7ec07c424b9534098c12018c8a",
+    "passed": true,
+    "checks": {
+      "real_mission_strict_sfc_rejects_low_load": true,
+      "cli_report": true,
+      "cli_open": true,
+      "cli_invalid": true,
+      "report_utf8_content_unchanged": true,
+      "cli_reopens_coupled": true,
+      "invalid_option_located": true
+    },
+    "strict_sfc": {
+      "status": "engine_sfc_out_of_domain",
+      "error": "低负荷低于原始耗油图范围",
+      "context": {
+        "pme_bar": 6.168021509505838
+      }
+    },
+    "commands": [
+      {
+        "action": "report",
+        "argv": [
+          "report",
+          "--run-id",
+          "8ce60f7ec07c424b9534098c12018c8a",
+          "--output",
+          "local\\v027-interface-checks02\\report.html"
+        ],
+        "exit_code": 0
+      },
+      {
+        "action": "open",
+        "argv": [
+          "archive-open",
+          "--input",
+          "local\\v027-validation01\\coupled.wdh"
+        ],
+        "exit_code": 0
+      },
+      {
+        "action": "invalid",
+        "argv": [
+          "coupled",
+          "--run-id",
+          "3d7439bd2dd449f1812ada88a952b26d",
+          "--coupled-options",
+          "local\\v027-interface-checks02\\invalid_options.json"
+        ],
+        "exit_code": 1
+      }
+    ],
+    "report_export": {
+      "original_bytes": 40428,
+      "exported_bytes": 39847,
+      "only_crlf_to_lf": true,
+      "exact_file_bytes": false
+    }
+  },
+  "browser": {
+    "run_id": "8ce60f7ec07c424b9534098c12018c8a",
+    "archive_id": "214772a440a942399af65203fd6ad8a7",
+    "observed_version": "0.2.7",
+    "observed_metrics": {
+      "design_mass_kg": 1220.6,
+      "block_fuel_kg": 82.57,
+      "power_kw": 151.66,
+      "power_fraction": 0.9728
+    },
+    "reopened_actual_archive": true,
+    "native_run_identity_visible": true,
+    "report_download_exact_bytes": true,
+    "report_sha256": "6a457893dc8b86bfd74aed04185ac9a58c373ffaca9a59b85c53a9794def4af6",
+    "report_bytes": 40428,
+    "screenshot": "local/v027-coupled-ui.jpg",
+    "screenshot_sha256": "322e8f5b09c8e7a3dac51afdad44f9840667b5c54fdaaaa32dcbc04fb8eccf05",
+    "tool_wait_s": 2701.8624,
+    "tool_wait_role": "browser automation call delay, not a solver or application performance measurement",
+    "download_filename": "report (7).html",
+    "passed": true,
+    "test_server_stopped": true
+  },
+  "wheel": {
+    "checks": {
+      "coupled_service.py": true,
+      "propulsion_feedback.py": true,
+      "engine_fuel.py": true,
+      "ccblade_worker.jl": true,
+      "metadata": true,
+      "frozen_source": true
+    },
+    "sha256": "0c771e15c7a9a268ef9717c112318214ab78bf8cb8ed5a304509e504a68d6a76"
+  },
+  "local_regression": {
+    "tests": "383",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "565.813",
+    "junit": "local/tests-v027-full02.xml"
+  },
+  "native_point_count": 134,
+  "official_data_roles": {
+    "engine": "upstream numerical regression and generic map consistency",
+    "propeller": "upstream official APC example and its published experiment; no calibration",
+    "full_scale_aircraft": "synthetic design, no independent physical validation"
+  },
+  "calibration_ids": []
+}

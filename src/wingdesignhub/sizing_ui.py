@@ -88,6 +88,10 @@ def results(record, project, root):
         for line in s['limits']: st.caption(line)
     st.caption('总体运行编号：'+record['run_id'])
     st.download_button('下载总体运行记录',json.dumps(record,ensure_ascii=False,indent=2),'overall-result.json')
+    from .coupled_ui import render as render_coupled
+    seed=st.session_state.get('aero_feedback_result')
+    if not seed or seed.get('parent_run_id')!=record['run_id'] or not seed.get('summary',{}).get('converged'):seed=record
+    render_coupled(project,root,seed)
     from .feedback_ui import render as render_feedback
     render_feedback(project,root,record)
     from .geometry_ui import render
