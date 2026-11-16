@@ -1,12 +1,12 @@
 # WingDesignHub
 
-面向固定翼飞机概念设计的本地工程工作台。当前版本 **V0.2.4**：在需求→总体→OpenVSP→AVL 配平链上接入 XFOIL 翼尾剖面阻力、非升力部件阻力与显式修正，提供可追溯的阻力账目、极曲线缺失/越界诊断、保存重开和报告。
+面向固定翼飞机概念设计的本地工程工作台。当前版本 **V0.2.5**：将多工况 AVL 配平、XFOIL 翼尾及非升力阻力接回任务积分和总体迭代，更新燃油、功率、重量与几何，提供新旧模型比较、假设敏感性及可重开的运行证据。
 
 目标是让用户给出有效载荷、航程/航时及可选起飞重量等少量需求，一键开展正向总体设计，形成初步技术参数、可行性诊断和方案比较。FAST-GA/OpenMDAO、OpenVSP、AVL/XFOIL、CCBlade、OpenAeroStruct、CalculiX 等工具支撑这一主流程，并逐步覆盖 AAA 十模块。
 
 默认首页“新建飞机方案”已能从少量需求生成初步构型、翼面积、重量、燃油和安装功率，并一键比较三个方案。计算采用 FAST-GA 原生部件重量、明确的概念极曲线与任务积分；输入、结果、报告可以一起保存，重开后复算。V0.2.0 交付软件阶段验证及专业评审材料，专业签署仍待完成。完整气动力/推进平衡、起降距离与结构质量回写按后续路线接入。详见 [产品主流程](docs/FORWARD_DESIGN.md)、[阶段验证](docs/VALIDATION_V0.2.0.md)与[评审材料](docs/REVIEW_V0.2.0.md)。
 
-V0.2.1 已生成并核验 12 部件全机外形，V0.2.2 固定迎角分析和 V0.2.3 升力面配平继续保留。V0.2.4 在已接受配平状态上汇总阻力，翼型、舵偏和工况一致，排除埋入面积和重复项。机身/黏性俯仰矩与推进平衡尚待补齐；总体任务仍使用原概念极曲线，V0.2.5 接任务反馈。见[几何接口](docs/GEOMETRY_INTERFACE.md)、[气动接口](docs/AERODYNAMICS_INTERFACE.md)、[配平接口](docs/TRIM_INTERFACE.md)、[阻力接口](docs/DRAG_INTERFACE.md)和[本版验证](docs/VALIDATION_V0.2.4.md)。
+V0.2.1～V0.2.4 的几何、固定迎角、配平及单点阻力入口继续保留。V0.2.5 在主入口增加气动驱动总体计算，每轮真实求解有界工况表，按剩余燃油更新质量和CG。沿航迹推力平衡已接入，常数桨效率和既有耗油方法保持；机身/黏性俯仰矩、滑流和实际推进图谱按后续节点完善。见[任务反馈接口](docs/AERO_FEEDBACK_INTERFACE.md)、[本版验证](docs/VALIDATION_V0.2.5.md)及[阻力接口](docs/DRAG_INTERFACE.md)。
 
 ## 普通用户
 
@@ -15,6 +15,7 @@ V0.2.1 已生成并核验 12 部件全机外形，V0.2.2 固定迎角分析和 V
 1. 在“新建飞机方案”填写载荷合计（含机组），选择起飞重量为规定值、上限或待求量。
 2. 选择航程、航时、同一任务同时约束两者，或往返转场加额外留空；储备独立填写。
 3. 核对巡航速度、高度、储备和初始构型假设，勾选确认，点击“运行初步总体设计”。页面给出初步参数、约束表、构型图及可下载的报告；通常可保留高级假设默认值。
+   若要让气动更新总体结果，点击其后的“运行气动反馈总体计算”。无需逐个启动专业工具，首次完整迭代可能需要数十分钟。可见假设包括支柱阻力和低迎角速度安排；计算结束后查看燃油、功率、重量变化及约束，导出气动反馈报告。原总体结果保留作比较。
    在结果下点击“生成全机几何”，可旋转查看外形。再点击“运行全机气动”，可查看升力、诱导阻力、力矩及条带载荷，导出气动报告和配平接口。默认工况即可运行，展开设置可修改迎角/舵偏等。之后保存方案会同时保存总体、几何和最后一次气动结果；修改需求后重新计算。
    要计算当前方案阻力，可直接“求解纵向配平”→“计算阻力账目”，无需先跑固定迎角分析。结果列出诱导、翼尾剖面、机身/起落架和修正项；高级假设可以修改转捩和工程预算。保存时带上配平、极曲线与阻力报告。
 4. 展开“三方案比较与需求变化”，选择展弦比或巡航速度比较设计，或选择载荷、航程、航时研究需求变化。填入三个取值，核对共同假设后点击“一键计算并比较三个方案”。支持保存/导入三方案配置、下载可打印方案卡及 ZIP 包。
@@ -46,9 +47,11 @@ CalculiX 基准要求 2.23。其他电脑可从 [CalculiX Windows 项目](https:
 
 ## 开发与验证
 
+V0.2.5：Python `feedback_service.run_aero_feedback(project, root, sizing_run_id, options)`，CLI `feedback --run-id ID [--feedback-options options.json]`；归档增加 `--feedback-run-id ID`。`MissionAeroTable.from_dict()` 重开工况表供有界查询。`scripts/validate_aero_feedback.py local/new-feedback-validation` 执行原生总体闭环、直接复算、任务步长、敏感性、失败诊断、档案及公开翼型检查。迭代的原始证据无损打包；方案包上限512 MB，首次保存/导出需要完整性检查时间。运行模型、比较口径和边界见[接口说明](docs/AERO_FEEDBACK_INTERFACE.md)。
+
 V0.2.4：Python `drag_service.run_aircraft_drag(project, root, trim_run_id, options)`；CLI `drag --trim-run-id ID [--drag-options options.json]`，归档增加 `--drag-run-id ID`。`scripts/validate_aircraft_drag.py local/new-drag-validation` 检查面元/极曲线/面积离散、同工况查询、质量/速度传递、缓存、失败和公开 UIUC E387 数据。XFOIL 锁定 6.99；本机缓存只接受完整曲线，原始证据随档案保存。公开数据对照的名义坐标、近似 Mach 和转捩假设保留，不拟合消除误差。
 
-V0.2.3：Python `trim_service.run_aircraft_trim(project, root, geometry_run_id, options)`；CLI `trim --geometry-run-id ID [--trim-options options.json]`。归档通过 `--trim-run-id ID` 保存完整配平记录。主界面“纵向配平”使用同一服务，无需先运行固定迎角分析。`scripts/validate_aircraft_trim.py local/new-trim-validation` 验证质量/CG/速度、三档网格、失败状态、原生配平对照与 MIT Vanilla 公开输入；已有原始文件按固定哈希读取，不自动改动第三方安装。方案包维持 50 MB 总大小限制，文件数上限 1024 以容纳迭代原始记录。
+V0.2.3：Python `trim_service.run_aircraft_trim(project, root, geometry_run_id, options)`；CLI `trim --geometry-run-id ID [--trim-options options.json]`。归档通过 `--trim-run-id ID` 保存完整配平记录。主界面“纵向配平”使用同一服务，无需先运行固定迎角分析。`scripts/validate_aircraft_trim.py local/new-trim-validation` 验证质量/CG/速度、三档网格、失败状态、原生配平对照与 MIT Vanilla 公开输入；已有原始文件按固定哈希读取，不自动改动第三方安装。方案包外层文件数上限1024；V0.2.5多轮原生证据另以受限内部档案保存，完整包上限512 MB。
 
 V0.2.2：Python 服务 `aero_service.run_aircraft_aero(project, root, geometry_run_id, options)`；CLI `aero --geometry-run-id ID [--aero-options options.json]`。归档增加 `--aero-run-id ID`，与来源总体和几何一起保存。`scripts/validate_aircraft_aero.py local/new-aero-validation` 执行五组需求、三档气动离散、对称/参考点/导数及官方算例验证；首次获取公开输入需要网络，已有官方文件可按固定哈希复用。要求已验证的 AVL 3.40 MRF 输出。
 

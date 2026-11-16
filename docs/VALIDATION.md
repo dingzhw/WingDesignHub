@@ -1,6 +1,6 @@
 # 验证方法与适用边界
 
-最新结果见 [V0.2.1 全机参数化几何验证](VALIDATION_V0.2.1.md)、`validation/v0.2.1.json`。总体阶段见 [V0.2.0](VALIDATION_V0.2.0.md)和[专业评审材料](REVIEW_V0.2.0.md)。前序记录见 [V0.1.8](VALIDATION_V0.1.8.md)、[V0.1.7](VALIDATION_V0.1.7.md)、[V0.1.6](VALIDATION_V0.1.6.md)、[V0.1.5](VALIDATION_V0.1.5.md)、[V0.1.4](VALIDATION_V0.1.4.md)、[V0.1.3](VALIDATION_V0.1.3.md)、[V0.1.2](VALIDATION_V0.1.2.md)和 [V0.1.1](VALIDATION_V0.1.1.md)。历史偏差和失败摘要保持原状，便于前后比较。
+本轮进度与结果见 [V0.2.5 气动驱动任务及总体反馈](VALIDATION_V0.2.5.md)。前序气动链证据见 [V0.2.4 阻力](VALIDATION_V0.2.4.md)、[V0.2.3 配平](VALIDATION_V0.2.3.md)、[V0.2.2 气动](VALIDATION_V0.2.2.md)、[V0.2.1 几何](VALIDATION_V0.2.1.md)。总体阶段见 [V0.2.0](VALIDATION_V0.2.0.md)和[专业评审材料](REVIEW_V0.2.0.md)。前序记录见 [V0.1.8](VALIDATION_V0.1.8.md)、[V0.1.7](VALIDATION_V0.1.7.md)、[V0.1.6](VALIDATION_V0.1.6.md)、[V0.1.5](VALIDATION_V0.1.5.md)、[V0.1.4](VALIDATION_V0.1.4.md)、[V0.1.3](VALIDATION_V0.1.3.md)、[V0.1.2](VALIDATION_V0.1.2.md)和 [V0.1.1](VALIDATION_V0.1.1.md)。历史偏差和失败摘要保持原状，便于前后比较。
 
 ## V0.1.0 验证对象
 

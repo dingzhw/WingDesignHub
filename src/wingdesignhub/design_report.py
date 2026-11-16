@@ -14,7 +14,8 @@ def table(headers,rows):
 
 def design_report_html(project,record):
     card=make_card(project,record);s=record.get('summary',{});sections=[]
-    sections.append('<h2>工程覆盖与评审状态</h2><p>本报告保留实际计算状态、诊断及已检查约束；专业评审待签署。配平、起降距离、操稳重心包线和结构定尺寸质量反馈尚未覆盖。</p>')
+    coverage='气动配平/阻力任务表与燃油、功率迭代已接通；起降距离、操稳重心包线和结构定尺寸质量反馈尚未覆盖。' if 'aerodynamic_feedback' in s else '配平、起降距离、操稳重心包线和结构定尺寸质量反馈尚未覆盖。'
+    sections.append('<h2>工程覆盖与评审状态</h2><p>本报告保留实际计算状态、诊断及已检查约束；专业评审待签署。'+coverage+'</p>')
     if s.get('converged') and 'geometry' in s:
         ms=s['mission'];fuel=ms.get('fuel_model',{})
         sections += ['<h2>任务与燃油账目</h2>',table(['任务段','时长 s','航迹 m','耗油 kg','使用方法'],[

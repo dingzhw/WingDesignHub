@@ -58,23 +58,23 @@ def speed_schedule(mass, geo, p):
     return climb_speed,loiter_speed,vs
 
 
-def constraints(mass, geo, p):
+def constraints(mass, geo, p, *, flight_model=None, schedule=None):
     a=p.sizing;h=p.assumptions.cruise_altitude_m;s=geo['wing_area_m2']
-    climb,loiter,vs=speed_schedule(mass,geo,p);sigma=density(h)/RHO0
-    pc=flight_power(mass,s,p.assumptions.cruise_speed_m_s,h,0,a)[0]/(sigma*a.cruise_power_fraction)
-    pcl=flight_power(mass,s,climb,h,a.climb_rate_m_s,a)[0]/sigma
-    pl=flight_power(mass,s,loiter,h,0,a)[0]/(sigma*a.cruise_power_fraction)
+    climb,loiter,vs=schedule or speed_schedule(mass,geo,p);sigma=density(h)/RHO0
+    power_at=flight_model or (lambda mm,ss,v,z,r,aa:flight_power(mm,ss,v,z,r,aa))
+    pc=power_at(mass,s,p.assumptions.cruise_speed_m_s,h,0,a)[0]/(sigma*a.cruise_power_fraction)
+    pcl=power_at(mass,s,climb,h,a.climb_rate_m_s,a)[0]/sigma
+    pl=power_at(mass,s,loiter,h,0,a)[0]/(sigma*a.cruise_power_fraction)
     demand={'cruise':pc,'climb_at_cruise_altitude':pcl,'loiter':pl}
     return {'installed_power_w':max(demand.values())*1.02,'power_constraints_w':demand,
             'controlling_power_constraint':max(demand,key=demand.get),'clean_stall_at_altitude_m_s':vs,
             'landing_stall_m_s':math.sqrt(2*mass*G/(RHO0*s*a.cl_max_landing))}
 
 
-def mission(mass, geo, installed_power, p, dt=30.):
-    from .fuel_model import fuel_flow, fuel_model_description
-    if not math.isfinite(dt) or dt<=0: raise ValueError('任务积分步长须为正有限值')
+def mission_legs(mass, geo, p, schedule=None):
+    """Shared route semantics; a supplied speed schedule is an explicit model input."""
     a=p.sizing;m=p.mission;h=p.assumptions.cruise_altitude_m;s=geo['wing_area_m2']
-    climb_speed,loiter_speed,vs=speed_schedule(mass,geo,p)
+    climb_speed,loiter_speed,vs=schedule or speed_schedule(mass,geo,p)
     tc=h/a.climb_rate_m_s;td=h/2.
     xc=math.sqrt(climb_speed**2-a.climb_rate_m_s**2)*tc
     xd=math.sqrt(climb_speed**2-4)*td
@@ -98,6 +98,14 @@ def mission(mass, geo, installed_power, p, dt=30.):
         if distance<v*60:raise DesignDomainError('航程短于爬升/下降及最少 60 秒巡航所需距离')
         legs.append(('cruise',distance/v,v,h,h,0,True))
     if td:legs.append(('descent',td,climb_speed,h,0,-2.,True))
+    return legs,v
+
+
+def mission(mass, geo, installed_power, p, dt=30., *, flight_model=None, schedule=None):
+    from .fuel_model import fuel_flow, fuel_model_description
+    if not math.isfinite(dt) or dt<=0: raise ValueError('任务积分步长须为正有限值')
+    a=p.sizing;s=geo['wing_area_m2'];legs,v=mission_legs(mass,geo,p,schedule)
+    power_at=flight_model or flight_power
     taxi_out=fuel_flow(installed_power*.1,installed_power,'taxi',a)[0]*300
     takeoff_roll=fuel_flow(installed_power*.9,installed_power,'takeoff',a)[0]*30
     current=mass-takeoff_roll;rows=[];worst_power=0.;max_cl=0.
@@ -109,8 +117,11 @@ def mission(mass, geo, installed_power, p, dt=30.):
             z=h0+(h1-h0)*(i+.5)/n
             # Explicit midpoint integration of fuel burn with density at midpoint height.
             def rate(mm):
-                pw,cl,_=flight_power(mm,s,speed,z,roc,a)
-                pw=max(pw,.05*installed_power*density(z)/RHO0)
+                pw,cl,_=power_at(mm,s,speed,z,roc,a)
+                idle=.05*installed_power*density(z)/RHO0
+                if flight_model is not None and pw<idle:
+                    raise DesignDomainError('下降所需功率低于当前怠速假设；需要阻力/推进模型支持，不能保持航迹而静默增加推力')
+                pw=max(pw,idle)
                 flow,method=fuel_flow(pw,installed_power,name,a)
                 return flow,pw,cl,method
             r0,_,_,_=rate(current);r,pw,cl,method=rate(current-r0*step/2)

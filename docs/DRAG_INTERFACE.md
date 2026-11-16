@@ -1,5 +1,7 @@
 # V0.2.4 配平阻力账目
 
+V0.2.5延续此单点复核入口，并增加[多工况任务反馈服务](AERO_FEEDBACK_INTERFACE.md)。单点阻力计算保持父总体不变；新的总体反馈服务在每轮试算外形上调用同一阻力内核，另行完成推力平衡、任务油量和重量/功率更新。
+
 本接口补齐正向总体设计链上的阻力分项。输入是同一方案已收敛的纵向升力面配平，输出当前工况的阻力、升阻比、分项账目和极曲线覆盖。下一节点 V0.2.5 才用多工况气动结果更新任务、燃油和功率。
 
 Python：`drag_service.run_aircraft_drag(project, root, trim_run_id, options)`。CLI：`drag --trim-run-id ID [--drag-options options.json]`。普通用户在“求解纵向配平”完成后点击“计算阻力账目”。三者共用服务。

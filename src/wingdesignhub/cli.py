@@ -21,7 +21,7 @@ from .comparison_service import run_comparison, compare_sizing_runs
 
 def main():
     parser = argparse.ArgumentParser(description="WingDesignHub 开发与自动化入口")
-    parser.add_argument("action", choices=["run", "doctor", "reference", "mesh", "static", "flight", "plate", "prepare", "size", "geometry", "aero", "trim", "drag", "compare", "compare-runs", "cruise-check", "fuel-check", "archive-save", "archive-open", "report", "fastga-reference", "fastga-contract"])
+    parser.add_argument("action", choices=["run", "doctor", "reference", "mesh", "static", "flight", "plate", "prepare", "size", "geometry", "aero", "trim", "drag", "feedback", "compare", "compare-runs", "cruise-check", "fuel-check", "archive-save", "archive-open", "report", "fastga-reference", "fastga-contract"])
     parser.add_argument("--root", type=Path, default=Path.cwd())
     parser.add_argument("--input", type=Path)
     parser.add_argument("--run-ids", nargs=3)
@@ -30,6 +30,8 @@ def main():
     parser.add_argument("--aero-run-id")
     parser.add_argument("--trim-run-id")
     parser.add_argument("--drag-run-id")
+    parser.add_argument("--feedback-run-id")
+    parser.add_argument("--feedback-options",type=Path)
     parser.add_argument("--drag-options",type=Path,help='DragOptions JSON; input remains the design project')
     parser.add_argument("--trim-options",type=Path,help='TrimOptions JSON; input remains the design project')
     parser.add_argument("--aero-options",type=Path,help='AeroOptions JSON; input remains the design project')
@@ -44,6 +46,13 @@ def main():
         parser.error("公开参考任务保留固定输入，不接受自定义需求覆盖；请用 prepare 保存需求。")
     if args.action == "doctor":
         result = inventory(args.root)
+    elif args.action == 'feedback':
+        from .feedback_service import run_aero_feedback
+        if not args.run_id:parser.error('feedback 需要 --run-id 初始总体运行')
+        path=args.input or args.root/'runs'/args.run_id/'input.json'
+        project=DesignProject.from_dict(json.loads(path.read_text('utf-8')))
+        options=json.loads(args.feedback_options.read_text('utf-8')) if args.feedback_options else None
+        result=run_aero_feedback(project,args.root,args.run_id,options)
     elif args.action == 'drag':
         from .drag_service import run_aircraft_drag
         if not args.trim_run_id:parser.error('drag 需要 --trim-run-id 已收敛配平运行')
@@ -100,7 +109,8 @@ def main():
                 aero=get_results(args.root,args.aero_run_id) if args.aero_run_id else None
                 trim=get_results(args.root,args.trim_run_id) if args.trim_run_id else None
                 drag=get_results(args.root,args.drag_run_id) if args.drag_run_id else None
-                data=build_bundle(project,args.root,record,geometry,aero,trim,drag);result={'status':'archive_saved',**save_bundle(data,args.root)}
+                feedback=get_results(args.root,args.feedback_run_id) if args.feedback_run_id else None
+                data=build_bundle(project,args.root,record,geometry,aero,trim,drag,feedback);result={'status':'archive_saved',**save_bundle(data,args.root)}
                 if args.output:
                     with args.output.open('xb') as f:f.write(data)
     elif args.action == "compare":

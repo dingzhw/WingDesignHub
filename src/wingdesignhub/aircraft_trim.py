@@ -119,7 +119,9 @@ def bounded_newton(evaluate,initial,lower,upper,*,max_iterations=12,tolerance=1e
 def solve_trim(contract,executable,work):
     from .avl_aircraft import solve
     work=Path(work);options=TrimOptions(**contract['trim_options']);f=contract['flow'];r=contract['references']
-    target=f['mass_kg']*G/(f['dynamic_pressure_pa']*r['area_m2']);evaluations=[]
+    normal=f.get('normal_weight_factor',1.)
+    if not math.isfinite(normal) or not 0<normal<=1:raise ValueError('定常航迹配平法向重量系数须在 (0,1] 内')
+    target=f['mass_kg']*G*normal/(f['dynamic_pressure_pa']*r['area_m2']);evaluations=[]
     def evaluate(x):
         c=deepcopy(contract);c['flow']['alpha_deg']=float(x[0]);c['options'].update(alpha_deg=float(x[0]),elevator_deg=float(x[1]))
         name=f'evaluations/{len(evaluations):03d}';directory=work/name;directory.mkdir(parents=True)
@@ -140,7 +142,7 @@ def solve_trim(contract,executable,work):
                 for name in ('MainWing','HorizontalTail','VerticalTail')}
     initial=json.loads((work/evaluations[0]/'summary.json').read_text('utf-8'))
     c=s['coefficients'];q=f['dynamic_pressure_pa'];area=r['area_m2']
-    trim={**answer,'level_flight_target_cl':target,'residual_cl':answer['residuals'][0],'residual_cm':answer['residuals'][1],
+    trim={**answer,'level_flight_target_cl':target,'normal_weight_factor':normal,'residual_cl':answer['residuals'][0],'residual_cm':answer['residuals'][1],
           'lift_residual_n':answer['residuals'][0]*q*area,'pitch_residual_nm':answer['residuals'][1]*q*area*r['chord_m'],
           'final_evaluation':payload['evaluation_id'],'evaluation_count':len(evaluations),'flight_state':contract['flight_state'],
           'alpha_deg':s['flow']['alpha_deg'],'elevator_deg':s['options']['elevator_deg'],
@@ -148,7 +150,7 @@ def solve_trim(contract,executable,work):
           'surface_loads':totals(loads),'initial_coefficients':initial['coefficients'],
           'initial_surface_loads':totals(json.loads((work/evaluations[0]/'strip_loads.json').read_text('utf-8'))),
           'induced_drag_n':c['CDff']*q*area,'mission_polar_updated':False,'axial_force_balanced':False,
-          'scope':'symmetric level lifting-surface CL/Cm equilibrium; thrust and fuselage omitted'}
+          'scope':'symmetric steady-flight lifting-surface CL/Cm equilibrium with declared normal weight factor; propulsive and fuselage moments omitted'}
     write_json(work/'final_aero_contract.json',final);write_json(work/'trim_solution.json',trim)
     write_json(work/'flight_state.json',contract['flight_state'])
     return {**s,'status':answer['status'],'passed':answer['converged'],'trim_checked':answer['converged'],

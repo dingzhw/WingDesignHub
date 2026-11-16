@@ -23,7 +23,7 @@ def cg_ledger(weights,geo,p,ms):
             'cg_mac_fraction':(cg-(x-.25*geo['mac_m']))/geo['mac_m'],'stations_source':'conceptual fixed component stations; no trim/CG envelope validation'}
 
 
-def solve_design(project, mass_model, max_iterations=80, dt=30.):
+def solve_design(project, mass_model, max_iterations=80, dt=30., *, feedback=None, initial_summary=None):
     if type(max_iterations) is not int or max_iterations<1:
         raise ValueError('最大迭代次数须为正整数')
     if not math.isfinite(dt) or dt<=0: raise ValueError('任务积分步长须为正有限值')
@@ -35,20 +35,32 @@ def solve_design(project, mass_model, max_iterations=80, dt=30.):
     fixed=p.weight.mode=='fixed'
     mass=p.weight.value_kg if fixed else max(800.,p.payload_kg*2.5)
     fuel=100.;previous=None;consecutive=0;history=[]
+    power_guess=None
+    if feedback is not None:
+        if not initial_summary or not initial_summary.get('converged'):raise ValueError('气动反馈需要已收敛的初始总体方案')
+        mass=initial_summary['design_mtow_kg'];fuel=initial_summary['mission']['block_fuel_kg']
+        power_guess=initial_summary['power']['installed_power_w']
     try:
         for i in range(max_iterations):
             if not 400<=mass<=2500:raise DesignDomainError('试算质量超出本模板 400–2500 kg 范围')
-            geo=geometry(mass,fuel,p);power=constraints(mass,geo,p)
+            geo=geometry(mass,fuel,p);coupling={}
+            if feedback is None:
+                power=constraints(mass,geo,p)
+                ms=mission(mass,geo,power['installed_power_w'],p,dt)
+                weights=mass_model.evaluate(mass,power['installed_power_w'],geo,p)
+                ledger=cg_ledger(weights,geo,p,ms)
+            else:
+                power,ms,weights,ledger,coupling=feedback.evaluate(mass,geo,fuel,power_guess,mass_model,i+1,dt)
             if not 40000<=power['installed_power_w']<=400000:raise DesignDomainError('安装功率超出首期 40–400 kW 范围')
-            ms=mission(mass,geo,power['installed_power_w'],p,dt)
-            weights=mass_model.evaluate(mass,power['installed_power_w'],geo,p)
-            ledger=cg_ledger(weights,geo,p,ms);required=ledger['loaded_mass_kg']
+            required=ledger['loaded_mass_kg']
             state=[mass,ms['block_fuel_kg'],power['installed_power_w'],weights['owe_kg']]
             residuals={'mass_closure_fraction':(required-mass)/mass,'fuel_capacity_kg':geo['usable_tank_capacity_kg']-ms['block_fuel_kg']}
+            residuals.update(coupling)
             if previous:
                 residuals['max_state_change']=max(abs(x/y-1) for x,y in zip(state,previous['state']))
                 residuals['cg_change_mac']=abs(ledger['cg_x_m']-previous['cg'])/geo['mac_m']
                 stable=residuals['max_state_change']<1e-4 and residuals['cg_change_mac']<.001 and (fixed or abs(residuals['mass_closure_fraction'])<1e-4)
+                if feedback is not None:stable=stable and coupling['power_weight_coupling']<1e-4 and coupling['dry_weight_coupling']<1e-4
                 consecutive=consecutive+1 if stable else 0
             history.append({'iteration':i+1,'design_mtow_kg':mass,'required_loaded_mass_kg':required,
                             'block_fuel_kg':ms['block_fuel_kg'],'installed_power_w':power['installed_power_w'],
@@ -56,26 +68,37 @@ def solve_design(project, mass_model, max_iterations=80, dt=30.):
                             'residuals':residuals,'stable_rounds':consecutive})
             if consecutive>=3 or i+1==max_iterations:break
             previous={'state':state,'cg':ledger['cg_x_m']}
-            if not fixed:mass=.5*mass+.5*required
-            fuel=.5*fuel+.5*ms['block_fuel_kg']
+            relaxation=.5 if feedback is None else .75
+            if not fixed:mass=(1-relaxation)*mass+relaxation*required
+            fuel=(1-relaxation)*fuel+relaxation*ms['block_fuel_kg']
+            if feedback is not None:power_guess=(1-relaxation)*power_guess+relaxation*power['installed_power_w']
         converged=consecutive>=3
         allowance=.005*mass
+        # The aerodynamic mission uses actual loaded mass, while area is sized at
+        # design mass. Map the declared 1e-4 mass closure tolerance through Vs~sqrt(m).
+        stall_factor=math.sqrt(1+1e-4) if feedback is not None and not fixed else 1+1e-9
         checks={'mass_budget':required<=mass+.01 if fixed else abs(required-mass)<=allowance,
                 'mtow_upper_bound':p.weight.mode!='upper_bound' or mass<=p.weight.value_kg,
                 'fuel_capacity':ms['block_fuel_kg']<=geo['usable_tank_capacity_kg']+1e-4,
-                'landing_stall':power['landing_stall_m_s']<=p.sizing.stall_speed_m_s*(1+1e-9),
+                'landing_stall':power['landing_stall_m_s']<=p.sizing.stall_speed_m_s*stall_factor,
                 'power_available':ms['max_power_fraction']<=1.001,
                 'clean_lift':ms['max_clean_cl']<=p.sizing.cl_max_clean,
                 'range':p.mission.range_m is None or abs(ms['route_distance_m']-p.mission.range_m)<max(1.,p.mission.range_m*1e-6),
                 'endurance':p.mission.endurance_s is None or ((next(r['duration_s'] for r in ms['segments'] if r['segment']=='loiter') if p.mission.kind=='transit_loiter' else ms['main_duration_s'])>=p.mission.endurance_s-1e-6)}
         status='not_converged' if not converged else ('concept_checked_with_limits' if all(checks.values()) else 'constraints_not_met')
-        return {'status':status,'converged':converged,'checks':checks,'iterations':history,
+        result={'status':status,'converged':converged,'checks':checks,'iterations':history,
                 'design_mtow_kg':mass,'required_loaded_mass_kg':required,'weight_mode':{'mode':p.weight.mode,'value_kg':p.weight.value_kg},
                 'convergence_thresholds':{'state_relative':1e-4,'mass_relative':1e-4,'cg_mac':.001,'consecutive_rounds':3},
+                'landing_stall_numerical_relative_tolerance':stall_factor-1,
                 'mass_budget_margin_kg':mass-required,'ramp_mass_design_kg':mass+ms['taxi_out_fuel_kg'],
                 'upper_bound_margin_kg':p.weight.value_kg-mass if p.weight.mode=='upper_bound' else None,
                 'geometry':geo,'power':power,'mission':ms,'weights':weights,'cg':ledger,
                 'method':'FAST-GA native mass + declared point-mass mission + explicit constraint sizing',
                 'physical_validation_passed':False,'trim_checked':False,'limits':LIMITS}
+        if feedback is not None:
+            result['method']='FAST-GA native mass + bounded native trim/drag tables + shared point-mass mission and sizing iteration'
+            feedback.finalize(result)
+        return result
     except DesignDomainError as exc:
-        return {'status':'out_of_domain','converged':False,'diagnostics':[str(exc)],'iterations':history,'limits':LIMITS}
+        return {'status':'out_of_domain','converged':False,'diagnostics':[str(exc)],'error_code':getattr(exc,'status','out_of_domain'),
+                'diagnostic_context':getattr(exc,'context',{}),'iterations':history,'limits':getattr(feedback,'limits',LIMITS)}

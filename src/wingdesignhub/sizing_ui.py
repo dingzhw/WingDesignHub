@@ -88,5 +88,7 @@ def results(record, project, root):
         for line in s['limits']: st.caption(line)
     st.caption('总体运行编号：'+record['run_id'])
     st.download_button('下载总体运行记录',json.dumps(record,ensure_ascii=False,indent=2),'overall-result.json')
+    from .feedback_ui import render as render_feedback
+    render_feedback(project,root,record)
     from .geometry_ui import render
     render(project,root,record)

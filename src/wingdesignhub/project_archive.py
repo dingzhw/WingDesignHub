@@ -12,7 +12,7 @@ from .requirements import DesignProject
 from .design_comparison import ComparisonRequest
 from .service import get_results
 
-MAX_BYTES=50*1024*1024
+MAX_BYTES=512*1024*1024  # iterative native evidence is a bounded, lossless nested archive
 MAX_FILES=1024  # bounded trim evaluations include their original commands and outputs
 
 
@@ -42,10 +42,11 @@ def raw_definition(data,kind):
     return digest(json.dumps(normalize(obj),ensure_ascii=False,sort_keys=True,allow_nan=False).encode())
 
 
-def build_bundle(project,root,record=None,geometry_record=None,aero_record=None,trim_record=None,drag_record=None):
+def build_bundle(project,root,record=None,geometry_record=None,aero_record=None,trim_record=None,drag_record=None,feedback_record=None):
     kind='comparison' if isinstance(project,ComparisonRequest) else 'design'
     project.validate() if kind=='comparison' else project.check_schema()
-    source=project.to_dict();files={'project.json':encoded(source)};ids=[];geometry_ids=[];aero_ids=[];trim_ids=[];drag_ids=[]
+    source=project.to_dict();files={'project.json':encoded(source)};ids=[];geometry_ids=[];aero_ids=[];trim_ids=[];drag_ids=[];feedback_ids=[]
+    if feedback_record is not None and (record is None or kind!='design'):raise ValueError('气动反馈须与来源总体一起保存')
     if drag_record is not None and trim_record is None:raise ValueError('阻力结果须与来源配平一起保存')
     if trim_record is not None and geometry_record is None:raise ValueError('配平结果须与来源几何一起保存')
     if aero_record is not None and geometry_record is None:raise ValueError('气动结果须与来源几何一起保存')
@@ -82,7 +83,12 @@ def build_bundle(project,root,record=None,geometry_record=None,aero_record=None,
             if dr!=drag_record or dr.get('mode')!='aircraft_drag' or dr.get('parent_run_id')!=tr['run_id']:
                 raise ValueError('阻力结果与配平运行不匹配')
             drag_ids=[dr['run_id']]
-        for rid in ids+geometry_ids+aero_ids+trim_ids+drag_ids:
+        if feedback_record is not None:
+            fr=get_results(root,feedback_record['run_id'])
+            if fr!=feedback_record or fr.get('mode')!='overall_feedback' or fr.get('parent_run_id')!=actual['run_id']:
+                raise ValueError('气动反馈与总体运行不匹配')
+            feedback_ids=[fr['run_id']]
+        for rid in ids+geometry_ids+aero_ids+trim_ids+drag_ids+feedback_ids:
             r=get_results(root,rid);work=Path(root)/'runs'/rid
             for name in ['result.json',*r.get('artifact_hashes',{})]:
                 safe_name(name);p=(work/name).resolve()
@@ -93,7 +99,7 @@ def build_bundle(project,root,record=None,geometry_record=None,aero_record=None,
             if p.is_file():files['reports/'+filename]=p.read_bytes()
     name=source['name'] if kind=='design' else source['projects'][0]['name']+' 等三方案'
     manifest={'bundle_schema':1,'kind':kind,'name':name,'software_version':__version__,
-              'created_utc':datetime.now(timezone.utc).isoformat(),'run_ids':ids,'geometry_run_ids':geometry_ids,'aero_run_ids':aero_ids,'trim_run_ids':trim_ids,'drag_run_ids':drag_ids,
+              'created_utc':datetime.now(timezone.utc).isoformat(),'run_ids':ids,'geometry_run_ids':geometry_ids,'aero_run_ids':aero_ids,'trim_run_ids':trim_ids,'drag_run_ids':drag_ids,'feedback_run_ids':feedback_ids,
               'definition_sha256':project.definition_hash(),'files':{n:digest(b) for n,b in files.items()},
               'integrity_scope':'SHA-256 detects damaged contents; this is not a signed authenticity certificate'}
     stream=BytesIO()
@@ -105,7 +111,7 @@ def build_bundle(project,root,record=None,geometry_record=None,aero_record=None,
 
 def read_bundle(data):
     """Check all members in memory, with no extraction and no HTML execution."""
-    if not isinstance(data,bytes) or len(data)>MAX_BYTES:raise ValueError('方案包大小超出 50 MB 限制')
+    if not isinstance(data,bytes) or len(data)>MAX_BYTES:raise ValueError('方案包大小超出 512 MB 限制')
     try:
         with ZipFile(BytesIO(data)) as z:
             infos=z.infolist();names=[safe_name(i.filename) for i in infos]
@@ -134,7 +140,10 @@ def read_bundle(data):
             raise ValueError('方案包配平运行列表无效')
         if len(drag_ids)>1 or set(drag_ids)&set(ids+geometry_ids+aero_ids+trim_ids) or (drag_ids and not trim_ids):
             raise ValueError('方案包阻力运行列表无效')
-        for rid in ids+geometry_ids+aero_ids+trim_ids+drag_ids:
+        feedback_ids=manifest.get('feedback_run_ids',[]);feedback_records=[]
+        if len(feedback_ids)>1 or set(feedback_ids)&set(ids+geometry_ids+aero_ids+trim_ids+drag_ids) or (feedback_ids and (kind!='design' or len(ids)!=1)):
+            raise ValueError('方案包气动反馈列表无效')
+        for rid in ids+geometry_ids+aero_ids+trim_ids+drag_ids+feedback_ids:
             if UUID(rid).hex!=rid:raise ValueError('方案包运行编号无效')
             prefix=f'runs/{rid}/';r=json.loads(files[prefix+'result.json'])
             if r['run_id']!=rid:raise ValueError('方案包运行身份不符')
@@ -148,7 +157,7 @@ def read_bundle(data):
             summary_name='comparison.json' if run_kind=='comparison' else 'summary.json'
             if prefix+summary_name in files and json.loads(files[prefix+summary_name])!=r.get('summary'):
                 raise ValueError('方案包摘要与运行结果不符')
-            (drag_records if rid in drag_ids else trim_records if rid in trim_ids else aero_records if rid in aero_ids else geometry_records if rid in geometry_ids else records).append(r)
+            (feedback_records if rid in feedback_ids else drag_records if rid in drag_ids else trim_records if rid in trim_ids else aero_records if rid in aero_ids else geometry_records if rid in geometry_ids else records).append(r)
         if records:
             expected='overall_comparison' if kind=='comparison' else 'overall_sizing'
             if records[0]['mode']!=expected or records[0]['definition_sha256']!=manifest['definition_sha256']:
@@ -232,13 +241,36 @@ def read_bundle(data):
                         s['flight_state']!=contract['flight_state'] or s['ledger']!=ledger or
                         ledger!=finish_ledger(ledger['rows'],s['flow']['dynamic_pressure_pa'],s['references']['area_m2'])):
                     raise ValueError('方案包阻力账目与工况不一致')
+        for r in feedback_records:
+            from .aero_feedback import FeedbackOptions,MissionAeroTable
+            from .feedback_evidence import check_native
+            prefix=f'runs/{r["run_id"]}/';parent=records[0];snapshot=files[prefix+'parent_result.json']
+            options=json.loads(files[prefix+'options.json']);FeedbackOptions.from_dict(options)
+            if (r['mode']!='overall_feedback' or r['parent_run_id']!=parent['run_id'] or
+                r['definition_sha256']!=parent['definition_sha256'] or json.loads(snapshot)!=parent or
+                digest(snapshot)!=r['parent_result_sha256'] or r['options']!=options):raise ValueError('方案包气动反馈来源不一致')
+            check_native(files[prefix+'native_evidence.zip'],json.loads(files[prefix+'native_manifest.json']))
+            s=r.get('summary',{})
+            if 'aerodynamic_feedback' in s:
+                audit=s['aerodynamic_feedback'];aero=json.loads(files[prefix+'aero_table.json'])
+                MissionAeroTable.from_dict(aero)
+                if (json.loads(files[prefix+'feedback_verification.json'])!=audit or audit['options']!=options or
+                    aero['reference_area_m2']!=s['geometry']['wing_area_m2'] or not aero['no_extrapolation']):
+                    raise ValueError('方案包气动反馈条件或验证不符')
+                dry=aero['dry_mass_kg'];moment=aero['dry_moment_kg_m'];fuel_x=aero['fuel_x_m']
+                for state in json.loads(files[prefix+'mission_trace.json']):
+                    mass=state['mass_kg']
+                    if (abs(state['remaining_fuel_kg']-(mass-dry))>1e-7 or
+                        abs(state['cg_x_m']-(moment+(mass-dry)*fuel_x)/mass)>1e-10):raise ValueError('方案包任务质量和重心不一致')
+                if abs(s['cg']['loaded_mass_kg']-dry-s['mission']['takeoff_fuel_kg'])>1e-6:raise ValueError('方案包任务初始质量不闭合')
         current={p.relative_to(Path(__file__).parent).as_posix():digest(p.read_bytes()) for p in Path(__file__).parent.rglob('*.py')}
-        compatible=all(r.get('version')==__version__ and r.get('source_hashes')==current for r in records+geometry_records+aero_records+trim_records+drag_records)
-        for r in records+geometry_records+aero_records+trim_records+drag_records:
+        all_records=records+geometry_records+aero_records+trim_records+drag_records+feedback_records
+        compatible=all(r.get('version')==__version__ and r.get('source_hashes')==current for r in all_records)
+        for r in all_records:
             for package,recorded in r.get('summary',{}).get('versions',{}).items():
                 try:compatible=compatible and version(package)==recorded
                 except PackageNotFoundError:compatible=False
-        return {'manifest':manifest,'input':source,'project':project,'records':records,'geometry_records':geometry_records,'aero_records':aero_records,'trim_records':trim_records,'drag_records':drag_records,'files':files,
+        return {'manifest':manifest,'input':source,'project':project,'records':records,'geometry_records':geometry_records,'aero_records':aero_records,'trim_records':trim_records,'drag_records':drag_records,'feedback_records':feedback_records,'files':files,
                 'migration_required':project.definition_hash()!=manifest['definition_sha256'],
                 'current_source_matches':compatible,'bundle_sha256':digest(data)}
     except (KeyError,TypeError,UnicodeError,json.JSONDecodeError,AttributeError) as exc:

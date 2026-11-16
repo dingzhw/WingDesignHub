@@ -61,14 +61,16 @@ def surface(name, area, span, taper, quarter_x, z, vertical=False, camber=0.):
                         {'leading_edge_m':tip_le, 'chord_m':tip, 'twist_deg':0.}]}
 
 
-def build_geometry_contract(project, record, options=None):
+def build_geometry_contract(project, record, options=None, *, trial=False):
     options = options or GeometryOptions(); options.validate()
-    if record.get('mode') != 'overall_sizing' or record.get('status') not in ('concept_checked_with_limits', 'constraints_not_met'):
+    if trial:
+        if record.get('mode')!='overall_trial' or record.get('status')!='trial':raise ValueError('内部几何试算须明确标记 trial')
+    elif record.get('mode') != 'overall_sizing' or record.get('status') not in ('concept_checked_with_limits', 'constraints_not_met'):
         raise ValueError('全机几何需要已收敛的总体运行；失败或未收敛试算不可使用')
     if project.confirmation_sha256 != project.definition_hash() or record.get('definition_sha256') != project.definition_hash():
         raise ValueError('需求或确认状态已变更，请重新计算总体方案')
     s = record['summary']
-    if s.get('converged') is not True or s.get('status') != record['status']:
+    if not trial and (s.get('converged') is not True or s.get('status') != record['status']):
         raise ValueError('总体收敛状态不一致')
     g = s['geometry']
     if g.get('configuration') != 'low_wing_conventional_tail_fixed_tricycle_metal' or g.get('engine_count') != 1:

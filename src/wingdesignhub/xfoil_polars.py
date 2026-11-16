@@ -38,7 +38,7 @@ class PolarSpec:
         if not 2e5 <= self.reynolds <= 2e7 or not 0 <= self.mach <= .3 or any(abs(x) > 1.2 for x in self.cl_grid):
             raise PolarError('polar_out_of_domain', 'XFOIL 接口范围：Re 20万–2000万、Mach≤0.3、|cl|≤1.2', conditions=asdict(self))
         if (not 1 <= self.ncrit <= 14 or not 0 < self.trip_top <= 1 or not 0 < self.trip_bottom <= 1 or
-                abs(self.flap_deg) > 10 or not .5 <= self.hinge_xc < 1 or self.panels not in (160, 240)):
+                abs(self.flap_deg) > 10 or not .5 <= self.hinge_xc < 1 or self.panels not in (160, 240, 280, 320)):
             raise PolarError('polar_invalid', '转捩、舵偏、铰链或面元条件无效')
         if not self.cl_grid or len(self.cl_grid) > 51 or list(self.cl_grid) != sorted(set(self.cl_grid)):
             raise PolarError('polar_invalid', 'cl 网格须有序、唯一且不超过 51 点')
@@ -107,8 +107,13 @@ def read_attempts(work,spec):
     if not missing or len(missing)>3 or [r['cl'] for r in recovery]!=missing:
         raise PolarError('polar_invalid','极曲线恢复清单与原始缺点不符')
     for i,item in enumerate(recovery):
-        if item['directory']!=f'recovery_{i}':raise PolarError('polar_invalid','恢复目录无效')
-        single=replace(spec,cl_grid=(item['cl'],))
+        attempts=item.get('attempts',[{'directory':f'recovery_{i}','panels':spec.panels}])
+        allowed={f'recovery_{i}':spec.panels,f'recovery_{i}_direct':spec.panels,
+                 **{f'recovery_{i}_mesh_{n}':n for n in (280,320) if n>spec.panels}}
+        if (not attempts or len(attempts)>4 or len({a['directory'] for a in attempts})!=len(attempts) or
+            any(allowed.get(a['directory'])!=a['panels'] for a in attempts) or item['directory']!=attempts[-1]['directory']):
+            raise PolarError('polar_invalid','恢复目录或面元记录无效')
+        single=replace(spec,cl_grid=(item['cl'],),panels=attempts[-1]['panels'])
         parsed=parse_polar((work/item['directory']/'polar.txt').read_text('utf-8'),single)
         result['rows'].extend(parsed['rows'])
     result['rows'].sort(key=lambda r:r['requested_cl']);result['recovery']=recovery
@@ -133,7 +138,10 @@ def run_polar(foil, spec, executable, work, cache=None, cache_only=False):
             if 'recovery.json' in manifest['files']:
                 recovery=json.loads((stored/'recovery.json').read_text('utf-8'))
                 if not 1<=len(recovery)<=3:raise ValueError('恢复次数无效')
-                required|={'recovery.json'}|{f'recovery_{i}/{n}' for i in range(len(recovery)) for n in raw}
+                required|={'recovery.json'}|{a['directory']+'/'+n for i,r in enumerate(recovery)
+                    for a in r.get('attempts',[{'directory':f'recovery_{i}'}]) for n in raw}
+                # Validate directory names before using any manifest path.
+                read_attempts(stored,spec)
             if set(manifest['files'])!=required:raise ValueError('缓存文件清单无效')
             if any(not (stored/n).is_file() or sha256(stored/n)!=h for n,h in manifest['files'].items()):raise ValueError('缓存文件哈希不符')
             parsed=read_attempts(stored,spec)
@@ -155,14 +163,29 @@ def run_polar(foil, spec, executable, work, cache=None, cache_only=False):
         for i,target in enumerate(missing):
             good=[r['requested_cl'] for r in partial['rows']]
             opposite=[x for x in good if x>target] if target>=0 else [x for x in good if x<target]
-            seed=min(opposite or good,key=lambda x:abs(x-target)) if good else 0.
-            directory=work/f'recovery_{i}';directory.mkdir();shutil.copy2(foil,directory/'foil.dat')
-            try:execute([str(executable)],directory,stdin=commands(replace(spec,cl_grid=(target,)),warm_start=seed),timeout=60)
-            except (RuntimeError,OSError) as exc:raise PolarError('polar_failed','缺点恢复失败：'+str(exc),cl=target,reynolds=spec.reynolds) from exc
-            if not (directory/'polar.txt').is_file():raise PolarError('polar_missing','缺点恢复未输出极曲线',cl=target,reynolds=spec.reynolds)
-            # One new initialization, unchanged physical inputs and panel count.
-            parse_polar((directory/'polar.txt').read_text('utf-8'),replace(spec,cl_grid=(target,)))
-            recovery.append({'cl':target,'warm_start_cl':seed,'directory':directory.name,'policy':'one cold process initialized from opposite neighbor; unchanged model'})
+            # At a grid endpoint, approach from the other side too. The seed is
+            # initialization only, never an accepted or interpolated polar point.
+            seed=min(opposite,key=lambda x:abs(x-target)) if opposite else max(-1.2,min(1.2,target+(.1 if target>=0 else -.1)))
+            attempts=[]
+            plan=[(f'recovery_{i}',spec.panels,seed),
+                  *[(f'recovery_{i}_mesh_{n}',n,seed) for n in (280,320) if n>spec.panels],
+                  (f'recovery_{i}_direct',spec.panels,None)]
+            # A failed warm seed can contaminate all panel retries. One independent
+            # direct target starts without that boundary-layer state, at base density.
+            for name,panels,start in plan:
+                directory=work/name;directory.mkdir();shutil.copy2(foil,directory/'foil.dat')
+                single=replace(spec,cl_grid=(target,),panels=panels)
+                try:execute([str(executable)],directory,stdin=commands(single,warm_start=start),timeout=60)
+                except (RuntimeError,OSError) as exc:raise PolarError('polar_failed','缺点恢复失败：'+str(exc),cl=target,reynolds=spec.reynolds) from exc
+                attempts.append({'directory':name,'panels':panels})
+                try:
+                    if not (directory/'polar.txt').is_file():raise PolarError('polar_missing','缺点恢复未输出极曲线')
+                    parse_polar((directory/'polar.txt').read_text('utf-8'),single);break
+                except PolarError as exc:
+                    if exc.status!='polar_missing' or name==plan[-1][0]:
+                        exc.context.update(cl=target,reynolds=spec.reynolds,attempts=attempts);raise
+            recovery.append({'cl':target,'warm_start_cl':seed,'directory':directory.name,'attempts':attempts,
+                'policy':'opposite-side seed; bounded panel refinement 280/320; final independent direct target; unchanged physical inputs, first converged point only'})
         if recovery:write_json(work/'recovery.json',recovery)
         parsed=read_attempts(work,spec)
         if not (work/'analyzed_foil.dat').is_file():raise PolarError('polar_invalid', '缺少实际分析翼型读回')

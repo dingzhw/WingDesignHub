@@ -4,6 +4,7 @@ from pathlib import Path
 import json
 import math
 import sys
+import shutil
 import numpy as np
 from .adapters import execute
 from .service import write_json
@@ -89,9 +90,26 @@ def finish_ledger(rows, q, area):
     return {'cd_total':math.fsum(r['cd'] for r in rows),'drag_n':math.fsum(r['drag_n'] for r in rows), 'rows':rows}
 
 
-def solve_drag(contract, work, root, xfoil):
+def solve_drag(contract, work, root, xfoil, *, prepared_geometry=None, polar_workers=1):
     work=Path(work);o=DragOptions(**contract['options']);f=contract['flow'];ref=contract['references']
-    execute([sys.executable,'-X','utf8','-m','wingdesignhub.drag_geometry_worker',str(work)],work,timeout=180)
+    from .adapters import sha256
+    raw_strips=json.loads((work/'trim_strip_loads.json').read_text('utf-8'))['strips']
+    keys=('surface','strip_id','x_le_m','y_le_m','z_le_m','chord_m','width_m','area_m2')
+    geometry_key={'vsp3':sha256(work/'aircraft.vsp3'),'contract':sha256(work/'geometry_contract.json'),
+                  'area_samples':o.area_samples,'geometry_tessellation':o.geometry_tessellation,
+                  'strips':[{k:s[k] for k in keys} for s in raw_strips]}
+    names=['drag_geometry.json','compgeom.json',*[f'airfoils/{n}.dat' for n in ('MainWing','HorizontalTail','VerticalTail')]]
+    if prepared_geometry is None:
+        execute([sys.executable,'-X','utf8','-m','wingdesignhub.drag_geometry_worker',str(work)],work,timeout=180)
+    else:
+        prepared_geometry=Path(prepared_geometry)
+        saved=json.loads((prepared_geometry/'prepared_geometry.json').read_text('utf-8'))
+        if saved['key']!=geometry_key:raise ValueError('面积复用的几何、条带或离散条件不一致')
+        if set(saved['files'])!=set(names):raise ValueError('面积复用文件清单不一致')
+        for name,h in saved['files'].items():
+            if sha256(prepared_geometry/name)!=h:raise ValueError('面积复用来源哈希不一致')
+            (work/name).parent.mkdir(parents=True,exist_ok=True);shutil.copy2(prepared_geometry/name,work/name)
+    write_json(work/'prepared_geometry.json',{'key':geometry_key,'files':{n:sha256(work/n) for n in names}})
     geom=json.loads((work/'drag_geometry.json').read_text('utf-8'))
     gc=json.loads((work/'geometry_contract.json').read_text('utf-8'))
     strips=json.loads((work/'trim_strip_loads.json').read_text('utf-8'))['strips']
@@ -102,7 +120,10 @@ def solve_drag(contract, work, root, xfoil):
     for name in ('MainWing','HorizontalTail','VerticalTail'):
         active=[s for s in strips if s['surface'].replace(' (YDUP)','')==name and exposure[(s['surface'],s['strip_id'])]['exposed_area_m2']>0]
         if not active:raise ValueError('升力面没有暴露面积：'+name)
-        res=[s['chord_m']*re_per_m for s in active];cls=[s['cl'] for s in active]
+        res=[s['chord_m']*re_per_m for s in active]
+        # Symmetric vertical-tail lift is zero up to floating-point roundoff.
+        # Do not request an unrelated -0.1 endpoint for a value of -1e-18.
+        cls=[0. if abs(s['cl'])<1e-12 else s['cl'] for s in active]
         if min(res)<2e5 or max(res)>2e7 or min(cls)<-1.2 or max(cls)>1.2:
             raise PolarError('polar_out_of_domain','条带超出本版 XFOIL 范围', surface=name, reynolds=[min(res),max(res)], cl=[min(cls),max(cls)])
         # Cover each queried cell; do not demand unrelated near-stall padding points.
@@ -111,13 +132,18 @@ def solve_drag(contract, work, root, xfoil):
         grid=tuple(round(float(v),8) for v in np.arange(lo,hi+o.cl_step/2,o.cl_step))
         re_grid=np.geomspace(min(res),max(res),o.re_stations);re_grid[0]=min(res);re_grid[-1]=max(res)
         flap=contract['trim_options']['elevator_deg'] if name=='HorizontalTail' else 0.
-        polars=[]
-        for i,reynolds in enumerate(re_grid):
+        def run_station(item):
+            i,reynolds=item
             spec=PolarSpec(float(reynolds),f['mach'],grid,o.ncrit,o.trip_top,o.trip_bottom,flap,.7,o.panels)
             try:polar=run_polar(work/geom['airfoils'][name]['file'],spec,xfoil,work/'polars'/name/str(i),Path(root)/'local'/'cache'/'xfoil',o.cache_only)
             except PolarError as exc:
                 exc.context.update(surface=name,station=i);raise
-            polars.append(polar)
+            return polar
+        if polar_workers==1:polars=list(map(run_station,enumerate(re_grid)))
+        else:
+            from concurrent.futures import ThreadPoolExecutor
+            if polar_workers!=3:raise ValueError('极曲线并行数限1或3')
+            with ThreadPoolExecutor(max_workers=3) as pool:polars=list(pool.map(run_station,enumerate(re_grid)))
         coverage.append({'surface':name,'reynolds':list(map(float,re_grid)),'cl_grid':list(grid),'flap_deg':flap,
                          'mach':f['mach'],'polar_count':len(polars),'cache_hits':sum(p['cache_hit'] for p in polars),
                          'recovered_points':sum(len(p.get('recovery',[])) for p in polars),

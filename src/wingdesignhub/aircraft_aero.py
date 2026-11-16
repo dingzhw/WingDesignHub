@@ -48,7 +48,7 @@ class AeroOptions:
                 raise ValueError(f'{name} 超出本版范围 [{lo}, {hi}]')
 
 
-def make_contract(interface, project, sizing_summary, options=None):
+def make_contract(interface, project, sizing_summary, options=None, *, trial=False):
     o=AeroOptions(**options) if isinstance(options,dict) else (options or AeroOptions());o.validate()
     if interface.get('schema_version')!=1:raise ValueError('气动几何接口版本不支持')
     surfaces=interface['surfaces'];refs=interface['references']
@@ -63,7 +63,7 @@ def make_contract(interface, project, sizing_summary, options=None):
     v=o.speed_m_s if o.speed_m_s is not None else sizing_summary['mission']['cruise_speed_used_m_s']
     h=o.altitude_m if o.altitude_m is not None else project.assumptions.cruise_altitude_m
     mass=o.mass_kg if o.mass_kg is not None else sizing_summary['design_mtow_kg']
-    if not 20<=v<=120 or not 0<=h<=4000 or not 0<mass<=sizing_summary['design_mtow_kg']:
+    if not 20<=v<=120 or not 0<=h<=4000 or not 0<mass or (not trial and mass>sizing_summary['design_mtow_kg']):
         raise ValueError('工况速度/高度越界，或工况质量大于设计起飞重量')
     temperature=288.15-.0065*h;rho=density(h);mu=1.716e-5*(temperature/273.15)**1.5*(273.15+110.4)/(temperature+110.4)
     mach=v/math.sqrt(1.4*287.05287*temperature)

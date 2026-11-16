@@ -164,6 +164,24 @@ def test_native_missing_point_recovery_uses_real_same_condition_output(native):
     assert (work/'recovery_0/stdout.log').is_file()
 
 
+def test_native_tail_recovery_discards_failed_seed_without_changing_conditions(native):
+    from wingdesignhub.xfoil_polars import read_attempts
+    root,p,s,g,t,d=native;foil=root/'runs'/d['run_id']/'airfoils/HorizontalTail.dat'
+    spec=PolarSpec(3308059.049347583,.176255570607546,(-.2,-.1,0.),
+                   flap_deg=-6.69965687184869,panels=240)
+    work=root/'tail_direct_recovery';cache=root/'tail_recovery_cache'
+    result=run_polar(foil,spec,'C:/apps/XFOIL6.99/xfoil.exe',work,cache)
+    recovered=result['recovery'][0]
+    assert recovered['cl']==-.2 and recovered['directory']=='recovery_0_direct'
+    assert len(recovered['attempts'])==4 and recovered['attempts'][-1]['panels']==240
+    assert result['rows'][0]['cd']==pytest.approx(.00448,abs=1e-5)
+    direct=(work/'recovery_0_direct/stdin.txt').read_text('utf-8')
+    assert direct.count('CL ')==1 and 'CL -0.2' in direct
+    assert read_attempts(work,spec)['rows']==result['rows']
+    repeated=run_polar(foil,spec,'C:/apps/XFOIL6.99/xfoil.exe',root/'tail_recovery_hit',cache,True)
+    assert repeated['cache_hit'] and repeated['rows']==result['rows']
+
+
 def test_native_archive_report_and_semantic_tamper_rejection(native):
     from wingdesignhub.project_archive import build_bundle,read_bundle,digest,encoded
     from wingdesignhub.service import generate_report
