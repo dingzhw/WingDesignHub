@@ -19,7 +19,7 @@ def show_files(record,files,key):
         st.plotly_chart(mesh_figure(json.loads(files['surface_mesh.json'])),width='stretch',key=key+'_3d')
     ref=s['references']
     st.caption(f'参考面积 {ref["area_m2"]:.4f} m² · 全翼展 {ref["span_m"]:.4f} m · MAC {ref["chord_m"]:.4f} m；机头朝 x 减小方向。可拖动旋转、滚轮缩放。')
-    st.write('全机外形已接通；气动分析与配平将在后续版本使用这套几何和参考量。')
+    st.write('全机外形已接通；后续气动子任务使用这套几何和参考量，分别保存检查状态。')
     for name,label in [('aircraft.vsp3','下载 OpenVSP 全机模型'),('report.html','导出几何报告'),
                        ('aerodynamic_geometry.json','下载气动几何接口')]:
         if name in files:st.download_button(label,files[name],name,key=key+'_'+name)
@@ -50,4 +50,6 @@ def render(project,root,sizing_record):
             record=get_results(root,record['run_id']);directory=Path(root)/'runs'/record['run_id']
             files={n:(directory/n).read_bytes() for n in record['artifact_hashes']}
             show_files(record,files,'current_geometry')
+            from .aero_ui import render as render_aero
+            render_aero(project,root,record)
         except (ValueError,OSError) as exc:st.error('几何记录检查失败：'+str(exc))

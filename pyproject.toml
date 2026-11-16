@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "wingdesignhub"
-version = "0.2.1"
+version = "0.2.2"
 description = "Traceable conceptual aircraft design workbench"
 requires-python = ">=3.13,<3.15"
 dependencies = ["numpy>=2.2,<3", "scipy>=1.15,<2", "streamlit>=1.45,<2", "psutil>=7,<8", "plotly>=6,<7"]

@@ -1,12 +1,12 @@
 # WingDesignHub
 
-面向固定翼飞机概念设计的本地工程工作台。当前版本 **V0.2.1**：需求驱动的总体设计结果已接入 OpenVSP 全机参数化几何，支持三维预览、统一气动几何接口、保存重开和报告导出。
+面向固定翼飞机概念设计的本地工程工作台。当前版本 **V0.2.2**：需求驱动的总体方案经 OpenVSP 全机几何接入 AVL 小迎角气动，支持工况/舵偏、条带载荷、配平准备接口、保存重开和报告导出。
 
 目标是让用户给出有效载荷、航程/航时及可选起飞重量等少量需求，一键开展正向总体设计，形成初步技术参数、可行性诊断和方案比较。FAST-GA/OpenMDAO、OpenVSP、AVL/XFOIL、CCBlade、OpenAeroStruct、CalculiX 等工具支撑这一主流程，并逐步覆盖 AAA 十模块。
 
 默认首页“新建飞机方案”已能从少量需求生成初步构型、翼面积、重量、燃油和安装功率，并一键比较三个方案。计算采用 FAST-GA 原生部件重量、明确的概念极曲线与任务积分；输入、结果、报告可以一起保存，重开后复算。V0.2.0 交付软件阶段验证及专业评审材料，专业签署仍待完成。全机配平、起降距离与结构质量回写按后续路线接入。详见 [产品主流程](docs/FORWARD_DESIGN.md)、[阶段验证](docs/VALIDATION_V0.2.0.md)与[评审材料](docs/REVIEW_V0.2.0.md)。
 
-V0.2.1 补齐“总体参数→全机外形→气动输入”：从同一已收敛方案生成机身、机翼、平尾、垂尾和概念动力/起落架共 12 个部件，读回核验尺寸、坐标、参考量及截面积分。外形模板假设可见，实际全机气动与配平仍待后续版本。见[几何接口与边界](docs/GEOMETRY_INTERFACE.md)和[本版验证](docs/VALIDATION_V0.2.1.md)。
+V0.2.1 已生成并核验 12 部件全机外形；V0.2.2 使用其中的机翼、平尾和垂尾进行联合无黏计算。机身气动力、黏性阻力、动力影响及配平求解仍待接入；总体任务保持原概念极曲线。见[几何接口](docs/GEOMETRY_INTERFACE.md)、[气动接口与边界](docs/AERODYNAMICS_INTERFACE.md)和[本版验证](docs/VALIDATION_V0.2.2.md)。
 
 ## 普通用户
 
@@ -15,7 +15,7 @@ V0.2.1 补齐“总体参数→全机外形→气动输入”：从同一已收�
 1. 在“新建飞机方案”填写载荷合计（含机组），选择起飞重量为规定值、上限或待求量。
 2. 选择航程、航时、同一任务同时约束两者，或往返转场加额外留空；储备独立填写。
 3. 核对巡航速度、高度、储备和初始构型假设，勾选确认，点击“运行初步总体设计”。页面给出初步参数、约束表、构型图及可下载的报告；通常可保留高级假设默认值。
-   在结果下点击“生成全机几何”，可旋转查看外形、下载 OpenVSP 模型、气动几何接口和几何报告。之后保存方案会同时保存总体与几何；修改需求后重新计算。
+   在结果下点击“生成全机几何”，可旋转查看外形。再点击“运行全机气动”，可查看升力、诱导阻力、力矩及条带载荷，导出气动报告和配平接口。默认工况即可运行，展开设置可修改迎角/舵偏等。之后保存方案会同时保存总体、几何和最后一次气动结果；修改需求后重新计算。
 4. 展开“三方案比较与需求变化”，选择展弦比或巡航速度比较设计，或选择载荷、航程、航时研究需求变化。填入三个取值，核对共同假设后点击“一键计算并比较三个方案”。支持保存/导入三方案配置、下载可打印方案卡及 ZIP 包。
 5. 点击“保存方案到本机”或“保存三方案到本机”。下次从顶部“打开本机方案”恢复输入和历史结果；重新运行产生新记录。也可以导出 `.wdh` 完整方案包，在另一台已配置电脑导入。
 6. 点击“导出可打印总体报告”或“导出可打印比较报告”，用浏览器打开 HTML，可打印或另存 PDF。报告包含需求、参数、约束、任务燃油账目、来源及诊断。
@@ -45,7 +45,9 @@ CalculiX 基准要求 2.23。其他电脑可从 [CalculiX Windows 项目](https:
 
 ## 开发与验证
 
-V0.2.1：Python 服务 `geometry_service.run_aircraft_geometry(project, root, sizing_run_id)`，CLI `geometry --run-id ID`；归档可用 `archive-save --run-id 总体ID --geometry-run-id 几何ID --output aircraft.wdh`。几何与父总体独立记录，检查源版本、输入、原生文件与气动参考量一致性。`scripts/validate_aircraft_geometry.py local/new-geometry-validation` 运行需求变化、两档几何离散、保存重开和随包 API 算例。当前不运行全机气动求解器。
+V0.2.2：Python 服务 `aero_service.run_aircraft_aero(project, root, geometry_run_id, options)`；CLI `aero --geometry-run-id ID [--aero-options options.json]`。归档增加 `--aero-run-id ID`，与来源总体和几何一起保存。`scripts/validate_aircraft_aero.py local/new-aero-validation` 执行五组需求、三档气动离散、对称/参考点/导数及官方算例验证；首次获取公开输入需要网络，已有官方文件可按固定哈希复用。要求已验证的 AVL 3.40 MRF 输出。
+
+V0.2.1：Python 服务 `geometry_service.run_aircraft_geometry(project, root, sizing_run_id)`，CLI `geometry --run-id ID`；归档可用 `archive-save --run-id 总体ID --geometry-run-id 几何ID --output aircraft.wdh`。几何与父总体独立记录，检查源版本、输入、原生文件与气动参考量一致性。`scripts/validate_aircraft_geometry.py local/new-geometry-validation` 运行需求变化、两档几何离散、保存重开和随包 API 算例。
 
 V0.2.0：`project_archive.build_bundle/read_bundle/save_bundle/load_saved` 共享保存重开逻辑，方案包校验 SHA-256、输入定义与运行产物，导入时不执行文件、不覆盖原记录。需求 schema 3 增加耗油模型选择；schema 1/2 迁移保持统一耗油语义并清除旧确认。报告由实际计算记录生成，校准、同源留出及异条件外部参考分开标记。
 
