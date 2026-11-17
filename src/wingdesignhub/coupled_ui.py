@@ -34,6 +34,9 @@ def show_files(record,files,key):
     for name,label in [('report.html','导出推进闭环报告'),('report.md','下载推进闭环摘要'),
                        ('aircraft_parameters.json','下载闭环后总体参数'),('final_geometry/aircraft.vsp3','下载闭环后全机几何')]:
         if name in files:st.download_button(label,files[name],Path(name).name,key=key+'_'+name)
+    if 'final_geometry/surface_mesh.json' in files or 'geometry.svg' in files:
+        from .geometry_ui import show_final_geometry
+        show_final_geometry(record,files,key+'_geometry')
     st.caption('推进闭环运行：'+record['run_id'])
 
 
@@ -50,12 +53,13 @@ def render(project,root,parent,key='coupled',archived=None):
     present=(Path(root)/'runs'/parent['run_id']/'result.json').is_file()
     if st.button('运行推进闭环总体计算',key=key+'_run',disabled=not present):
         try:
-            with st.spinner('正在匹配推进、更新重量和携油，并逐轮重建原生几何/气动……'):
-                st.session_state['coupled_result']=run_coupled(project,root,parent['run_id'],options)
+            from .job_ui import submit
+            submit(root,'coupled',project,parent['run_id'],options)
         except (ValueError,OSError) as exc:st.error(str(exc))
     if not present:st.caption('来源运行未在本机计算目录中；可查看存档，新计算请先运行当前总体方案。')
     r=st.session_state.get('coupled_result')
-    if r and r.get('parent_run_id')==parent['run_id']:
+    if r and r.get('definition_sha256')==project.definition_hash():
+        st.caption('新任务初值来源：'+parent['run_id']+'；下方历史结果初值来源：'+r['parent_run_id'])
         if r['options']!=asdict(options):st.warning('闭环选项已修改，下方保留上次结果，请重新计算。')
         try:
             r=get_results(root,r['run_id']);work=Path(root)/'runs'/r['run_id']

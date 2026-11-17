@@ -1,0 +1,783 @@
+{
+  "version": "0.3.1",
+  "software_stage_passed": true,
+  "physical_validation_passed": false,
+  "professional_review": "pending_signoff",
+  "source_hashes": {
+    "adapters.py": "2bcdc44f953613563068f22ca832b4e4c7945d4a63374709fbde3855f3807351",
+    "aero_feedback.py": "e658ef9ec3c6b29dd546cbdf21aec037f689fdaff95f97628181ac666d0feb23",
+    "aero_report.py": "867ca0f8750c137e1dc1cf2a5f0ae836f7346ad411ea2d376a881dae35e5ba17",
+    "aero_service.py": "c5f0e176868e3af4e6b41a0ea86471a16243c176d113c7622b702e338d4ce61b",
+    "aero_ui.py": "7e32c902f91527df99cbbc822378874df6667e817d2fa354cdd1456a9116eb56",
+    "aircraft_aero.py": "38fe036640af07e409dc58372ad548486f6c0e8462729e3e8773ee2b5e811360",
+    "aircraft_drag.py": "343843c812215be0fadced137fa70bf4895af85630fd102e6e12dc98bb065d5d",
+    "aircraft_geometry.py": "b41270ed26eb09653085fb6ddc4b8c917275b20e015855e20cb13121ef961deb",
+    "aircraft_trim.py": "95221b7eb977d557553089fd011598047e27b64e65dcadba9f9ddb9aedcb40e4",
+    "aircraft_vsp_worker.py": "b906dffd66ac67688c99edcf85e01bd5ec2ec046d891014618295408f44fc438",
+    "avl_aircraft.py": "9880ba1c2dbc3e528d6d6ec41c8c91100ae73101960b07635eef41ca2707dd9e",
+    "box_comparison.py": "bf8e8a4c19e59c24e53a9cbbcc2add9ef42ece3343f902663795c52a44e783b5",
+    "buckling.py": "a473b5d91d835f3f100473e11aad1185f6597854e8cdd87960a4b22658399720",
+    "calculix_benchmark.py": "f3bab4818455864f4324f62a96f1fff25cdaf42f08e8b42b6d548c8e20a630ec",
+    "ccblade_adapter.py": "b52fe5d57395a00bbd1eed67ac76e864959d9c88d146aabd6f0671818cc30d62",
+    "ccblade_benchmark.py": "34ab2197a16efb2eddf221d1f84b793c92cca3fcd4b2ab3f70322f6dd66c020f",
+    "cli.py": "93857e61f5a3d1328b898ba3f5f9206f7148b7928be8edab0967af85e4b0b1d3",
+    "comparison_archive.py": "46a66ea4cc6d8c92aa862c91992337049a68140050351ecb3cdbe0fc5064c405",
+    "comparison_service.py": "eba9cce47a74639c6f675922c535636e45a6555c5104e1a2c8619f556f24a871",
+    "comparison_ui.py": "40461039f839c9ef3ee3561b159724521e3da95f8be2da764348d29c36136fe1",
+    "configuration.py": "4ed86770b5be810db956cff7246b507962fe471d116ec75f97bf31c5789f5426",
+    "coupled_archive.py": "7db2093cd7ae9f421e1dc68b0df58769acea6754303262d7dded3ef3ea9452da",
+    "coupled_identity.py": "b119604f91aa83e30f47d80ed5f83b9ed200aa5db806f92118d1e7f559cdd5a8",
+    "coupled_report.py": "5bbe6f67cebaedaa798035d1ede0bd2a2d48fe27d29263ee144c9e1911f20cb4",
+    "coupled_service.py": "56636e12f8977ba95a654730629b923fd14adc3a2dd23c62c4226cf39ac60dfb",
+    "coupled_ui.py": "ee4a17ef0cc0451656d7a6c5c495cb17bb2f526e406c5209c7b2a327052086c5",
+    "coupled_worker.py": "2bf2b4da15776a5142b32e4e808bb57951de354b5fac3d6d76443f5790ee9220",
+    "design_cards.py": "b142e8e06c6ca2dd025995512db9c906ff08858be5e88471f8ddef108f09cd73",
+    "design_comparison.py": "34c29f4fdf1fc06bc2c365b5272c0a944e5d75c4aad2a3ad230b49ca1e637235",
+    "design_report.py": "202d8226a88ce27971781c241bf3808ef770577c4ffe21d7ae95fee6b2409f1f",
+    "design_service.py": "45abc8b6ac761c6c489fd27b0119b7e9258563f4548d6e86bae1d1bd2ad22c88",
+    "design_ui.py": "696a62887959b0c86bed0ecec9d55241dc3686ab32dda3e058362d5cc9e14fef",
+    "drag_geometry_worker.py": "e7133fba5c37ce147126896783e2ca3115765638c3cbe2a6b9c95c8f349ff37f",
+    "drag_report.py": "865fc455ae89d3cfc51521644541e2e7156290418e039e2b0143658ce9ad295a",
+    "drag_service.py": "1562f1d3b7d4e8f629d8f395e567f1c22d0a78f3256a3d794430502c54b34a9f",
+    "drag_ui.py": "bba05565cb0374076fdea56e9dc5a7a886062f7f07252fb91a18226b4214fc06",
+    "engine_fuel.py": "753966d653278cef4e628987c8ff1e16b1dfc0476f1b356e6039e307a21d6f3b",
+    "fastga_compat.py": "6ba7f14ef2c6046533ef6cef6d93355a1db91255bab46c9746f1ae5a14a94fab",
+    "fastga_diagnostics.py": "bc93d372e3e5bb7f5dc4e068f4dfb3b14dfda42600ec8f84a3b51e06f631b887",
+    "fastga_interface.py": "cb0852101644a0a5a9e34fb2cfb2a249d9a148988dfdc05a0cf28f41021c7b69",
+    "fastga_mass.py": "425d441f5b4e79e575dfa205d6b55f8b6da55ef211fda80a3abe6b1f86207f71",
+    "fastga_worker.py": "a25185200db8ebb0222eb307f3852c7c83c15ed9c98c3c8b1bc92fed8958375f",
+    "fea_mesh.py": "f99f1817b20d85089a64d4248684c64a8ba7180268fe11b91a14ed415dc729e3",
+    "feedback_evidence.py": "f5ea96f6a81d7764ab35975e31f9d934ceb498636a4a5932666d6c507db8a7f8",
+    "feedback_native.py": "cc8aa5d04cea7085ffea23c9bebcae3ed7736c1c5eeb037c714fdcac9d4bdb5d",
+    "feedback_report.py": "3d430acb4157fc0cea1398eaf7b4ccc55502beccba39298981248a485b262625",
+    "feedback_service.py": "27f503b645134e1976c14e10876f86f662801172451d3fc3c443ebf4e37a6d49",
+    "feedback_ui.py": "9d9283729e43b159e633afb7923e095454eb59b4329f6b40d760b8db7fab0da4",
+    "feedback_worker.py": "3b0ff3d4bbc43f492a7f441f66ade57e965c755285cfce0efc3e52bcbd76667f",
+    "flight_loads.py": "4d9d7e8bcd24d59131337cbdb5953e90ed432853e5c6c4b359857a7395247890",
+    "flight_service.py": "72dcf0c2a247bd1ab560819a1a295141f459143377c964ecfac24129c4bc5645",
+    "flight_state.py": "042fc1a50ae186487b5f6a978fbae8a7f86bce1ab0abef81cc5dc35129c1f98b",
+    "flight_ui.py": "fb4b7a8a3ee36f1a3f01e65c719eed70c8150473f391047523d8d8ff74d0fa78",
+    "fuel_model.py": "2678359dc34e16e0aa7c881a479f25ed3645fb7bb9e6afd3697f82b945f0da66",
+    "fuel_validation.py": "1485a6bd9f9b870385fb5f475da73ba7a838e2eb0f1c38199c59732bfc8d64b4",
+    "geometry_report.py": "423e78b7d2b730c13dfcae8fa2c75bf3b83884e99e1b2afba3eae6ddecd0891d",
+    "geometry_service.py": "5e0364787ca74ed408a0f36d7d8592a1dded5ce3985e0f5c7b6fe1ed8d1ca841",
+    "geometry_ui.py": "407a598773ed1c88a2dddd540b3c3c0af513225463117262527244711e0bdee1",
+    "jobs.py": "d87bf83e8bf6db0750ef00f6b4fafc508c88f3b9236f3fe55da30b6c788ae34b",
+    "job_events.py": "51031b8891b1e61da620cdd39652fdbfcd420883095b2ecec3a4e3b69032af83",
+    "job_runner.py": "7165707c627dee5b50c0bd4c31458ad5f8eca7a7fd4fa02a507d2ad70a984404",
+    "job_ui.py": "38e05fb83d100d3a52bbe7494000b1625e8d35cfc7ccb515ca312ba45d0b929f",
+    "job_worker.py": "aa3c228aaf52f9b07f63e75a245211e6453f1a76a588f8d7a495aebd1dabd470",
+    "mechanics.py": "aece8baec13b7d9a84e133720f82a33d70444a38c980b86cf727cbdab0973650",
+    "model.py": "345afae92c6b8dd09435ebb31ce234ddf40e0d5e615e8a2fca4f2e85cc058b11",
+    "oas_benchmark.py": "74d2900b9dbba587c701bd2fc92ba75a8bf09ec17678c03ac67c1f00cdff5c56",
+    "oas_wingbox.py": "e8d0b503f1f1ba3fb7d77abdda14d376820fff41ef32f1b5a97e187d0f2f737b",
+    "plate_buckling.py": "7448faec93a91382127a0ade183b69d26074062be66ddaab1607b249b1fd9c09",
+    "plate_service.py": "0c740429e6591a1b020a334beb344fe3f1a8325569498cfdd43da0b2d9fb7301",
+    "plate_ui.py": "47adf0c1efec842d669cb199dfa3f8dfb47d21e8bd67f9df846bbe0813e6b0d9",
+    "processes.py": "e7d030f653df07f94675b3aba7afadf116bb6135dcb4496da417ee92a4723233",
+    "project_archive.py": "df8f58fa7c79dd5e18b7d1824d2f5046150e011dab53e29f954bb7d52762ba68",
+    "project_ui.py": "c49488ecf6025eed60e46885f502da98ef581c4e404b7f8860304a421c5d6ab3",
+    "propulsion_feedback.py": "bc7a89d9d44db96d90f00cb7c998b601cadf21114e8fdc3d3d76e4d79d991b60",
+    "propulsion_model.py": "5165440160107be26f49a43f3fdbaae1d103e3e012424111697d4a2d448dc167",
+    "propulsion_report.py": "85c46d94966087e75c915a8323db5d1d52ba72e74c2ad81b218ddf8046e5a6e7",
+    "propulsion_service.py": "cba6ea802d93884303dd306039720214ece3446a33234efb241881becf27affc",
+    "propulsion_ui.py": "4f7cc2d248e4ab53c1234bbc254ac155ada09522331441de556684661aff8bf8",
+    "reference_cruise.py": "7987b65965090c774f9043e126a10724fab4d48e3eb87120c33891cb3764242a",
+    "requirements.py": "af49146e331235fba487e736a5ae4ba04b40070d74e735bf1f44f670d010d4d9",
+    "service.py": "5ab243c183eade78fc6aa69c77281cc58c8130372e869fff290a93b8bc176b7b",
+    "shell_loads.py": "a06bdbb345ab2ac1cf18265eec95815accd6b3f2bb0732a7eaaee9c09208a397",
+    "shell_static.py": "1c23aabbf1395b4b2a7729b135428b130ff2d252397b3420bb3e287c7fee4da4",
+    "shell_validation.py": "30d6c706a44d32d131d0ab6c7f9e41508c82bd39aabe8f3cab26e28cab68be92",
+    "sizing.py": "2ea486f1e2d55e53bb04869495260e6e45133bb21d9e2e6923cc9e60687f0b04",
+    "sizing_config.py": "81039f38893ce848ba725f2a5f97ba0c9e194f01f2688497a837464807e00e69",
+    "sizing_physics.py": "87995f3d53f55631cc4787cb9199ad3744e417aecb294646a61b78f69a3d8665",
+    "sizing_service.py": "e13f8f8d9fc91be4e19d5c1d2b5607634a1760c9cfbd5196872060f86f08a41f",
+    "sizing_ui.py": "696c3206af040978dc858f7690ecb2c6614f5164f8dd7605886922ba690c2bc6",
+    "sizing_worker.py": "8a1beb33e3764ed21660e8fd2dfea387fa371d0f7ea5d06d8ebb966726d15cbb",
+    "static_service.py": "941de7a411c9814b8c73883b248aecbb04ebb812cf380bafb7e3f5f7b39528f9",
+    "structural_sensitivity.py": "cf1527dafd494a67281b12414e4f223e13e31c76252ff2f1f7592bd3ce77e6fc",
+    "structure_service.py": "5703dd5d078b0af7dfb078b661beace113b627e97c304b9d612af39fe45ad12b",
+    "tool_health.py": "ca04b7e9a06d2cc76e122002621c2c3b12b6d913a6d5db8a27533ed41ae46e39",
+    "tool_ui.py": "b346eeb68677cd4db8cebb05fee15dbe30cc0fc0b45dd4ca99654901c42cedc4",
+    "trim_report.py": "5793b363fb2eacf715f79cbf946c54ddf1fb04d56848195ebb056fab9e1971b8",
+    "trim_service.py": "c90a5ddee4f2db9c2c7b3cb7b3ac61ca806042f47d5687c0908c5df8f543da1d",
+    "trim_ui.py": "c8aa4d8a02c9fe0179fba2f46bc5a4592c691198b26994e713732b331059fc4c",
+    "vsp_structure_worker.py": "ee7cfff132602d9b5c6875b54c956cbc6d381fd4ef0228cdb7455add725899bc",
+    "vsp_worker.py": "aba49475b1221a2ad13d73644a38f508bcecc093859184e78e782282a7f73abd",
+    "xfoil_polars.py": "11ca5d93547c8b6e5196b35b7d1aefca3350fc92535c249299738370968b768f",
+    "__init__.py": "a3a375ce3a1565b579c391fe7e1d01181f9b35c600bea1331e1aea1aefa7ca05",
+    "fastga_plugins/furniture.py": "45b5a219b73c6380a63418f0e64f1f66d189c7943147f39faa2e98d118f719bf",
+    "fastga_plugins/reserve.py": "ceb05f0f889a91b66bea34856f0dbcf0de594e895f16edf0cdbdef0bbe2b2cda",
+    "fastga_plugins/unusable_fuel.py": "724433d55934a868696f27553b9924c75f99ca6594df274045dfaf9bf5a00f21",
+    "fastga_plugins/__init__.py": "652c53dda99eb1a2b439a1aca6f0ec81c25fed142d761e63ddf46af578a41a17"
+  },
+  "representative_request": {
+    "project": {
+      "schema_version": 3,
+      "name": "新飞机方案 · A",
+      "payload_kg": 350.0,
+      "weight": {
+        "mode": "solve",
+        "value_kg": null
+      },
+      "mission": {
+        "kind": "range_only",
+        "range_m": 800000.0,
+        "endurance_s": null
+      },
+      "assumptions": {
+        "cruise_speed_m_s": 60.0,
+        "cruise_altitude_m": 2000.0,
+        "reserve_duration_s": 2700.0,
+        "reserve_basis": "cruise_fuel_flow",
+        "sources": {
+          "cruise_speed_m_s": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+          "cruise_altitude_m": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+          "reserve_duration_s": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+          "reserve_basis": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定"
+        }
+      },
+      "sizing": {
+        "template": "metal_single_v1",
+        "stall_speed_m_s": 28.0,
+        "climb_rate_m_s": 3.0,
+        "aspect_ratio": 7.5,
+        "cd0": 0.032,
+        "oswald_efficiency": 0.8,
+        "cl_max_clean": 1.4,
+        "cl_max_landing": 1.8,
+        "propeller_efficiency": 0.8,
+        "bsfc_kg_kwh": 0.3,
+        "fuel_model": "constant_bsfc",
+        "cruise_power_fraction": 0.75,
+        "seats": 4,
+        "fuselage_length_m": 7.5,
+        "tank_volume_fraction": 0.12,
+        "unusable_fuel_fraction": 0.02,
+        "source": "WingDesignHub V0.1.7 独立金属单发概念模板；系数为待校准工程假设，非真实型号数据"
+      },
+      "confirmation_sha256": "3a67e5287506da1737e635544dbb472f8a1e0fddaabe2cbeaea4dfebb980bddc"
+    },
+    "options": {
+      "aero": {
+        "schedule_cl_ceiling": 0.5,
+        "mass_stations": 2,
+        "altitude_stations": 3,
+        "integration_step_s": 30.0,
+        "max_iterations": 40,
+        "drag": {
+          "panels": 240,
+          "re_stations": 3,
+          "cl_step": 0.1,
+          "ncrit": 9.0,
+          "trip_top": 1.0,
+          "trip_bottom": 1.0,
+          "area_samples": 12,
+          "geometry_tessellation": 1,
+          "strut_crossflow_cd": 1.2,
+          "junction_cd": 0.0015,
+          "cooling_cd": 0.001,
+          "roughness_cd": 0.0005,
+          "cache_only": false
+        }
+      },
+      "propeller": {
+        "rpm": 2400.0,
+        "blades": 3,
+        "root_chord_m": 0.18,
+        "tip_chord_m": 0.08,
+        "reference_pitch_deg": 20.0,
+        "collective_min_deg": -8.0,
+        "collective_max_deg": 16.0,
+        "collective_step_deg": 1.0,
+        "radial_stations": 48,
+        "altitude_stations": 3,
+        "integration_step_s": 30.0
+      },
+      "low_load_policy": "base_bsfc"
+    }
+  },
+  "native": {
+    "version": "0.3.1",
+    "status": "native_checks_passed",
+    "run_id": "3b8a708c07d54eb7bed4698717ec9bae",
+    "job_id": "eb7b71798a514cf3be67fe5ab323e223",
+    "seed_run_id": "0ea773e61da640f8b594eb098a3ed29b",
+    "cancel_job_id": "404069cbfbfe4bea83dd141558345ca8",
+    "cancel_latency_s": 0.5424623489379883,
+    "comparisons": [
+      {
+        "quantity": "MTOW kg",
+        "before": 1220.5417719952202,
+        "after": 1217.6010929138863,
+        "relative_change": -0.0024093227686314833
+      },
+      {
+        "quantity": "OWE kg",
+        "before": 788.3778219134351,
+        "after": 785.548872371154,
+        "relative_change": -0.0035883170018852217
+      },
+      {
+        "quantity": "fuel kg",
+        "before": 82.57128790341345,
+        "after": 82.45704289306478,
+        "relative_change": -0.0013835924478047268
+      },
+      {
+        "quantity": "power W",
+        "before": 151656.86976119023,
+        "after": 151390.09805397203,
+        "relative_change": -0.001759047958976634
+      },
+      {
+        "quantity": "area m2",
+        "before": 13.84773238967204,
+        "after": 13.814368732731687,
+        "relative_change": -0.0024093227686314833
+      }
+    ],
+    "iteration_count": 14,
+    "elapsed_s": 3465.162786500063,
+    "remaining_processes": [],
+    "checks": {
+      "mass_budget": true,
+      "mtow_upper_bound": true,
+      "fuel_capacity": true,
+      "landing_stall": true,
+      "power_available": true,
+      "clean_lift": true,
+      "range": true,
+      "endurance": true,
+      "aero_table_accuracy": true,
+      "propeller_table_accuracy": true,
+      "mission_step_accuracy": true,
+      "shaft_torque_balance": true
+    },
+    "physical_validation_passed": false,
+    "data_role": "same synthetic aircraft and conditions; numerical/model-consistency regression, not independent physical data",
+    "unchanged_iteration_prefix": {
+      "completed_common_iterations": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "max_absolute_differences": {
+        "design_mtow_kg": 0.0,
+        "block_fuel_kg": 0.0,
+        "installed_power_w": 0.0,
+        "wing_area_m2": 0.0,
+        "owe_kg": 0.0,
+        "cg_x_m": 0.0
+      },
+      "basis": "same corrected configuration; before/after bounded numerical recovery; not the V0.3.0 comparison"
+    },
+    "unchanged_after_process_membership_fix": {
+      "prior_run_id": "1aa979452aff46d99dfd2fe3cc49d710",
+      "iterations": 14,
+      "max_absolute_differences": {
+        "design_mtow_kg": 0.0,
+        "block_fuel_kg": 0.0,
+        "installed_power_w": 0.0,
+        "wing_area_m2": 0.0,
+        "owe_kg": 0.0,
+        "cg_x_m": 0.0
+      },
+      "changed_core_files": [
+        "job_worker.py",
+        "jobs.py",
+        "processes.py"
+      ],
+      "unchanged_core_file_count": 103,
+      "basis": "completed engineering calculation retained despite false monitoring ownership; all physical model code unchanged"
+    },
+    "bounded_refinement_points": [
+      {
+        "polar_directory": "trial_011/point_006/polars/HorizontalTail/2",
+        "cl": -0.2,
+        "accepted_panels": 360,
+        "conditions": {
+          "reynolds": 4266778.139368093,
+          "mach": 0.18043530883564288,
+          "cl_grid": [
+            -0.2,
+            -0.1,
+            0.0
+          ],
+          "ncrit": 9.0,
+          "trip_top": 1.0,
+          "trip_bottom": 1.0,
+          "flap_deg": -6.636921834122845,
+          "hinge_xc": 0.7,
+          "panels": 240
+        },
+        "accepted_row": {
+          "alpha_deg": 2.754,
+          "cl": -0.2,
+          "cd": 0.00428,
+          "cd_pressure": 0.00057,
+          "cm": 0.0777,
+          "transition_top": 0.3619,
+          "transition_bottom": 0.7421,
+          "requested_cl": -0.2
+        }
+      }
+    ]
+  },
+  "profile": {
+    "solver_groups": {
+      "OpenVSP full geometry": {
+        "calls": 14,
+        "wall_s": 92.3323289998807
+      },
+      "avl.exe": {
+        "calls": 690,
+        "wall_s": 2947.6212411012966
+      },
+      "OpenVSP area/exposure": {
+        "calls": 14,
+        "wall_s": 116.37482209980953
+      },
+      "xfoil.exe": {
+        "calls": 1,
+        "wall_s": 0.18819940008688718
+      },
+      "julia.exe": {
+        "calls": 2,
+        "wall_s": 99.52738089987542
+      },
+      "parent Python worker (inclusive)": {
+        "calls": 1,
+        "wall_s": 3393.6063434000826
+      }
+    },
+    "aggregation": "parent Python durations include nested solvers; do not sum them with child groups",
+    "pack": [
+      {
+        "elapsed_s": 61.12353549990803,
+        "file_count": 33578,
+        "uncompressed_bytes": 956765214,
+        "archive_bytes": 198578574
+      }
+    ],
+    "heartbeat_max_interval_s": 0.6295180320739746,
+    "resource_samples": 6852,
+    "peak_rss_bytes": 1040007168,
+    "paired_solver_events": 722,
+    "aero_points": 230,
+    "trial_aero_points": 230,
+    "polar_cache_hits": 2074,
+    "polar_cache_misses": 0,
+    "geometry_files": 244,
+    "unique_geometry_contents": 14,
+    "cache_basis": "existing local cache plus preceding cancelled probes; mixed cache, not a cold-cache speed benchmark"
+  },
+  "environment": {
+    "os": "Windows-11-10.0.26320-SP0",
+    "processor": "AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD",
+    "logical_cpus": 24,
+    "physical_cpus": 12,
+    "ram_bytes": 34281426944,
+    "available_ram_at_probe_bytes": 7908466688,
+    "python": "3.13.18",
+    "packages": {
+      "fast-oad-cs23": "1.4.0",
+      "openmdao": "3.45.2",
+      "openaerostruct": "2.12.1",
+      "streamlit": "1.67.0",
+      "psutil": "7.2.2",
+      "numpy": "2.5.4",
+      "scipy": "1.18.1"
+    },
+    "note": "shared workstation; task RSS sums working sets, not exclusive physical memory"
+  },
+  "tests": {
+    "full_regression": {
+      "tests": "414",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "659.930"
+    },
+    "full_regression_log_sha256": "bb1ff2e0816dac6b988eaee2a88f99e23b0017eb6a8c26862d02dd629253cfa4",
+    "scope": "full suite preceded final progress/telemetry, bounded XFOIL refinement and process-ownership fixes; affected modules rerun below; batches overlap",
+    "progress": {
+      "passed": 12,
+      "elapsed_s": 19.38,
+      "log_sha256": "7bb0af3be66cd394002fe91a4115ef32b383e826c2e776857cd1a8659a25e3a8"
+    },
+    "parallel_events": {
+      "passed": 13,
+      "elapsed_s": 21.25,
+      "log_sha256": "6019b5be76bc005d321e780e30f8694e57672a918d76509f9822bd0d2f463e4f"
+    },
+    "tools": {
+      "passed": 3,
+      "elapsed_s": 0.27,
+      "log_sha256": "15a8872527abf1ca8babb3fa23514473a3e0c87a406920987a6558542a772cdc"
+    },
+    "xfoil_refinement": {
+      "passed": 26,
+      "elapsed_s": 116.57,
+      "log_sha256": "6791e541a6dd80d775297b3a1aa233fa8fdb580e2d3d9dae0148889e48289293"
+    },
+    "dispatcher_gate": {
+      "passed": 17,
+      "elapsed_s": 18.66,
+      "log_sha256": "fd638f08e5a63eacc479872af164ea026b109de5dc3232bb74430990ef95eb89"
+    },
+    "job_membership": {
+      "passed": 18,
+      "elapsed_s": 19.73,
+      "log_sha256": "0901b4501f7d93e931df9a083aeb1f6eddbb8cda0c4b2ae513cc2a0eaee5befd"
+    }
+  },
+  "fixed_configuration_mass": {
+    "basis": "same mass, power, areas, mission and engine; only tail thickness 0.10->0.12 and VT AR1.8->1.6",
+    "old_reproduction_max_input_error": 0.0,
+    "old_owe_kg": 788.3796576921341,
+    "new_owe_kg": 786.8490961926955,
+    "delta_owe_kg": -1.5305614994385905,
+    "changed_inputs": {
+      "data:geometry:horizontal_tail:thickness_ratio": {
+        "before": {
+          "value": 0.1,
+          "units": "unitless"
+        },
+        "after": {
+          "value": 0.12,
+          "units": "unitless"
+        }
+      },
+      "data:geometry:vertical_tail:aspect_ratio": {
+        "before": {
+          "value": 1.8,
+          "units": "unitless"
+        },
+        "after": {
+          "value": 1.6,
+          "units": "unitless"
+        }
+      },
+      "data:geometry:vertical_tail:thickness_ratio": {
+        "before": {
+          "value": 0.1,
+          "units": "unitless"
+        },
+        "after": {
+          "value": 0.12,
+          "units": "unitless"
+        }
+      }
+    }
+  },
+  "workflow": {
+    "status": "passed",
+    "checks": {
+      "selected_native_record": true,
+      "exact_inputs_and_results": true,
+      "current_sources_match": true,
+      "selected_report_matches": true,
+      "final_mesh_preserved": true,
+      "saved_reopened_same_bundle": true,
+      "saved_selected_id": true,
+      "actual_initial_native_switch": true,
+      "native_3d_shown": true,
+      "native_geometry_id_visible": true,
+      "history_loads_exact_chain": true,
+      "history_selects_native": true,
+      "ui_reopens_selected_native": true,
+      "ui_reopened_mesh_shown": true,
+      "ui_reopened_report_available": true,
+      "ui_clear_preserves_disk_archive": true
+    },
+    "timings": {
+      "build_bundle_including_validation_s": 11.885980500024743,
+      "read_and_verify_s": 5.286289899959229,
+      "save_with_verification_s": 5.337748399935663,
+      "load_with_verification_s": 5.41967149998527,
+      "result_switch_AppTest_s": [
+        0.5228893000166863,
+        0.28676859999541193,
+        0.35743259999435395
+      ],
+      "load_completed_job_full_page_s": 13.733204999938607,
+      "warm_full_page_AppTest_s": 1.1813548998907208,
+      "reopen_AppTest_s": 5.5076022000284865
+    },
+    "bundle_bytes": 179604099,
+    "bundle_sha256": "514078e0801b596ac0207cfbfd383f0763bbe1e2c99150924a2bd886957703ca",
+    "archive_id": "9229cffb0caf48618ed0b82060262869",
+    "native_run_id": "3b8a708c07d54eb7bed4698717ec9bae",
+    "scope": "actual frozen native results and AppTest; browser download/visual rendering not measured"
+  },
+  "live_ui": {
+    "checks": {
+      "duplicate_returns_same_job": true,
+      "second_task_stays_queued": true,
+      "page_switch_keeps_job": true,
+      "new_session_recovers_job": true,
+      "same_worker_continues": true,
+      "heartbeat_advances": true,
+      "actual_progress_visible": true
+    },
+    "timings_s": {
+      "select_task_AppTest": 0.2143643000163138,
+      "switch_page_AppTest": 0.17152329999953508
+    },
+    "native_job_id": "a2eeb2b89a7b44318e5870b5fe992e4e",
+    "queued_tools_job_id": "a8a90133bfca4f3f95387b0e97cf7c8e",
+    "scope": "real queue and AppTest sessions; no browser rendering latency claim"
+  },
+  "browser_task_panel": {
+    "checked_at": 1794910050.4540274,
+    "mode": "CUA screenshot and accessibility tree; isolated fresh Streamlit process",
+    "checks": {
+      "version_0_3_1_visible": true,
+      "current_job_id_matches": true,
+      "iteration_and_mass_visible": true,
+      "heartbeat_visible": true,
+      "cancel_control_visible": true,
+      "beam_entry_explicitly_named": true
+    },
+    "job_id": "ad33c29ad0374c879d4754e72c436215",
+    "observed_iteration": 3,
+    "native_calculations_submitted": 0,
+    "limitations": [
+      "no completed-result visual inspection in this browser pass",
+      "no browser download latency measured"
+    ],
+    "environment_notes": [
+      "pre-existing server retained cached 0.3.0 version; untouched",
+      "first isolated port unavailable; OS-assigned port succeeded"
+    ]
+  },
+  "final_cancel_probe": {
+    "checks": {
+      "real_aerodynamic_stage_observed": true,
+      "cancelled_confirmed": true,
+      "no_owned_process_remaining": true,
+      "within_10_seconds": true,
+      "source_still_frozen": true
+    },
+    "job_id": "a5de755b8682458faeda1c895f9ebe92",
+    "related_run_ids": [
+      "f073ba85f82f4549b2fbf31d8b366eb0"
+    ],
+    "cancel_latency_s": 0.7930557727813721,
+    "status": "cancelled",
+    "resumed_same_probe": true,
+    "scope": "final-source native job cancellation; representative completed run retained"
+  },
+  "diagnostics": {
+    "checks": {
+      "actual_ccblade_import": true,
+      "identical_commands": true,
+      "polar_failure_reproduced": true,
+      "foil_unchanged": true,
+      "original_failure_preserved": true,
+      "failed_record_reopened": true,
+      "failed_report_selected": true
+    },
+    "ccblade": {
+      "status": "runtime_checked",
+      "version": "1.0.0",
+      "julia_version": "1.12.4",
+      "source_sha256": "3a377560a80d2a7a4fc9fe0f68a7c8c19af2e1f0c2020a5881b3916ffc38ace6",
+      "scope": "导入与版本核查；气动精度见公开桨算例"
+    },
+    "polar_status": "polar_failed",
+    "polar_elapsed_s": 60.73004479997326,
+    "old_run_id": "39d34c3a5cb6493eba089a98cee9c3ea",
+    "original_result_sha256": "d9770db2345567cb5b2a356db2030bb3aca25a79637fb9cc5113f213f00b383e",
+    "foil_sha256": "152c2c25cdb2fbb966747e4dd2d852bb7f5483693243cf4c182206a6f7bd0f20",
+    "conditions": {
+      "conditions": {
+        "reynolds": 2368102.0688359574,
+        "mach": 0.17625557060754624,
+        "cl_grid": [
+          -0.2,
+          -0.1,
+          0.0
+        ],
+        "ncrit": 9.0,
+        "trip_top": 1.0,
+        "trip_bottom": 1.0,
+        "flap_deg": -7.990482434456497,
+        "hinge_xc": 0.7,
+        "panels": 240
+      },
+      "surface": "HorizontalTail",
+      "station": 0
+    },
+    "role": "failure diagnosis replay; fixed-weight budget validation remains incomplete"
+  },
+  "preserved_attempts": [
+    {
+      "job_id": "c41e99119ce44fed8b27845ea6a79b2a",
+      "run_ids": [
+        "fd7d2b6a16a74d99acfb1468e1a7cf1d"
+      ],
+      "reason": "parallel telemetry append lost events; cancelled, fixed with per-process thread lock",
+      "checkpoint": "checkpoint-attempt-c41e99119ce44fed8b27845ea6a79b2a.json"
+    },
+    {
+      "job_id": "a2eeb2b89a7b44318e5870b5fe992e4e",
+      "run_ids": [
+        "be065580f99a40d991a123ef742c2c23"
+      ],
+      "reason": "XFOIL 240/280/320-panel oscillation at fixed physical conditions; bounded 360/400 refinement verified",
+      "checkpoint": "checkpoint-attempt-a2eeb2b89a7b44318e5870b5fe992e4e.json"
+    },
+    {
+      "job_id": "8de17edb3b414c07aea5fb5e6e1d9c86",
+      "run_ids": [
+        "4b28c9cb394248ddb47e595f8a5afe35"
+      ],
+      "reason": "dispatcher must stop taking queued jobs when cleanup is unconfirmed; bounded branch fix and regression",
+      "checkpoint": "checkpoint-attempt-8de17edb3b414c07aea5fb5e6e1d9c86.json"
+    },
+    {
+      "job_id": "ad33c29ad0374c879d4754e72c436215",
+      "run_ids": [
+        "1aa979452aff46d99dfd2fe3cc49d710"
+      ],
+      "reason": "engineering loop completed; monitor falsely included older unrelated orphan via reused parent PID; Windows Job Object membership query fixed and tested",
+      "checkpoint": "checkpoint-attempt-ad33c29ad0374c879d4754e72c436215.json"
+    }
+  ],
+  "bounded_polar_diagnosis": {
+    "failed_run_id": "be065580f99a40d991a123ef742c2c23",
+    "status": "polar_missing",
+    "iteration": 11,
+    "point": 6,
+    "reynolds": 4266778.139368093,
+    "mach": 0.180435308835643,
+    "flap_deg": -6.63692183412284,
+    "cl": -0.2,
+    "initialization_probes": {
+      "foil_sha256": "152c2c25cdb2fbb966747e4dd2d852bb7f5483693243cf4c182206a6f7bd0f20",
+      "rows": [
+        {
+          "probe": "fine_from_above",
+          "status": "failed",
+          "reason": "XFOIL 未提供唯一收敛点，禁止跨缺点插值",
+          "elapsed_s": 2.87798950006254
+        },
+        {
+          "probe": "fine_from_below",
+          "status": "failed",
+          "reason": "XFOIL 未提供唯一收敛点，禁止跨缺点插值",
+          "elapsed_s": 3.2048738000448793
+        },
+        {
+          "probe": "fixed_alpha_seed",
+          "status": "failed",
+          "reason": "XFOIL 未提供唯一收敛点，禁止跨缺点插值",
+          "elapsed_s": 3.0571664000162855
+        },
+        {
+          "probe": "repeat_target",
+          "status": "failed",
+          "reason": "XFOIL 未提供唯一收敛点，禁止跨缺点插值",
+          "elapsed_s": 7.4775940999388695
+        }
+      ]
+    },
+    "numerical_probes": {
+      "foil_sha256": "152c2c25cdb2fbb966747e4dd2d852bb7f5483693243cf4c182206a6f7bd0f20",
+      "rows": [
+        {
+          "probe": "vacc_zero",
+          "panels": 240,
+          "vacc": 0,
+          "status": "failed",
+          "reason": "XFOIL 未提供唯一收敛点，禁止跨缺点插值",
+          "elapsed_s": 3.103147500078194
+        },
+        {
+          "probe": "vacc_small",
+          "panels": 240,
+          "vacc": 0.001,
+          "status": "failed",
+          "reason": "XFOIL 未提供唯一收敛点，禁止跨缺点插值",
+          "elapsed_s": 2.716584000037983
+        },
+        {
+          "probe": "mesh_160",
+          "panels": 160,
+          "vacc": null,
+          "status": "converged",
+          "rows": [
+            {
+              "alpha_deg": 2.76,
+              "cl": -0.2,
+              "cd": 0.00423,
+              "cd_pressure": 0.00056,
+              "cm": 0.0779,
+              "transition_top": 0.3628,
+              "transition_bottom": 0.7396,
+              "requested_cl": -0.2
+            }
+          ],
+          "elapsed_s": 0.40726500004529953
+        },
+        {
+          "probe": "mesh_360",
+          "panels": 360,
+          "vacc": null,
+          "status": "converged",
+          "rows": [
+            {
+              "alpha_deg": 2.754,
+              "cl": -0.2,
+              "cd": 0.00428,
+              "cd_pressure": 0.00057,
+              "cm": 0.0777,
+              "transition_top": 0.3619,
+              "transition_bottom": 0.7421,
+              "requested_cl": -0.2
+            }
+          ],
+          "elapsed_s": 0.6769353999989107
+        },
+        {
+          "probe": "mesh_400",
+          "panels": 400,
+          "vacc": null,
+          "status": "converged",
+          "rows": [
+            {
+              "alpha_deg": 2.755,
+              "cl": -0.2,
+              "cd": 0.00428,
+              "cd_pressure": 0.00057,
+              "cm": 0.0777,
+              "transition_top": 0.3614,
+              "transition_bottom": 0.7424,
+              "requested_cl": -0.2
+            }
+          ],
+          "elapsed_s": 0.7615413999883458
+        }
+      ]
+    },
+    "source": "https://web.mit.edu/drela/Public/web/xfoil/xfoil_doc.txt",
+    "policy": "360/400-panel direct starts only after existing bounded recovery fails; unchanged physical inputs and accepted convergence criteria"
+  },
+  "limitations": [
+    "synthetic single-engine aircraft; no new whole-aircraft physical calibration",
+    "mixed existing polar cache; not a cold-cache speed comparison",
+    "AppTest and service archive verification; browser rendering/download not timed",
+    "recovery creates a fresh run; no internal solver checkpoint resume",
+    "fixed 1100kg polar failure preserved; structural sizing and mass replacement remain planned"
+  ],
+  "review_report_sha256": "a36fa8ca8677ab27157adb1d5d8bd733fcbc6064c09c43646b8feef4f3ee0c01"
+}

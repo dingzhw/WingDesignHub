@@ -1,6 +1,6 @@
 # 验证方法与适用边界
 
-最新节点为[V0.2.6发动机与CCBlade任务复算](VALIDATION_V0.2.6.md)：20项阶段检查、364项本地回归、11项真实结果界面检查及实际浏览器导出通过。固定构型示例保留功率超限，软件验证通过与飞机约束满足分开记录。
+当前节点为 [V0.3.1 一致性与任务可靠性](VALIDATION_V0.3.1.md)，该报告列出实际验收状态、测试和原生证据。此前 [V0.3.0 三方案阶段](VALIDATION_V0.3.0.md)、[V0.2.7 推进总体闭环](VALIDATION_V0.2.7.md)和 [V0.2.6 发动机与 CCBlade 复算](VALIDATION_V0.2.6.md)保留原始记录。软件验证通过、飞机已检查约束满足、独立物理验证和专业签署分别报告。
 
 总体反馈证据见 [V0.2.5 气动驱动任务及总体反馈](VALIDATION_V0.2.5.md)。前序气动链证据见 [V0.2.4 阻力](VALIDATION_V0.2.4.md)、[V0.2.3 配平](VALIDATION_V0.2.3.md)、[V0.2.2 气动](VALIDATION_V0.2.2.md)、[V0.2.1 几何](VALIDATION_V0.2.1.md)。总体阶段见 [V0.2.0](VALIDATION_V0.2.0.md)和[专业评审材料](REVIEW_V0.2.0.md)。前序记录见 [V0.1.8](VALIDATION_V0.1.8.md)、[V0.1.7](VALIDATION_V0.1.7.md)、[V0.1.6](VALIDATION_V0.1.6.md)、[V0.1.5](VALIDATION_V0.1.5.md)、[V0.1.4](VALIDATION_V0.1.4.md)、[V0.1.3](VALIDATION_V0.1.3.md)、[V0.1.2](VALIDATION_V0.1.2.md)和 [V0.1.1](VALIDATION_V0.1.1.md)。历史偏差和失败摘要保持原状，便于前后比较。
 

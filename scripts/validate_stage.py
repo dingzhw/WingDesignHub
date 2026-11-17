@@ -4,7 +4,7 @@ from pathlib import Path
 import sys
 from wingdesignhub.requirements import DesignProject,WeightRequirement,MissionRequirement
 from wingdesignhub.sizing_service import run_sizing
-from wingdesignhub.comparison_ui import variants
+from wingdesignhub.design_comparison import variants
 from wingdesignhub.comparison_service import run_comparison
 from wingdesignhub.project_archive import build_bundle,save_bundle,load_saved,read_bundle
 from wingdesignhub.design_service import run_fastga_reference

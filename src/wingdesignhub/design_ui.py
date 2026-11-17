@@ -84,8 +84,8 @@ def render(root):
                            '定义': s['definition']} for s in intent['mission_segments']], hide_index=True)
         st.download_button('保存需求配置', json.dumps(p.to_dict(), ensure_ascii=False, indent=2), 'aircraft-requirements.json', 'application/json')
         if st.button('运行初步总体设计', type='primary', key='run_sizing', disabled=intent['status']!='requirements_ready'):
-            with st.spinner('正在定尺寸并迭代重量、燃油和功率……'):
-                st.session_state['sizing_result'] = sizing_service.run_sizing(p, root)
+            from .job_ui import submit
+            submit(root,'size',p)
         if 'sizing_result' in st.session_state:
             sizing_ui.results(st.session_state['sizing_result'], p, root)
         save_controls(p,root,st.session_state.get('sizing_result'))
@@ -112,12 +112,14 @@ def render(root):
         render_comparison(p, root)
     except (ValueError, TypeError) as exc:
         st.error(str(exc))
+        st.info('输入尚未满足计算范围，可保存草案后继续调整；历史任务仍在页面顶部。')
+        st.download_button('保存待修正草案',json.dumps(p.to_dict(),ensure_ascii=False,indent=2),'aircraft-draft.json','application/json')
     with st.expander('总体服务验证：公开参考任务'):
         st.write('独立复算 FAST-GA 1.4.0 的双发 Beechcraft 76 教学任务。该按钮保留参考机输入，不使用上方的新方案需求。')
         st.caption('参考条件：711 nmi 航程、158 kn 巡航真空速、10000 ft 高度、45 min 额外储备；2 名乘员另加 2 名驾驶员，行李 60 kg。')
         if st.button('复算 FAST-GA 公开参考任务', key='fastga_reference'):
-            with st.spinner('正在复算总体参考任务并核查质量、航程和燃油账目……'):
-                st.session_state['design_reference_result'] = design_service.run_fastga_reference(root)
+            from .job_ui import submit
+            submit(root,'fastga_reference')
         if 'design_reference_result' in st.session_state:
             r = st.session_state['design_reference_result']
             if r['status'] == 'failed':

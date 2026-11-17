@@ -50,8 +50,8 @@ def render(project,root,parent):
     o=replace(o,schedule_cl_ceiling=cl,drag=replace(o.drag,strut_crossflow_cd=strut))
     if st.button('运行气动反馈总体计算',key='run_aero_feedback'):
         try:
-            with st.spinner('正在生成工况表并迭代总体，逐轮证据持续保存……'):
-                st.session_state['aero_feedback_result']=run_aero_feedback(project,root,parent['run_id'],o)
+            from .job_ui import submit
+            submit(root,'feedback',project,parent['run_id'],o)
         except (ValueError,OSError) as exc:st.error(str(exc))
     r=st.session_state.get('aero_feedback_result')
     if r and r.get('parent_run_id')==parent['run_id']:

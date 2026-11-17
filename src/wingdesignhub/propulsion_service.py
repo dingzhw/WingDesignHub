@@ -17,7 +17,7 @@ from .feedback_evidence import pack_native
 
 
 def validate_parent(project,parent,files):
-    if (parent.get('mode')!='overall_feedback' or parent.get('version') not in ('0.2.5','0.2.6','0.2.7',__version__) or
+    if (parent.get('mode')!='overall_feedback' or parent.get('version') not in ('0.2.5','0.2.6','0.2.7','0.3.0',__version__) or
         parent.get('status')!='concept_checked_with_limits' or not parent.get('summary',{}).get('converged')):
         raise ValueError('推进复算需要V0.2.5及以后已验收的气动反馈任务')
     if build_design_intent(project)['status']!='requirements_ready' or project.definition_hash()!=parent['definition_sha256']:

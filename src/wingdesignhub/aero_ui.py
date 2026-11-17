@@ -51,8 +51,8 @@ def render(project,root,geometry_record):
     options=AeroOptions(alpha,beta,**deflections,speed_m_s=v,altitude_m=h,mass_kg=mass,mesh_level=mesh)
     if st.button('运行全机气动',key='run_aircraft_aero'):
         try:
-            with st.spinner('正在计算 AVL 气动、条带载荷及配平接口……'):
-                st.session_state['aircraft_aero_result']=run_aircraft_aero(project,root,geometry_record['run_id'],options)
+            from .job_ui import submit
+            submit(root,'aero',project,geometry_record['run_id'],options)
         except (ValueError,OSError) as exc:st.error(str(exc))
     record=st.session_state.get('aircraft_aero_result')
     if record and record.get('parent_run_id')==geometry_record['run_id']:

@@ -39,7 +39,7 @@ def main(work):
             (work/'geometry.svg').write_text(geometry_svg(summary['geometry']),encoding='utf-8')
             final=feedback.last['native'].geometry_work
             dest=work/'final_geometry';dest.mkdir()
-            for name in ('aircraft.vsp3','geometry_contract.json','aerodynamic_geometry.json','summary.json'):
+            for name in ('aircraft.vsp3','geometry_contract.json','aerodynamic_geometry.json','summary.json','surface_mesh.json'):
                 shutil.copy2(final/name,dest/name)
         write_json(work/'summary.json',summary)
     except Exception as exc:

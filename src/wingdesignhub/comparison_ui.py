@@ -8,17 +8,7 @@ from .design_cards import METRICS
 from . import comparison_service
 
 
-def variants(base,axis,values):
-    plans=[]
-    for i,value in enumerate(values):
-        name=f'{base.name} · {"ABC"[i]}'
-        if '.' in axis:
-            group,field=axis.split('.')
-            p=replace(base,name=name,**{group:replace(getattr(base,group),**{field:value})},confirmation_sha256=None)
-        else:p=replace(base,name=name,**{axis:value},confirmation_sha256=None)
-        plans.append(p)
-    purpose='design_trade' if axis in ('sizing.aspect_ratio','assumptions.cruise_speed_m_s') else 'requirements_sensitivity'
-    return ComparisonRequest(tuple(plans),purpose).validate()
+from .design_comparison import variants
 
 
 def show_results(r,request,root):
@@ -77,6 +67,8 @@ def render(base,root):
             elif use_opened:
                 request=opened['project']
                 st.info('当前比较使用已打开的三方案完整需求；取消上方选项即可在界面调整比较参数。')
+            elif st.session_state.get('job_comparison_request') and st.checkbox('查看已载入的三方案任务',value=True,key='use_job_comparison'):
+                request=st.session_state['job_comparison_request']
             else:
                 choices=['sizing.aspect_ratio','assumptions.cruise_speed_m_s','payload_kg']
                 if base.mission.range_m is not None:choices.append('mission.range_m')
@@ -109,11 +101,8 @@ def render(base,root):
             request=replace(request,projects=tuple(p.confirmed() if confirmed else replace(p,confirmation_sha256=None) for p in request.projects))
             st.download_button('保存三方案配置',json.dumps(request.to_dict(),ensure_ascii=False,indent=2),'three-designs.json')
             if st.button('一键计算并比较三个方案',key='run-comparison',disabled=not confirmed):
-                with st.spinner('正在运行三个方案并核对比较条件……'):
-                    progress=st.empty()
-                    def update(i,stage,rid):
-                        progress.info(f"方案 {'ABC'[i]}："+{'initial':'初步总体','coupled':'气动—推进—总体闭环','completed':'已保存结果'}[stage]+'；批次 '+rid)
-                    st.session_state['comparison_result']=comparison_service.run_comparison(request,root,on_progress=update)
+                from .job_ui import submit
+                submit(root,'compare',request)
             if 'comparison_result' in st.session_state:show_results(st.session_state['comparison_result'],request,root)
             from .project_ui import save_controls
             save_controls(request,root,st.session_state.get('comparison_result'),key='comparison')

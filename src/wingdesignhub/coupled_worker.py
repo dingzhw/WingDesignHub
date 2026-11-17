@@ -57,7 +57,7 @@ def main(work):
             from .sizing_worker import geometry_svg
             (work/'geometry.svg').write_text(geometry_svg(summary['geometry']),encoding='utf-8')
             dest=work/'final_geometry';dest.mkdir()
-            for name in ('aircraft.vsp3','geometry_contract.json','aerodynamic_geometry.json','summary.json'):
+            for name in ('aircraft.vsp3','geometry_contract.json','aerodynamic_geometry.json','summary.json','surface_mesh.json'):
                 shutil.copy2(feedback.last['native'].geometry_work/name,dest/name)
         write_json(work/'summary.json',summary)
     except Exception as exc:

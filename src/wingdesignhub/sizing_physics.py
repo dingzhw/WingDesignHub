@@ -5,6 +5,7 @@ Constant BSFC, density-proportional naturally aspirated power and geometry ratio
 are declared conceptual assumptions, not empirical validation of an aircraft.
 """
 import math
+from .configuration import CONFIGURATION_VERSION, surface_parameters
 
 G=9.80665
 RHO0=1.225
@@ -34,17 +35,20 @@ def flight_power(mass, area, speed, altitude, roc, assumptions, *, air_density_k
 
 def geometry(mass, fuel_capacity, p):
     a=p.sizing;rho=density(p.assumptions.cruise_altitude_m)
+    parameters=surface_parameters(a.aspect_ratio)
+    thickness=parameters['wing']['thickness_ratio']
     areas={'landing_stall':2*mass*G/(RHO0*a.stall_speed_m_s**2*a.cl_max_landing),
            'cruise_lift':2*mass*G/(rho*p.assumptions.cruise_speed_m_s**2*.8*a.cl_max_clean),
-           'fuel_volume':(1.02*max(fuel_capacity,1)*math.sqrt(a.aspect_ratio)/(a.tank_volume_fraction*.12*FUEL_DENSITY*(1-a.unusable_fuel_fraction)))**(2/3)}
-    area=max(areas.values());span=math.sqrt(area*a.aspect_ratio);taper=.6
+           'fuel_volume':(1.02*max(fuel_capacity,1)*math.sqrt(a.aspect_ratio)/(a.tank_volume_fraction*thickness*FUEL_DENSITY*(1-a.unusable_fuel_fraction)))**(2/3)}
+    area=max(areas.values());span=math.sqrt(area*a.aspect_ratio);taper=parameters['wing']['taper_ratio']
     root=2*area/(span*(1+taper));tip=taper*root;mac=2/3*root*(1+taper+taper*taper)/(1+taper)
     arm=.45*a.fuselage_length_m
-    return {'wing_area_m2':area,'wing_span_m':span,'root_chord_m':root,'tip_chord_m':tip,'mac_m':mac,
+    return {'configuration_version':CONFIGURATION_VERSION,'surface_parameters':parameters,
+            'wing_area_m2':area,'wing_span_m':span,'root_chord_m':root,'tip_chord_m':tip,'mac_m':mac,
             'wing_quarter_x_m':.39*a.fuselage_length_m,'horizontal_tail_area_m2':.7*area*mac/arm,
             'vertical_tail_area_m2':.04*area*span/arm,'tail_arm_m':arm,'fuselage_length_m':a.fuselage_length_m,
-            'fuselage_width_m':1.2,'fuselage_height_m':1.35,'tank_capacity_kg':a.tank_volume_fraction*area*math.sqrt(area/a.aspect_ratio)*.12*FUEL_DENSITY,
-            'usable_tank_capacity_kg':a.tank_volume_fraction*area*math.sqrt(area/a.aspect_ratio)*.12*FUEL_DENSITY*(1-a.unusable_fuel_fraction),
+            'fuselage_width_m':1.2,'fuselage_height_m':1.35,'tank_capacity_kg':a.tank_volume_fraction*area*math.sqrt(area/a.aspect_ratio)*thickness*FUEL_DENSITY,
+            'usable_tank_capacity_kg':a.tank_volume_fraction*area*math.sqrt(area/a.aspect_ratio)*thickness*FUEL_DENSITY*(1-a.unusable_fuel_fraction),
             'capacity_sizing_margin_fraction':.02,
             'sizing_areas_m2':areas,'controlling_area_constraint':max(areas,key=areas.get),'engine_count':1,
             'configuration':'low_wing_conventional_tail_fixed_tricycle_metal','axes':'x aft from nose, y right, z up'}

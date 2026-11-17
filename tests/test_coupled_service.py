@@ -24,6 +24,9 @@ def test_coupled_failure_report_archive_and_unchanged_seed(baseline,monkeypatch)
     assert 'injected SFC boundary' in generate_report(r,root=root)
     opened=read_bundle(build_bundle(p,root,b,coupled_record=r))
     assert opened['coupled_records']==[r] and opened['current_source_matches']
+    selected=read_bundle(build_bundle(p,root,b,coupled_record=r,current_run_id=r['run_id']))
+    assert selected['manifest']['current_run_id']==r['run_id']
+    assert selected['files']['reports/report.html']==(root/'runs'/r['run_id']/'report.html').read_bytes()
     with pytest.raises(ValueError,match='来源总体'):build_bundle(p,root,coupled_record=r)
     for pp in (replace(p,payload_kg=p.payload_kg+1).confirmed(),replace(p,confirmation_sha256=None)):
         with pytest.raises(ValueError,match='需求'):run_coupled(pp,root,b['run_id'])

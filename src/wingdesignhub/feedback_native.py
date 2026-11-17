@@ -34,6 +34,8 @@ class NativeFeedbackGeometry:
 
     def __call__(self,mass,cg,speed,altitude,roc):
         work=self.work/f'point_{len(self.points):03d}';work.mkdir()
+        from .job_events import event
+        event('aero_point',directory=str(work),mass_kg=mass,speed_m_s=speed,altitude_m=altitude,roc_m_s=roc)
         gamma=math.asin(roc/speed)
         if abs(gamma)>math.radians(10):raise ValueError('任务航迹角超过 ±10° 的定常模型范围')
         options=TrimOptions(mass_state='explicit',mass_kg=mass,cg_x_m=cg,source_note='overall trial dry-mass ledger plus remaining fuel',

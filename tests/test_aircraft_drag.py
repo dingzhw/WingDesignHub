@@ -182,6 +182,31 @@ def test_native_tail_recovery_discards_failed_seed_without_changing_conditions(n
     assert repeated['cache_hit'] and repeated['rows']==result['rows']
 
 
+def test_native_tail_refinement_recovers_oscillation_and_agrees_with_finer_mesh(native):
+    from wingdesignhub.xfoil_polars import read_attempts
+    root,p,s,g,t,d=native;foil=root/'runs'/d['run_id']/'airfoils/HorizontalTail.dat'
+    spec=PolarSpec(4266778.139368093,.180435308835643,(-.2,-.1,0.),
+                   flap_deg=-6.63692183412284,panels=240)
+    work=root/'tail_refined';cache=root/'tail_refined_cache'
+    result=run_polar(foil,spec,'C:/apps/XFOIL6.99/xfoil.exe',work,cache)
+    recovered=result['recovery'][0]
+    assert recovered['cl']==-.2 and recovered['directory']=='recovery_0_mesh_360'
+    assert [a['panels'] for a in recovered['attempts']]==[240,280,320,240,360]
+    assert read_attempts(work,spec)['rows']==result['rows']
+    # The second mesh independently checks target and both adjacent requested CLs.
+    fine=run_polar(foil,replace(spec,panels=400),'C:/apps/XFOIL6.99/xfoil.exe',root/'tail_fine')
+    for row,other in zip(result['rows'],fine['rows']):
+        assert abs(row['cd']/other['cd']-1)<.02
+        assert abs(row['cm']-other['cm'])<.001
+        assert abs(row['alpha_deg']-other['alpha_deg'])<.05
+    repeated=run_polar(foil,spec,'C:/apps/XFOIL6.99/xfoil.exe',root/'tail_refined_hit',cache,True)
+    assert repeated['cache_hit'] and repeated['rows']==result['rows']
+    metadata=json.loads((work/'recovery.json').read_text('utf-8'))
+    metadata[0]['attempts'][-1]['panels']=320
+    (work/'recovery.json').write_text(json.dumps(metadata),encoding='utf-8')
+    with pytest.raises(PolarError,match='面元记录'):read_attempts(work,spec)
+
+
 def test_native_archive_report_and_semantic_tamper_rejection(native):
     from wingdesignhub.project_archive import build_bundle,read_bundle,digest,encoded
     from wingdesignhub.service import generate_report

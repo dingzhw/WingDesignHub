@@ -8,6 +8,7 @@ import re
 import shutil
 import subprocess
 import sys
+import time
 
 NUMBER = r"[-+]?(?:\d*\.\d+|\d+\.?)(?:[EeDd][-+]?\d+)?"
 
@@ -38,33 +39,43 @@ def inventory(root):
             result[name] = {"version": meta.version(name), "found": True, "status": "已安装，查看验证记录"}
         except meta.PackageNotFoundError:
             result[name] = {"found": False, "status": "尚未安装"}
+    from .ccblade_adapter import runtime
+    try:
+        cfg=runtime(root)
+        result['Julia']={'path':cfg['julia'],'found':True,'status':'文件已配置；待运行检查'}
+        result['CCBlade']={'path':cfg['package'],'found':True,'version':'1.0.0','status':'声明版本符合；待导入核查'}
+    except (ValueError,OSError,KeyError) as exc:
+        result['Julia/CCBlade']={'found':False,'status':str(exc)}
     return result
 
 
 def execute(args, cwd, stdin="", timeout=60):
+    from .processes import launch_owned,stop_owned
+    from .job_events import event
     cwd = Path(cwd)
     manifest = {"argv": [str(x) for x in args], "timeout_seconds": timeout,
                 "executable_sha256": sha256(args[0])}
     (cwd/"command.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     (cwd/"stdin.txt").write_text(stdin, encoding="ascii")
-    process = subprocess.Popen(args, cwd=cwd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT, creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0)
+    started=time.monotonic()
+    event('solver_started',argv=[str(x) for x in args],directory=str(cwd),timeout_s=timeout)
+    process,owner = launch_owned(args, cwd=cwd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT)
     try:
         data, _ = process.communicate(stdin.encode("ascii"), timeout=timeout)
     except subprocess.TimeoutExpired:
-        import psutil
-        try:
-            for child in psutil.Process(process.pid).children(recursive=True):
-                try:
-                    child.kill()
-                except psutil.NoSuchProcess:
-                    pass
-        except psutil.NoSuchProcess:
-            pass
-        process.kill()
+        stop_owned(process,owner)
         data, _ = process.communicate()
         (cwd/"stdout.log").write_bytes(data)
         raise RuntimeError(f"计算超过 {timeout} 秒，已停止；请查看运行日志") from None
+    except BaseException:
+        stop_owned(process,owner)
+        raise
+    finally:
+        owner.close()
+        manifest.update(elapsed_s=time.monotonic()-started,returncode=process.poll())
+        (cwd/'command.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
+        event('solver_finished',directory=str(cwd),elapsed_s=manifest['elapsed_s'],returncode=process.poll())
     (cwd/"stdout.log").write_bytes(data)
     output = data.decode("utf-8", errors="replace")
     if process.returncode:

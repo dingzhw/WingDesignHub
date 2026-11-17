@@ -9,8 +9,8 @@ from .design_cards import STATUS,METRICS
 
 
 @st.cache_data(max_entries=2,show_spinner=False)
-def feedback_bundle(project,root,record,geometry,aero,trim,drag,feedback,source_token,propulsion=None,coupled=None):
-    return archive.build_bundle(project,root,record,geometry,aero,trim,drag,feedback,propulsion,coupled)
+def feedback_bundle(project,root,record,geometry,aero,trim,drag,feedback,source_token,propulsion=None,coupled=None,current_run_id=None):
+    return archive.build_bundle(project,root,record,geometry,aero,trim,drag,feedback,propulsion,coupled,current_run_id=current_run_id)
 
 
 @st.cache_data(max_entries=1,show_spinner=False)
@@ -19,6 +19,8 @@ def comparison_bundle(project,root,record,evidence_token):
 
 
 def activate(parsed=None):
+    st.session_state.pop('workspace_project',None)
+    st.session_state.pop('job_comparison_request',None)
     for key in ('sizing_result','comparison_result','design_intent_result','archive_saved_note','aircraft_geometry_result','aircraft_aero_result','aircraft_trim_result','aircraft_drag_result','aero_feedback_result','propulsion_result','coupled_result'):
         st.session_state.pop(key,None)
     for key in list(st.session_state):
@@ -53,7 +55,9 @@ def library(root):
         elif not opened['current_source_matches']:st.warning('存档包含与当前版本不同的来源记录，按原版本查阅；推进复算会单独核查冻结气动接口。')
         with st.expander('查看存档结果和导出报告'):
             if not opened['records']:st.write('这是需求草案，尚无计算结果。')
-            for r in opened['records'][:1]:
+            selected=m.get('current_run_id')
+            current=[r for r in opened['records']+opened.get('feedback_records',[])+opened.get('coupled_records',[]) if r['run_id']==selected]
+            for r in current or opened['records'][:1]:
                 st.caption('历史运行 '+r['run_id']+' · V'+r['version'])
                 labels={**STATUS,'compared_with_limits':'三个方案已比较（概念模型）','comparison_incomplete':'比较未完整通过，保留各方案诊断'}
                 st.write(labels.get(r['status'],r['status']))
@@ -109,7 +113,7 @@ def library(root):
                 coupled_render(opened['project'],root,seeds[0],'archive_coupled',archived=opened)
         p=opened['project']
         return p.projects[0] if isinstance(p,ComparisonRequest) else p
-    return DesignProject()
+    return st.session_state.get('workspace_project',DesignProject())
 
 
 def save_controls(project,root,record=None,key='design'):
@@ -139,13 +143,15 @@ def save_controls(project,root,record=None,key='design'):
         coupled=st.session_state.get('coupled_result') if key=='design' else None
         if not chosen or not coupled or coupled.get('parent_run_id') not in [chosen['run_id'],*( [feedback['run_id']] if feedback else [])]:coupled=None
         if coupled:st.caption('同时保存推进闭环、发动机/携油/几何联动及全部原生计算证据。')
+        selected=st.session_state.get('current_design_run_'+project.definition_hash()) if key=='design' else None
+        if selected not in [r['run_id'] for r in (chosen,feedback,coupled) if r]:selected=chosen['run_id'] if chosen else None
         if feedback or coupled:
             # Verify mutable disk inputs before reusing the large portable byte stream.
             from .service import get_results
             from .geometry_service import source_hashes
             for r in (chosen,geometry,aero,trim,drag,feedback,propulsion,coupled):
                 if r is not None and get_results(root,r['run_id'])!=r:raise ValueError('当前运行记录已改变')
-            data=feedback_bundle(project,str(root),chosen,geometry,aero,trim,drag,feedback,source_hashes(),propulsion,coupled)
+            data=feedback_bundle(project,str(root),chosen,geometry,aero,trim,drag,feedback,source_hashes(),propulsion,coupled,selected)
         elif chosen and isinstance(project,ComparisonRequest) and project.analysis_model=='coupled':
             from .comparison_archive import support_runs
             from .service import get_results
@@ -160,7 +166,7 @@ def save_controls(project,root,record=None,key='design'):
             st.rerun()
         st.download_button('导出完整'+('三方案包' if key=='comparison' else '方案包')+'（需求与结果）',data,key+'.wdh',key=key+'_bundle_download')
         if chosen:
-            path=Path(root)/'runs'/chosen['run_id']/'report.html'
+            path=Path(root)/'runs'/selected/'report.html'
             if path.is_file():st.download_button('导出可打印'+('比较' if key=='comparison' else '总体')+'报告',path.read_bytes(),key+'-report.html',key=key+'_html_report')
         if 'archive_saved_note' in st.session_state:st.success(st.session_state['archive_saved_note'])
     except (ValueError,OSError) as exc:st.error('方案保存检查失败：'+str(exc))

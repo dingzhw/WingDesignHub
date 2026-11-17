@@ -6,25 +6,21 @@ import streamlit as st
 from .design_cards import CHECK_LABELS as CHECKS
 
 
-FIELDS = {
-    'stall_speed_m_s': '着陆构型失速速度限值（m/s）',
-    'climb_rate_m_s': '巡航高度爬升率要求（m/s）',
-    'aspect_ratio': '机翼展弦比', 'cd0': '零升阻力系数 CD0',
-    'oswald_efficiency': '奥斯瓦尔德效率因子',
-    'cl_max_clean': '净构型最大升力系数', 'cl_max_landing': '着陆构型最大升力系数',
-    'propeller_efficiency': '螺旋桨效率', 'bsfc_kg_kwh': '基础轴功率耗油率（kg/kWh）',
-    'cruise_power_fraction': '巡航功率占可用功率比例',
-    'fuselage_length_m': '机身长度（m）', 'tank_volume_fraction': '油箱占翼体积包络比例',
-    'unusable_fuel_fraction': '不可用燃油占总容量比例',
-}
+from .sizing_config import FIELD_LABELS as FIELDS
 
 
 def assumptions(base, key):
+    from .sizing_config import LIMITS
     with st.expander('初始构型与计算假设（通常可保留默认值）'):
         from .fuel_model import FUEL_MODELS, calibrated_bsfc
         st.write('常规低翼、常规尾翼、金属、固定前三点起落架、机头单发。默认系数为概念假设，确认后参与本次定尺寸。')
-        values = {n: st.number_input(label, value=float(getattr(base, n)), key=key+'_'+n)
-                  for n, label in FIELDS.items()}
+        values={}
+        for n,label in FIELDS.items():
+            lo,hi=LIMITS[n];value=float(getattr(base,n))
+            bounds={'min_value':float(lo),'max_value':float(hi)} if lo<=value<=hi else {}
+            if not bounds:st.error(f'{label} 当前为 {value}，允许范围 [{lo}, {hi}]，请修正。')
+            values[n]=st.number_input(label,value=value,step=.001 if hi<1 else .1,
+                                     help=f'当前方法范围 [{lo}, {hi}]',key=key+'_'+n,**bounds)
         values['fuel_model']=st.selectbox('耗油计算方式',list(FUEL_MODELS),format_func=FUEL_MODELS.get,
                 index=list(FUEL_MODELS).index(base.fuel_model),key=key+'_fuel_model')
         if values['fuel_model']=='piper_economy_reference':
@@ -44,12 +40,22 @@ def assumptions(base, key):
 
 
 def results(record, project, root):
+    seed_record=record
     if record['definition_sha256'] != project.definition_hash() or project.confirmation_sha256 != project.definition_hash():
         st.info('需求或确认状态已变更；上次总体结果不适用于当前定义，请确认后重新运行。')
         return
+    candidates={r['run_id']:r for r in [record,st.session_state.get('aero_feedback_result'),st.session_state.get('coupled_result')]
+                if r and r.get('definition_sha256')==project.definition_hash()}
+    key='current_design_run_'+project.definition_hash()
+    if st.session_state.get(key) not in candidates:st.session_state[key]=record['run_id']
+    labels={'overall_sizing':'初步总体','overall_feedback':'气动反馈总体','overall_propulsion':'推进闭环总体'}
+    selected=st.selectbox('当前总体结果',list(candidates),key=key,
+        format_func=lambda rid:labels[candidates[rid]['mode']]+' · '+rid[:12]+' · '+candidates[rid]['status'])
+    record=candidates[selected]
+    st.caption('当前参数、几何与总体报告来源：'+selected)
     status = record['status']; s = record.get('summary', {})
     if status == 'concept_checked_with_limits':
-        st.warning('初步总体迭代已收敛，当前模型检查项均满足；配平、起降距离和结构校核仍待接通。')
+        st.warning('总体迭代已收敛，当前模型检查项满足；具体适用边界见本次运行记录。起降距离和结构重量闭环仍待接入。')
     elif status == 'constraints_not_met':
         st.error('迭代已收敛，但存在未满足的约束，请查看余量与检查表。')
     elif status == 'not_converged':
@@ -75,7 +81,7 @@ def results(record, project, root):
                 ('转场航程（留空另列）',ms['route_distance_m']/1000,'km'),('估算起飞重心站位',s['cg']['cg_x_m'],'m')]], hide_index=True)
         if s['upper_bound_margin_kg'] is not None:
             st.write(f"起飞重量上限余量：{s['upper_bound_margin_kg']:.2f} kg")
-        st.dataframe([{'检查项': CHECKS[k], '结果': '满足' if v else '未满足'} for k,v in s['checks'].items()], hide_index=True)
+        st.dataframe([{'检查项': CHECKS.get(k,k), '结果': '满足' if v else '未满足'} for k,v in s['checks'].items()], hide_index=True)
         with st.expander('查看构型、迭代和质量/任务明细'):
             work=Path(root)/'runs'/record['run_id']
             if (work/'geometry.svg').is_file(): st.image((work/'geometry.svg').read_text(encoding='utf-8'))
@@ -88,11 +94,16 @@ def results(record, project, root):
         for line in s['limits']: st.caption(line)
     st.caption('总体运行编号：'+record['run_id'])
     st.download_button('下载总体运行记录',json.dumps(record,ensure_ascii=False,indent=2),'overall-result.json')
+    work=Path(root)/'runs'/record['run_id']
+    if (work/'report.html').is_file():st.download_button('导出当前总体报告',(work/'report.html').read_bytes(),'current-design-report.html')
+    if record['mode'] in ('overall_feedback','overall_propulsion'):
+        from .geometry_ui import show_final_geometry
+        show_final_geometry(record,{n:(work/n).read_bytes() for n in ('final_geometry/surface_mesh.json','final_geometry/geometry_contract.json','final_geometry/aircraft.vsp3','geometry.svg') if (work/n).is_file()},'selected_final_geometry')
     from .coupled_ui import render as render_coupled
     seed=st.session_state.get('aero_feedback_result')
-    if not seed or seed.get('parent_run_id')!=record['run_id'] or not seed.get('summary',{}).get('converged'):seed=record
+    if not seed or seed.get('parent_run_id')!=seed_record['run_id'] or not seed.get('summary',{}).get('converged'):seed=seed_record
     render_coupled(project,root,seed)
     from .feedback_ui import render as render_feedback
-    render_feedback(project,root,record)
+    render_feedback(project,root,seed_record)
     from .geometry_ui import render
-    render(project,root,record)
+    if record['mode']=='overall_sizing':render(project,root,record)

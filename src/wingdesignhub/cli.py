@@ -21,9 +21,13 @@ from .comparison_service import run_comparison, compare_sizing_runs
 
 def main():
     parser = argparse.ArgumentParser(description="WingDesignHub 开发与自动化入口")
-    parser.add_argument("action", choices=["run", "doctor", "reference", "mesh", "static", "flight", "plate", "prepare", "size", "geometry", "aero", "trim", "drag", "feedback", "propulsion", "coupled", "compare", "compare-runs", "cruise-check", "fuel-check", "archive-save", "archive-open", "report", "fastga-reference", "fastga-contract"])
+    parser.add_argument("action", choices=["jobs","job-submit","job-status","job-cancel","job-retry","run", "doctor", "reference", "mesh", "static", "flight", "plate", "prepare", "size", "geometry", "aero", "trim", "drag", "feedback", "propulsion", "coupled", "compare", "compare-runs", "cruise-check", "fuel-check", "archive-save", "archive-open", "report", "fastga-reference", "fastga-contract"])
     parser.add_argument("--root", type=Path, default=Path.cwd())
     parser.add_argument("--input", type=Path)
+    from .jobs import KINDS
+    parser.add_argument('--kind',choices=KINDS,default='size')
+    parser.add_argument('--job-id')
+    parser.add_argument('--options',type=Path)
     parser.add_argument("--run-ids", nargs=3)
     parser.add_argument("--run-id")
     parser.add_argument("--geometry-run-id")
@@ -48,7 +52,17 @@ def main():
     if args.input and (args.action in ("fastga-reference", "fastga-contract") or
                        (args.action == "reference" and args.benchmark == "fastga")):
         parser.error("公开参考任务保留固定输入，不接受自定义需求覆盖；请用 prepare 保存需求。")
-    if args.action == "doctor":
+    if args.action in ('jobs','job-submit','job-status','job-cancel','job-retry'):
+        from .jobs import list_jobs,submit_job,get_job,cancel_job,retry_job
+        if args.action=='jobs':result={'jobs':list_jobs(args.root)}
+        elif args.action=='job-submit':
+            p=json.loads(args.input.read_text('utf-8')) if args.input else None
+            o=json.loads(args.options.read_text('utf-8')) if args.options else None
+            result=submit_job(args.root,args.kind,p,args.run_id,o)
+        else:
+            if not args.job_id:parser.error('需要 --job-id')
+            result={'job-status':get_job,'job-cancel':cancel_job,'job-retry':retry_job}[args.action](args.root,args.job_id)
+    elif args.action == "doctor":
         result = inventory(args.root)
     elif args.action == 'coupled':
         from .coupled_service import run_coupled

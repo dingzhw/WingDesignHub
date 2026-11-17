@@ -45,7 +45,7 @@ def raw_definition(data,kind):
     return digest(json.dumps(normalize(obj),ensure_ascii=False,sort_keys=True,allow_nan=False).encode())
 
 
-def build_bundle(project,root,record=None,geometry_record=None,aero_record=None,trim_record=None,drag_record=None,feedback_record=None,propulsion_record=None,coupled_record=None):
+def build_bundle(project,root,record=None,geometry_record=None,aero_record=None,trim_record=None,drag_record=None,feedback_record=None,propulsion_record=None,coupled_record=None,*,current_run_id=None):
     kind='comparison' if isinstance(project,ComparisonRequest) else 'design'
     project.validate() if kind=='comparison' else project.check_schema()
     source=project.to_dict();files={'project.json':encoded(source)};ids=[];geometry_ids=[];aero_ids=[];trim_ids=[];drag_ids=[];feedback_ids=[]
@@ -117,10 +117,18 @@ def build_bundle(project,root,record=None,geometry_record=None,aero_record=None,
             p=Path(root)/'runs'/ids[0]/filename
             if p.is_file():files['reports/'+filename]=p.read_bytes()
     name=source['name'] if kind=='design' else source['projects'][0]['name']+' 等三方案'
+    current_run_id=current_run_id or (ids[0] if ids else None)
+    if current_run_id is not None and current_run_id not in ids+feedback_ids+coupled_ids:
+        raise ValueError('当前运行必须属于本方案的总体结果')
+    if current_run_id:
+        for filename in ('report.html','report.md'):
+            p=Path(root)/'runs'/current_run_id/filename
+            if p.is_file():files['reports/'+filename]=p.read_bytes()
     manifest={'bundle_schema':1,'kind':kind,'name':name,'software_version':__version__,
               'created_utc':datetime.now(timezone.utc).isoformat(),'run_ids':ids,'geometry_run_ids':geometry_ids,'aero_run_ids':aero_ids,'trim_run_ids':trim_ids,'drag_run_ids':drag_ids,'feedback_run_ids':feedback_ids,'propulsion_run_ids':propulsion_ids,'coupled_run_ids':coupled_ids,
               'definition_sha256':project.definition_hash(),'files':{n:digest(b) for n,b in files.items()},
               'support_run_ids':support_ids,
+              'current_run_id':current_run_id,
               'integrity_scope':'SHA-256 detects damaged contents; this is not a signed authenticity certificate'}
     stream=BytesIO()
     with ZipFile(stream,'w',ZIP_DEFLATED) as z:
@@ -198,7 +206,8 @@ def read_bundle(data):
                 if r['mode'] not in expected_modes or r['definition_sha256']!=raw_definition(source['projects'][i],'design'):
                     raise ValueError('方案包子运行与需求不符')
             for filename in ('report.html','report.md'):
-                if 'reports/'+filename in files and files['reports/'+filename]!=files[f'runs/{ids[0]}/{filename}']:
+                report_id=manifest.get('current_run_id') or ids[0]
+                if 'reports/'+filename in files and files['reports/'+filename]!=files[f'runs/{report_id}/{filename}']:
                     raise ValueError('方案包报告与运行产物不一致')
         for r in geometry_records:
             prefix=f'runs/{r["run_id"]}/';parent=records[0]
@@ -320,6 +329,8 @@ def read_bundle(data):
             check_comparison(project,records,support_records,files)
         current={p.relative_to(Path(__file__).parent).as_posix():digest(p.read_bytes()) for p in Path(__file__).parent.rglob('*.py')}
         all_records=records+geometry_records+aero_records+trim_records+drag_records+feedback_records+propulsion_records+coupled_records+support_records
+        selected=manifest.get('current_run_id',ids[0] if ids else None)
+        if selected is not None and selected not in ids+feedback_ids+coupled_ids:raise ValueError('存档当前总体运行无效')
         compatible=all(r.get('version')==__version__ and r.get('source_hashes')==current for r in all_records)
         for r in all_records:
             for package,recorded in r.get('summary',{}).get('versions',{}).items():

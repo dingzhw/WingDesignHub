@@ -46,8 +46,8 @@ def render(project,root,parent,key='current_propulsion',archived=None):
     present=(Path(root)/'runs'/parent['run_id']/'result.json').is_file()
     if st.button('运行推进模型任务复算',key=key+'_run',disabled=not present):
         try:
-            with st.spinner('正在生成有界桨图、匹配推力并积分任务……'):
-                st.session_state['propulsion_result']=run_propulsion(project,root,parent['run_id'],options)
+            from .job_ui import submit
+            submit(root,'propulsion',project,parent['run_id'],options)
         except (ValueError,OSError) as exc:st.error(str(exc))
     if not present:st.caption('该历史源运行不在本机runs目录中；可查看和导出存档结果，重新计算需先在本机生成气动任务。')
     result=st.session_state.get('propulsion_result')

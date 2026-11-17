@@ -8,6 +8,10 @@ STATUS={'concept_checked_with_limits':'已收敛，已检查约束满足（概�
         'out_of_domain':'模型范围或任务冲突','failed':'计算失败',
         'needs_confirmation':'需求待确认','invalid_input':'需求无效',
         'engine_sfc_out_of_domain':'发动机耗油图越界','propeller_tip_mach_exceeded':'桨尖马赫数超限'}
+STATUS.update({'polar_missing':'缺少所需极曲线','polar_failed':'翼型计算未收敛','polar_invalid':'极曲线数据无效',
+    'polar_out_of_domain':'翼型查询超出已验证范围','ccblade_not_configured':'Julia/CCBlade 尚未配置',
+    'cancelled':'已取消，保留原始记录','interrupted':'计算中断，需新建重算','trim_not_converged':'配平未收敛',
+    'trim_bounds_exceeded':'配平迎角或舵偏超限','propeller_out_of_domain':'桨图查询超出有效范围'})
 METRICS={'mtow_kg':('设计起飞重量','kg'),'owe_kg':('空重（含不可用燃油）','kg'),
          'block_fuel_kg':('总可用燃油（含储备与滑行）','kg'),'reserve_kg':('其中储备燃油','kg'),
          'power_kw':('安装轴功率','kW'),'area_m2':('翼面积','m²'),'span_m':('翼展','m'),

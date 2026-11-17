@@ -3,6 +3,7 @@ from pathlib import Path, PurePosixPath
 from zipfile import ZipFile, ZIP_DEFLATED
 from io import BytesIO
 import hashlib
+import time
 from .adapters import sha256
 from .service import write_json
 
@@ -11,6 +12,8 @@ MAX_NATIVE_FILES=100000
 
 
 def pack_native(work):
+    from .job_events import event
+    started=time.monotonic();event('pack_started',directory=str(work))
     work=Path(work);paths=sorted(p for p in (work/'native').rglob('*') if p.is_file())
     manifest={'files':{},'uncompressed_bytes':sum(p.stat().st_size for p in paths),
               'scope':'original native inputs, commands, logs, geometry, trim and drag outputs; never execute on import'}
@@ -20,6 +23,8 @@ def pack_native(work):
             name=p.relative_to(work/'native').as_posix();z.write(p,name);manifest['files'][name]=sha256(p)
     manifest['archive_sha256']=sha256(work/'native_evidence.zip')
     write_json(work/'native_manifest.json',manifest)
+    event('pack_finished',directory=str(work),elapsed_s=time.monotonic()-started,
+          file_count=len(paths),uncompressed_bytes=manifest['uncompressed_bytes'],archive_bytes=(work/'native_evidence.zip').stat().st_size)
     return manifest
 
 

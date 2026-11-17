@@ -42,6 +42,8 @@ def solve_design(project, mass_model, max_iterations=80, dt=30., *, feedback=Non
         power_guess=initial_summary['power']['installed_power_w']
     try:
         for i in range(max_iterations):
+            from .job_events import event
+            event('iteration_started',iteration=i+1,mass_kg=mass)
             if not 400<=mass<=2500:raise DesignDomainError('试算质量超出本模板 400–2500 kg 范围')
             geo=geometry(mass,fuel,p);coupling={}
             if feedback is None:
@@ -66,6 +68,7 @@ def solve_design(project, mass_model, max_iterations=80, dt=30., *, feedback=Non
                             'block_fuel_kg':ms['block_fuel_kg'],'installed_power_w':power['installed_power_w'],
                             'wing_area_m2':geo['wing_area_m2'],'owe_kg':weights['owe_kg'],'cg_x_m':ledger['cg_x_m'],
                             'residuals':residuals,'stable_rounds':consecutive})
+            event('iteration_completed',**history[-1])
             if consecutive>=3 or i+1==max_iterations:break
             previous={'state':state,'cg':ledger['cg_x_m']}
             relaxation=.5 if feedback is None else .75

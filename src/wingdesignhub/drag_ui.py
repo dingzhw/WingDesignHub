@@ -50,8 +50,8 @@ def render(project,root,trim):
     o=DragOptions(panels=panels,ncrit=n,trip_top=trip,trip_bottom=trip,strut_crossflow_cd=strut,junction_cd=junction,cooling_cd=cooling,roughness_cd=roughness)
     if st.button('计算阻力账目',key='run_aircraft_drag'):
         try:
-            with st.spinner('正在检查暴露面积、运行 XFOIL 并汇总阻力……'):
-                st.session_state['aircraft_drag_result']=run_aircraft_drag(project,root,trim['run_id'],o)
+            from .job_ui import submit
+            submit(root,'drag',project,trim['run_id'],o)
         except (ValueError,OSError) as exc:st.error(str(exc))
     r=st.session_state.get('aircraft_drag_result')
     if r and r.get('parent_run_id')==trim['run_id']:

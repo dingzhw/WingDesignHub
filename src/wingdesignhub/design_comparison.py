@@ -1,3 +1,4 @@
+from dataclasses import replace
 """Explicit comparison conditions; no ranking across different requirements."""
 from dataclasses import dataclass,field,asdict
 import hashlib
@@ -132,3 +133,16 @@ def summarize_comparison(request,records):
             'physical_validation_passed':False}
     if request.schema_version==2:result.update(analysis_model=request.analysis_model,analysis_label=MODELS[request.analysis_model],analysis_options=request.options_dict())
     return result
+
+
+def variants(base,axis,values):
+    plans=[]
+    for i,value in enumerate(values):
+        name=f'{base.name} · {"ABC"[i]}'
+        if '.' in axis:
+            group,field=axis.split('.')
+            p=replace(base,name=name,**{group:replace(getattr(base,group),**{field:value})},confirmation_sha256=None)
+        else:p=replace(base,name=name,**{axis:value},confirmation_sha256=None)
+        plans.append(p)
+    purpose='design_trade' if axis in ('sizing.aspect_ratio','assumptions.cruise_speed_m_s') else 'requirements_sensitivity'
+    return ComparisonRequest(tuple(plans),purpose).validate()

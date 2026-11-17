@@ -69,8 +69,8 @@ def render(project,root,geometry_record):
         initial_alpha_deg=min(max(3.,amin),amax),initial_elevator_deg=min(max(0.,emin),emax))
     if st.button('求解纵向配平',key='run_aircraft_trim'):
         try:
-            with st.spinner('正在迭代 AVL 并检查实际升力、俯仰矩残差……'):
-                st.session_state['aircraft_trim_result']=run_aircraft_trim(project,root,geometry_record['run_id'],options)
+            from .job_ui import submit
+            submit(root,'trim',project,geometry_record['run_id'],options)
         except (ValueError,OSError) as exc:st.error(str(exc))
     record=st.session_state.get('aircraft_trim_result')
     if record and record.get('parent_run_id')==geometry_record['run_id']:

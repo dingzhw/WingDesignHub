@@ -16,12 +16,14 @@ ROOT = Path(__file__).resolve().parent
 st.set_page_config(page_title="WingDesignHub", page_icon="✈", layout="wide")
 st.title("✈ WingDesignHub")
 st.caption(f"V{__version__} · 固定翼概念设计工作台 · 需求与总体服务")
-page = st.sidebar.radio("工作区", ["新建飞机方案", "开始计算", "结构网格", "机翼静力", "载荷与屈曲", "代表板屈曲", "公开基准算例", "工具设置", "验证与路线图"])
+page = st.sidebar.radio("工作区", ["新建飞机方案", "梁基准算例", "结构网格", "机翼静力", "载荷与屈曲", "代表板屈曲", "公开基准算例", "工具设置", "验证与路线图"])
+from wingdesignhub.job_ui import panel
+panel(ROOT)
 
 if page == "新建飞机方案":
     from wingdesignhub.design_ui import render
     render(ROOT)
-elif page == "开始计算":
+elif page == "梁基准算例":
     base = WingCase()
     uploaded = st.file_uploader("打开已保存的方案（可选）", type="json")
     if uploaded:
@@ -286,17 +288,8 @@ elif page == "公开基准算例":
             st.json(r)
         st.download_button("下载基准记录", json.dumps(r, ensure_ascii=False, indent=2), "benchmark.json")
 elif page == "工具设置":
-    st.subheader("本机计算工具")
-    st.caption("路径只保存在本地；检测到文件或安装包不等于已经完成工程验证。")
-    st.caption("OpenVSP 的 Python 接口须与安装目录版本一致。CalculiX 基准要求 2.23，可选择项目内便携版或填写路径。")
-    st.dataframe(pd.DataFrame.from_dict(inventory(ROOT), orient="index").fillna(""), width="stretch")
-    with st.form("tools"):
-        labels = {"avl": "AVL 程序路径", "xfoil": "XFOIL 程序路径", "openvsp": "OpenVSP 安装目录", "calculix": "CalculiX 2.23 程序路径"}
-        config = {k: st.text_input(labels[k], v) for k, v in tool_paths(ROOT).items()}
-        if st.form_submit_button("保存本机路径"):
-            (ROOT/"local").mkdir(exist_ok=True)
-            (ROOT/"local/tools.json").write_text(json.dumps(config, ensure_ascii=False, indent=2), encoding="utf-8")
-            st.success("已保存。计算时会再次检查实际文件。")
+    from wingdesignhub.tool_ui import render
+    render(ROOT)
 else:
     for name in ("FORWARD_DESIGN.md", "COVERAGE.md", "VALIDATION.md", "ROADMAP.md"):
         st.markdown((ROOT/"docs"/name).read_text(encoding="utf-8"))

@@ -6,6 +6,20 @@ from . import geometry_service
 from .geometry_report import mesh_figure
 
 
+def show_final_geometry(record,files,key):
+    st.subheader('当前总体的最终几何')
+    mesh=files.get('final_geometry/surface_mesh.json')
+    if mesh:
+        st.plotly_chart(mesh_figure(json.loads(mesh)),width='stretch',key=key+'_3d')
+    elif 'geometry.svg' in files:
+        st.image(files['geometry.svg'].decode('utf-8'))
+        st.caption('旧记录没有最终三维预览网格，显示其自身参数构型图；可下载该记录的 CAD。')
+    else:st.info('此记录未保存几何预览。')
+    if 'final_geometry/aircraft.vsp3' in files:
+        st.download_button('下载当前总体 OpenVSP 模型',files['final_geometry/aircraft.vsp3'],'aircraft.vsp3',key=key+'_cad')
+    st.caption('几何与总体参数对应运行 '+record['run_id']+'；历史初值不替代此模型。')
+
+
 def show_files(record,files,key):
     if record['status']=='failed':
         st.error('几何生成失败：'+record.get('error','请查看运行日志'))
@@ -40,8 +54,8 @@ def render(project,root,sizing_record):
         for line in LIMITS:st.caption(line)
     if st.button('生成全机几何',key='generate_aircraft_geometry'):
         try:
-            with st.spinner('正在生成 OpenVSP 全机模型并检查写出、重读和参考量……'):
-                st.session_state['aircraft_geometry_result']=geometry_service.run_aircraft_geometry(project,root,sizing_record['run_id'])
+            from .job_ui import submit
+            submit(root,'geometry',project,sizing_record['run_id'])
         except (ValueError,OSError) as exc:st.error(str(exc))
     record=st.session_state.get('aircraft_geometry_result')
     if record and record.get('parent_run_id')==sizing_record['run_id'] and record['definition_sha256']==project.definition_hash():

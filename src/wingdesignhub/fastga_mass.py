@@ -9,6 +9,7 @@ from pathlib import Path
 import xml.etree.ElementTree as ET
 import numpy as np
 from .adapters import sha256
+from .configuration import geometry_parameters, domain_ledger
 
 
 def mass_inputs(mass, power, geo, project):
@@ -22,8 +23,10 @@ def mass_inputs(mass, power, geo, project):
     add('data:mission:sizing:main_route:cruise:altitude',h,'m')
     add('data:geometry:cabin:seats:passenger:NPAX_max',a.seats-2)
     add('data:geometry:wing_configuration',1.);add('data:geometry:has_T_tail',0.)
-    for component,area,ar,taper,thick in [('wing',geo['wing_area_m2'],a.aspect_ratio,.6,.12),
-            ('horizontal_tail',geo['horizontal_tail_area_m2'],4.,.6,.1),('vertical_tail',geo['vertical_tail_area_m2'],1.8,.6,.1)]:
+    parameters=geometry_parameters(geo)
+    for component, spec in parameters.items():
+        area=geo[component+'_area_m2']
+        ar,taper,thick=(spec[k] for k in ('aspect_ratio','taper_ratio','thickness_ratio'))
         for field,value,unit in [('area',area,'m**2'),('aspect_ratio',ar,None),('taper_ratio',taper,None),('thickness_ratio',thick,None),('sweep_25',0.,'deg')]:
             add('data:geometry:'+component+':'+field,value,unit)
         add('data:weight:airframe:'+component+':k_factor',1.)
@@ -100,6 +103,7 @@ class FastGAMassModel:
         if not np.isfinite(list(categories.values())+[owe]).all() or min(categories.values())<0 or abs(sum(categories.values())-owe)>1e-6:
             raise ValueError('FAST-GA 重量输出或部件求和无效')
         self.last_inputs={n:{'value':v,'units':u or 'unitless'} for n,(v,u) in values.items()}
+        self.audit['domain_ledger']=domain_ledger(geo)
         details={}
         for name,m in self.problem.model.get_io_metadata(iotypes='output').items():
             public=m['prom_name']

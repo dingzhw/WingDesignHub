@@ -9,6 +9,8 @@ from .sizing_physics import density
 from .xfoil_polars import PolarSpec,run_polar
 from .propulsion_model import PropellerMap,PropulsionError
 
+FULL_SCALE_REYNOLDS=(500000.,750000.,1000000.,2000000.)
+
 
 def runtime(root):
     path=Path(root)/'local/propulsion-tools.json'
@@ -55,7 +57,7 @@ def full_scale_airfoil(root,work):
     work=Path(work);work.mkdir(parents=True,exist_ok=False);exe=tool_paths(root)['xfoil']
     execute([exe],work,stdin='PLOP\nG\n\nNACA 4412\nPSAV foil.dat\n\nQUIT\n',timeout=60)
     if not (work/'foil.dat').is_file():raise PropulsionError('propeller_airfoil_missing','XFOIL未生成NACA4412坐标')
-    reynolds=[500000.,750000.,1000000.,2000000.];polars=[]
+    reynolds=list(FULL_SCALE_REYNOLDS);polars=[]
     for re in reynolds:
         spec=PolarSpec(re,0.,tuple(round(x,2) for x in np.arange(-.6,1.201,.1)),panels=240)
         result=run_polar(work/'foil.dat',spec,exe,work/f're_{re:.0f}',cache=Path(root)/'local/xfoil-cache')

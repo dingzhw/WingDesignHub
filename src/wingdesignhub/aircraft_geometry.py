@@ -2,6 +2,7 @@
 from dataclasses import asdict, dataclass
 import math
 import numpy as np
+from .configuration import geometry_parameters, CONFIGURATION_VERSION, PROPELLER_DIAMETER_M
 
 TEMPLATE_VERSION = 'conventional_single_v1'
 GEOMETRY_AXES = 'x aft from nose, y right, z up'
@@ -46,16 +47,18 @@ def transfer_wrench(force_geometry_n, moment_geometry_nm, old_reference_m, new_r
     return body_vectors(f), body_vectors(translated)
 
 
-def surface(name, area, span, taper, quarter_x, z, vertical=False, camber=0.):
+def surface(name, area, span, taper, quarter_x, z, vertical=False, camber=0., spec=None):
     root = 2*area/(span*(1+taper)); tip = taper*root
     mac = 2*root*(1+taper+taper*taper)/(3*(1+taper))
     extent = span if vertical else span/2
     root_le = [quarter_x-.25*root, 0., z]
     tip_le = [quarter_x-.25*tip, 0. if vertical else extent, z+extent if vertical else z]
+    naca = spec['naca'] if spec else ('2412' if camber else '0012')
     return {'name':name, 'area_m2':area, 'span_m':span, 'root_chord_m':root,
             'tip_chord_m':tip, 'mac_m':mac, 'quarter_x_m':quarter_x, 'z_m':z,
-            'symmetric':not vertical, 'vertical':vertical, 'naca':'2412' if camber else '0012',
-            'camber':camber, 'camber_location':.4, 'thickness_ratio':.12,
+            'symmetric':not vertical, 'vertical':vertical, 'naca':naca,
+            'camber':int(naca[0])/100, 'camber_location':int(naca[1])/10 or .4,
+            'thickness_ratio':spec['thickness_ratio'] if spec else int(naca[-2:])/100,
             'incidence_deg':0., 'twist_deg':0., 'dihedral_deg':0., 'quarter_sweep_deg':0.,
             'sections':[{'leading_edge_m':root_le, 'chord_m':root, 'twist_deg':0.},
                         {'leading_edge_m':tip_le, 'chord_m':tip, 'twist_deg':0.}]}
@@ -73,6 +76,7 @@ def build_geometry_contract(project, record, options=None, *, trial=False):
     if not trial and (s.get('converged') is not True or s.get('status') != record['status']):
         raise ValueError('总体收敛状态不一致')
     g = s['geometry']
+    parameters = geometry_parameters(g)
     if g.get('configuration') != 'low_wing_conventional_tail_fixed_tricycle_metal' or g.get('engine_count') != 1:
         raise ValueError('外形模板仅适用于常规低翼单发飞机')
     if g.get('axes') != GEOMETRY_AXES:
@@ -82,14 +86,15 @@ def build_geometry_contract(project, record, options=None, *, trial=False):
     if any(type(g[k]) not in (float,int) or not math.isfinite(g[k]) or g[k]<=0 for k in required):
         raise ValueError('总体几何尺寸须为正有限值')
     wing = surface('MainWing',g['wing_area_m2'],g['wing_span_m'],g['tip_chord_m']/g['root_chord_m'],
-                   g['wing_quarter_x_m'],-.24*g['fuselage_height_m'],camber=.02)
+                   g['wing_quarter_x_m'],-.24*g['fuselage_height_m'],spec=parameters['wing'])
     for key in ('root_chord_m','tip_chord_m','mac_m'):
         if not math.isclose(wing[key],g[key],rel_tol=1e-8):raise ValueError('总体面积、弦长或 MAC 定义不一致')
     tail_x = g['wing_quarter_x_m']+g['tail_arm_m']
-    ht = surface('HorizontalTail',g['horizontal_tail_area_m2'],math.sqrt(4*g['horizontal_tail_area_m2']),.6,
-                 tail_x,.12*g['fuselage_height_m'])
-    vt = surface('VerticalTail',g['vertical_tail_area_m2'],math.sqrt(1.6*g['vertical_tail_area_m2']),.6,
-                 tail_x,.2*g['fuselage_height_m'],vertical=True)
+    hs,vs = parameters['horizontal_tail'],parameters['vertical_tail']
+    ht = surface('HorizontalTail',g['horizontal_tail_area_m2'],math.sqrt(hs['aspect_ratio']*g['horizontal_tail_area_m2']),hs['taper_ratio'],
+                 tail_x,.12*g['fuselage_height_m'],spec=hs)
+    vt = surface('VerticalTail',g['vertical_tail_area_m2'],math.sqrt(vs['aspect_ratio']*g['vertical_tail_area_m2']),vs['taper_ratio'],
+                 tail_x,.2*g['fuselage_height_m'],vertical=True,spec=vs)
     cg = float(s['cg']['cg_x_m'])
     if not math.isfinite(cg) or not 0<cg<g['fuselage_length_m']:raise ValueError('总体重心站位无效')
     ref = {'area_m2':g['wing_area_m2'],'span_m':g['wing_span_m'],'chord_m':g['mac_m'],
@@ -106,11 +111,12 @@ def build_geometry_contract(project, record, options=None, *, trial=False):
             'fuselage':{'length_m':g['fuselage_length_m'],'width_m':g['fuselage_width_m'],
                         'height_m':g['fuselage_height_m'],
                         'sections_fraction':[[0,0,0],[.18,.85,.9],[.45,1,1],[.8,.45,.5],[1,0,0]]},
-            'propeller':{'diameter_m':1.9,'center_m':[-.1,0.,0.],'representation':'unpowered disk'},
+            'propeller':{'diameter_m':PROPELLER_DIAMETER_M,'center_m':[-.1,0.,0.],'representation':'unpowered disk'},
             'gear':{'main_x_m':cg+.18*g['mac_m'],'nose_x_m':.15*g['fuselage_length_m'],
                     'half_track_m':.18*g['wing_span_m'],'wheel_center_z_m':-1.15,
                     'fairing_length_m':.55,'fairing_fineness':1.8},
-            'assumptions':{'tail_aspect_ratios':[4.,1.6],'tail_taper':.6,'controls_status':'not_defined',
+            'assumptions':{'configuration_version':CONFIGURATION_VERSION,
+                           'tail_aspect_ratios':[hs['aspect_ratio'],vs['aspect_ratio']],'tail_taper':hs['taper_ratio'],'controls_status':'not_defined',
                            'source':'WingDesignHub conventional_single_v1 concept template; not manufacturer geometry'},
             'analysis_contract':{'status':'geometry_ready_aerodynamics_not_run','flow_condition':None,
                                  'controls':[],'trim_state':None,'propulsion_force_included':False,

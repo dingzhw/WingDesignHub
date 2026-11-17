@@ -38,7 +38,7 @@ class PolarSpec:
         if not 2e5 <= self.reynolds <= 2e7 or not 0 <= self.mach <= .3 or any(abs(x) > 1.2 for x in self.cl_grid):
             raise PolarError('polar_out_of_domain', 'XFOIL 接口范围：Re 20万–2000万、Mach≤0.3、|cl|≤1.2', conditions=asdict(self))
         if (not 1 <= self.ncrit <= 14 or not 0 < self.trip_top <= 1 or not 0 < self.trip_bottom <= 1 or
-                abs(self.flap_deg) > 10 or not .5 <= self.hinge_xc < 1 or self.panels not in (160, 240, 280, 320)):
+                abs(self.flap_deg) > 10 or not .5 <= self.hinge_xc < 1 or self.panels not in (160, 240, 280, 320, 360, 400)):
             raise PolarError('polar_invalid', '转捩、舵偏、铰链或面元条件无效')
         if not self.cl_grid or len(self.cl_grid) > 51 or list(self.cl_grid) != sorted(set(self.cl_grid)):
             raise PolarError('polar_invalid', 'cl 网格须有序、唯一且不超过 51 点')
@@ -109,8 +109,8 @@ def read_attempts(work,spec):
     for i,item in enumerate(recovery):
         attempts=item.get('attempts',[{'directory':f'recovery_{i}','panels':spec.panels}])
         allowed={f'recovery_{i}':spec.panels,f'recovery_{i}_direct':spec.panels,
-                 **{f'recovery_{i}_mesh_{n}':n for n in (280,320) if n>spec.panels}}
-        if (not attempts or len(attempts)>4 or len({a['directory'] for a in attempts})!=len(attempts) or
+                 **{f'recovery_{i}_mesh_{n}':n for n in (280,320,360,400) if n>spec.panels}}
+        if (not attempts or len(attempts)>6 or len({a['directory'] for a in attempts})!=len(attempts) or
             any(allowed.get(a['directory'])!=a['panels'] for a in attempts) or item['directory']!=attempts[-1]['directory']):
             raise PolarError('polar_invalid','恢复目录或面元记录无效')
         single=replace(spec,cl_grid=(item['cl'],),panels=attempts[-1]['panels'])
@@ -169,9 +169,13 @@ def run_polar(foil, spec, executable, work, cache=None, cache_only=False):
             attempts=[]
             plan=[(f'recovery_{i}',spec.panels,seed),
                   *[(f'recovery_{i}_mesh_{n}',n,seed) for n in (280,320) if n>spec.panels],
-                  (f'recovery_{i}_direct',spec.panels,None)]
+                  (f'recovery_{i}_direct',spec.panels,None),
+                  *[(f'recovery_{i}_mesh_{n}',n,None) for n in (360,400) if n>spec.panels]]
             # A failed warm seed can contaminate all panel retries. One independent
             # direct target starts without that boundary-layer state, at base density.
+            # Only after existing recovery fails, refine with two bounded independent
+            # starts. Transition/BL discretization can oscillate on 240--320 panels.
+            # Reynolds, Mach, foil/flap, transition and requested CL stay identical.
             for name,panels,start in plan:
                 directory=work/name;directory.mkdir();shutil.copy2(foil,directory/'foil.dat')
                 single=replace(spec,cl_grid=(target,),panels=panels)
@@ -185,7 +189,7 @@ def run_polar(foil, spec, executable, work, cache=None, cache_only=False):
                     if exc.status!='polar_missing' or name==plan[-1][0]:
                         exc.context.update(cl=target,reynolds=spec.reynolds,attempts=attempts);raise
             recovery.append({'cl':target,'warm_start_cl':seed,'directory':directory.name,'attempts':attempts,
-                'policy':'opposite-side seed; bounded panel refinement 280/320; final independent direct target; unchanged physical inputs, first converged point only'})
+                'policy':'opposite-side seed; refinement 280/320; independent base target; final independent refinement 360/400; unchanged physical inputs, first converged point only'})
         if recovery:write_json(work/'recovery.json',recovery)
         parsed=read_attempts(work,spec)
         if not (work/'analyzed_foil.dat').is_file():raise PolarError('polar_invalid', '缺少实际分析翼型读回')

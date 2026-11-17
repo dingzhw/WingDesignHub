@@ -27,6 +27,9 @@ def write_json(path, value):
             if getattr(exc,'winerror',None) not in (5,32,33) or attempt==4:
                 raise
             sleep(.05*2**attempt)
+    if path.name=='result.json' and path.parent.parent.name=='runs':
+        from .job_events import event
+        event('run',run_id=value['run_id'],status=value.get('status'),mode=value.get('mode'),progress=value.get('progress'))
 
 
 def run_reference(root, name):

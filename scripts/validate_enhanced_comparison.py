@@ -4,7 +4,7 @@ from dataclasses import replace,asdict
 import json,math,sys
 from wingdesignhub import __version__
 from wingdesignhub.requirements import DesignProject,WeightRequirement
-from wingdesignhub.comparison_ui import variants
+from wingdesignhub.design_comparison import variants
 from wingdesignhub.comparison_service import run_comparison,compare_sizing_runs
 from wingdesignhub.propulsion_feedback import CoupledOptions
 from wingdesignhub.coupled_service import run_coupled

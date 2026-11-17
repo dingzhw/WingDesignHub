@@ -3,7 +3,7 @@ from dataclasses import replace
 from pathlib import Path
 import sys
 from wingdesignhub.requirements import DesignProject,MissionRequirement,WeightRequirement
-from wingdesignhub.comparison_ui import variants
+from wingdesignhub.design_comparison import variants
 from wingdesignhub.comparison_service import run_comparison,compare_sizing_runs
 from wingdesignhub.reference_cruise import run_public_cruise
 from wingdesignhub.service import get_results,write_json
