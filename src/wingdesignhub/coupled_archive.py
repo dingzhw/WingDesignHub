@@ -1,3 +1,4 @@
+from .archive_evidence import check_packaged_native
 """Inert verification of propulsion-coupled archives, without native dependencies."""
 import json,hashlib,math
 from .propulsion_feedback import CoupledOptions
@@ -15,7 +16,7 @@ def check_coupled(record,parents,files):
     if (parent is None or r['mode']!='overall_propulsion' or data('parent_result.json')!=parent or
         hashlib.sha256(snapshot).hexdigest()!=r['parent_result_sha256'] or options!=r['options'] or
         r['definition_sha256']!=parent['definition_sha256']):raise ValueError('方案包推进闭环来源不符')
-    check_native(files[prefix+'native_evidence.zip'],data('native_manifest.json'))
+    check_packaged_native(files,prefix)
     s=r.get('summary',{})
     if 'propulsion_feedback' not in s:return
     audit=data('coupled_verification.json');aero=MissionAeroTable.from_dict(data('aero_table.json'));prop=PropellerMap(data('propeller_map.json'))

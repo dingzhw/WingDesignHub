@@ -3,6 +3,14 @@ import pytest
 from streamlit.testing.v1 import AppTest
 
 
+@pytest.fixture(autouse=True)
+def isolate_task_history(monkeypatch):
+    # These tests exercise a discipline page, not the persistent task panel.
+    # Never allow positional buttons to operate on the user's saved jobs.
+    from wingdesignhub import jobs
+    monkeypatch.setattr(jobs,'list_jobs',lambda root:[])
+
+
 def test_first_time_user_can_run_and_view_results():
     app = AppTest.from_file(str(Path(__file__).resolve().parents[1]/"app.py")).run(timeout=30)
     assert not app.exception

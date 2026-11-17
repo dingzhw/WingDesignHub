@@ -62,7 +62,7 @@ def render(project,root,parent,key='coupled',archived=None):
         st.caption('新任务初值来源：'+parent['run_id']+'；下方历史结果初值来源：'+r['parent_run_id'])
         if r['options']!=asdict(options):st.warning('闭环选项已修改，下方保留上次结果，请重新计算。')
         try:
-            r=get_results(root,r['run_id']);work=Path(root)/'runs'/r['run_id']
+            r=get_results(root,r['run_id'],verify_native=False);work=Path(root)/'runs'/r['run_id']
             show_files(r,{n:(work/n).read_bytes() for n in ('report.html','report.md','aircraft_parameters.json','final_geometry/aircraft.vsp3') if n in r['artifact_hashes']},key)
             if archived is not None and st.button('保存推进闭环后的方案',key=key+'_save'):
                 from .project_archive import build_bundle,save_bundle

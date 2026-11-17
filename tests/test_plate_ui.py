@@ -4,6 +4,14 @@ import pytest
 from streamlit.testing.v1 import AppTest
 
 
+@pytest.fixture(autouse=True)
+def isolate_task_history(monkeypatch):
+    # These tests exercise a discipline page, not the persistent task panel.
+    # Never allow positional buttons to operate on the user's saved jobs.
+    from wingdesignhub import jobs
+    monkeypatch.setattr(jobs,'list_jobs',lambda root:[])
+
+
 def test_plate_failure_visible(monkeypatch):
     from wingdesignhub import plate_service
     monkeypatch.setattr(plate_service,'run_plate_analysis',lambda *a:{'run_id':'fixture','status':'failed','error':'模态输出不完整'})

@@ -58,7 +58,7 @@ def render(project,root,parent):
         if r['options']!=asdict(o):st.warning('气动任务假设已修改，下方保留上次结果，请重新计算。')
         from .service import get_results
         try:
-            r=get_results(root,r['run_id']);work=Path(root)/'runs'/r['run_id']
+            r=get_results(root,r['run_id'],verify_native=False);work=Path(root)/'runs'/r['run_id']
             show_files(r,{n:(work/n).read_bytes() for n in ('report.html','report.md','aircraft_parameters.json','aero_table.json') if n in r['artifact_hashes']},'current_feedback')
             from .propulsion_ui import render as propulsion_render
             propulsion_render(project,root,r)

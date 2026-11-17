@@ -30,7 +30,7 @@ def load_run(root,run_id):
     chain=[];seen=set();rid=run_id
     while rid:
         if rid in seen:raise ValueError('运行依赖循环')
-        seen.add(rid);r=get_results(root,rid);chain.append(r);rid=r.get('parent_run_id')
+        seen.add(rid);r=get_results(root,rid,verify_native=False);chain.append(r);rid=r.get('parent_run_id')
     activate()
     if not (Path(root)/'runs'/run_id/'input.json').is_file():
         st.session_state['design_reference_result']=chain[0];return

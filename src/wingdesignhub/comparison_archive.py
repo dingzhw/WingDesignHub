@@ -1,16 +1,17 @@
+from .archive_evidence import check_packaged_native
 """Bounded dependency closure for portable enhanced comparison evidence."""
 import json,hashlib
 from .service import get_results
 
 
-def support_runs(root,children):
+def support_runs(root,children,*,verify_native=True):
     seen=set(children);result=[]
     for rid in children:
-        record=get_results(root,rid)
+        record=get_results(root,rid,verify_native=verify_native)
         for _ in range(3):
             if record['mode']=='overall_sizing':break
             if record['mode'] not in ('overall_propulsion','overall_feedback'):raise ValueError('比较包含不支持的来源链')
-            parent=get_results(root,record['parent_run_id'])
+            parent=get_results(root,record['parent_run_id'],verify_native=verify_native)
             if parent['definition_sha256']!=record['definition_sha256']:raise ValueError('比较来源定义不符')
             if parent['run_id'] in seen:raise ValueError('比较来源链重复或形成环')
             seen.add(parent['run_id']);result.append(parent['run_id']);record=parent
@@ -28,7 +29,7 @@ def check_feedback(record,parent,files):
         r['parent_run_id']!=parent['run_id'] or r['definition_sha256']!=parent['definition_sha256'] or
         data('parent_result.json')!=parent or hashlib.sha256(files[prefix+'parent_result.json']).hexdigest()!=r['parent_result_sha256'] or
         r['options']!=options):raise ValueError('方案包气动反馈来源不一致')
-    check_native(files[prefix+'native_evidence.zip'],data('native_manifest.json'))
+    check_packaged_native(files,prefix)
     s=r.get('summary',{})
     if 'aerodynamic_feedback' in s:
         audit=s['aerodynamic_feedback'];aero=MissionAeroTable.from_dict(data('aero_table.json'))

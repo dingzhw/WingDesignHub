@@ -4,6 +4,14 @@ import pytest
 from streamlit.testing.v1 import AppTest
 
 
+@pytest.fixture(autouse=True)
+def isolate_task_history(monkeypatch):
+    # These tests exercise a discipline page, not the persistent task panel.
+    # Never allow positional buttons to operate on the user's saved jobs.
+    from wingdesignhub import jobs
+    monkeypatch.setattr(jobs,'list_jobs',lambda root:[])
+
+
 def test_flight_page_failure(monkeypatch):
     from wingdesignhub import flight_service
     monkeypatch.setattr(flight_service,'run_flight_structure',lambda *a:{'run_id':'fixture','status':'failed','error':'目标升力超出线性域'})

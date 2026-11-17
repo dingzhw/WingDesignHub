@@ -54,7 +54,7 @@ def render(project,root,parent,key='current_propulsion',archived=None):
     if result and result.get('parent_run_id')==parent['run_id']:
         if result['options']!=asdict(options):st.warning('推进设置已修改，下方保留上次结果，请重新计算。')
         try:
-            result=get_results(root,result['run_id']);work=Path(root)/'runs'/result['run_id']
+            result=get_results(root,result['run_id'],verify_native=False);work=Path(root)/'runs'/result['run_id']
             show_files(result,{n:(work/n).read_bytes() for n in ('report.html','report.md','propeller_map.json') if n in result['artifact_hashes']},key)
             if archived is not None:
                 from .project_archive import build_bundle,save_bundle

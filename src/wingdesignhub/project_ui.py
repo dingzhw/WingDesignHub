@@ -9,13 +9,13 @@ from .design_cards import STATUS,METRICS
 
 
 @st.cache_data(max_entries=2,show_spinner=False)
-def feedback_bundle(project,root,record,geometry,aero,trim,drag,feedback,source_token,propulsion=None,coupled=None,current_run_id=None):
-    return archive.build_bundle(project,root,record,geometry,aero,trim,drag,feedback,propulsion,coupled,current_run_id=current_run_id)
+def feedback_bundle(project,root,record,geometry,aero,trim,drag,feedback,source_token,propulsion=None,coupled=None,current_run_id=None,profile="portable"):
+    return archive.build_bundle(project,root,record,geometry,aero,trim,drag,feedback,propulsion,coupled,current_run_id=current_run_id,profile=profile)
 
 
 @st.cache_data(max_entries=1,show_spinner=False)
-def comparison_bundle(project,root,record,evidence_token):
-    return archive.build_bundle(project,root,record)
+def comparison_bundle(project,root,record,evidence_token,profile="portable"):
+    return archive.build_bundle(project,root,record,profile=profile)
 
 
 def activate(parsed=None):
@@ -50,6 +50,7 @@ def library(root):
     opened=st.session_state.get('opened_archive')
     if opened:
         m=opened['manifest']
+        if opened.get('evidence_status')=='detached_not_verified':st.caption('轻量工程包：结果、最终几何与图谱已校验；原生过程证据单独保留，本次未读取或验证。')
         st.info('已打开存档：'+m['name']+'。需求已载入下方；存档结果可在下面查看，重新运行会生成新记录。')
         if opened['migration_required']:st.warning('存档需求已迁移，请重新核对确认；历史结果保留原版本。')
         elif not opened['current_source_matches']:st.warning('存档包含与当前版本不同的来源记录，按原版本查阅；推进复算会单独核查冻结气动接口。')
@@ -131,18 +132,21 @@ def save_controls(project,root,record=None,key='design'):
     drag=st.session_state.get('aircraft_drag_result') if key=='design' else None
     if not trim or not drag or drag.get('parent_run_id')!=trim['run_id']:drag=None
     st.caption('保存内容：需求、假设'+('、本次计算结果和报告'+('、全机几何'+('、气动与条带载荷。' if aero else '。') if geometry else '。') if chosen else '（草案，无当前有效计算结果）。'))
+    include_evidence=st.checkbox('包含完整原生过程证据（文件较大）',value=False,key=key+'_full_evidence')
+    profile='full' if include_evidence else 'portable'
+    st.caption('当前导出层级：'+('完整审计包' if include_evidence else '轻量工程包，原生过程按哈希引用单独保留'))
     try:
         if trim:st.caption('同时保存纵向配平、工况台账及全部迭代原始记录。')
         if drag:st.caption('同时保存阻力账目、极曲线、面积和诊断记录。')
         feedback=st.session_state.get('aero_feedback_result') if key=='design' else None
         if not chosen or not feedback or feedback.get('parent_run_id')!=chosen['run_id']:feedback=None
-        if feedback:st.caption('同时保存气动驱动任务、总体反馈结果及原生计算证据包。')
+        if feedback:st.caption('同时保存气动驱动任务、总体反馈结果及原生证据的哈希引用。')
         propulsion=st.session_state.get('propulsion_result') if key=='design' else None
         if not feedback or not propulsion or propulsion.get('parent_run_id')!=feedback['run_id']:propulsion=None
         if propulsion:st.caption('同时保存发动机/螺旋桨图谱、推进任务复算及原始输出。')
         coupled=st.session_state.get('coupled_result') if key=='design' else None
         if not chosen or not coupled or coupled.get('parent_run_id') not in [chosen['run_id'],*( [feedback['run_id']] if feedback else [])]:coupled=None
-        if coupled:st.caption('同时保存推进闭环、发动机/携油/几何联动及全部原生计算证据。')
+        if coupled:st.caption('同时保存推进闭环、发动机/携油/几何联动及原生证据的哈希引用。')
         selected=st.session_state.get('current_design_run_'+project.definition_hash()) if key=='design' else None
         if selected not in [r['run_id'] for r in (chosen,feedback,coupled) if r]:selected=chosen['run_id'] if chosen else None
         if feedback or coupled:
@@ -150,21 +154,21 @@ def save_controls(project,root,record=None,key='design'):
             from .service import get_results
             from .geometry_service import source_hashes
             for r in (chosen,geometry,aero,trim,drag,feedback,propulsion,coupled):
-                if r is not None and get_results(root,r['run_id'])!=r:raise ValueError('当前运行记录已改变')
-            data=feedback_bundle(project,str(root),chosen,geometry,aero,trim,drag,feedback,source_hashes(),propulsion,coupled,selected)
+                if r is not None and get_results(root,r['run_id'],verify_native=include_evidence)!=r:raise ValueError('当前运行记录已改变')
+            data=feedback_bundle(project,str(root),chosen,geometry,aero,trim,drag,feedback,source_hashes(),propulsion,coupled,selected,profile)
         elif chosen and isinstance(project,ComparisonRequest) and project.analysis_model=='coupled':
             from .comparison_archive import support_runs
             from .service import get_results
             children=chosen.get('child_runs',[])
-            records=[get_results(root,rid) for rid in [chosen['run_id'],*children,*support_runs(root,children)]]
+            records=[get_results(root,rid,verify_native=include_evidence) for rid in [chosen['run_id'],*children,*support_runs(root,children,verify_native=include_evidence)]]
             if records[0]!=chosen:raise ValueError('当前比较记录已改变')
-            data=comparison_bundle(project,str(root),chosen,records)
-        else:data=archive.build_bundle(project,root,chosen,geometry,aero,trim,drag)
+            data=comparison_bundle(project,str(root),chosen,records,profile)
+        else:data=archive.build_bundle(project,root,chosen,geometry,aero,trim,drag,profile=profile)
         if st.button('保存'+('三方案' if key=='comparison' else '方案')+'到本机',key=key+'_save_local'):
             index=archive.save_bundle(data,root)
             st.session_state['archive_saved_note']='已保存 '+index['name']+'；可在页面顶部打开，原方案不会被覆盖。'
             st.rerun()
-        st.download_button('导出完整'+('三方案包' if key=='comparison' else '方案包')+'（需求与结果）',data,key+'.wdh',key=key+'_bundle_download')
+        st.download_button(('导出完整' if include_evidence else '导出轻量')+('三方案包' if key=='comparison' else '方案包')+'（需求与结果）',data,key+'.wdh',key=key+'_bundle_download')
         if chosen:
             path=Path(root)/'runs'/selected/'report.html'
             if path.is_file():st.download_button('导出可打印'+('比较' if key=='comparison' else '总体')+'报告',path.read_bytes(),key+'-report.html',key=key+'_html_report')

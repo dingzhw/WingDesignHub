@@ -49,7 +49,7 @@ def inventory(root):
     return result
 
 
-def execute(args, cwd, stdin="", timeout=60):
+def execute(args, cwd, stdin="", timeout=60, *, output_limit=8*1024*1024):
     from .processes import launch_owned,stop_owned
     from .job_events import event
     cwd = Path(cwd)
@@ -62,21 +62,22 @@ def execute(args, cwd, stdin="", timeout=60):
     process,owner = launch_owned(args, cwd=cwd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT)
     try:
-        data, _ = process.communicate(stdin.encode("ascii"), timeout=timeout)
-    except subprocess.TimeoutExpired:
-        stop_owned(process,owner)
-        data, _ = process.communicate()
-        (cwd/"stdout.log").write_bytes(data)
-        raise RuntimeError(f"计算超过 {timeout} 秒，已停止；请查看运行日志") from None
+        from .bounded_output import capture
+        capture_info=capture(process,owner,stdin.encode("ascii"),cwd/"stdout.log",timeout,output_limit)
+        manifest['output_capture']=capture_info
+        if capture_info['status']=='output_limit':
+            raise RuntimeError('求解器输出超过容量限制，已停止；日志保留首尾，未接受计算结果')
+        if capture_info['status']=='timeout':
+            raise RuntimeError(f"计算超过 {timeout} 秒，已停止；请查看运行日志")
     except BaseException:
-        stop_owned(process,owner)
+        if process.poll() is None:stop_owned(process,owner)
         raise
     finally:
         owner.close()
         manifest.update(elapsed_s=time.monotonic()-started,returncode=process.poll())
         (cwd/'command.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
         event('solver_finished',directory=str(cwd),elapsed_s=manifest['elapsed_s'],returncode=process.poll())
-    (cwd/"stdout.log").write_bytes(data)
+    data=(cwd/"stdout.log").read_bytes()
     output = data.decode("utf-8", errors="replace")
     if process.returncode:
         raise RuntimeError(f"求解器退出码 {process.returncode}；请查看运行日志")

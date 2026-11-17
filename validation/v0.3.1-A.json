@@ -1,0 +1,43 @@
+{
+  "stage": "V0.3.1-A",
+  "representative_run": "3b8a708c07d54eb7bed4698717ec9bae",
+  "portable_bytes": 2259790,
+  "portable_build_s": 0.9642011999385431,
+  "portable_under_20_MiB": true,
+  "old_bundle_bytes": 179604099,
+  "native_unique_archive_bytes": 102590021,
+  "native_old_archive_bytes": 198578574,
+  "logical_files_preserved": 33578,
+  "results_geometry_reports_identical": true,
+  "old_bundle_readable": true,
+  "save_deduplicated": true,
+  "failure_probe_s": 0.7719765999354422,
+  "scope": "data governance acceptance; 14 full-regression failures resolved by UI test isolation and affected retests; no new whole-aircraft physical validation",
+  "history_removed_bytes": 2329996934,
+  "history_restore_verified": true,
+  "full_regression": {
+    "passed": 412,
+    "failed": 14,
+    "duration_s": 754.6,
+    "failures": "legacy positional UI tests operated on persistent task panel; fixed isolation"
+  },
+  "software_stage_passed": true,
+  "physical_validation_passed": false,
+  "affected_final_regression": {
+    "passed": 65,
+    "failed": 0,
+    "duration_s": 120.27
+  },
+  "final_view_checks": {
+    "portable_build_does_not_read_native_zip": true,
+    "portable_build_s": 0.4624993000179529,
+    "portable_bytes": 2259790,
+    "real_archived_ui_no_exception": true,
+    "final_geometry_component_present": true,
+    "detached_status_visible": true,
+    "restore_identity": true,
+    "existing_destination_rejected": true
+  },
+  "acceptance_date": "2026-11-18",
+  "historical_run_files_preserved": true
+}

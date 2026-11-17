@@ -129,12 +129,13 @@ def run_analysis(case, root, mode="beam"):
     return record
 
 
-def get_results(root, run_id):
+def get_results(root, run_id, *, verify_native=True):
     if UUID(run_id).hex != run_id:
         raise ValueError("无效运行编号")
     directory = Path(root)/"runs"/run_id
     record = json.loads((directory/"result.json").read_text(encoding="utf-8"))
     for name, digest in record.get("artifact_hashes", {}).items():
+        if not verify_native and name == "native_evidence.zip":continue
         p = (directory/name).resolve()
         if not p.is_relative_to(directory.resolve()) or not p.is_file() or sha256(p) != digest:
             raise ValueError(f"运行文件完整性检查失败：{name}")

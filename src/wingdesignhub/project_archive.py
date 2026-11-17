@@ -11,6 +11,7 @@ from . import __version__
 from .requirements import DesignProject
 from .design_comparison import ComparisonRequest
 from .service import get_results
+from .archive_evidence import check_packaged_native
 
 MAX_BYTES=1024*1024*1024  # three iterative native designs plus bounded source runs
 MAX_FILES=1024  # bounded trim evaluations include their original commands and outputs
@@ -45,7 +46,9 @@ def raw_definition(data,kind):
     return digest(json.dumps(normalize(obj),ensure_ascii=False,sort_keys=True,allow_nan=False).encode())
 
 
-def build_bundle(project,root,record=None,geometry_record=None,aero_record=None,trim_record=None,drag_record=None,feedback_record=None,propulsion_record=None,coupled_record=None,*,current_run_id=None):
+def build_bundle(project,root,record=None,geometry_record=None,aero_record=None,trim_record=None,drag_record=None,feedback_record=None,propulsion_record=None,coupled_record=None,*,current_run_id=None,profile="full"):
+    if profile not in ('full','portable'):raise ValueError('未知归档层级')
+    detached={}
     kind='comparison' if isinstance(project,ComparisonRequest) else 'design'
     project.validate() if kind=='comparison' else project.check_schema()
     source=project.to_dict();files={'project.json':encoded(source)};ids=[];geometry_ids=[];aero_ids=[];trim_ids=[];drag_ids=[];feedback_ids=[]
@@ -59,7 +62,7 @@ def build_bundle(project,root,record=None,geometry_record=None,aero_record=None,
     if geometry_record is not None and (record is None or kind!='design'):
         raise ValueError('全机几何须与其单方案总体结果一起保存')
     if record is not None:
-        actual=get_results(root,record['run_id'])
+        actual=get_results(root,record['run_id'],verify_native=profile=="full")
         if actual!=record:raise ValueError('待保存结果与实际运行记录不符')
         expected='overall_comparison' if kind=='comparison' else 'overall_sizing'
         if actual['mode']!=expected or actual['definition_sha256']!=project.definition_hash():
@@ -71,48 +74,50 @@ def build_bundle(project,root,record=None,geometry_record=None,aero_record=None,
         ids=[actual['run_id'],*actual.get('child_runs',[])]
         if kind=='comparison' and project.analysis_model=='coupled':
             from .comparison_archive import support_runs
-            support_ids=support_runs(root,ids[1:])
+            support_ids=support_runs(root,ids[1:],verify_native=profile=="full")
         if geometry_record is not None:
-            gr=get_results(root,geometry_record['run_id'])
+            gr=get_results(root,geometry_record['run_id'],verify_native=profile=="full")
             if gr!=geometry_record or gr.get('mode')!='aircraft_geometry' or gr.get('parent_run_id')!=actual['run_id']:
                 raise ValueError('几何结果与总体运行不匹配')
             geometry_ids=[gr['run_id']]
         if aero_record is not None:
-            ar=get_results(root,aero_record['run_id'])
+            ar=get_results(root,aero_record['run_id'],verify_native=profile=="full")
             if ar!=aero_record or ar.get('mode')!='aircraft_aero' or ar.get('parent_run_id')!=gr['run_id']:
                 raise ValueError('气动结果与几何运行不匹配')
             aero_ids=[ar['run_id']]
         if trim_record is not None:
-            tr=get_results(root,trim_record['run_id'])
+            tr=get_results(root,trim_record['run_id'],verify_native=profile=="full")
             if tr!=trim_record or tr.get('mode')!='aircraft_trim' or tr.get('parent_run_id')!=gr['run_id']:
                 raise ValueError('配平结果与几何运行不匹配')
             trim_ids=[tr['run_id']]
         if drag_record is not None:
-            dr=get_results(root,drag_record['run_id'])
+            dr=get_results(root,drag_record['run_id'],verify_native=profile=="full")
             if dr!=drag_record or dr.get('mode')!='aircraft_drag' or dr.get('parent_run_id')!=tr['run_id']:
                 raise ValueError('阻力结果与配平运行不匹配')
             drag_ids=[dr['run_id']]
         if feedback_record is not None:
-            fr=get_results(root,feedback_record['run_id'])
+            fr=get_results(root,feedback_record['run_id'],verify_native=profile=="full")
             if fr!=feedback_record or fr.get('mode')!='overall_feedback' or fr.get('parent_run_id')!=actual['run_id']:
                 raise ValueError('气动反馈与总体运行不匹配')
             feedback_ids=[fr['run_id']]
         if propulsion_record is not None:
-            pr=get_results(root,propulsion_record['run_id'])
+            pr=get_results(root,propulsion_record['run_id'],verify_native=profile=="full")
             if pr!=propulsion_record or pr.get('mode')!='propulsion_replay' or pr.get('parent_run_id')!=fr['run_id']:
                 raise ValueError('推进结果与气动反馈运行不匹配')
             propulsion_ids=[pr['run_id']]
         if coupled_record is not None:
-            cr=get_results(root,coupled_record['run_id'])
+            cr=get_results(root,coupled_record['run_id'],verify_native=profile=="full")
             if cr!=coupled_record or cr.get('mode')!='overall_propulsion' or cr.get('parent_run_id') not in [actual['run_id'],*feedback_ids]:
                 raise ValueError('推进闭环与来源总体或气动反馈不匹配')
             coupled_ids=[cr['run_id']]
         for rid in ids+geometry_ids+aero_ids+trim_ids+drag_ids+feedback_ids+propulsion_ids+coupled_ids+support_ids:
-            r=get_results(root,rid);work=Path(root)/'runs'/rid
+            r=get_results(root,rid,verify_native=profile=="full");work=Path(root)/'runs'/rid
             for name in ['result.json',*r.get('artifact_hashes',{})]:
                 safe_name(name);p=(work/name).resolve()
                 if not p.is_relative_to(work.resolve()):raise ValueError('运行产物路径越界')
-                files[f'runs/{rid}/{name}']=p.read_bytes()
+                if profile=='portable' and name=='native_evidence.zip':
+                    detached[f'runs/{rid}/{name}']=r['artifact_hashes'][name]
+                else:files[f'runs/{rid}/{name}']=p.read_bytes()
         for filename in ('report.html','report.md'):
             p=Path(root)/'runs'/ids[0]/filename
             if p.is_file():files['reports/'+filename]=p.read_bytes()
@@ -124,7 +129,7 @@ def build_bundle(project,root,record=None,geometry_record=None,aero_record=None,
         for filename in ('report.html','report.md'):
             p=Path(root)/'runs'/current_run_id/filename
             if p.is_file():files['reports/'+filename]=p.read_bytes()
-    manifest={'bundle_schema':1,'kind':kind,'name':name,'software_version':__version__,
+    manifest={'bundle_schema':2 if profile=='portable' else 1,'profile':profile,'detached_evidence':detached,'kind':kind,'name':name,'software_version':__version__,
               'created_utc':datetime.now(timezone.utc).isoformat(),'run_ids':ids,'geometry_run_ids':geometry_ids,'aero_run_ids':aero_ids,'trim_run_ids':trim_ids,'drag_run_ids':drag_ids,'feedback_run_ids':feedback_ids,'propulsion_run_ids':propulsion_ids,'coupled_run_ids':coupled_ids,
               'definition_sha256':project.definition_hash(),'files':{n:digest(b) for n,b in files.items()},
               'support_run_ids':support_ids,
@@ -151,10 +156,14 @@ def read_bundle(data):
     except (BadZipFile,RuntimeError,EOFError) as exc:raise ValueError('方案包无法读取或已损坏') from exc
     try:
         manifest=json.loads(files.pop('manifest.json'))
-        if type(manifest.get('bundle_schema')) is not int or manifest['bundle_schema']!=1:raise ValueError('方案包版本不支持')
+        if type(manifest.get('bundle_schema')) is not int or manifest['bundle_schema'] not in (1,2):raise ValueError('方案包版本不支持')
         if manifest['kind'] not in ('design','comparison'):raise ValueError('方案包类型无效')
         if set(manifest['files'])!=set(files) or any(digest(b)!=manifest['files'][n] for n,b in files.items()):
             raise ValueError('方案包文件完整性检查失败')
+        from .archive_evidence import EvidenceFiles
+        detached=manifest.get('detached_evidence',{})
+        if not isinstance(detached,dict) or (detached and manifest['bundle_schema']!=2):raise ValueError('归档证据层级无效')
+        files=EvidenceFiles(files,detached)
         source=json.loads(files['project.json']);kind=manifest['kind']
         project=ComparisonRequest.from_dict(source) if kind=='comparison' else DesignProject.from_dict(source)
         if raw_definition(source,kind)!=manifest['definition_sha256']:raise ValueError('方案包需求哈希不符')
@@ -187,7 +196,9 @@ def read_bundle(data):
             if r['run_id']!=rid:raise ValueError('方案包运行身份不符')
             for name,h in r['artifact_hashes'].items():
                 safe_name(name)
-                if digest(files[prefix+name])!=h:raise ValueError('方案包运行产物哈希不符')
+                if prefix+name in files.detached:
+                    if files.detached[prefix+name]!=h:raise ValueError('分离证据与原记录哈希不符')
+                elif digest(files[prefix+name])!=h:raise ValueError('方案包运行产物哈希不符')
             if digest(files[prefix+'input.json'])!=r['input_hash']:raise ValueError('方案包运行输入哈希不符')
             run_kind='comparison' if r['mode']=='overall_comparison' else 'design'
             if raw_definition(json.loads(files[prefix+'input.json']),run_kind)!=r['definition_sha256']:
@@ -289,7 +300,7 @@ def read_bundle(data):
             if (r['mode']!='overall_feedback' or r['parent_run_id']!=parent['run_id'] or
                 r['definition_sha256']!=parent['definition_sha256'] or json.loads(snapshot)!=parent or
                 digest(snapshot)!=r['parent_result_sha256'] or r['options']!=options):raise ValueError('方案包气动反馈来源不一致')
-            check_native(files[prefix+'native_evidence.zip'],json.loads(files[prefix+'native_manifest.json']))
+            check_packaged_native(files,prefix)
             s=r.get('summary',{})
             if 'aerodynamic_feedback' in s:
                 audit=s['aerodynamic_feedback'];aero=json.loads(files[prefix+'aero_table.json'])
@@ -313,7 +324,7 @@ def read_bundle(data):
             for name in ('aero_table.json','summary.json','feedback_verification.json'):
                 if files[prefix+'source_'+name]!=files[pp+name]:raise ValueError('方案包冻结气动输入不符')
             if files[prefix+'geometry_contract.json']!=files[pp+'final_geometry/geometry_contract.json']:raise ValueError('方案包推进几何不符')
-            check_native(files[prefix+'native_evidence.zip'],json.loads(files[prefix+'native_manifest.json']))
+            check_packaged_native(files,prefix)
             if 'summary' in r:
                 s=r['summary'];table=MissionAeroTable.from_dict(json.loads(files[prefix+'source_aero_table.json']))
                 prop=PropellerMap(json.loads(files[prefix+'propeller_map.json']))
@@ -327,6 +338,8 @@ def read_bundle(data):
         if kind=='comparison' and project.analysis_model=='coupled':
             from .comparison_archive import check_comparison
             check_comparison(project,records,support_records,files)
+        expected_detached={f'runs/{r["run_id"]}/native_evidence.zip' for r in records+feedback_records+propulsion_records+coupled_records+support_records if 'native_evidence.zip' in r.get('artifact_hashes',{})}
+        if not set(files.detached)<=expected_detached:raise ValueError('存在无关分离证据')
         current={p.relative_to(Path(__file__).parent).as_posix():digest(p.read_bytes()) for p in Path(__file__).parent.rglob('*.py')}
         all_records=records+geometry_records+aero_records+trim_records+drag_records+feedback_records+propulsion_records+coupled_records+support_records
         selected=manifest.get('current_run_id',ids[0] if ids else None)
@@ -336,7 +349,7 @@ def read_bundle(data):
             for package,recorded in r.get('summary',{}).get('versions',{}).items():
                 try:compatible=compatible and version(package)==recorded
                 except PackageNotFoundError:compatible=False
-        return {'manifest':manifest,'input':source,'project':project,'records':records,'geometry_records':geometry_records,'aero_records':aero_records,'trim_records':trim_records,'drag_records':drag_records,'feedback_records':feedback_records,'propulsion_records':propulsion_records,'coupled_records':coupled_records,'files':files,
+        return {'evidence_status':'detached_not_verified' if files.detached else 'embedded_verified','manifest':manifest,'input':source,'project':project,'records':records,'geometry_records':geometry_records,'aero_records':aero_records,'trim_records':trim_records,'drag_records':drag_records,'feedback_records':feedback_records,'propulsion_records':propulsion_records,'coupled_records':coupled_records,'files':files,
                 'migration_required':project.definition_hash()!=manifest['definition_sha256'],
                 'support_records':support_records,
                 'current_source_matches':compatible,'bundle_sha256':digest(data)}
@@ -346,10 +359,16 @@ def read_bundle(data):
 
 def save_bundle(data,root):
     parsed=read_bundle(data);directory=Path(root)/'local'/'projects';directory.mkdir(parents=True,exist_ok=True)
+    identity={k:v for k,v in parsed['manifest'].items() if k!='created_utc'}
+    fingerprint=digest(encoded(identity))
+    for saved in list_saved(root):
+        if saved.get('content_fingerprint')==fingerprint:
+            old=load_saved(root,saved['archive_id'])
+            if {k:v for k,v in old['manifest'].items() if k!='created_utc'}==identity:return saved
     sid=uuid4().hex;path=directory/(sid+'.wdh')
     with path.open('xb') as f:f.write(data)
     index={k:parsed['manifest'][k] for k in ('name','kind','created_utc','software_version')}
-    index.update(archive_id=sid,bundle_sha256=digest(data),has_results=bool(parsed['records']))
+    index.update(content_fingerprint=fingerprint,archive_id=sid,bundle_sha256=digest(data),has_results=bool(parsed['records']))
     with (directory/(sid+'.json')).open('xb') as f:f.write(encoded(index))
     return index
 
