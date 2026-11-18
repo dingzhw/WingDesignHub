@@ -18,12 +18,12 @@ def show_files(record,files,key):
         cols[0].metric('反馈后设计起飞重量',f"{s['design_mtow_kg']:.1f} kg")
         cols[1].metric('反馈后总可用燃油',f"{s['mission']['block_fuel_kg']:.1f} kg")
         cols[2].metric('反馈后安装轴功率',f"{s['power']['installed_power_w']/1000:.1f} kW")
-        st.dataframe([{'指标':r['quantity'],'单位':r['unit'],'原总体':r['legacy'],'反馈后':r['feedback'],'变化 %':100*r['relative_change']}
-                      for r in s['redesign_comparison']['rows']],hide_index=True)
+        from .presentation import redesign_rows,mission_rows
+        st.dataframe(redesign_rows(s['redesign_comparison']['rows'],'legacy','feedback'),hide_index=True)
         st.caption('上表比较重新定尺寸后的方案；气动模型和速度安排均有变化。原总体记录保留。')
         with st.expander('同条件差异、任务明细与收敛检查'):
             st.json(s.get('aerodynamic_feedback',{}).get('same_condition_comparison',{}))
-            st.dataframe(s['mission']['segments'],hide_index=True);st.dataframe(s['iterations'],hide_index=True)
+            st.dataframe(mission_rows(s),hide_index=True);st.dataframe(s['iterations'],hide_index=True)
             from .constraint_ui import render as show_constraints
             show_constraints(s)
             st.json(s.get('aerodynamic_feedback',{}).get('direct_checks',[]))

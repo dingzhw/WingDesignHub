@@ -50,6 +50,23 @@ def load_run(root,run_id):
         st.session_state['current_design_run_'+p.definition_hash()]=run_id
 
 
+def restore_inputs(root,job_id):
+    """Restore editable inputs even when a failed job never created a result."""
+    from .project_ui import activate
+    from .requirements import DesignProject
+    from .design_comparison import ComparisonRequest
+    request=jobs.read(jobs.job_path(root,job_id)/'request.json')
+    raw=request.get('project')
+    if raw is None:raise ValueError('此工具/参考任务没有用户飞机需求可恢复')
+    p=ComparisonRequest.from_dict(raw) if request['kind']=='compare' else DesignProject.from_dict(raw)
+    # Parse completely before clearing the current view.
+    activate()
+    if isinstance(p,ComparisonRequest):
+        st.session_state['job_comparison_request']=p
+        st.session_state['workspace_project']=p.projects[0]
+    else:st.session_state['workspace_project']=p
+
+
 @st.fragment(run_every=2)
 def panel(root):
     with st.expander('计算任务与历史',expanded=True):
@@ -103,6 +120,9 @@ def panel(root):
             if st.button('取消此任务',key='cancel_job_'+selected):
                 jobs.cancel_job(root,selected);st.rerun()
         else:
+            if record['kind'] not in ('tools','fastga_reference') and st.button('恢复此任务需求以便修改',key='restore_job_'+selected):
+                try:restore_inputs(root,selected);st.rerun()
+                except (ValueError,TypeError,OSError) as exc:st.error('需求恢复失败：'+str(exc))
             if record.get('run_id') and record['kind']=='tools':
                 st.json(jobs.read(Path(root)/'runs'/record['run_id']/'result.json'))
             elif record.get('run_id') and st.button('载入此任务结果',key='load_job_'+selected):
@@ -112,5 +132,5 @@ def panel(root):
                 try:
                     new=jobs.retry_job(root,selected);st.session_state['pending_selected_job']=new['job_id'];st.rerun()
                 except (ValueError,OSError) as exc:st.error(str(exc))
-            st.caption('重新计算创建新任务，原始输入、日志和已有结果保留。')
+            st.caption('恢复需求只载入输入；修改后重新确认。重新计算创建新任务，从头求解并复用有效缓存，不续接求解器中断轮次；原始输入、日志和已有结果保留。')
         st.caption('任务进度不等同于工程可行性；原生多工况计算可能需数十分钟，不显示未经估算的完成百分比。')

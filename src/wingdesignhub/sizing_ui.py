@@ -3,7 +3,7 @@ from dataclasses import replace
 from pathlib import Path
 import json
 import streamlit as st
-from .design_cards import CHECK_LABELS as CHECKS
+from .design_cards import CHECK_LABELS as CHECKS, STATUS
 
 
 from .sizing_config import FIELD_LABELS as FIELDS
@@ -54,7 +54,7 @@ def results(record, project, root):
     if st.session_state.get(key) not in candidates:st.session_state[key]=record['run_id']
     labels={'overall_sizing':'初步总体','overall_feedback':'气动反馈总体','overall_propulsion':'推进闭环总体'}
     selected=st.selectbox('当前总体结果',list(candidates),key=key,
-        format_func=lambda rid:labels[candidates[rid]['mode']]+' · '+rid[:12]+' · '+candidates[rid]['status'])
+        format_func=lambda rid:labels[candidates[rid]['mode']]+' · '+rid[:12]+' · '+STATUS.get(candidates[rid]['status'],candidates[rid]['status']))
     record=candidates[selected]
     st.caption('当前参数、几何与总体报告来源：'+selected)
     status = record['status']; s = record.get('summary', {})
@@ -92,20 +92,25 @@ def results(record, project, root):
         if s.get('first_level'):
             with st.expander('起降分段、装载轨迹与尾翼力矩敏感性'):
                 st.write(s['first_level']['field'])
-                st.dataframe(s['first_level']['loading'],hide_index=True)
-                st.dataframe([{'装载场景':case['loading_case'],**pt} for case in s['first_level']['longitudinal'] for pt in case['points']],hide_index=True)
+                from .presentation import loading_rows,tail_rows
+                st.dataframe(loading_rows(s),hide_index=True)
+                st.dataframe(tail_rows(s),hide_index=True)
                 st.write(s['first_level']['speed_selection'])
         with st.expander('查看构型、迭代和质量/任务明细'):
             work=Path(root)/'runs'/record['run_id']
             if (work/'geometry.svg').is_file(): st.image((work/'geometry.svg').read_text(encoding='utf-8'))
             st.write('几何由本方案需求生成，图中机头朝左；当前为参数布局。')
             st.dataframe(s['iterations'], hide_index=True)
-            st.dataframe(s['cg']['rows'], hide_index=True)
-            st.dataframe(ms['segments'], hide_index=True)
+            from .presentation import mass_rows,mission_rows
+            st.dataframe(mass_rows(s), hide_index=True)
+            st.dataframe(mission_rows(s), hide_index=True)
+            with st.expander('原始质量与任务数据（SI）'):st.json({'质量台账':s['cg']['rows'],'任务段':ms['segments']})
             for name,label in [('aircraft_parameters.json','下载初步参数'),('report.md','下载总体摘要'),('geometry.svg','下载构型图')]:
                 if (work/name).is_file(): st.download_button(label,(work/name).read_bytes(),name)
         for line in s['limits']: st.caption(line)
     st.caption('总体运行编号：'+record['run_id'])
+    from .structure_handoff import render as show_handoff
+    show_handoff(project,record,'selected_'+record['run_id'])
     st.download_button('下载总体运行记录',json.dumps(record,ensure_ascii=False,indent=2),'overall-result.json')
     work=Path(root)/'runs'/record['run_id']
     if (work/'report.html').is_file():st.download_button('导出当前总体报告',(work/'report.html').read_bytes(),'current-design-report.html')

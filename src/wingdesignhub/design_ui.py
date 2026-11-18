@@ -6,6 +6,7 @@ import math
 from pathlib import Path
 import streamlit as st
 from . import design_service
+from .presentation import SEGMENTS
 from . import sizing_service, sizing_ui
 from .requirements import (DesignProject, WeightRequirement, MissionRequirement, DesignAssumptions,
                            WEIGHT_LABELS, MISSION_LABELS, ASSUMPTION_KEYS, build_design_intent)
@@ -15,6 +16,7 @@ from .fastga_interface import get_fastga_contract, reference_binding_preview
 def render(root):
     st.subheader('新建飞机方案')
     st.write('填写载荷和航程/航时，核对假设后，一键生成常规单发飞机的初步尺寸、重量、燃油和功率。')
+    st.info('使用顺序：①填写并确认需求 → ②运行总体并从顶部载入结果 → ③三方案比较 → ④保存到本机 / 导出报告。气动与推进闭环在初步结果下启动；超限方案保留诊断。')
     from .project_ui import library,save_controls
     base = library(root)
     revision=st.session_state.get('workspace_revision',0)
@@ -79,7 +81,7 @@ def render(root):
         for d in intent['diagnostics']:
             (st.error if d['severity'] == 'error' else st.warning)(d['message'])
         if intent.get('mission_segments'):
-            st.dataframe([{'任务段': s['id'], '航程（km）': None if s['distance_m'] is None else s['distance_m']/1000,
+            st.dataframe([{'任务段': SEGMENTS.get(s['id'],s['id']), '航程（km）': None if s['distance_m'] is None else s['distance_m']/1000,
                            '要求时长（min）': None if s['duration_s'] is None else s['duration_s']/60,
                            '定义': s['definition']} for s in intent['mission_segments']], hide_index=True)
         st.download_button('保存需求配置', json.dumps(p.to_dict(), ensure_ascii=False, indent=2), 'aircraft-requirements.json', 'application/json')

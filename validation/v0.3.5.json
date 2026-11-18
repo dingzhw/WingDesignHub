@@ -1,0 +1,450 @@
+{
+  "version": "0.3.5",
+  "software_acceptance_passed": true,
+  "physical_validation_passed": false,
+  "acceptance_checks": {
+    "old_initial_equal": true,
+    "three_actual_designs": true,
+    "infeasible_preserved": true,
+    "converged": true,
+    "status_preserved": true,
+    "same_physics_results": true,
+    "four_state_equal": true,
+    "ui_flow": true,
+    "input_invalidation": true,
+    "save_button": true,
+    "native_geometry_visible": true,
+    "structural_readiness_not_overstated": true,
+    "full_regression": true
+  },
+  "native": {
+    "elapsed_s": 368.4274611000001,
+    "checks": {
+      "converged": true,
+      "status_preserved": true,
+      "same_physics_results": true,
+      "four_state_equal": true
+    },
+    "differences": [
+      {
+        "quantity": "design_mtow_kg",
+        "old": 1215.611792275607,
+        "new": 1215.611792275607,
+        "relative_difference": 0.0
+      },
+      {
+        "quantity": "mission.block_fuel_kg",
+        "old": 82.04672910743598,
+        "new": 82.04672910743598,
+        "relative_difference": 0.0
+      },
+      {
+        "quantity": "power.installed_power_w",
+        "old": 150720.222736762,
+        "new": 150720.222736762,
+        "relative_difference": 0.0
+      },
+      {
+        "quantity": "geometry.wing_area_m2",
+        "old": 13.791798998935143,
+        "new": 13.791798998935143,
+        "relative_difference": 0.0
+      }
+    ],
+    "timing_role": "existing caches plus final native audit; not a cold/warm benchmark",
+    "baseline_run": "698cce20be83410789d3ca9fa7824ee1",
+    "current_run": "0177e35cfead4623b9fc404f074e9530"
+  },
+  "initial_seed_run": "d33980bb070f4a18b753f301146e56e2",
+  "comparison": {
+    "run_id": "f9d40601cb6b4743bb04ccc1267f0f68",
+    "analysis_model": "initial",
+    "status": "comparison_incomplete",
+    "cards": [
+      {
+        "name": "V0.3.4 需求驱动单发概念方案 · A",
+        "status": "constraints_not_met",
+        "metrics": {
+          "mtow_kg": 1292.8380021480818,
+          "owe_kg": 826.7071106601072,
+          "block_fuel_kg": 116.60559383918627,
+          "reserve_kg": 19.35549786968831,
+          "power_kw": 163.33011797374738,
+          "area_m2": 14.667973753720075,
+          "span_m": 10.488555818266907,
+          "duration_h": 3.714823276333547,
+          "route_km": 800.0,
+          "cg_x_m": 2.6854777229480633
+        }
+      },
+      {
+        "name": "V0.3.4 需求驱动单发概念方案 · B",
+        "status": "constraints_not_met",
+        "metrics": {
+          "mtow_kg": 1289.163933790298,
+          "owe_kg": 826.0092222671522,
+          "block_fuel_kg": 113.62040934765365,
+          "reserve_kg": 18.85477923300776,
+          "power_kw": 160.1004474611783,
+          "area_m2": 14.62628938324844,
+          "span_m": 10.984848083237184,
+          "duration_h": 3.714823276333547,
+          "route_km": 800.0,
+          "cg_x_m": 2.6909700628297073
+        }
+      },
+      {
+        "name": "V0.3.4 需求驱动单发概念方案 · C",
+        "status": "constraints_not_met",
+        "metrics": {
+          "mtow_kg": 1288.1509680462132,
+          "owe_kg": 827.2970988411829,
+          "block_fuel_kg": 111.31410610008314,
+          "reserve_kg": 18.46761744345849,
+          "power_kw": 157.67186814107907,
+          "area_m2": 14.614796717560267,
+          "span_m": 11.468791150685517,
+          "duration_h": 3.714823276333547,
+          "route_km": 800.0,
+          "cg_x_m": 2.6955262111152973
+        }
+      }
+    ]
+  },
+  "infeasible": {
+    "run_id": "2f556e2862764ad48d0b93d6a6ece2ff",
+    "status": "constraints_not_met",
+    "mass_budget_margin_kg": -121.46799792321099
+  },
+  "ui": {
+    "cases": [
+      {
+        "case": "native",
+        "run_id": "0177e35cfead4623b9fc404f074e9530",
+        "bundle_bytes": 2395523,
+        "opened_via_button": true,
+        "report_identical": true,
+        "exceedance_visible": true
+      },
+      {
+        "case": "comparison",
+        "run_id": "f9d40601cb6b4743bb04ccc1267f0f68",
+        "bundle_bytes": 412685,
+        "opened_via_button": true,
+        "report_identical": true,
+        "exceedance_visible": true
+      },
+      {
+        "case": "infeasible",
+        "run_id": "2f556e2862764ad48d0b93d6a6ece2ff",
+        "bundle_bytes": 89287,
+        "opened_via_button": true,
+        "report_identical": true,
+        "exceedance_visible": true
+      }
+    ],
+    "full_app_selected_geometry": true,
+    "save_button": true,
+    "changed_input_requires_confirmation": true,
+    "handoff_run": "0177e35cfead4623b9fc404f074e9530",
+    "structural_solution_ready": false
+  },
+  "regression": {
+    "tests": 483,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsed_s": 838.153,
+    "warnings": 1,
+    "warning_note": "Existing upstream traitlets DeprecationWarning; no new dependency change."
+  },
+  "source_scope": {
+    "changed_existing_sources": [
+      "src/wingdesignhub/__init__.py",
+      "src/wingdesignhub/constraint_ui.py",
+      "src/wingdesignhub/coupled_report.py",
+      "src/wingdesignhub/coupled_ui.py",
+      "src/wingdesignhub/design_report.py",
+      "src/wingdesignhub/design_ui.py",
+      "src/wingdesignhub/feedback_ui.py",
+      "src/wingdesignhub/job_ui.py",
+      "src/wingdesignhub/project_ui.py",
+      "src/wingdesignhub/sizing_ui.py"
+    ],
+    "new_sources": [
+      "presentation.py",
+      "structure_handoff.py"
+    ],
+    "solver_and_physics_files_unchanged": true,
+    "baseline_commit": "3de46ecbe8722b9a036fc8861443136fc8046dee"
+  },
+  "wheel": {
+    "all_frozen_sources_match": true,
+    "source_files": 125,
+    "sha256": "f1785c090c1a39ac981705919687e08deea33854ca79e7b16c8ffc0d4ba17fa6"
+  },
+  "storage": {
+    "native_run_bytes": 1242741654,
+    "native_zip_bytes": 120364546,
+    "portable_bytes": 2395523
+  },
+  "four_state_constraints": [
+    {
+      "id": "mass_budget",
+      "label": "质量预算或闭合残差",
+      "status": "met",
+      "reason": "按本次模型与已记录残差检查",
+      "value": null,
+      "limit": null,
+      "margin": null,
+      "unit": "",
+      "kind": "numerical"
+    },
+    {
+      "id": "mtow_upper_bound",
+      "label": "起飞重量上限",
+      "status": "not_applicable",
+      "reason": "当前任务未规定该项",
+      "value": null,
+      "limit": null,
+      "margin": null,
+      "unit": "",
+      "kind": "design"
+    },
+    {
+      "id": "fuel_capacity",
+      "label": "油箱容量",
+      "status": "met",
+      "reason": "按本次模型与已记录残差检查",
+      "value": null,
+      "limit": null,
+      "margin": null,
+      "unit": "",
+      "kind": "design"
+    },
+    {
+      "id": "landing_stall",
+      "label": "着陆构型失速速度",
+      "status": "met",
+      "reason": "按本次模型与已记录残差检查",
+      "value": null,
+      "limit": null,
+      "margin": null,
+      "unit": "",
+      "kind": "design"
+    },
+    {
+      "id": "power_available",
+      "label": "任务可用功率",
+      "status": "met",
+      "reason": "按本次模型与已记录残差检查",
+      "value": null,
+      "limit": null,
+      "margin": null,
+      "unit": "",
+      "kind": "design"
+    },
+    {
+      "id": "clean_lift",
+      "label": "净构型升力",
+      "status": "met",
+      "reason": "按本次模型与已记录残差检查",
+      "value": null,
+      "limit": null,
+      "margin": null,
+      "unit": "",
+      "kind": "design"
+    },
+    {
+      "id": "range",
+      "label": "规定航程",
+      "status": "met",
+      "reason": "按本次模型与已记录残差检查",
+      "value": null,
+      "limit": null,
+      "margin": null,
+      "unit": "",
+      "kind": "design"
+    },
+    {
+      "id": "endurance",
+      "label": "最低航时或留空时间",
+      "status": "not_applicable",
+      "reason": "当前任务未规定该项",
+      "value": null,
+      "limit": null,
+      "margin": null,
+      "unit": "",
+      "kind": "design"
+    },
+    {
+      "id": "aero_table_accuracy",
+      "label": "气动表直接复算",
+      "status": "met",
+      "reason": "按本次模型与已记录残差检查",
+      "value": null,
+      "limit": null,
+      "margin": null,
+      "unit": "",
+      "kind": "numerical"
+    },
+    {
+      "id": "propeller_table_accuracy",
+      "label": "桨图直接复算",
+      "status": "met",
+      "reason": "按本次模型与已记录残差检查",
+      "value": null,
+      "limit": null,
+      "margin": null,
+      "unit": "",
+      "kind": "numerical"
+    },
+    {
+      "id": "mission_step_accuracy",
+      "label": "任务积分步长",
+      "status": "met",
+      "reason": "按本次模型与已记录残差检查",
+      "value": null,
+      "limit": null,
+      "margin": null,
+      "unit": "",
+      "kind": "numerical"
+    },
+    {
+      "id": "shaft_torque_balance",
+      "label": "发动机与桨轴扭矩一致性",
+      "status": "met",
+      "reason": "按本次模型与已记录残差检查",
+      "value": null,
+      "limit": null,
+      "margin": null,
+      "unit": "",
+      "kind": "numerical"
+    },
+    {
+      "id": "takeoff_distance",
+      "label": "越障起飞距离",
+      "status": "met",
+      "reason": "干燥跑道工程模型；并非具体机型实测性能",
+      "value": 681.2443601931398,
+      "limit": 800.0,
+      "margin": 118.75563980686024,
+      "unit": "m",
+      "kind": "design"
+    },
+    {
+      "id": "landing_distance",
+      "label": "越障着陆距离",
+      "status": "met",
+      "reason": "干燥跑道工程模型；并非具体机型实测性能",
+      "value": 544.5623928012426,
+      "limit": 700.0,
+      "margin": 155.4376071987574,
+      "unit": "m",
+      "kind": "design"
+    },
+    {
+      "id": "climb_sea_level",
+      "label": "海平面爬升需用功率",
+      "status": "met",
+      "reason": "爬升率要求 3m/s；需用与安装额定功率在同一基准比较",
+      "value": 124105.26428908408,
+      "limit": 150720.222736762,
+      "margin": 26614.958447677913,
+      "unit": "W",
+      "kind": "design"
+    },
+    {
+      "id": "climb_cruise_altitude",
+      "label": "巡航高度爬升需用功率",
+      "status": "met",
+      "reason": "爬升率要求 3m/s；需用与安装额定功率在同一基准比较",
+      "value": 147764.92425172744,
+      "limit": 150720.222736762,
+      "margin": 2955.298485034553,
+      "unit": "W",
+      "kind": "design"
+    },
+    {
+      "id": "loading_cg",
+      "label": "规定装载CG研究范围",
+      "status": "exceeded",
+      "reason": "实际装载和主任务结束；仅显式声明的分配场景",
+      "value": [
+        0.07378850421288484,
+        0.08362964185933197
+      ],
+      "limit": [
+        0.15,
+        0.35
+      ],
+      "margin": -0.07621149578711515,
+      "unit": "MAC",
+      "kind": "design"
+    },
+    {
+      "id": "longitudinal_static",
+      "label": "纵向静稳定一级筛查",
+      "status": "met",
+      "reason": "固定舵面线性升力斜率，缺失机身/动力修正",
+      "value": 0.46921600201532604,
+      "limit": 0.05,
+      "margin": 0.41921600201532605,
+      "unit": "MAC",
+      "kind": "design"
+    },
+    {
+      "id": "longitudinal_control",
+      "label": "纵向配平角度与舵量（含Cm扰动）",
+      "status": "exceeded",
+      "reason": "所有装载及给定Cm扰动角点；超过角度域表示当前一级方案尚不能确认可用",
+      "value": 1.1214816796103688,
+      "limit": 1.0,
+      "margin": -0.12148167961036882,
+      "unit": "fraction",
+      "kind": "design"
+    },
+    {
+      "id": "lateral_control",
+      "label": "横航向操稳包线",
+      "status": "not_calculated",
+      "reason": "后续节点，当前概念筛查不包含此项",
+      "value": null,
+      "limit": null,
+      "margin": null,
+      "unit": "",
+      "kind": "design"
+    },
+    {
+      "id": "structural_feedback",
+      "label": "结构定尺寸质量反馈",
+      "status": "not_calculated",
+      "reason": "后续节点，当前概念筛查不包含此项",
+      "value": null,
+      "limit": null,
+      "margin": null,
+      "unit": "",
+      "kind": "design"
+    }
+  ],
+  "limits": [
+    "需求驱动的重量—燃油—功率迭代：每轮FAST-GA经验重量、OpenVSP外形、AVL配平/XFOIL阻力重算；发动机按连续额定功率定尺寸，尚未离散选具体商品发动机。",
+    "推进采用规定转速、理想恒速变距、轴向均匀入流；CCBlade合成桨叶，直径继承模板。桨图缺点及边界不跨越，桨尖Mach≤0.75，无滑流/安装损失或调速器瞬态。",
+    "通用发动机转速/高度功率与扭矩/RPM耗油图来自FAST-GA 1.4.0；图内爬升富油系数1.15，其他空中段为1，尚无目标型号独立台架标定。",
+    "低负荷可显式采用基础BSFC并单列油量，或严格拒绝；地面/滑跑用基础BSFC。高负荷和转速耗油图越界拒绝；高度只修正可用功率。",
+    "气动沿既有小迎角、单向黏性阻力叠加边界；推力沿航迹通过CG，无动力俯仰矩。任务为标准大气、无风的准定常直线段。",
+    "储备以平均巡航油耗携带一次，不增加已飞航时/航程；固定重量保留规定设计值，实际装载及剩余预算单列，上限模式不裁剪结果。",
+    "起降为干燥水平硬跑道、无风、规定工程襟翼/摩擦及作用盘损失模型；未经具体全尺寸桨、襟翼和试飞标定。",
+    "场地温度/高度仅用于起降；任务仍采用规定巡航高度的标准大气。起降段耗油仍沿用30s/90%功率，距离校核与瞬态燃油尚未联算。",
+    "CG研究区间来自用户假设，不是允许装载包线；额外装载分配须另核座椅/行李舱限重。",
+    "纵向一级模型采用有限翼升力斜率和线性下洗；未包括机身、滑流、推力线及黏性俯仰矩修正。给定Cm扰动是情景范围，不是统计置信区间。",
+    "AVL/XFOIL和一级模型的俯仰力矩均有误差；力矩平衡、低角度余量与局部静稳定分别报告，完整操稳/操纵力仍未计算。",
+    "速度为低CL域内9个候选的初步最小需用功率选择；增强模型沿用并验证实际工况，不宣称原生气动全域最优。"
+  ],
+  "evidence_roles": {
+    "v034_public_data": "unchanged prior evidence; no new calibration or independent aircraft measurement",
+    "three_designs": "new initial-model runs; one additional native enhanced representative",
+    "user_flow": "automated Streamlit interactions; human engineering trial and review not signed",
+    "cold_warm_timing": "not measured in this workflow release"
+  }
+}

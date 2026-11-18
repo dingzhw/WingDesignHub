@@ -21,7 +21,7 @@ def comparison_bundle(project,root,record,evidence_token,profile="portable"):
 def activate(parsed=None):
     st.session_state.pop('workspace_project',None)
     st.session_state.pop('job_comparison_request',None)
-    for key in ('sizing_result','comparison_result','design_intent_result','archive_saved_note','aircraft_geometry_result','aircraft_aero_result','aircraft_trim_result','aircraft_drag_result','aero_feedback_result','propulsion_result','coupled_result'):
+    for key in ('sizing_result','comparison_result','design_intent_result','design_reference_result','use_job_comparison','archive_saved_note','aircraft_geometry_result','aircraft_aero_result','aircraft_trim_result','aircraft_drag_result','aero_feedback_result','propulsion_result','coupled_result'):
         st.session_state.pop(key,None)
     for key in list(st.session_state):
         if key.startswith(('confirm_','comparison-confirm-')):st.session_state.pop(key,None)
@@ -67,12 +67,22 @@ def library(root):
                     st.caption(s.get('analysis_label','初步总体（概念气动与推进）'))
                     st.dataframe([{'方案':c['name'],'状态':c['status_label'],**{f'{METRICS[k][0]}（{METRICS[k][1]}）':v for k,v in c['metrics'].items()}} for c in s['cards']],hide_index=True)
                     for c in s['cards']:
-                        if c.get('enhanced'):st.write(c['name']);st.json(c['enhanced'])
+                        st.write(c['name'])
+                        from .constraint_ui import render as show_constraints
+                        show_constraints(c)
+                        for d in c.get('diagnostics',[]):st.write(d)
+                        for limit in c.get('limits',[]):st.caption(limit)
+                        if c.get('enhanced'):st.json(c['enhanced'])
                 elif 'geometry' in s:
                     st.dataframe([{'指标':'设计起飞重量 kg','值':s['design_mtow_kg']},
                                   {'指标':'翼面积 m²','值':s['geometry']['wing_area_m2']},
                                   {'指标':'安装功率 kW','值':s['power']['installed_power_w']/1000},
                                   {'指标':'总可用油 kg','值':s['mission']['block_fuel_kg']}],hide_index=True)
+                    from .constraint_ui import render as show_constraints
+                    from .structure_handoff import render as show_handoff
+                    show_constraints(s,opened['project'])
+                    show_handoff(opened['project'],r,'archive_'+r['run_id'])
+                    for limit in s.get('limits',[]):st.caption(limit)
                 for d in s.get('diagnostics',[]):st.write(d)
                 if r.get('error'):st.error(r['error'])
             for filename in ('report.html','report.md'):

@@ -19,15 +19,15 @@ def show_files(record,files,key):
         cols[0].metric('闭环后设计起飞重量',f"{s['design_mtow_kg']:.1f} kg")
         cols[1].metric('闭环后总可用燃油',f"{s['mission']['block_fuel_kg']:.2f} kg")
         cols[2].metric('闭环后额定轴功率',f"{s['power']['installed_power_w']/1000:.2f} kW")
-        st.dataframe([{'指标':r['quantity'],'单位':r['unit'],'原方案':r['before'],'闭环后':r['after'],'变化 %':r['relative_change']*100}
-                      for r in s['redesign_comparison']['rows']],hide_index=True)
+        from .presentation import redesign_rows,mission_rows
+        st.dataframe(redesign_rows(s['redesign_comparison']['rows'],'before','after'),hide_index=True)
         st.caption('相同需求重新定尺寸。发动机质量、实际携油、重心与原生外形均已更新；具体发动机及桨产品仍待选型。')
         st.write(f"任务最大需用/可用功率：{s['mission']['max_power_fraction']:.4f}")
         from .constraint_ui import render as show_constraints
         show_constraints(s)
         with st.expander('匹配、耗油覆盖和迭代明细'):
             st.dataframe([{'耗油方法':k,'燃油 kg':v} for k,v in s['mission']['block_fuel_by_method_kg'].items()],hide_index=True)
-            st.dataframe(s['mission']['segments'],hide_index=True);st.dataframe(s['iterations'],hide_index=True)
+            st.dataframe(mission_rows(s),hide_index=True);st.dataframe(s['iterations'],hide_index=True)
             st.json(s.get('propulsion_feedback',{}))
     with st.expander('推进闭环假设与适用边界'):
         st.json(record.get('options',{}))

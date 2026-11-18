@@ -16,20 +16,27 @@ def design_report_html(project,record):
     card=make_card(project,record);s=record.get('summary',{});sections=[]
     coverage='气动配平/阻力任务表与燃油、功率迭代已接通；起降距离、操稳重心包线和结构定尺寸质量反馈尚未覆盖。' if 'aerodynamic_feedback' in s or 'propulsion_feedback' in s else '配平、起降距离、操稳重心包线和结构定尺寸质量反馈尚未覆盖。'
     if s.get('first_level'):coverage='已进行起降、双高度爬升、装载CG和纵向一级概念筛查；完整操稳包线与结构质量回写待接入。'
-    from .constraint_states import display_rows
+    from .presentation import constraint_rows as display_rows
     sections.append('<h2>工程覆盖与评审状态</h2><p>本报告保留实际计算状态、诊断及已检查约束；专业评审待签署。'+coverage+'</p>')
     rows=display_rows(s,project)
     sections.append('<h2>约束四态与数值证据</h2>'+table(list(rows[0]) if rows else [],[list(r.values()) for r in rows]))
-    if s.get('first_level'):sections.append('<h2>一级模型分段结果与敏感性</h2><pre>'+escape(json.dumps(s['first_level'],ensure_ascii=False,indent=2))+'</pre>')
+    from .presentation import mission_rows,mass_rows,loading_rows,tail_rows
+    def view(title,rows):
+        return '<h2>'+title+'</h2>'+table(list(rows[0]),[list(r.values()) for r in rows]) if rows else ''
+    if s.get('first_level'):
+        sections += [view('装载轨迹',loading_rows(s)),view('纵向尾翼力矩敏感性',tail_rows(s)),
+            '<details><summary>一级模型原始分段记录（SI）</summary><pre>'+escape(json.dumps(s['first_level'],ensure_ascii=False,indent=2))+'</pre></details>']
+    from .structure_handoff import build
+    handoff=build(project,record)
+    sections += [view('载荷与结构阶段输入准备',[{'输入项':r['item'],'状态':r['status'],'来源或下一步':r['source_or_action']} for r in handoff['items']])]
     if s.get('converged') and 'geometry' in s:
         ms=s['mission'];fuel=ms.get('fuel_model',{})
-        sections += ['<h2>任务与燃油账目</h2>',table(['任务段','时长 s','航迹 m','耗油 kg','使用方法'],[
-            (r['segment'],r['duration_s'],r['path_distance_m'],r['fuel_kg'],json.dumps(r.get('fuel_by_method_kg',{}),ensure_ascii=False)) for r in ms['segments']]),
+        sections += ['<h2>任务与燃油账目</h2>',view('任务段明细',mission_rows(s)),
             table(['账目','燃油 kg'],[(label,ms[key]) for key,label in [('taxi_out_fuel_kg','出场滑行'),('takeoff_roll_fuel_kg','起飞地面段'),('taxi_in_fuel_kg','返场滑行'),('reserve_fuel_kg','额外储备（不作为已飞段）'),('takeoff_fuel_kg','起飞携带可用油'),('block_fuel_kg','总可用油')]]),
             '<p>耗油模型：'+escape(fuel.get('label','历史统一耗油率'))+'；方法覆盖按下表逐项记账，数据角色与来源见完整假设。</p>',
             table(['耗油方法','总可用油 kg'],list(ms.get('block_fuel_by_method_kg',{}).items())),
             '<ul>'+''.join('<li>'+escape(x)+'</li>' for x in fuel.get('limits',[]))+'</ul>',
-            '<h2>质量与站位</h2>',table(['部件','质量 kg','站位 x m'],[(r['component'],r['mass_kg'],r['x_m']) for r in s['cg']['rows']]),
+            '<h2>质量与站位</h2>',view('部件台账',mass_rows(s)),
             '<h2>收敛证据</h2><pre>'+escape(json.dumps(s['iterations'][-1],ensure_ascii=False,indent=2))+'</pre>']
     sections += ['<h2>可追溯证据</h2><pre>'+escape(json.dumps({'run_id':record['run_id'],'version':record['version'],
         'input_hash':record.get('input_hash'),'model_signature':s.get('model_signature'),'source_hashes':record.get('source_hashes',{})},ensure_ascii=False,indent=2))+'</pre>']
@@ -49,8 +56,9 @@ def comparison_report_html(summary,record=None):
     if summary.get('analysis_options'):text+='<pre>'+escape(json.dumps(summary['analysis_options'],ensure_ascii=False,indent=2))+'</pre>'
     for c in summary.get('cards',[]):
         text+='<h3>'+escape(c['name'])+'</h3><p>'+escape('；'.join(c['diagnostics']))+'</p>'
-        from .constraint_states import display_rows
-        text+=table(['检查项','结果','类别','说明'],[(r['项目'],r['状态'],r['类别'],r['说明']) for r in display_rows(c)])
+        from .presentation import constraint_rows as display_rows
+        rows=display_rows(c)
+        text+=table(list(rows[0]) if rows else [],[list(r.values()) for r in rows])
         if c.get('enhanced'):text+='<h4>推进与耗油覆盖</h4><pre>'+escape(json.dumps(c['enhanced'],ensure_ascii=False,indent=2))+'</pre>'
         text+='<ul>'+''.join('<li>'+escape(x)+'</li>' for x in c.get('limits',[]))+'</ul>'
         text+='<pre>'+escape(json.dumps({'run_id':c['run_id'],'definition_sha256':c['definition_sha256'],'input':c['input']},ensure_ascii=False,indent=2))+'</pre>'
