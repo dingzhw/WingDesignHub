@@ -18,7 +18,8 @@ def checked_geometry_source(project,root,geometry_run_id):
     root=Path(root).resolve();parent=get_results(root,geometry_run_id);pw=root/'runs'/geometry_run_id
     if parent.get('run_id')!=geometry_run_id or parent.get('mode')!='aircraft_geometry' or parent.get('status')!='geometry_checked_with_limits':
         raise ValueError('气动分析需要已通过检查的全机几何运行')
-    if parent.get('version')!=__version__ or parent.get('source_hashes')!=source_hashes():
+    from .computation_identity import compatible
+    if parent.get('version')!=__version__ or not compatible(parent,root):
         raise ValueError('模型或版本已变更，请重新运行总体和全机几何')
     if p.confirmation_sha256!=p.definition_hash() or parent['definition_sha256']!=p.definition_hash():
         raise ValueError('需求或确认状态已变更，请重新计算总体和几何')

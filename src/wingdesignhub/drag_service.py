@@ -17,7 +17,8 @@ def run_aircraft_drag(project, root, trim_run_id, options=None):
     root=Path(root).resolve();trim=get_results(root,trim_run_id);tw=root/'runs'/trim_run_id
     if trim.get('run_id')!=trim_run_id or trim.get('mode')!='aircraft_trim':raise ValueError('需要配平运行编号')
     p,root,geometry,gw,sizing,interface=checked_geometry_source(project,root,trim['parent_run_id'])
-    if trim.get('version')!=__version__ or trim.get('source_hashes')!=source_hashes():raise ValueError('配平模型版本已变更，请重新计算')
+    from .computation_identity import compatible
+    if trim.get('version')!=__version__ or not compatible(trim,root):raise ValueError('配平模型版本已变更，请重新计算')
     if (trim['definition_sha256']!=p.definition_hash() or trim['sizing_run_id']!=sizing['run_id'] or
         json.loads((tw/'parent_result.json').read_text('utf-8'))!=geometry or sha256(tw/'parent_result.json')!=trim['parent_result_sha256']):
         raise ValueError('配平来源与当前几何或需求不一致')

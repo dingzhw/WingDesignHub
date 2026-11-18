@@ -158,14 +158,16 @@ def submit_job(root,kind,project=None,parent_run_id=None,options=None):
     errors=[r for r in checks if r['severity']=='error']
     if errors:raise ValueError('；'.join(r['code']+'：'+r['message'] for r in errors))
     sources=code_identity()
-    signature=hashlib.sha256(json.dumps({'request':request,'source':sources},sort_keys=True).encode()).hexdigest()
+    from .computation_identity import calculation
+    calculation_id=calculation(root,kind)
+    signature=hashlib.sha256(json.dumps({'request':request,'calculation':calculation_id},sort_keys=True).encode()).hexdigest()
     with locked(root) as directory:
         _recover(directory)
         for record in _records(directory):
             if record['signature']==signature and record['status'] in ACTIVE:
                 _start(root,directory);return record
         record={'job_id':uuid4().hex,'kind':kind,'status':'queued','signature':signature,
-                'source_hashes':sources,'preflight':checks,
+                'source_hashes':sources,'calculation_identity':calculation_id,'preflight':checks,
                 'created':time.time(),'name':(request.get('project') or {}).get('name',kind),
                 'definition_sha256':hashlib.sha256(json.dumps(request,sort_keys=True).encode()).hexdigest()}
         work=directory/record['job_id'];atomic(work/'request.json',request);atomic(work/'job.json',record)

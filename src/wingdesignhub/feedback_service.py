@@ -21,7 +21,8 @@ def run_aero_feedback(project,root,sizing_run_id,options=None):
     if parent.get('run_id')!=sizing_run_id or parent.get('mode')!='overall_sizing' or not parent.get('summary',{}).get('converged'):
         raise ValueError('气动反馈需要已收敛的初始总体方案；约束超限也保留诊断')
     if build_design_intent(p)['status']!='requirements_ready' or parent['definition_sha256']!=p.definition_hash():raise ValueError('需求已变更或尚未确认，请先运行当前总体方案')
-    if parent.get('version')!=__version__ or parent.get('source_hashes')!=source_hashes():raise ValueError('总体版本或模型已变化，请重新运行总体设计')
+    from .computation_identity import compatible
+    if parent.get('version')!=__version__ or not compatible(parent,root):raise ValueError('总体版本或模型已变化，请重新运行总体设计')
     for package,recorded in parent['summary'].get('versions',{}).items():
         if version(package)!=recorded:raise ValueError('求解依赖已变化：'+package)
     if (DesignProject.from_dict(json.loads((pw/'input.json').read_text('utf-8'))).definition_hash()!=p.definition_hash() or

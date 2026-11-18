@@ -116,8 +116,9 @@ def bounded_newton(evaluate,initial,lower,upper,*,max_iterations=12,tolerance=1e
                            'elevator_lower':float(x[1]-lo[1]),'elevator_upper':float(hi[1]-x[1])}}
 
 
-def solve_trim(contract,executable,work):
+def solve_trim(contract,executable,work,*,solver=None):
     from .avl_aircraft import solve
+    solve=solver or solve
     work=Path(work);options=TrimOptions(**contract['trim_options']);f=contract['flow'];r=contract['references']
     normal=f.get('normal_weight_factor',1.)
     if not math.isfinite(normal) or not 0<normal<=1:raise ValueError('定常航迹配平法向重量系数须在 (0,1] 内')

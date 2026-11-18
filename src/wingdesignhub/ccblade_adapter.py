@@ -39,8 +39,16 @@ def toml_request(data):
     return '\n'.join(lines)+'\n'
 
 
-def run_batch(root,work,request):
+def run_batch(root,work,request,*,use_cache=False):
     cfg=runtime(root);work=Path(work);work.mkdir(parents=True,exist_ok=False)
+    from .computation_identity import sources,environment
+    from .exact_cache import ExactCache
+    cache=ExactCache(Path(root)/'local/cache/computation','ccblade')
+    identity={'request':request,'sources':sources(('ccblade_adapter',)),'environment':environment(root,'ccblade')}
+    if use_cache and cache.restore(identity,work):
+        result=json.loads((work/'result.json').read_text('utf-8'))
+        if len(result['points'])!=len(request['points']):raise PropulsionError('ccblade_output_invalid','缓存输出点数不符')
+        write_json(work/'cache_reuse.json',{'cache_hit':True,'identity':identity});return result
     write_json(work/'request.json',request)
     (work/'input.toml').write_text(toml_request(request),encoding='utf-8')
     worker=Path(__file__).with_name('ccblade_worker.jl');shutil.copy2(worker,work/'worker.jl')
@@ -50,7 +58,10 @@ def run_batch(root,work,request):
     if len(result['points'])!=len(request['points']):raise PropulsionError('ccblade_output_invalid','CCBlade输出点数不符')
     result['metadata'].update(worker_sha256=sha256(work/'worker.jl'),julia_sha256=sha256(cfg['julia']),
         environment_sha256={n:sha256(Path(cfg['project'])/n) for n in ('Project.toml','Manifest.toml')})
-    write_json(work/'result.json',result);return result
+    write_json(work/'result.json',result)
+    if use_cache and all(p['status']=='valid' for p in result['points']):
+        cache.publish(identity,work,[p.name for p in work.iterdir() if p.is_file()])
+    write_json(work/'cache_reuse.json',{'cache_hit':False,'identity':identity});return result
 
 
 def full_scale_airfoil(root,work):
@@ -75,7 +86,7 @@ def request_base(options,diameter,airfoil):
             'chord75_over_radius':(options.root_chord_m+(options.tip_chord_m-options.root_chord_m)*(.75-.2)/.8)/(diameter/2)}
 
 
-def build_map(root,work,aero,diameter,options,airfoil=None):
+def build_map(root,work,aero,diameter,options,airfoil=None,*,use_cache=False):
     work=Path(work);work.mkdir(parents=True,exist_ok=False)
     heights=sorted({h for b in aero.tables.values() for h in b['altitudes_m']})
     heights=[heights[0]] if heights[0]==heights[-1] else np.linspace(heights[0],heights[-1],options.altitude_stations).tolist()
@@ -87,7 +98,7 @@ def build_map(root,work,aero,diameter,options,airfoil=None):
     collectives=np.linspace(options.collective_min_deg,options.collective_max_deg,count).tolist()
     request=request_base(options,diameter,airfoil)
     request['points']=[conditions(v,h,options.rpm,beta) for v in speeds for h in heights for beta in collectives]
-    result=run_batch(root,work/'julia',request)
+    result=run_batch(root,work/'julia',request,use_cache=use_cache)
     data={'rpm':options.rpm,'diameter_m':diameter,'blades':options.blades,'hub_fraction':.2,
           'speeds_m_s':speeds,'altitudes_m':heights,'collectives_deg':collectives,'no_extrapolation':True,
           'options':asdict(options),'airfoil':airfoil,'metadata':result['metadata'],'points':result['points'],'max_tip_mach':tip_mach,

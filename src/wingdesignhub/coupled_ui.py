@@ -46,10 +46,11 @@ def render(project,root,parent,key='coupled',archived=None):
     st.write('一键匹配发动机与桨，更新耗油、发动机质量和携油，重新生成全机几何及气动。完整计算可能需要数十分钟，原方案保留供比较。')
     options=CoupledOptions()
     with st.expander('闭环推进设置'):
+        execution=st.selectbox('计算方式',['reuse','native_audit'],format_func=lambda x:'加速计算（精确缓存与原生会话复用）' if x=='reuse' else '原生审计（逐次启动，耗时较长）',key=key+'_execution')
         rpm=st.number_input('恒速桨指定转速 rpm',2200.,2700.,2400.,50.,key=key+'_rpm')
         policy=st.selectbox('耗油图低负荷处理',['base_bsfc','reject'],format_func=lambda x:'基础耗油率估算，单列覆盖' if x=='base_bsfc' else '严格拒绝图外工况',key=key+'_low_load')
         st.caption('通用发动机耗油图替代原平飞耗油模型；爬升富油系数1.15。下降低负荷和地面估算使用方案的基础BSFC。合成桨叶与轴向均匀入流假设随报告保存。')
-    options=replace(options,propeller=replace(options.propeller,rpm=rpm),low_load_policy=policy)
+    options=replace(options,aero=replace(options.aero,execution_mode=execution),propeller=replace(options.propeller,rpm=rpm),low_load_policy=policy)
     present=(Path(root)/'runs'/parent['run_id']/'result.json').is_file()
     if st.button('运行推进闭环总体计算',key=key+'_run',disabled=not present):
         try:

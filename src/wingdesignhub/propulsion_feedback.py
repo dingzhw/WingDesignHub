@@ -1,7 +1,7 @@
 """Engine/propeller/fuel disciplines in the existing overall sizing iteration."""
 from dataclasses import dataclass, field, asdict
 from pathlib import Path
-import hashlib,json,math
+import hashlib,json,math,time
 import numpy as np
 from .aero_feedback import FeedbackOptions,FeedbackError,MissionAeroTable,dry_ledger,feedback_schedule
 from .propulsion_model import PropulsionOptions,PropulsiveFlight,propulsion_constraints,PropulsionError
@@ -52,9 +52,12 @@ class PropulsionFeedback:
         from .feedback_native import NativeFeedbackGeometry
         from .ccblade_adapter import build_map
         self.root=Path(root);self.work=Path(work);self.p=project;self.options=options;options.validate()
-        self.native_factory=native_factory or NativeFeedbackGeometry;self.map_factory=map_factory or build_map
+        from functools import partial
+        self.native_factory=native_factory or partial(NativeFeedbackGeometry,execution_mode=options.aero.execution_mode)
+        self.map_factory=map_factory or partial(build_map,use_cache=options.aero.execution_mode=='reuse')
         self.engine_factory=engine_factory or EngineFuelModel;self.history=[];self.last=None;self.limits=LIMITS
         self.maps={};self.airfoil=None
+        self.started=time.perf_counter()
 
     def propeller(self,table,native):
         contract=json.loads((native.geometry_work/'geometry_contract.json').read_text('utf-8'))
@@ -62,7 +65,7 @@ class PropulsionFeedback:
         # In-process reuse only. Solver, blade options and airfoil stay immutable;
         # unlike the aero table, this axial prop map does not depend on airframe mass.
         identity={'diameter':diameter,'options':asdict(self.options.propeller),
-                  'branches':sorted({(round(b['speed_m_s'],9),tuple(b['altitudes_m'])) for b in table.tables.values()})}
+                  'branches':sorted({(b['speed_m_s'],tuple(b['altitudes_m'])) for b in table.tables.values()})}
         key=hashlib.sha256(json.dumps(identity,sort_keys=True).encode()).hexdigest()
         if key not in self.maps:
             prop=self.map_factory(self.root,self.work/'native'/('prop_'+key[:12]),table,diameter,self.options.propeller,self.airfoil)
@@ -120,6 +123,7 @@ class PropulsionFeedback:
         return power,ms,weights,ledger,residuals
 
     def finalize(self,summary):
+        audit_started=time.perf_counter();iteration_s=audit_started-self.started
         from .propulsion_service import verify_queries
         last=self.last;table=last['table'];native=last['native'];flight=last['flight'];p=self.p;direct=[]
         for b in table.tables.values():
@@ -154,3 +158,8 @@ class PropulsionFeedback:
         summary['limits']=LIMITS;summary['method']='FAST-GA mass and engine maps + native AVL/XFOIL + CCBlade + shared overall iteration'
         if summary['converged'] and not all(summary['checks'].values()):summary['status']='constraints_not_met'
         write_json(self.work/'coupled_verification.json',audit)
+        profile={'execution_mode':self.options.aero.execution_mode,'iteration_s':iteration_s,
+                 'final_native_audit_s':time.perf_counter()-audit_started,
+                 'audit_scope':'non-node AVL/Newton and direct CCBlade; existing verified XFOIL polar cache allowed',
+                 'mesh_and_tolerances_changed':False}
+        summary['execution_profile']=profile;write_json(self.work/'execution_profile.json',profile)

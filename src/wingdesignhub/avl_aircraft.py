@@ -138,6 +138,12 @@ def solve(contract,executable,work):
     if not Path(executable).is_file():raise FileNotFoundError('未找到 AVL，请在工具设置中指定 avl.exe')
     (work/'model.avl').write_text(avl_input(contract),encoding='ascii')
     out=execute([executable],work,commands(contract),timeout=120)
+    return read_solution(contract,executable,work,out)
+
+
+def read_solution(contract,executable,work,out):
+    """Validate raw native files identically for fresh and persistent executions."""
+    work=Path(work)
     match=re.search(r'Program\s+Version\s+(\d+\.\d+)',out)
     if not match or match[1]!='3.40':raise ValueError('本版已验证 AVL 3.40 MRF；当前可执行版本未验证')
     if re.search(r'not recognized|forrtl:|convergence failed',out,re.I):raise ValueError('AVL 未完成指定工况，请查看日志')

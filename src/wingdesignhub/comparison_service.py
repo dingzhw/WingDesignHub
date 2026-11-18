@@ -32,7 +32,8 @@ def _save(request,root,records=None,on_progress=None,complete=False):
                 if len(records)>3:raise ValueError('最多复用三个已完成方案')
                 for p,r in zip(request.projects,records):
                     check_record(request,p,r)
-                    if r['version']!=__version__ or r['source_hashes']!=result['source_hashes']:
+                    from .computation_identity import compatible
+                    if r['version']!=__version__ or not compatible(r,root):
                         raise ValueError('复用记录源码或版本已改变，请重新计算')
                 result['child_runs']=[r['run_id'] for r in records]
                 for index,project in enumerate(request.projects[len(records):],len(records)):
@@ -74,6 +75,10 @@ def _save(request,root,records=None,on_progress=None,complete=False):
 
 def run_comparison(request,root,*,reuse_run_ids=(),on_progress=None):
     req=ComparisonRequest.from_dict(request) if isinstance(request,dict) else request
+    if req.analysis_model=='coupled':
+        from dataclasses import replace,asdict
+        from .propulsion_feedback import CoupledOptions
+        req=replace(req,analysis_options=asdict(CoupledOptions.from_dict(req.analysis_options)))
     records=[get_results(root,rid) for rid in reuse_run_ids]
     return _save(req,root,records,on_progress,complete=True)
 

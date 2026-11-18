@@ -32,7 +32,9 @@ def execute_job(root,record):
     started=time.monotonic();process=owner=None;observed={};peak=0;cancelled=False;failure=None
     try:
         from .jobs import code_identity
-        if record['source_hashes']!=code_identity():raise ValueError('排队期间源码已改变，请按原输入重新提交，避免混用版本。')
+        from .computation_identity import calculation
+        same=(record['calculation_identity']==calculation(root,record['kind']) if 'calculation_identity' in record else record['source_hashes']==code_identity())
+        if not same:raise ValueError('排队期间计算依赖已改变，请按原输入重新提交，避免混用版本。')
         with (work/'worker.log').open('ab') as log:
             process,owner=launch_owned([sys.executable,'-X','utf8','-m','wingdesignhub.job_runner',str(root),str(work)],
                 stdin=subprocess.DEVNULL,stdout=log,stderr=subprocess.STDOUT,env=env)

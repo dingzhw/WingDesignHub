@@ -45,7 +45,13 @@ class ComparisonRequest:
     def options_dict(self):
         if self.analysis_model=='initial':return {}
         from .propulsion_feedback import CoupledOptions
-        return asdict(CoupledOptions.from_dict(self.analysis_options))
+        options=asdict(CoupledOptions.from_dict(self.analysis_options))
+        aero=self.analysis_options.get('aero')
+        # Preserve archived pre-V0.3.2 definitions; a new execution expands its
+        # defaults explicitly before creating the new run and confirmation hash.
+        if isinstance(aero,dict) and aero and 'execution_mode' not in aero:
+            options['aero'].pop('execution_mode')
+        return options
 
     def definition_hash(self):
         value={'purpose':self.purpose,'schema_version':self.schema_version,'definitions':[p.definition_hash() for p in self.projects]}
@@ -90,6 +96,9 @@ def check_record(request,project,record):
         raise ValueError('总体运行与方案定义或分析模型不匹配')
     if record.get('status')=='running':raise ValueError('运行尚未完成，不能重复启动或比较')
     if not record.get('version') or not record.get('source_hashes'):raise ValueError('总体运行缺少版本或源码证据')
+    identity=record.get('calculation_identity')
+    if identity and any(record['source_hashes'].get(n)!=h for n,h in identity['sources'].items()):
+        raise ValueError('计算身份与源码审计记录不一致，拒绝比较')
     if mode=='overall_propulsion' and not blocked and record.get('options')!=request.options_dict():
         raise ValueError('增强分析选项不一致，请使用共同设置重新计算')
     return blocked
@@ -101,7 +110,8 @@ def summarize_comparison(request,records):
     if len(records)!=3:raise ValueError('比较需要三个运行记录')
     for p,r in zip(request.projects,records):
         check_record(request,p,r)
-    if len({json.dumps([r['version'],r['source_hashes']],sort_keys=True) for r in records})!=1:
+    from .computation_identity import comparison_compatible
+    if not comparison_compatible(records):
         raise ValueError('软件版本或源码不同，请使用同一模型重新计算后比较')
     computed=[r['summary'] for r in records if 'geometry' in r.get('summary',{})
               and (request.analysis_model=='initial' or r['mode']=='overall_propulsion')]

@@ -344,7 +344,8 @@ def read_bundle(data):
         all_records=records+geometry_records+aero_records+trim_records+drag_records+feedback_records+propulsion_records+coupled_records+support_records
         selected=manifest.get('current_run_id',ids[0] if ids else None)
         if selected is not None and selected not in ids+feedback_ids+coupled_ids:raise ValueError('存档当前总体运行无效')
-        compatible=all(r.get('version')==__version__ and r.get('source_hashes')==current for r in all_records)
+        from .computation_identity import source_compatible
+        compatible=all(r.get('version')==__version__ and source_compatible(r) for r in all_records)
         for r in all_records:
             for package,recorded in r.get('summary',{}).get('versions',{}).items():
                 try:compatible=compatible and version(package)==recorded

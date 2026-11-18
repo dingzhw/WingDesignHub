@@ -43,11 +43,12 @@ def render(project,root,parent):
     st.write('一键生成多工况几何、配平和阻力，沿任务积分更新燃油、功率和重量。首次完整计算可能需要数十分钟；原总体方案保留供比较。')
     o=FeedbackOptions()
     with st.expander('气动任务假设（运行前确认）'):
+        execution=st.selectbox('气动计算方式',['reuse','native_audit'],format_func=lambda x:'加速计算' if x=='reuse' else '原生审计（逐次启动）',key='feedback_execution')
         st.caption('自然转捩 Ncrit=9，翼型面元240；常数桨效率、发动机耗油模型沿用本方案。推力沿航迹通过重心，未计滑流或推力线偏置。')
         strut=st.number_input('任务反馈：支柱横流阻力系数',.1,2.,1.2,step=.1,key='feedback_strut')
         cl=st.number_input('低迎角速度安排的 CL 上限',.35,.55,.50,step=.01,key='feedback_schedule_cl')
         st.caption('该 CL 控制爬升/留空速度安排，实际配平仍检查迎角和舵偏；不用于预测失速或最优速度。')
-    o=replace(o,schedule_cl_ceiling=cl,drag=replace(o.drag,strut_crossflow_cd=strut))
+    o=replace(o,execution_mode=execution,schedule_cl_ceiling=cl,drag=replace(o.drag,strut_crossflow_cd=strut))
     if st.button('运行气动反馈总体计算',key='run_aero_feedback'):
         try:
             from .job_ui import submit

@@ -15,9 +15,10 @@ from .service import write_json
 
 
 class NativeFeedbackGeometry:
-    def __init__(self,root,work,project,geo,cg,design_mass,drag_options):
+    def __init__(self,root,work,project,geo,cg,design_mass,drag_options,*,execution_mode='reuse'):
         self.root=Path(root);self.work=Path(work);self.p=project;self.geo=geo
         self.drag_options=drag_options;self.design_mass=design_mass;self.prepared=None;self.points=[]
+        self.execution_mode=execution_mode;self.session=None
         self.work.mkdir(parents=True,exist_ok=False);self.geometry_work=self.work/'geometry';self.geometry_work.mkdir()
         write_json(self.work/'input.json',project.to_dict())
         record={'run_id':self.work.name,'mode':'overall_trial','status':'trial',
@@ -26,11 +27,42 @@ class NativeFeedbackGeometry:
         contract=build_geometry_contract(project,record,trial=True)
         contract['limits']=['内部总体迭代试算外形；最终总体收敛与气动检查独立记录。',*contract['limits'][1:5]]
         write_json(self.geometry_work/'geometry_contract.json',contract)
-        execute([sys.executable,'-X','utf8','-m','wingdesignhub.aircraft_vsp_worker',str(self.geometry_work)],self.geometry_work,timeout=180)
+        from .computation_identity import sources,environment
+        from .exact_cache import ExactCache
+        cache=ExactCache(self.root/'local/cache/computation','geometry')
+        identity={'contract':{k:v for k,v in contract.items() if k not in ('parent_run_id','parent_input_hash','definition_sha256','name')},
+                  'sources':sources(('aircraft_vsp_worker',)),'environment':environment(root,'geometry')}
+        hit=execution_mode=='reuse' and cache.restore(identity,self.geometry_work)
+        if not hit:
+            execute([sys.executable,'-X','utf8','-m','wingdesignhub.aircraft_vsp_worker',str(self.geometry_work)],self.geometry_work,timeout=180)
         geom=json.loads((self.geometry_work/'summary.json').read_text('utf-8'))
         if not geom['passed']:raise ValueError('总体试算几何检查失败')
+        if not hit and execution_mode=='reuse':
+            cache.publish(identity,self.geometry_work,[p.relative_to(self.geometry_work).as_posix() for p in self.geometry_work.rglob('*')
+                if p.is_file() and p.name!='geometry_contract.json'])
+        write_json(self.geometry_work/'cache_reuse.json',{'cache_hit':hit,'identity':identity})
         self.interface=json.loads((self.geometry_work/'aerodynamic_geometry.json').read_text('utf-8'))
+        # Cached numerical geometry is rebound to this trial's explicit provenance.
+        self.interface.update(source_run_id=self.geometry_work.name,parent_run_id=contract['parent_run_id'])
+        geom.update(parent_run_id=contract['parent_run_id'],parent_status=contract['parent_status'])
+        write_json(self.geometry_work/'aerodynamic_geometry.json',self.interface);write_json(self.geometry_work/'summary.json',geom)
+        if hit:
+            from .geometry_report import write_geometry_report
+            write_geometry_report(self.geometry_work,contract,geom)
         self.tools=tool_paths(root)
+
+    def batch(self,requests):
+        """Exact Mach grouping only changes scheduling; output retains request order."""
+        if self.execution_mode=='native_audit':return [self(*r) for r in requests]
+        from .avl_session import AVLSession
+        def mach(r):return r[2]/math.sqrt(1.4*287.05287*(288.15-.0065*r[3]))
+        answers={}
+        with AVLSession(self.tools['avl'],self.work/'avl_session',cache=self.root/'local/cache/computation') as session:
+            self.session=session
+            try:
+                for i in sorted(range(len(requests)),key=lambda i:mach(requests[i])):answers[i]=self(*requests[i])
+            finally:self.session=None
+        return [answers[i] for i in range(len(requests))]
 
     def __call__(self,mass,cg,speed,altitude,roc):
         work=self.work/f'point_{len(self.points):03d}';work.mkdir()
@@ -52,7 +84,7 @@ class NativeFeedbackGeometry:
         contract['flow'].update(normal_weight_factor=math.cos(gamma),flight_path_angle_deg=math.degrees(gamma))
         contract.update(flight_state=state,trim_options=asdict(options),model='mission_lifting_surface_trim_v1')
         write_json(work/'trim_contract.json',contract)
-        trim=solve_trim(contract,self.tools['avl'],work)
+        trim=solve_trim(contract,self.tools['avl'],work,solver=self.session.solve if self.session else None)
         write_json(work/'trim_summary.json',trim)
         if not trim['trim']['converged']:
             from .aero_feedback import FeedbackError

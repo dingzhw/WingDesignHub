@@ -15,6 +15,10 @@ from .adapters import run_avl, run_openvsp, tool_paths, sha256, execute
 
 def write_json(path, value):
     path = Path(path)
+    if path.name=='result.json' and path.parent.parent.name=='runs' and isinstance(value,dict):
+        from .computation_identity import MODES,calculation
+        kind=MODES.get(value.get('mode'))
+        if kind and 'calculation_identity' not in value:value['calculation_identity']=calculation(path.parent.parent.parent,kind)
     temporary = path.with_suffix(path.suffix + ".tmp")
     temporary.write_text(json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False), encoding="utf-8")
     # Windows readers/scanners may briefly deny replacement of an existing file.

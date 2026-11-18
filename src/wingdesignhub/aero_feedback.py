@@ -17,6 +17,7 @@ class FeedbackError(DesignDomainError):
 
 @dataclass(frozen=True)
 class FeedbackOptions:
+    execution_mode: str='reuse'
     schedule_cl_ceiling: float=.50
     mass_stations: int=2
     altitude_stations: int=3
@@ -31,6 +32,7 @@ class FeedbackOptions:
         result=cls(**data);result.validate();return result
 
     def validate(self):
+        if self.execution_mode not in ('reuse','native_audit'):raise ValueError('未知计算执行模式')
         for n,lo,hi in [('schedule_cl_ceiling',.35,.55),('integration_step_s',5.,60.)]:
             x=getattr(self,n)
             if type(x) not in (int,float) or not math.isfinite(x) or not lo<=x<=hi:raise ValueError('气动任务选项越界：'+n)
@@ -78,14 +80,16 @@ class MissionAeroTable:
         self.mass_nodes=list(map(float,mass_nodes));self.area=area;self.tables={};self.capture=False;self.trace=[]
         if len(self.mass_nodes)<2 or any(not math.isfinite(x) for x in self.mass_nodes) or any(b<=a for a,b in zip(self.mass_nodes,self.mass_nodes[1:])):
             raise ValueError('质量表节点须为有限递增量')
+        requests=[]
         for speed,roc,heights in branches:
             key=self.key(speed,roc)
             if key in self.tables:continue
             grid=[float(heights[0])] if heights[0]==heights[-1] else list(map(float,np.linspace(heights[0],heights[-1],altitude_nodes)))
-            points=[]
-            for mass in self.mass_nodes:
-                points.append([native(mass,self.cg(mass),speed,h,roc) for h in grid])
-            self.tables[key]={'speed_m_s':speed,'roc_m_s':roc,'altitudes_m':grid,'points':points}
+            self.tables[key]={'speed_m_s':speed,'roc_m_s':roc,'altitudes_m':grid,'points':[]}
+            requests.extend((mass,self.cg(mass),speed,h,roc) for mass in self.mass_nodes for h in grid)
+        results=iter(native.batch(requests) if hasattr(native,'batch') else [native(*r) for r in requests])
+        for b in self.tables.values():
+            b['points']=[[next(results) for h in b['altitudes_m']] for mass in self.mass_nodes]
 
     @staticmethod
     def key(speed,roc):return f'{speed:.9f}/{roc:.9f}'
@@ -148,7 +152,8 @@ class AeroFeedback:
     def __init__(self,root,work,project,options,native_factory=None):
         from .feedback_native import NativeFeedbackGeometry
         self.root=Path(root);self.work=Path(work);self.p=project;self.options=options;options.validate()
-        self.native_factory=native_factory or NativeFeedbackGeometry;self.history=[];self.last=None
+        from functools import partial
+        self.native_factory=native_factory or partial(NativeFeedbackGeometry,execution_mode=options.execution_mode);self.history=[];self.last=None
         self.limits=LIMITS
 
     def evaluate(self,design_mass,geo,fuel_guess,power_guess,mass_model,iteration,dt):

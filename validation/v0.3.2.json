@@ -1,0 +1,352 @@
+{
+  "baseline_run": "3b8a708c07d54eb7bed4698717ec9bae",
+  "baseline_wall_s": 3465.16,
+  "rows": [
+    {
+      "mode": "cold",
+      "run_id": "4a326e4aa1144d29ba3cac2ca9d2330a",
+      "wall_s": 1118.9340388,
+      "execution_profile": {
+        "execution_mode": "reuse",
+        "iteration_s": 980.4752573000001,
+        "final_native_audit_s": 96.78201169999966,
+        "audit_scope": "non-node AVL/Newton and direct CCBlade; existing verified XFOIL polar cache allowed",
+        "mesh_and_tolerances_changed": false
+      },
+      "relative_to_v031": {
+        "mtow": -2.220446049250313e-16,
+        "fuel": 0.0,
+        "power": -5.551115123125783e-16,
+        "area": -2.220446049250313e-16,
+        "cg": 4.440892098500626e-16
+      },
+      "relative_to_cold": {
+        "mtow": 0.0,
+        "fuel": 0.0,
+        "power": 0.0,
+        "area": 0.0,
+        "cg": 0.0
+      },
+      "avl_session_calls": 560,
+      "avl_exact_cache_hits": 112,
+      "native_archive_bytes": 105344965
+    },
+    {
+      "mode": "warm",
+      "run_id": "da661296b41a43cfa7fee33cdf4ad0e9",
+      "wall_s": 312.2082561999996,
+      "execution_profile": {
+        "execution_mode": "reuse",
+        "iteration_s": 192.38310330000013,
+        "final_native_audit_s": 83.96886240000003,
+        "audit_scope": "non-node AVL/Newton and direct CCBlade; existing verified XFOIL polar cache allowed",
+        "mesh_and_tolerances_changed": false
+      },
+      "relative_to_v031": {
+        "mtow": -2.220446049250313e-16,
+        "fuel": 0.0,
+        "power": -5.551115123125783e-16,
+        "area": -2.220446049250313e-16,
+        "cg": 4.440892098500626e-16
+      },
+      "relative_to_cold": {
+        "mtow": 0.0,
+        "fuel": 0.0,
+        "power": 0.0,
+        "area": 0.0,
+        "cg": 0.0
+      },
+      "avl_session_calls": 0,
+      "avl_exact_cache_hits": 672,
+      "native_archive_bytes": 104732736
+    }
+  ],
+  "module": {
+    "elapsed_s": {
+      "native": 31.865193199999794,
+      "cold": 17.693550200000118,
+      "warm": 0.7495398999999452
+    },
+    "checks": [
+      {
+        "mode": "cold",
+        "point": 0,
+        "coefficient_absolute_error": {
+          "CLtot": 1.1102230246251565e-16,
+          "CDff": 8.673617379884035e-19,
+          "Cmtot": 6.24500418264426e-17
+        },
+        "angle_error_deg": {
+          "alpha_deg": 2.6645352591003757e-15,
+          "elevator_deg": 1.0658141036401503e-14
+        },
+        "strip_load_absolute_error": 3.979039320256561e-13
+      },
+      {
+        "mode": "cold",
+        "point": 1,
+        "coefficient_absolute_error": {
+          "CLtot": 0.0,
+          "CDff": 1.734723475976807e-18,
+          "Cmtot": 0.0
+        },
+        "angle_error_deg": {
+          "alpha_deg": 1.3322676295501878e-15,
+          "elevator_deg": 9.769962616701378e-15
+        },
+        "strip_load_absolute_error": 2.8421709430404007e-13
+      },
+      {
+        "mode": "cold",
+        "point": 2,
+        "coefficient_absolute_error": {
+          "CLtot": 1.1102230246251565e-16,
+          "CDff": 1.0408340855860843e-17,
+          "Cmtot": 4.163336011472092e-17
+        },
+        "angle_error_deg": {
+          "alpha_deg": 4.884981308350689e-15,
+          "elevator_deg": 3.019806626980426e-14
+        },
+        "strip_load_absolute_error": 4.547473508864641e-13
+      },
+      {
+        "mode": "cold",
+        "point": 3,
+        "coefficient_absolute_error": {
+          "CLtot": 0.0,
+          "CDff": 2.949029909160572e-17,
+          "Cmtot": 6.938901844841109e-17
+        },
+        "angle_error_deg": {
+          "alpha_deg": 7.105427357601002e-15,
+          "elevator_deg": 4.085620730620576e-14
+        },
+        "strip_load_absolute_error": 5.684341886080801e-13
+      },
+      {
+        "mode": "warm",
+        "point": 0,
+        "coefficient_absolute_error": {
+          "CLtot": 1.1102230246251565e-16,
+          "CDff": 8.673617379884035e-19,
+          "Cmtot": 6.24500418264426e-17
+        },
+        "angle_error_deg": {
+          "alpha_deg": 2.6645352591003757e-15,
+          "elevator_deg": 1.0658141036401503e-14
+        },
+        "strip_load_absolute_error": 3.979039320256561e-13
+      },
+      {
+        "mode": "warm",
+        "point": 1,
+        "coefficient_absolute_error": {
+          "CLtot": 0.0,
+          "CDff": 1.734723475976807e-18,
+          "Cmtot": 0.0
+        },
+        "angle_error_deg": {
+          "alpha_deg": 1.3322676295501878e-15,
+          "elevator_deg": 9.769962616701378e-15
+        },
+        "strip_load_absolute_error": 2.8421709430404007e-13
+      },
+      {
+        "mode": "warm",
+        "point": 2,
+        "coefficient_absolute_error": {
+          "CLtot": 1.1102230246251565e-16,
+          "CDff": 1.0408340855860843e-17,
+          "Cmtot": 4.163336011472092e-17
+        },
+        "angle_error_deg": {
+          "alpha_deg": 4.884981308350689e-15,
+          "elevator_deg": 3.019806626980426e-14
+        },
+        "strip_load_absolute_error": 4.547473508864641e-13
+      },
+      {
+        "mode": "warm",
+        "point": 3,
+        "coefficient_absolute_error": {
+          "CLtot": 0.0,
+          "CDff": 2.949029909160572e-17,
+          "Cmtot": 6.938901844841109e-17
+        },
+        "angle_error_deg": {
+          "alpha_deg": 7.105427357601002e-15,
+          "elevator_deg": 4.085620730620576e-14
+        },
+        "strip_load_absolute_error": 5.684341886080801e-13
+      }
+    ],
+    "physical_model_changed": false,
+    "data_role": "same native model numerical regression"
+  },
+  "cache_basis": "Existing verified XFOIL caches retained for same-cache comparison to V0.3.1; not an empty-airfoil-cache benchmark",
+  "physical_validation_passed": false,
+  "version": "0.3.2",
+  "status": "numerical_checks_passed_performance_gate_open",
+  "direct_audit": [
+    {
+      "mode": "cold",
+      "direct_cd_relative_to_baseline": 4.440892098500626e-16,
+      "direct_propeller_relative_to_baseline": 1.1102230246251565e-15,
+      "max_aero_table_relative_cd_error": 0.0022943496703737853,
+      "max_propeller_table_relative_power_error": 0.0015919986060305424,
+      "half_step_relative_fuel_error": 1.362172554753016e-07
+    },
+    {
+      "mode": "warm",
+      "direct_cd_relative_to_baseline": 4.440892098500626e-16,
+      "direct_propeller_relative_to_baseline": 1.1102230246251565e-15,
+      "max_aero_table_relative_cd_error": 0.0022943496703737853,
+      "max_propeller_table_relative_power_error": 0.0015919986060305424,
+      "half_step_relative_fuel_error": 1.362172554753016e-07
+    }
+  ],
+  "valid_ccblade_batch": {
+    "times_s": {
+      "cold": 36.28447049999977,
+      "warm": 0.05241639999985637
+    },
+    "identical": true,
+    "power_torque_identity": true,
+    "scope": "two valid synthetic propeller conditions; full maps with out-of-domain masks remain uncached"
+  },
+  "archive": {
+    "portable_bytes": 2137698,
+    "portable_build_s": 0.45847609999964334,
+    "native_zip_not_read": true,
+    "save_reopen_identical": true,
+    "final_geometry_component_visible": true,
+    "ui_no_exception": true,
+    "legacy_v031a_readable": true,
+    "historical_seed_role": "same immutable V0.3.1 seed used for cold and warm performance control; archived provenance stays historical"
+  },
+  "three_design_speed_gate_verified": false,
+  "three_design_three_minute_target_verified": false,
+  "model_changed": false,
+  "calibration_performed": false,
+  "data_role": "same_model_numerical_regression_not_independent_physical_validation",
+  "source_freeze_sha256": "d1143b132c81c5350ea8c7f2d4fb52ad1f0cce9c8a5ffd680e031174968c1107",
+  "release_compatibility": {
+    "source_changes_after_native_freeze": [
+      "comparison_service.py",
+      "design_comparison.py"
+    ],
+    "reason": "comparison audit integrity and legacy option compatibility; outside measured coupled calculation closure",
+    "native_evidence_preserved": true,
+    "checks": [
+      {
+        "mode": "cold",
+        "calculation_identity_unchanged": true,
+        "compatible_with_release": true
+      },
+      {
+        "mode": "warm",
+        "calculation_identity_unchanged": true,
+        "compatible_with_release": true
+      }
+    ]
+  },
+  "storage": {
+    "calculation_cache": {
+      "bytes": 65001446,
+      "files": 574
+    },
+    "cold_run": {
+      "bytes": 1314826396,
+      "files": 36505
+    },
+    "warm_run": {
+      "bytes": 1081122190,
+      "files": 33677
+    }
+  },
+  "timing_breakdown": {
+    "cold": {
+      "fresh_process_count": {
+        "wingdesignhub.coupled_worker": 1,
+        "wingdesignhub.aircraft_vsp_worker": 14,
+        "wingdesignhub.drag_geometry_worker": 14,
+        "xfoil.exe": 621,
+        "julia.exe": 3,
+        "avl.exe": 18
+      },
+      "fresh_process_elapsed_s": {
+        "wingdesignhub.aircraft_vsp_worker": 16.213362500000585,
+        "wingdesignhub.drag_geometry_worker": 28.22127730000011,
+        "xfoil.exe": 380.8289718999986,
+        "julia.exe": 117.49842559999979,
+        "avl.exe": 47.954914399999325,
+        "wingdesignhub.coupled_worker": 1078.1163238999998
+      },
+      "pack": {
+        "elapsed_s": 34.80092190000005,
+        "file_count": 36460,
+        "uncompressed_bytes": 1198357158,
+        "archive_bytes": 105344965
+      },
+      "note": "AVL session calls are separate; sums are instrumentation categories, not additive phase totals"
+    },
+    "warm": {
+      "fresh_process_count": {
+        "wingdesignhub.coupled_worker": 1,
+        "wingdesignhub.drag_geometry_worker": 14,
+        "xfoil.exe": 1,
+        "julia.exe": 3,
+        "avl.exe": 18
+      },
+      "fresh_process_elapsed_s": {
+        "wingdesignhub.drag_geometry_worker": 26.86267509999834,
+        "xfoil.exe": 0.10329619999993156,
+        "julia.exe": 111.64083430000073,
+        "avl.exe": 45.39021340000181,
+        "wingdesignhub.coupled_worker": 277.19229099999984
+      },
+      "pack": {
+        "elapsed_s": 29.881106299999374,
+        "file_count": 33632,
+        "uncompressed_bytes": 965594123,
+        "archive_bytes": 104732736
+      },
+      "note": "AVL session calls are separate; sums are instrumentation categories, not additive phase totals"
+    }
+  },
+  "regression": [
+    {
+      "scope": "full suite before final legacy comparison compatibility fix",
+      "tests": "435",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "497.722"
+    },
+    {
+      "scope": "affected modules after final legacy comparison compatibility fix",
+      "tests": "66",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "119.074"
+    }
+  ],
+  "legacy_comparison": {
+    "original_bundle_sha256": "2870fe5e70d4b6067688ea01824a6bfd1f02164fa1a1b9166b0451c9c4e735fe",
+    "original_bundle_bytes": 563925006,
+    "read_s": 13.320460699999785,
+    "kind": "comparison",
+    "record_count": 4,
+    "legacy_definition_preserved": true,
+    "source_unchanged": true
+  },
+  "limits": [
+    "single representative cold and warm benchmark, not a timed three-design batch",
+    "existing XFOIL cache retained but exact new requests still required new solves",
+    "mixed valid/out-of-domain propeller maps are not cached",
+    "expanded run evidence remains on disk; portable bundle size is a different measure",
+    "no independent target-aircraft physical validation added"
+  ]
+}

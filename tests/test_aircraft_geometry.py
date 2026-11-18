@@ -115,13 +115,13 @@ def test_native_save_reopen_geometry_and_report_are_bound_to_parent(native,tmp_p
 
 
 def test_service_rejects_changed_model_and_records_solver_failure(native,monkeypatch):
-    from wingdesignhub import geometry_service
+    from wingdesignhub import geometry_service,computation_identity
     from wingdesignhub.service import get_results
     from wingdesignhub.project_archive import build_bundle,read_bundle
-    root,p,r,g=native;original=geometry_service.source_hashes
-    monkeypatch.setattr(geometry_service,'source_hashes',lambda:{})
+    root,p,r,g=native;original=computation_identity.sources
+    monkeypatch.setattr(computation_identity,'sources',lambda *a,**k:{})
     with pytest.raises(ValueError,match='模型已变更'):geometry_service.run_aircraft_geometry(p,root,r['run_id'])
-    monkeypatch.setattr(geometry_service,'source_hashes',original)
+    monkeypatch.setattr(computation_identity,'sources',original)
     monkeypatch.setattr(geometry_service,'execute',lambda *a,**k:(_ for _ in ()).throw(TimeoutError('test timeout')))
     failed=geometry_service.run_aircraft_geometry(p,root,r['run_id'])
     assert failed['status']=='failed' and 'test timeout' in failed['error']

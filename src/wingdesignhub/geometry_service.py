@@ -23,7 +23,8 @@ def run_aircraft_geometry(project,root,sizing_run_id,options=None):
     p=DesignProject.from_dict(project) if isinstance(project,dict) else project;p.check_schema()
     options=GeometryOptions(**options) if isinstance(options,dict) else (options or GeometryOptions())
     options.validate();root=Path(root).resolve();parent=get_results(root,sizing_run_id)
-    if parent.get('version')!=__version__ or parent.get('source_hashes')!=source_hashes():
+    from .computation_identity import compatible
+    if parent.get('version')!=__version__ or not compatible(parent,root):
         raise ValueError('总体结果的软件或模型已变更，请在当前版本重新运行总体设计')
     for package,recorded in parent.get('summary',{}).get('versions',{}).items():
         try:matches=version(package)==recorded

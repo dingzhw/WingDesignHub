@@ -38,7 +38,10 @@ def main(root,directory):
     try:
         r=dispatch(Path(root),read(Path(directory)/'request.json'))
         from .jobs import code_identity
-        if read(Path(directory)/'job.json')['source_hashes']!=code_identity():
+        from .computation_identity import calculation
+        record=read(Path(directory)/'job.json')
+        same=(record['calculation_identity']==calculation(root,record['kind']) if 'calculation_identity' in record else record['source_hashes']==code_identity())
+        if not same:
             raise ValueError('运行期间源码发生变化，结果保留供诊断，请重新提交固定版本的计算。')
         result={'run_id':r['run_id'],'engineering_status':r['status']}
         if r.get('error'):result['error']=r['error']
