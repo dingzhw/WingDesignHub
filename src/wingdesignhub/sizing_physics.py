@@ -45,7 +45,7 @@ def geometry(mass, fuel_capacity, p):
     arm=.45*a.fuselage_length_m
     return {'configuration_version':CONFIGURATION_VERSION,'surface_parameters':parameters,
             'wing_area_m2':area,'wing_span_m':span,'root_chord_m':root,'tip_chord_m':tip,'mac_m':mac,
-            'wing_quarter_x_m':.39*a.fuselage_length_m,'horizontal_tail_area_m2':.7*area*mac/arm,
+            'wing_quarter_x_m':(.39 if a.layout is None else a.layout['wing_quarter_fraction'])*a.fuselage_length_m,'horizontal_tail_area_m2':.7*area*mac/arm,
             'vertical_tail_area_m2':.04*area*span/arm,'tail_arm_m':arm,'fuselage_length_m':a.fuselage_length_m,
             'fuselage_width_m':1.2,'fuselage_height_m':1.35,'tank_capacity_kg':a.tank_volume_fraction*area*math.sqrt(area/a.aspect_ratio)*thickness*FUEL_DENSITY,
             'usable_tank_capacity_kg':a.tank_volume_fraction*area*math.sqrt(area/a.aspect_ratio)*thickness*FUEL_DENSITY*(1-a.unusable_fuel_fraction),

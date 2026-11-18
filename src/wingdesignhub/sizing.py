@@ -12,6 +12,9 @@ LIMITS=['常规低速金属单发、2–6 座；失速/功率/容量为当前已
 
 
 def cg_ledger(weights,geo,p,ms):
+    if p.sizing.layout is not None:
+        from .layout import component_ledger
+        return component_ledger(weights,geo,p,ms)
     x=geo['wing_quarter_x_m'];lf=geo['fuselage_length_m']
     stations={'airframe':.44*lf,'propulsion':.12*lf,'systems':.4*lf,'furniture':.4*lf,'unusable_fuel':x}
     rows=[{'component':n,'mass_kg':mass,'x_m':stations[n]} for n,mass in weights['categories_kg'].items()]

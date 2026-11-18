@@ -38,6 +38,7 @@ class SizingAssumptions:
     fuselage_length_m: float = 7.5
     tank_volume_fraction: float = .12
     unusable_fuel_fraction: float = .02
+    layout: dict | None = None
     source: str = 'WingDesignHub V0.1.7 独立金属单发概念模板；系数为待校准工程假设，非真实型号数据'
 
     def to_dict(self): return asdict(self)
@@ -49,6 +50,8 @@ class SizingAssumptions:
         result=cls(**data);result.validate();return result
 
     def validate(self):
+        from .layout import validate_layout
+        validate_layout(self.layout)
         from .fuel_model import FUEL_MODELS
         if self.fuel_model not in FUEL_MODELS:raise ValueError('耗油模型选项无效')
         if self.template!='metal_single_v1' or type(self.seats) is not int or not 2<=self.seats<=6:

@@ -158,7 +158,8 @@ class AeroFeedback:
 
     def evaluate(self,design_mass,geo,fuel_guess,power_guess,mass_model,iteration,dt):
         p=self.p;weights=mass_model.evaluate(design_mass,power_guess,geo,p)
-        rows,dry,moment=dry_ledger(weights,geo,p);fuel_x=geo['wing_quarter_x_m']
+        from .layout import fuel_station
+        rows,dry,moment=dry_ledger(weights,geo,p);fuel_x=fuel_station(geo,p)
         upper=max(60.,1.6*fuel_guess);schedule=feedback_schedule(design_mass,geo,p,self.options)
         ref_mass=dry+min(fuel_guess,upper);cg=(moment+(ref_mass-dry)*fuel_x)/ref_mass
         native=self.native_factory(self.root,self.work/'native'/f'trial_{iteration:03d}',p,geo,cg,design_mass,self.options.drag)

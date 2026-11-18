@@ -21,7 +21,7 @@ from .comparison_service import run_comparison, compare_sizing_runs
 
 def main():
     parser = argparse.ArgumentParser(description="WingDesignHub 开发与自动化入口")
-    parser.add_argument("action", choices=["jobs","job-submit","job-status","job-cancel","job-retry","run", "doctor", "reference", "mesh", "static", "flight", "plate", "prepare", "size", "geometry", "aero", "trim", "drag", "feedback", "propulsion", "coupled", "compare", "compare-runs", "cruise-check", "fuel-check", "archive-save", "archive-open", "report", "fastga-reference", "fastga-contract"])
+    parser.add_argument("action", choices=["jobs","job-submit","job-status","job-cancel","job-retry","run", "doctor", "reference", "mesh", "static", "flight", "plate", "prepare", "size", "geometry", "aero", "trim", "drag", "feedback", "propulsion", "coupled", "compare", "compare-runs", "cruise-check", "fuel-check", "aircraft-check", "archive-save", "archive-open", "report", "fastga-reference", "fastga-contract"])
     parser.add_argument("--root", type=Path, default=Path.cwd())
     parser.add_argument("--input", type=Path)
     from .jobs import KINDS
@@ -113,6 +113,10 @@ def main():
         path=args.input or args.root/'runs'/args.run_id/'input.json'
         project=DesignProject.from_dict(json.loads(path.read_text('utf-8')))
         result=run_aircraft_geometry(project,args.root,args.run_id,GeometryOptions(tessellation=args.tessellation))
+    elif args.action == 'aircraft-check':
+        if args.input:parser.error('aircraft-check 使用固定公开基准，不接受需求覆盖')
+        from .aircraft_reference import run_aircraft_reference
+        result=run_aircraft_reference(args.root)
     elif args.action == 'fuel-check':
         from .fuel_validation import run_fuel_validation
         result=run_fuel_validation(args.root)

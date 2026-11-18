@@ -39,6 +39,6 @@ CLI 提供 `job-submit --kind ... --input ... --run-id ... --options ...`、`job
 
 `local/jobs/<job_id>/` 保存请求快照、状态、逐进程事件、资源采样和日志。工程输出继续进入 `runs/<run_id>/`。后台调度器独立于 Streamlit 会话；同一项目默认串行。Windows Job Object 在子进程恢复执行前绑定所有权，关闭或终止该 Job 会回收所属进程树；PID 与创建时间共同用于存活核查。其他项目/任务的同名求解器不作为清理目标。[Windows 官方机制](https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects)
 
-界面轮询使用独立片段，不在每次心跳重新执行整页与大包导出。[Streamlit fragment](https://docs.streamlit.io/develop/api-reference/execution-flow/st.fragment) 详细原生证据包仍按旧版保存，其压缩、重复哈希和载入成本留待 V0.3.2 处理。本版增加计时和资源记录，不宣称已经达到分钟级三方案。
+界面轮询使用独立片段，不在每次心跳重新执行整页与大包导出。[Streamlit fragment](https://docs.streamlit.io/develop/api-reference/execution-flow/st.fragment) 普通方案与完整原生证据现已分层，计算缓存按依赖身份复用。V0.3.2.1 三方案温缓存实测13.34 min，3 min目标未达到；详见对应验证记录。
 
 排队前保存源码签名，启动和结束均核查。正式验证期间冻结源码；正在计算时修改代码会留下诊断，须以固定版本重新提交。任务目录、机器配置和原始计算数据只留本地，不入公开 Git。

@@ -65,7 +65,9 @@ class DesignProject:
     confirmation_sha256: str | None = None
 
     def to_dict(self):
-        return asdict(self)
+        data=asdict(self)
+        if data['sizing'].get('layout') is None:data['sizing'].pop('layout',None)
+        return data
 
     @classmethod
     def from_dict(cls, data):
@@ -115,6 +117,8 @@ class DesignProject:
     def definition_hash(self):
         data = self.to_dict()
         data.pop('confirmation_sha256')
+        # Absence of the opt-in layout preserves historical confirmed identities.
+        if data['sizing'].get('layout') is None:data['sizing'].pop('layout',None)
         # Normalize numeric forms so 350 and 350.0 represent the same definition.
         def normalize(value):
             if isinstance(value, dict): return {k: normalize(v) for k, v in value.items()}

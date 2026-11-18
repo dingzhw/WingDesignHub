@@ -207,6 +207,34 @@ def test_native_tail_refinement_recovers_oscillation_and_agrees_with_finer_mesh(
     with pytest.raises(PolarError,match='面元记录'):read_attempts(work,spec)
 
 
+def test_native_tail_extended_iteration_budget_and_independent_start_agree(native):
+    from wingdesignhub.xfoil_polars import read_attempts
+    from wingdesignhub.adapters import execute
+    import shutil
+    root,p,s,g,t,d=native;foil=root/'runs'/d['run_id']/'airfoils/HorizontalTail.dat'
+    spec=PolarSpec(4261634.247291853,.180435308835643,(-.2,-.1,0.),
+                   flap_deg=-6.08934043811211,panels=240)
+    work=root/'tail_extended';cache=root/'tail_extended_cache'
+    result=run_polar(foil,spec,'C:/apps/XFOIL6.99/xfoil.exe',work,cache)
+    recovered=result['recovery'][0]
+    assert recovered['directory']=='recovery_0_extended_320' and len(recovered['attempts'])==7
+    assert read_attempts(work,spec)['rows']==result['rows']
+    # Independent 240-panel initialization, including both neighboring requested
+    # points; initialization is never inserted into the accepted polar grid.
+    for i,row in enumerate(result['rows']):
+        check=root/f'tail_extended_independent_{i}';check.mkdir();shutil.copy2(foil,check/'foil.dat')
+        single=replace(spec,cl_grid=(row['requested_cl'],))
+        execute(['C:/apps/XFOIL6.99/xfoil.exe'],check,
+                stdin=commands(single,warm_start=-.15 if i==0 else None,iterations=1000),timeout=60)
+        other=parse_polar((check/'polar.txt').read_text('utf8'),single)['rows'][0]
+        assert abs(row['cd']/other['cd']-1)<.02
+        assert abs(row['alpha_deg']-other['alpha_deg'])<.05
+    repeated=run_polar(foil,spec,'C:/apps/XFOIL6.99/xfoil.exe',root/'tail_extended_hit',cache,True)
+    assert repeated['cache_hit'] and repeated['rows']==result['rows']
+    assert 'ITER 1000' in (work/'recovery_0_extended_320/stdin.txt').read_text('utf8')
+    with pytest.raises(PolarError,match='迭代上限'):commands(spec,iterations=1001)
+
+
 def test_native_archive_report_and_semantic_tamper_rejection(native):
     from wingdesignhub.project_archive import build_bundle,read_bundle,digest,encoded
     from wingdesignhub.service import generate_report

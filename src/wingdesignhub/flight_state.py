@@ -54,7 +54,9 @@ def make_flight_state(summary, mass_state='takeoff', mass_kg=None, cg_x_m=None, 
             'cg_geometry_m':[cg,0.,0.],'design_mtow_kg':mtow,'configured_takeoff_mass_kg':total,
             'unallocated_mass_budget_kg':mtow-total,'fuel_burned_from_takeoff_kg':burned if state_rows else None,
             'remaining_usable_fuel_kg':fuel_remaining,'component_ledger':state_rows,
-            'source':source_note.strip() if mass_state=='explicit' else 'existing fixed-station component ledger; fuel at wing quarter chord',
+            'source':source_note.strip() if mass_state=='explicit' else
+                ('configured leaf component/loading ledger; fuel at declared station' if summary['cg'].get('layout') is not None
+                 else 'existing fixed-station component ledger; fuel at wing quarter chord'),
             'phase':'end of airborne mission, before taxi-in' if mass_state=='mission_end' else mass_state,
             'scope':'conceptual x-CG; y=z=0 assumption; no payload relocation, tank distribution or CG envelope validation',
             'mass_budget_allocated_as_ballast':False,'unusable_fuel_in_empty_mass_once':True}

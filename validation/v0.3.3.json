@@ -1,0 +1,4563 @@
+{
+  "version": "0.3.3",
+  "date": "2026-11-18",
+  "status": "software_and_bounded_sensitivity_verified_target_aircraft_validation_open",
+  "product_goal": "requirements to consistent sizing, assumptions, constraints and comparison",
+  "public_reference": {
+    "status": "reference_audit_with_open_gaps",
+    "registry": {
+      "id": "pa28_181_vb760_v1",
+      "aircraft": "Piper PA-28-181 Archer II",
+      "sources": {
+        "piper": {
+          "document": "Piper PA-28-181 VB-760, Fig.5-13 p.5-17; cruise example p.5-5",
+          "url": "https://www.summitaviationspokane.com/wp-content/uploads/2025/08/pa-28-181-archer-ii-poh.pdf",
+          "sha256": "0a51a23b0db5d4d1bbb063484a56d7ed12a0a1935da96e5c90e88dd13e1bd43c"
+        },
+        "lycoming": {
+          "document": "Lycoming 60297-12, October 2005, p.3-12 (PDF 44), O-360-A/C series",
+          "url": "https://www.lycoming.com/sites/default/files/file/2025-11/60297-12%20-%20O-360%2C%20HO-360%2C%20IO-360%2C%20AIO-360%2C%20HIO-360%2C%20and%20TIO-360%20Series.pdf",
+          "sha256": "06142d8b252d818d7c3f46baf648dbe6a65c1b33df03332d5256d5af7bf12946"
+        }
+      },
+      "revision_policy": "VB-760 issued 1975-08-15; mixed revisions, pinned PDF SHA and individual pages govern",
+      "geometry": {
+        "wing_area_m2": 15.7935168,
+        "wing_span_m": 10.668000000000001,
+        "length_m": 7.25424,
+        "source_page": "1-2 / PDF 9",
+        "role": "unfitted_specification_reference"
+      },
+      "engine": {
+        "model": "Lycoming O-360-A4M",
+        "rated_power_w": 134225.97688480865,
+        "rated_rpm": 2700.0,
+        "dry_mass_kg": 133.80974915000002,
+        "source_page": "Piper 1-3 / PDF 10; Lycoming 2-7/2-8 / PDF 25/26",
+        "mass_definition": "standard dry engine including listed accessories, starter and generator/alternator; excludes complete aircraft installation",
+        "role": "external_manufacturer_specification_not_fitted"
+      },
+      "propeller": {
+        "model": "Sensenich 76EM8S5-0-60",
+        "diameter_m": 1.9304,
+        "blades": 2,
+        "control": "fixed_pitch",
+        "source_page": "1-3 / PDF 10",
+        "performance_data_available": false
+      },
+      "mass": {
+        "mtow_kg": 1156.6605435000001,
+        "standard_empty_kg": 630.4933943,
+        "fuel_total_kg": 136.077711,
+        "fuel_usable_kg": 130.63460256000002,
+        "source_page": "1-3/1-4 / PDF 10/11",
+        "empty_definition": "approximate standard empty, unusable fuel and full operating fluids including oil",
+        "role": "unfitted_approximate_specification; not a specific aircraft weighing"
+      },
+      "loading_arms_in": {
+        "front": 80.5,
+        "rear": 118.1,
+        "fuel": 95.0,
+        "baggage": 142.8
+      },
+      "loading_source": "6-11 Fig.6-9 / PDF 101; aircraft datum is not platform nose origin; empty CG absent",
+      "fuel_points": [
+        {
+          "id": "piper_vb760_economy_65",
+          "role": "calibration",
+          "rated_hp": 180.0,
+          "power_fraction": 0.65,
+          "fuel_us_gal_h": 7.6,
+          "fuel_lb_us_gal": 6.0,
+          "mixture": "best_economy"
+        },
+        {
+          "id": "piper_vb760_economy_55",
+          "role": "same_source_holdout",
+          "rated_hp": 180.0,
+          "power_fraction": 0.55,
+          "fuel_us_gal_h": 6.3,
+          "fuel_lb_us_gal": 6.0,
+          "mixture": "best_economy"
+        },
+        {
+          "id": "piper_vb760_economy_75",
+          "role": "same_source_holdout",
+          "rated_hp": 180.0,
+          "power_fraction": 0.75,
+          "fuel_us_gal_h": 8.8,
+          "fuel_lb_us_gal": 6.0,
+          "mixture": "best_economy"
+        }
+      ],
+      "best_power_gal_h": {
+        "55": 7.8,
+        "65": 9.0,
+        "75": 10.5
+      },
+      "best_power_role": "unfitted_same_source_reference; 100 F rich of peak EGT, not equivalent to generic map mixture=1",
+      "fuel_source_page": "5-17 Fig.5-13 / PDF 80; economy peak EGT vs best power rich mixture",
+      "registered_before_evaluation": true,
+      "new_fit_parameters": [],
+      "missing": [
+        "measured empty CG and datum-to-nose offset",
+        "individual component masses and stations",
+        "exact broken-taper wing/stabilator and incidence geometry",
+        "matched installed fixed-pitch propeller map",
+        "RPM/OAT/mixture matched target engine SFC data",
+        "independent aircraft flight-test data"
+      ],
+      "limits": [
+        "载荷力臂保留手册基准；未取得机头坐标转换量前不灌入平台重心台账。",
+        "65%经济点已用于旧耗油系数校准；55%/75%为同源留出，均不是独立验证数据。",
+        "通用图没有目标型号混合比标定；缺少精确RPM时只给规定转速敏感性，不把误差判成同条件验收。",
+        "重量计算固定公开外廓与功率，其余模板输入逐项保存；标准空重对照属于部分条件匹配。"
+      ]
+    },
+    "fuel_rows": [
+      {
+        "id": "piper_vb760_economy_65",
+        "role": "calibration",
+        "rated_hp": 180.0,
+        "power_fraction": 0.65,
+        "fuel_us_gal_h": 7.6,
+        "fuel_lb_us_gal": 6.0,
+        "mixture": "best_economy",
+        "constant_bsfc_gal_h": 9.617322815100001,
+        "old_calibrated_gal_h": 7.599999999999999,
+        "generic_map_rpm_sensitivity": [
+          {
+            "rpm": 2350.0,
+            "fuel_us_gal_h": 7.637147279371196,
+            "relative_error": 0.004887799917262736,
+            "method": "native_engine_sfc_map",
+            "power_feasible_in_generic_model": true,
+            "torque_nm": 354.53037480411723,
+            "bsfc_kg_kwh": 0.23823097423890882
+          },
+          {
+            "rpm": 2400.0,
+            "fuel_us_gal_h": 7.7248185976959975,
+            "relative_error": 0.01642349969684176,
+            "method": "native_engine_sfc_map",
+            "power_feasible_in_generic_model": true,
+            "torque_nm": 347.14432532903146,
+            "bsfc_kg_kwh": 0.24096576811066545
+          },
+          {
+            "rpm": 2450.0,
+            "fuel_us_gal_h": 7.798446371714262,
+            "relative_error": 0.02611136469924502,
+            "method": "native_engine_sfc_map",
+            "power_feasible_in_generic_model": true,
+            "torque_nm": 340.05974726109207,
+            "bsfc_kg_kwh": 0.24326249170309797
+          },
+          {
+            "rpm": 2500.0,
+            "fuel_us_gal_h": 7.886034343757431,
+            "relative_error": 0.03763609786281985,
+            "method": "native_engine_sfc_map",
+            "power_feasible_in_generic_model": true,
+            "torque_nm": 333.2585523158702,
+            "bsfc_kg_kwh": 0.2459946856949326
+          }
+        ],
+        "comparison_status": "conditions_incomplete",
+        "unmatched": [
+          "exact RPM",
+          "OAT effect",
+          "engine mixture calibration"
+        ],
+        "independent_validation_passed": false
+      },
+      {
+        "id": "piper_vb760_economy_55",
+        "role": "same_source_holdout",
+        "rated_hp": 180.0,
+        "power_fraction": 0.55,
+        "fuel_us_gal_h": 6.3,
+        "fuel_lb_us_gal": 6.0,
+        "mixture": "best_economy",
+        "constant_bsfc_gal_h": 8.137734689700002,
+        "old_calibrated_gal_h": 6.43076923076923,
+        "generic_map_rpm_sensitivity": [
+          {
+            "rpm": 2350.0,
+            "fuel_us_gal_h": 6.574839619547662,
+            "relative_error": 0.04362533643613675,
+            "method": "native_engine_sfc_map",
+            "power_feasible_in_generic_model": true,
+            "torque_nm": 299.98724021886846,
+            "bsfc_kg_kwh": 0.24238341025799814
+          },
+          {
+            "rpm": 2400.0,
+            "fuel_us_gal_h": 6.669102219942808,
+            "relative_error": 0.05858765395917587,
+            "method": "native_engine_sfc_map",
+            "power_feasible_in_generic_model": true,
+            "torque_nm": 293.73750604764206,
+            "bsfc_kg_kwh": 0.24585842894524249
+          },
+          {
+            "rpm": 2450.0,
+            "fuel_us_gal_h": 6.75106631266187,
+            "relative_error": 0.07159782740664622,
+            "method": "native_engine_sfc_map",
+            "power_feasible_in_generic_model": true,
+            "torque_nm": 287.7428630670779,
+            "bsfc_kg_kwh": 0.24888005950378614
+          },
+          {
+            "rpm": 2500.0,
+            "fuel_us_gal_h": 6.823068218025542,
+            "relative_error": 0.08302670127389544,
+            "method": "native_engine_sfc_map",
+            "power_feasible_in_generic_model": true,
+            "torque_nm": 281.98800580573635,
+            "bsfc_kg_kwh": 0.25153443107434637
+          }
+        ],
+        "comparison_status": "conditions_incomplete",
+        "unmatched": [
+          "exact RPM",
+          "OAT effect",
+          "engine mixture calibration"
+        ],
+        "independent_validation_passed": false
+      },
+      {
+        "id": "piper_vb760_economy_75",
+        "role": "same_source_holdout",
+        "rated_hp": 180.0,
+        "power_fraction": 0.75,
+        "fuel_us_gal_h": 8.8,
+        "fuel_lb_us_gal": 6.0,
+        "mixture": "best_economy",
+        "constant_bsfc_gal_h": 11.0969109405,
+        "old_calibrated_gal_h": 8.769230769230766,
+        "generic_map_rpm_sensitivity": [
+          {
+            "rpm": 2350.0,
+            "fuel_us_gal_h": 8.87197514039021,
+            "relative_error": 0.008178993226160225,
+            "method": "native_engine_sfc_map",
+            "power_feasible_in_generic_model": true,
+            "torque_nm": 409.07350938936605,
+            "bsfc_kg_kwh": 0.239849860595271
+          },
+          {
+            "rpm": 2400.0,
+            "fuel_us_gal_h": 8.958527502571267,
+            "relative_error": 0.018014488928552952,
+            "method": "native_engine_sfc_map",
+            "power_feasible_in_generic_model": true,
+            "torque_nm": 400.5511446104209,
+            "bsfc_kg_kwh": 0.2421897648076722
+          },
+          {
+            "rpm": 2450.0,
+            "fuel_us_gal_h": 9.02836429147501,
+            "relative_error": 0.025950487667614652,
+            "method": "native_engine_sfc_map",
+            "power_feasible_in_generic_model": true,
+            "torque_nm": 392.3766314551062,
+            "bsfc_kg_kwh": 0.2440777710089889
+          },
+          {
+            "rpm": 2500.0,
+            "fuel_us_gal_h": 9.127272311999475,
+            "relative_error": 0.037190035454485626,
+            "method": "native_engine_sfc_map",
+            "power_feasible_in_generic_model": true,
+            "torque_nm": 384.5290988260041,
+            "bsfc_kg_kwh": 0.2467517048917098
+          }
+        ],
+        "comparison_status": "conditions_incomplete",
+        "unmatched": [
+          "exact RPM",
+          "OAT effect",
+          "engine mixture calibration"
+        ],
+        "independent_validation_passed": false
+      }
+    ],
+    "engine_evidence": {
+      "provider": "FAST-GA 1.4.0 BasicICEngine native map and compute_max_power",
+      "source_sha256": "841bc4947900d3a3bf4eb9dd8fba42cc8ca2b7807bb3588f518529b10bcffa81",
+      "map_sha256": "466839d6647a0884df528e6ab824235aa85ad1b98a487457a1279eae26636cec",
+      "rpm": [
+        2200.0,
+        2250.0,
+        2300.0,
+        2350.0,
+        2400.0,
+        2450.0,
+        2500.0,
+        2550.0,
+        2600.0,
+        2650.0,
+        2700.0
+      ],
+      "sea_level_power_fraction": [
+        0.8817204324892585,
+        0.8978494646853472,
+        0.9086021530016146,
+        0.92473118525157,
+        0.9354838732266803,
+        0.9462365616057924,
+        0.956989249805348,
+        0.9677419381485493,
+        0.9731182820732593,
+        0.9892473145566384,
+        1.0
+      ],
+      "fuel": "native FAST-GA 1.4.0 torque/RPM SFC with explicit domain guards",
+      "physical_validation_passed": false,
+      "sfc_units": "g/kWh",
+      "pme_bounds_bar": [
+        8.08191746,
+        20.6280777
+      ],
+      "equivalent_volume_m3": 0.005784279117324597,
+      "volume_role": "upstream scaling coordinate; not measured displacement",
+      "mixture_factors": {
+        "climb": 1.15,
+        "level_and_descent": 1.0
+      },
+      "low_load_policy": "base_bsfc",
+      "ground_policy": "declared base BSFC; no ground propeller matching",
+      "calibration_ids": [],
+      "data_role": "upstream generic map; no target-engine calibration or independent physical validation"
+    },
+    "mass": {
+      "weights": {
+        "owe_kg": 747.0400806893834,
+        "native_owe_kg": 741.5969722493835,
+        "unusable_fuel_added_once_kg": 5.44310844,
+        "categories_kg": {
+          "airframe": 306.83060512362533,
+          "propulsion": 200.22862814341678,
+          "systems": 192.20076684026523,
+          "furniture": 42.33697214207606,
+          "unusable_fuel": 5.44310844
+        },
+        "components_kg": {
+          "data:weight:airframe:mass": 306.83060512362533,
+          "data:weight:airframe:horizontal_tail:mass": 20.09780450517269,
+          "data:weight:airframe:vertical_tail:mass": 9.633461028198319,
+          "data:weight:airframe:flight_controls:mass": 15.78138407717265,
+          "data:weight:airframe:fuselage:mass": 102.170453470636,
+          "data:weight:airframe:landing_gear:main:mass": 28.078227357357527,
+          "data:weight:airframe:landing_gear:front:mass": 12.811318003878387,
+          "data:weight:airframe:paint:mass": 0.0,
+          "data:weight:airframe:wing:mass": 118.25795668120969,
+          "data:weight:furniture:mass": 42.33697214207606,
+          "data:weight:furniture:passenger_seats:mass": 42.33697214207606,
+          "data:weight:propulsion:engine:mass": 182.44855077511494,
+          "data:weight:propulsion:fuel_lines:mass": 17.780077368301836,
+          "data:weight:propulsion:mass": 200.22862814341678,
+          "data:weight:propulsion:unusable_fuel:mass": 5.44310844,
+          "data:weight:systems:life_support:insulation:mass": 0.0,
+          "data:weight:systems:life_support:air_conditioning:mass": 37.27490096067174,
+          "data:weight:systems:life_support:de_icing:mass": 0.0,
+          "data:weight:systems:life_support:internal_lighting:mass": 0.0,
+          "data:weight:systems:life_support:seat_installation:mass": 0.0,
+          "data:weight:systems:life_support:fixed_oxygen:mass": 8.402526570819315,
+          "data:weight:systems:life_support:security_kits:mass": 0.0,
+          "data:weight:systems:avionics:mass": 59.874192840000006,
+          "data:weight:systems:power:electric_systems:mass": 78.55252266427418,
+          "data:weight:systems:power:hydraulic_systems:mass": 8.096623804500002,
+          "data:weight:systems:recording:mass": 0.0,
+          "data:weight:systems:mass": 192.20076684026523
+        }
+      },
+      "geometry": {
+        "configuration_version": "metal_single_shared_v2",
+        "surface_parameters": {
+          "wing": {
+            "taper_ratio": 0.6,
+            "thickness_ratio": 0.12,
+            "naca": "2412",
+            "aspect_ratio": 7.2058823529411775
+          },
+          "horizontal_tail": {
+            "aspect_ratio": 4.0,
+            "taper_ratio": 0.6,
+            "thickness_ratio": 0.12,
+            "naca": "0012"
+          },
+          "vertical_tail": {
+            "aspect_ratio": 1.6,
+            "taper_ratio": 0.6,
+            "thickness_ratio": 0.12,
+            "naca": "0012"
+          }
+        },
+        "wing_area_m2": 15.7935168,
+        "wing_span_m": 10.668000000000001,
+        "root_chord_m": 1.8505714285714283,
+        "tip_chord_m": 1.1103428571428569,
+        "mac_m": 1.5112999999999999,
+        "wing_quarter_x_m": 2.8291536,
+        "horizontal_tail_area_m2": 5.118269333333333,
+        "vertical_tail_area_m2": 2.0645120000000006,
+        "tail_arm_m": 3.264408,
+        "fuselage_length_m": 7.25424,
+        "fuselage_width_m": 1.2,
+        "fuselage_height_m": 1.35,
+        "tank_capacity_kg": 136.077711,
+        "usable_tank_capacity_kg": 130.63460256000002,
+        "capacity_sizing_margin_fraction": 0.02,
+        "sizing_areas_m2": {
+          "landing_stall": 13.122963948949828,
+          "cruise_lift": 6.137178556294992,
+          "fuel_volume": 10.752182360880955
+        },
+        "controlling_area_constraint": "landing_stall",
+        "engine_count": 1,
+        "configuration": "low_wing_conventional_tail_fixed_tricycle_metal",
+        "axes": "x aft from nose, y right, z up"
+      },
+      "project": {
+        "schema_version": 3,
+        "name": "新飞机方案",
+        "payload_kg": 350.0,
+        "weight": {
+          "mode": "solve",
+          "value_kg": null
+        },
+        "mission": {
+          "kind": "range_only",
+          "range_m": 800000.0,
+          "endurance_s": null
+        },
+        "assumptions": {
+          "cruise_speed_m_s": 56.77408,
+          "cruise_altitude_m": 1828.8000000000002,
+          "reserve_duration_s": 2700.0,
+          "reserve_basis": "cruise_fuel_flow",
+          "sources": {
+            "cruise_speed_m_s": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+            "cruise_altitude_m": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+            "reserve_duration_s": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+            "reserve_basis": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定"
+          }
+        },
+        "sizing": {
+          "template": "metal_single_v1",
+          "stall_speed_m_s": 28.0,
+          "climb_rate_m_s": 3.0,
+          "aspect_ratio": 7.2058823529411775,
+          "cd0": 0.032,
+          "oswald_efficiency": 0.8,
+          "cl_max_clean": 1.4,
+          "cl_max_landing": 1.8,
+          "propeller_efficiency": 0.8,
+          "bsfc_kg_kwh": 0.3,
+          "fuel_model": "constant_bsfc",
+          "cruise_power_fraction": 0.75,
+          "seats": 4,
+          "fuselage_length_m": 7.25424,
+          "tank_volume_fraction": 0.12,
+          "unusable_fuel_fraction": 0.04,
+          "source": "WingDesignHub V0.1.7 独立金属单发概念模板；系数为待校准工程假设，非真实型号数据"
+        },
+        "confirmation_sha256": "23559cc8715a6cf7335e6aa5b5cb407cf616fdb88a350b717850795040744af5"
+      },
+      "inputs": {
+        "data:weight:aircraft:MTOW": {
+          "value": 1156.6605435000001,
+          "units": "kg"
+        },
+        "data:weight:aircraft:MFW": {
+          "value": 136.077711,
+          "units": "kg"
+        },
+        "data:weight:aircraft:payload": {
+          "value": 350.0,
+          "units": "kg"
+        },
+        "data:weight:aircraft:max_payload": {
+          "value": 350.0,
+          "units": "kg"
+        },
+        "data:TLAR:v_cruise": {
+          "value": 56.77408,
+          "units": "m/s"
+        },
+        "data:TLAR:v_max_sl": {
+          "value": 68.128896,
+          "units": "m/s"
+        },
+        "data:mission:sizing:cs23:characteristic_speed:vd": {
+          "value": 79.483712,
+          "units": "m/s"
+        },
+        "data:mission:sizing:cs23:sizing_factor:ultimate_aircraft": {
+          "value": 5.7,
+          "units": "unitless"
+        },
+        "data:mission:sizing:main_route:cruise:altitude": {
+          "value": 1828.8000000000002,
+          "units": "m"
+        },
+        "data:geometry:cabin:seats:passenger:NPAX_max": {
+          "value": 2,
+          "units": "unitless"
+        },
+        "data:geometry:wing_configuration": {
+          "value": 1.0,
+          "units": "unitless"
+        },
+        "data:geometry:has_T_tail": {
+          "value": 0.0,
+          "units": "unitless"
+        },
+        "data:geometry:wing:area": {
+          "value": 15.7935168,
+          "units": "m**2"
+        },
+        "data:geometry:wing:aspect_ratio": {
+          "value": 7.2058823529411775,
+          "units": "unitless"
+        },
+        "data:geometry:wing:taper_ratio": {
+          "value": 0.6,
+          "units": "unitless"
+        },
+        "data:geometry:wing:thickness_ratio": {
+          "value": 0.12,
+          "units": "unitless"
+        },
+        "data:geometry:wing:sweep_25": {
+          "value": 0.0,
+          "units": "deg"
+        },
+        "data:weight:airframe:wing:k_factor": {
+          "value": 1.0,
+          "units": "unitless"
+        },
+        "data:geometry:horizontal_tail:area": {
+          "value": 5.118269333333333,
+          "units": "m**2"
+        },
+        "data:geometry:horizontal_tail:aspect_ratio": {
+          "value": 4.0,
+          "units": "unitless"
+        },
+        "data:geometry:horizontal_tail:taper_ratio": {
+          "value": 0.6,
+          "units": "unitless"
+        },
+        "data:geometry:horizontal_tail:thickness_ratio": {
+          "value": 0.12,
+          "units": "unitless"
+        },
+        "data:geometry:horizontal_tail:sweep_25": {
+          "value": 0.0,
+          "units": "deg"
+        },
+        "data:weight:airframe:horizontal_tail:k_factor": {
+          "value": 1.0,
+          "units": "unitless"
+        },
+        "data:geometry:vertical_tail:area": {
+          "value": 2.0645120000000006,
+          "units": "m**2"
+        },
+        "data:geometry:vertical_tail:aspect_ratio": {
+          "value": 1.6,
+          "units": "unitless"
+        },
+        "data:geometry:vertical_tail:taper_ratio": {
+          "value": 0.6,
+          "units": "unitless"
+        },
+        "data:geometry:vertical_tail:thickness_ratio": {
+          "value": 0.12,
+          "units": "unitless"
+        },
+        "data:geometry:vertical_tail:sweep_25": {
+          "value": 0.0,
+          "units": "deg"
+        },
+        "data:weight:airframe:vertical_tail:k_factor": {
+          "value": 1.0,
+          "units": "unitless"
+        },
+        "data:geometry:wing:span": {
+          "value": 10.668000000000001,
+          "units": "m"
+        },
+        "data:geometry:fuselage:length": {
+          "value": 7.25424,
+          "units": "m"
+        },
+        "data:geometry:fuselage:maximum_width": {
+          "value": 1.2,
+          "units": "m"
+        },
+        "data:geometry:fuselage:maximum_height": {
+          "value": 1.35,
+          "units": "m"
+        },
+        "data:weight:airframe:fuselage:k_factor": {
+          "value": 1.0,
+          "units": "unitless"
+        },
+        "data:geometry:aircraft:wet_area": {
+          "value": 71.79992963361339,
+          "units": "m**2"
+        },
+        "data:geometry:landing_gear:type": {
+          "value": 0.0,
+          "units": "unitless"
+        },
+        "data:geometry:landing_gear:height": {
+          "value": 0.75,
+          "units": "m"
+        },
+        "data:geometry:propulsion:engine:count": {
+          "value": 1.0,
+          "units": "unitless"
+        },
+        "data:geometry:propulsion:engine:layout": {
+          "value": 3.0,
+          "units": "unitless"
+        },
+        "data:propulsion:IC_engine:max_power": {
+          "value": 134225.97688480865,
+          "units": "W"
+        },
+        "data:propulsion:IC_engine:strokes_nb": {
+          "value": 4.0,
+          "units": "unitless"
+        },
+        "data:propulsion:fuel_type": {
+          "value": 1.0,
+          "units": "unitless"
+        },
+        "settings:weight:aircraft:MLW_MZFW_ratio": {
+          "value": 1.06,
+          "units": "unitless"
+        },
+        "settings:propulsion:IC_engine:k_factor_sfc": {
+          "value": 1.0,
+          "units": "unitless"
+        },
+        "settings:weight:propulsion:engine:k_factor": {
+          "value": 1.0,
+          "units": "unitless"
+        },
+        "settings:wingdesignhub:unusable_fuel_fraction": {
+          "value": 0.04,
+          "units": "unitless"
+        }
+      },
+      "source_audit": {
+        "provider": "FAST-GA 1.4.0 MassBreakdown(payload_from_npax=False)",
+        "propeller_constructor_source_sha256": "2c3b52ccb156f49a9b74d777167eca6bfc26a0d16957969924bf42393dccd569",
+        "bindings": {
+          "data:mission:sizing:cs23:sizing_factor:ultimate_aircraft": {
+            "units": "unitless",
+            "origin": "design_configuration"
+          },
+          "data:weight:aircraft:MTOW": {
+            "units": "kg",
+            "origin": "design_configuration"
+          },
+          "data:weight:airframe:horizontal_tail:k_factor": {
+            "units": "unitless",
+            "origin": "design_configuration"
+          },
+          "data:weight:airframe:vertical_tail:k_factor": {
+            "units": "unitless",
+            "origin": "design_configuration"
+          },
+          "data:TLAR:v_cruise": {
+            "units": "m/s",
+            "origin": "design_configuration"
+          },
+          "data:mission:sizing:main_route:cruise:altitude": {
+            "units": "m",
+            "origin": "design_configuration"
+          },
+          "data:geometry:horizontal_tail:area": {
+            "units": "m**2",
+            "origin": "design_configuration"
+          },
+          "data:geometry:horizontal_tail:thickness_ratio": {
+            "units": "unitless",
+            "origin": "design_configuration"
+          },
+          "data:geometry:horizontal_tail:sweep_25": {
+            "units": "deg",
+            "origin": "design_configuration"
+          },
+          "data:geometry:horizontal_tail:aspect_ratio": {
+            "units": "unitless",
+            "origin": "design_configuration"
+          },
+          "data:geometry:horizontal_tail:taper_ratio": {
+            "units": "unitless",
+            "origin": "design_configuration"
+          },
+          "data:geometry:has_T_tail": {
+            "units": "unitless",
+            "origin": "design_configuration"
+          },
+          "data:geometry:vertical_tail:area": {
+            "units": "m**2",
+            "origin": "design_configuration"
+          },
+          "data:geometry:vertical_tail:thickness_ratio": {
+            "units": "unitless",
+            "origin": "design_configuration"
+          },
+          "data:geometry:vertical_tail:sweep_25": {
+            "units": "deg",
+            "origin": "design_configuration"
+          },
+          "data:geometry:vertical_tail:aspect_ratio": {
+            "units": "unitless",
+            "origin": "design_configuration"
+          },
+          "data:geometry:vertical_tail:taper_ratio": {
+            "units": "unitless",
+            "origin": "design_configuration"
+          },
+          "data:geometry:wing:span": {
+            "units": "m",
+            "origin": "design_configuration"
+          },
+          "data:geometry:fuselage:length": {
+            "units": "m",
+            "origin": "design_configuration"
+          },
+          "data:weight:airframe:fuselage:k_factor": {
+            "units": "unitless",
+            "origin": "design_configuration"
+          },
+          "data:geometry:fuselage:maximum_width": {
+            "units": "m",
+            "origin": "design_configuration"
+          },
+          "data:geometry:fuselage:maximum_height": {
+            "units": "m",
+            "origin": "design_configuration"
+          },
+          "data:TLAR:v_max_sl": {
+            "units": "m/s",
+            "origin": "design_configuration"
+          },
+          "data:geometry:landing_gear:height": {
+            "units": "m",
+            "origin": "design_configuration"
+          },
+          "data:geometry:landing_gear:type": {
+            "units": "unitless",
+            "origin": "design_configuration"
+          },
+          "data:geometry:wing_configuration": {
+            "units": "unitless",
+            "origin": "design_configuration"
+          },
+          "data:geometry:aircraft:wet_area": {
+            "units": "m**2",
+            "origin": "design_configuration"
+          },
+          "data:geometry:wing:area": {
+            "units": "m**2",
+            "origin": "design_configuration"
+          },
+          "data:geometry:wing:taper_ratio": {
+            "units": "unitless",
+            "origin": "design_configuration"
+          },
+          "data:geometry:wing:thickness_ratio": {
+            "units": "unitless",
+            "origin": "design_configuration"
+          },
+          "data:weight:airframe:wing:k_factor": {
+            "units": "unitless",
+            "origin": "design_configuration"
+          },
+          "data:geometry:wing:aspect_ratio": {
+            "units": "unitless",
+            "origin": "design_configuration"
+          },
+          "data:geometry:wing:sweep_25": {
+            "units": "deg",
+            "origin": "design_configuration"
+          },
+          "data:geometry:cabin:seats:passenger:NPAX_max": {
+            "units": "unitless",
+            "origin": "design_configuration"
+          },
+          "data:propulsion:IC_engine:max_power": {
+            "units": "W",
+            "origin": "design_configuration"
+          },
+          "data:propulsion:fuel_type": {
+            "units": "unitless",
+            "origin": "design_configuration"
+          },
+          "data:propulsion:IC_engine:strokes_nb": {
+            "units": "unitless",
+            "origin": "design_configuration"
+          },
+          "data:geometry:propulsion:engine:layout": {
+            "units": "unitless",
+            "origin": "design_configuration"
+          },
+          "settings:propulsion:IC_engine:k_factor_sfc": {
+            "units": "unitless",
+            "origin": "design_configuration"
+          },
+          "data:aerodynamics:propeller:sea_level:speed": {
+            "units": "m/s",
+            "origin": "engine_constructor_only_public_map"
+          },
+          "data:aerodynamics:propeller:sea_level:thrust": {
+            "units": "N",
+            "origin": "engine_constructor_only_public_map"
+          },
+          "data:aerodynamics:propeller:sea_level:thrust_limit": {
+            "units": "N",
+            "origin": "engine_constructor_only_public_map"
+          },
+          "data:aerodynamics:propeller:sea_level:efficiency": {
+            "units": "unitless",
+            "origin": "engine_constructor_only_public_map"
+          },
+          "data:aerodynamics:propeller:cruise_level:speed": {
+            "units": "m/s",
+            "origin": "engine_constructor_only_public_map"
+          },
+          "data:aerodynamics:propeller:cruise_level:thrust": {
+            "units": "N",
+            "origin": "engine_constructor_only_public_map"
+          },
+          "data:aerodynamics:propeller:cruise_level:thrust_limit": {
+            "units": "N",
+            "origin": "engine_constructor_only_public_map"
+          },
+          "data:aerodynamics:propeller:cruise_level:efficiency": {
+            "units": "unitless",
+            "origin": "engine_constructor_only_public_map"
+          },
+          "data:aerodynamics:propeller:cruise_level:altitude": {
+            "units": "m",
+            "origin": "engine_constructor_only_public_map"
+          },
+          "data:geometry:propulsion:engine:count": {
+            "units": "unitless",
+            "origin": "design_configuration"
+          },
+          "data:aerodynamics:propeller:installation_effect:effective_efficiency:low_speed": {
+            "units": "unitless",
+            "origin": "engine_constructor_only_public_map"
+          },
+          "data:aerodynamics:propeller:installation_effect:effective_efficiency:cruise": {
+            "units": "unitless",
+            "origin": "engine_constructor_only_public_map"
+          },
+          "data:aerodynamics:propeller:installation_effect:effective_advance_ratio": {
+            "units": "unitless",
+            "origin": "engine_constructor_only_public_map"
+          },
+          "settings:weight:propulsion:engine:k_factor": {
+            "units": "unitless",
+            "origin": "design_configuration"
+          },
+          "data:weight:aircraft:MFW": {
+            "units": "kg",
+            "origin": "design_configuration"
+          },
+          "settings:wingdesignhub:unusable_fuel_fraction": {
+            "units": "unitless",
+            "origin": "design_configuration"
+          },
+          "data:mission:sizing:cs23:characteristic_speed:vd": {
+            "units": "m/s",
+            "origin": "design_configuration"
+          },
+          "data:weight:aircraft:max_payload": {
+            "units": "kg",
+            "origin": "design_configuration"
+          },
+          "data:weight:aircraft:payload": {
+            "units": "kg",
+            "origin": "design_configuration"
+          },
+          "settings:weight:aircraft:MLW_MZFW_ratio": {
+            "units": "unitless",
+            "origin": "design_configuration"
+          }
+        },
+        "upstream_mass_source_hashes": {
+          "models/weight/mass_breakdown/constants.py": "90a56b7fa136f51679e75b7487d484f7b79b6894ce6d5dc883ea2c91b0c81dae",
+          "models/weight/mass_breakdown/mass_breakdown.py": "921971346b39b3d442743bb46f0369182d365f41368d89ba01e427488170968b",
+          "models/weight/mass_breakdown/payload.py": "31c8b532ddbda75e7906a9d2e9e7f29d038abb57128eb45958d4a5ed0b2e9c4a",
+          "models/weight/mass_breakdown/update_mlw_and_mzfw.py": "40cff809cb29d9c7d52eaccc68c56c57f7b99c625aa5d1963fc9be6e629ab092",
+          "models/weight/mass_breakdown/update_mtow.py": "97d8b5271cf252e0de8a35fa23913b6d4cc35cd56579911d7fa617eb0596a1fd",
+          "models/weight/mass_breakdown/__init__.py": "fb072a41a207c8e465b6b699197590a703adaafb4e8c9f999beb3f7d5157d4c4",
+          "models/weight/mass_breakdown/a_airframe/a1_wing_weight.py": "bb0a48eff56c58ad66e5389c733feac8c5f43d5ded426921939deb5f4169b634",
+          "models/weight/mass_breakdown/a_airframe/a1_wing_weight_analytical.py": "9ce4aea5132082083fb9105051ce9576dca151de36af48410b258c647134bd2a",
+          "models/weight/mass_breakdown/a_airframe/a2_fuselage_weight.py": "15732ea1bfda0a6359a2bc3dc734d7ffedab4e601e6fc8f2ba7217cae606cc4d",
+          "models/weight/mass_breakdown/a_airframe/a2_fuselage_weight_analytical.py": "4c5fe9b79425e48c9ae66c02bf94bd7b89d9efeb2ec88fdff220fa13916f0f9e",
+          "models/weight/mass_breakdown/a_airframe/a31_tail_htp_weight.py": "7885c99f570f56d028e6766c57549af008d8ddec4647fa9d6187b34316369187",
+          "models/weight/mass_breakdown/a_airframe/a32_tail_vtp_weight.py": "c1146f6dd71d46776b1631857436de704ca9c467da30a33f9a0b28f8025c3780",
+          "models/weight/mass_breakdown/a_airframe/a3_tail_weight.py": "eab0db03cd45aa6aefbefde32acf016f8edb057bbbf5ed750126de848b2b548b",
+          "models/weight/mass_breakdown/a_airframe/a4_flight_control_weight.py": "683116fe01104fb6ea15b5ee717cd5b6a96d58ffea8afe63c7262fa8404e348b",
+          "models/weight/mass_breakdown/a_airframe/a5_landing_gear_weight.py": "bbe0221211ca4d825205f77f8e772d9f107125c9fd5688953ee1123598773f9a",
+          "models/weight/mass_breakdown/a_airframe/a7_paint_weight.py": "20a2e08a84080e3ad5f6f5d7e90f36ba59ee3d06de3457c39a137b0f46f3cb64",
+          "models/weight/mass_breakdown/a_airframe/constants.py": "b062df030981cdf2ca927fe1139641002ddd645d66037de154bc7a1b9af435cc",
+          "models/weight/mass_breakdown/a_airframe/sum.py": "1c2fc13344e8bd0ef2de4f41c0d8bafbe91e01e99317ed3d0b1ac1b3d7de3468",
+          "models/weight/mass_breakdown/a_airframe/__init__.py": "34d0b7bdecffadd4e945b54096af1c357801b74ddc78d662d58b8c36d17bdd2d",
+          "models/weight/mass_breakdown/b_propulsion/b1_2_oil_weight.py": "10eb1ec565adb3666444281ecdca929a1ba8ca415e1cc5b68c652b5517e2ad95",
+          "models/weight/mass_breakdown/b_propulsion/b1_engine_weight.py": "e85d83c4d0ba76957f93076996c877b55f37584b4c0ea30ed234da19f17add5f",
+          "models/weight/mass_breakdown/b_propulsion/b2_fuel_lines_weight.py": "3a3351e2d1c0c724f085e7f8e21cd7e492a98b5c2f090127c155e96316ae303d",
+          "models/weight/mass_breakdown/b_propulsion/b3_unusable_fuel_weight.py": "467f6a98210dbb0b53dfc8a2b02a2694f33a2afb44ccf6cec725acad230d95c6",
+          "models/weight/mass_breakdown/b_propulsion/constants.py": "b60642f8a8553f8844d73b55ff02b4c121652b7a3ff3f7c067bc2915b15aca10",
+          "models/weight/mass_breakdown/b_propulsion/sum.py": "7cde8a605288bff32cd4d0d03dab06ec4459039368dd08a52de16b5bc6926758",
+          "models/weight/mass_breakdown/b_propulsion/__init__.py": "cf787078727467bfdb6822cdd9e06f4002b23500c2c924bf2b5d649f7f0a35b1",
+          "models/weight/mass_breakdown/c_systems/c1_power_systems_weight.py": "e6de00a9a27d666b38004017ce91d4b5f1bc8be5fe3f6222218d9e322ae1637f",
+          "models/weight/mass_breakdown/c_systems/c2_life_support_systems_weight.py": "267bf01fec470f596a541a3c3f0175f4d9d51f4a48b995d36d2f953614126b77",
+          "models/weight/mass_breakdown/c_systems/c3_avionics_systems_weight.py": "aad9bb4a8c92e6ef8f286fdae123648ebd52f2b6fb94eedf64cd7c34de5fd3c6",
+          "models/weight/mass_breakdown/c_systems/c4_recording_systems_weight.py": "b4d5b71a30266fc5dc73a3bd46766ea61c1c95b7b69a3fcabe842d685625049e",
+          "models/weight/mass_breakdown/c_systems/constants.py": "ce90d13bbae1e72adfd55bb75c070170bff8be056766d4cead63e1c702ef81db",
+          "models/weight/mass_breakdown/c_systems/sum.py": "ddb8553dcd400a0cd81bacd4da3d830abfc18cfd23bc8116774d1c01d02db3ea",
+          "models/weight/mass_breakdown/c_systems/__init__.py": "fe80e7e62593e712def46afaba59a7bcacf88fc2e566d79f8a2c1ddb161a4d23",
+          "models/weight/mass_breakdown/d_furniture/constants.py": "949fea6bb4b06c2a9a7012e113657c1a45e29110721869071d7ad7b0d18004e0",
+          "models/weight/mass_breakdown/d_furniture/d2_passenger_seats_weight.py": "18652008a767bdf34ea63da3f04a73b774f2a72cf16092fe47f1605140a121c6",
+          "models/weight/mass_breakdown/d_furniture/sum.py": "18da7b0c3dd6a015d5b60c506ff935e752771db0a1600d8a22883e3552518ade",
+          "models/weight/mass_breakdown/d_furniture/__init__.py": "bdb4a4ff56ab1b89c1307442b12e59cf21cdc0c3915c6a812840552dc24e5c0c",
+          "models/weight/mass_breakdown/a_airframe/fuselage_components/compute_additional_bending_material_mass_h.py": "a5efcab3cccd9ee216a3afee8d58f43e3e2777452495aa6d6722fbde992f89c4",
+          "models/weight/mass_breakdown/a_airframe/fuselage_components/compute_additional_bending_material_mass_v.py": "816cfc1c93db67e12d20d829efebd7816c37d32c8bab9c72a93f1831eff1899c",
+          "models/weight/mass_breakdown/a_airframe/fuselage_components/compute_bulkhead_mass.py": "de47985e5e5c206a6283faa463ebac225ff9f9bea4e9038d150c5f64872dec03",
+          "models/weight/mass_breakdown/a_airframe/fuselage_components/compute_cone_mass.py": "4cf81272d8ca3ae7f1b968044ba816089e1ed8f8c98f717c8a7a58030fac58f6",
+          "models/weight/mass_breakdown/a_airframe/fuselage_components/compute_doors_mass.py": "26089ea6d3ff780b97eac210903531e3507e5d641b7fbb5d748f93ac5ae7f29e",
+          "models/weight/mass_breakdown/a_airframe/fuselage_components/compute_engine_support_mass.py": "e07d6624d41c762cb4b5b935f37141655856cb57925a372075a41f7327808dc2",
+          "models/weight/mass_breakdown/a_airframe/fuselage_components/compute_floor_mass.py": "272e32f739a779a657175eeab6182d1bc7758f393acac229e8b4b2dde0d47172",
+          "models/weight/mass_breakdown/a_airframe/fuselage_components/compute_insulation_mass.py": "ecb26593ee424e09e18aba40ab46fd6d1acb54d32baf9096b62c4f3eb009a4cf",
+          "models/weight/mass_breakdown/a_airframe/fuselage_components/compute_nlg_hatch_mass.py": "7bbe443be5aea98a94e1709b312e5f01ef3789957d88572a0006ed6392055c0a",
+          "models/weight/mass_breakdown/a_airframe/fuselage_components/compute_shell_mass.py": "f105c1c2fc56d64207ff669fa59c29acfb35aa3c7ddfd0aa6e868bbd8ef402c4",
+          "models/weight/mass_breakdown/a_airframe/fuselage_components/compute_windows_mass.py": "c8929877eccaf891c67d095b3cc213aaf3dc65fe67052b840cb6904a6cf80994",
+          "models/weight/mass_breakdown/a_airframe/fuselage_components/compute_wing_fuselage_connection_mass.py": "90cf7bd07a5d4e24c3de796dd57657fa05b2f908152fe535cefe97b6486be6a9",
+          "models/weight/mass_breakdown/a_airframe/fuselage_components/update_fuselage_mass.py": "63917d61bf6424b6a8275fcd514b137571c4de4162f308b97c6ee19efc7303b1",
+          "models/weight/mass_breakdown/a_airframe/fuselage_components/__init__.py": "e64375e7babd28e106f1194f5f0be47974a6c99905d82603c437786556a508c3",
+          "models/weight/mass_breakdown/a_airframe/wing_components/compute_lower_flange.py": "fb0db9eeca65d5aad120c7085acc18afe92c26269ea55297ac2849dc9ec35695",
+          "models/weight/mass_breakdown/a_airframe/wing_components/compute_misc_mass.py": "bef61a615185c00ff1d8eb42c37a9351b4b715fbf410f62d7f609d426b4acd22",
+          "models/weight/mass_breakdown/a_airframe/wing_components/compute_primary_mass.py": "3dcf11313e50e3301f42bb4ba79c4a04caaea3a66d2644755b0ede11f89e05bf",
+          "models/weight/mass_breakdown/a_airframe/wing_components/compute_ribs_mass.py": "0081af1aefa7cd53a6c869388d8dc4a8ab78b4ebb2efa2e3b4a8f00e4bec9398",
+          "models/weight/mass_breakdown/a_airframe/wing_components/compute_secondary_mass.py": "21b0cc066ff7eba315244bb5b154e7440baa4fb7f840811c3a2608793d66d964",
+          "models/weight/mass_breakdown/a_airframe/wing_components/compute_skin_mass.py": "733b93188b2b640a2b72290a84e9064fbbb24b58de1375f597a4bdee81e5f2d4",
+          "models/weight/mass_breakdown/a_airframe/wing_components/compute_upper_flange.py": "39a0611766cef4bd2e1ef298f78e934211aa5e1b1a8c08991eec694688df801d",
+          "models/weight/mass_breakdown/a_airframe/wing_components/compute_web_mass.py": "e7ef03b344887d6f28a5036c1be5b8e7ea5e345e34beb90b21ad5934ee3a9280",
+          "models/weight/mass_breakdown/a_airframe/wing_components/constants.py": "8b60e6ce3855cf6b3f2ce52456474c4ea06a8a14de8b07b2a7b890f9c51454cd",
+          "models/weight/mass_breakdown/a_airframe/wing_components/update_wing_mass.py": "08f442febe96503c7ba88fe7b2b193ce368aabcfbb44097775b347c700a3ae6e",
+          "models/weight/mass_breakdown/a_airframe/wing_components/__init__.py": "5c955f1cd2df03721a06fab30770bdfcba7d5d348dd7959ddeb72694ab8d0dc1"
+        },
+        "note": "公开桨图仅供原生发动机对象初始化，未用于当前任务效率或耗油率；新机几何和重量输入全部自行生成",
+        "domain_ledger": {
+          "configuration_version": "metal_single_shared_v2",
+          "shared_surface_parameters": {
+            "wing": {
+              "taper_ratio": 0.6,
+              "thickness_ratio": 0.12,
+              "naca": "2412",
+              "aspect_ratio": 7.2058823529411775
+            },
+            "horizontal_tail": {
+              "aspect_ratio": 4.0,
+              "taper_ratio": 0.6,
+              "thickness_ratio": 0.12,
+              "naca": "0012"
+            },
+            "vertical_tail": {
+              "aspect_ratio": 1.6,
+              "taper_ratio": 0.6,
+              "thickness_ratio": 0.12,
+              "naca": "0012"
+            }
+          },
+          "active_models": [
+            "FAST-GA MassBreakdown",
+            "AVL lifting surfaces",
+            "XFOIL profiles"
+          ],
+          "inactive_empirical_components": [
+            {
+              "name": "FAST-GA k_vh",
+              "reason": "垂尾气动经验组件未进入当前重量组与AVL链；参考任务的告警另记"
+            }
+          ],
+          "template_limits": [
+            "座舱截面、固定站位和发动机包络是研究假设，尚未验证2–6座/40–400 kW的全部组合",
+            "起降距离和完整重心包线未计算；已检查约束满足不等于整机工程验收"
+          ],
+          "empirical_clipping_policy": "已核查FAST-GA 1.4.0重量目录，未发现clip/interp/min/max裁剪调用；适用性按下表保留边界",
+          "component_domains": [
+            {
+              "component": "FAST-GA airframe/systems/furniture mass regressions",
+              "role": "active mass breakdown",
+              "input_source": "fastga_mass_inputs.json and interface bindings",
+              "domain": "上游未给出完整标定样本范围；本平台400–2500 kg/2–6座为研究域，非精度保证",
+              "clipping": "none identified in pinned mass source"
+            },
+            {
+              "component": "FAST-GA BasicICEngine weight",
+              "role": "active engine weight",
+              "domain": "平台限定40–400 kW；商品发动机质量与几何匹配待验证",
+              "clipping": "none; out-of-domain rejected"
+            },
+            {
+              "component": "AVL/XFOIL",
+              "role": "downstream aerodynamic analysis",
+              "domain": "小迎角配平与已收敛极曲线，局部Re/Mach/舵偏单独检查",
+              "clipping": "missing/out-of-domain rejected"
+            },
+            {
+              "component": "CCBlade/native engine SFC",
+              "role": "coupled option only",
+              "domain": "旋转尖速预检与叶素、图谱运行期检查；低负荷按显式策略单列",
+              "clipping": "no map extrapolation"
+            }
+          ]
+        }
+      },
+      "standard_empty_relative_error": 0.1848499721694601,
+      "diagnostic_band_fraction": 0.2,
+      "inside_diagnostic_band": true,
+      "condition_status": "partially_matched",
+      "optional_equipment_kg": {
+        "data:weight:systems:life_support:air_conditioning:mass": 37.27490096067174,
+        "data:weight:systems:life_support:fixed_oxygen:mass": 8.402526570819315
+      },
+      "engine_uninstalled_regression_kg": 130.32039341079638,
+      "engine_installation_allowance_kg": 52.128157364318554,
+      "engine_bare_relative_error": -0.0260769918587328,
+      "unmatched": [
+        "tail geometry and wing planform",
+        "equipment inventory and oil accounting",
+        "load factors/design speeds",
+        "specific aircraft empty weight"
+      ]
+    },
+    "checks": {
+      "empty_mass_sum": true,
+      "no_new_calibration": true,
+      "roles_preserved": true,
+      "shaft_units": true
+    },
+    "physical_validation_passed": false,
+    "limits": [
+      "载荷力臂保留手册基准；未取得机头坐标转换量前不灌入平台重心台账。",
+      "65%经济点已用于旧耗油系数校准；55%/75%为同源留出，均不是独立验证数据。",
+      "通用图没有目标型号混合比标定；缺少精确RPM时只给规定转速敏感性，不把误差判成同条件验收。",
+      "重量计算固定公开外廓与功率，其余模板输入逐项保存；标准空重对照属于部分条件匹配。"
+    ]
+  },
+  "reference_run": "1df952c1541640b1ae4264e25c78a3ae",
+  "fixed": {
+    "baseline_run": "f3d53e6f32534150970ce6bc114a5703",
+    "baseline_hashes": {
+      "input.json": "86d5bc5861761bab3aea1c15bfa8a827fea27a92723212b121ad29e40cf3aea7",
+      "summary.json": "4f1b1b88b604ec415bde4a7adc3c318672e244be90a304eb23b4ced3289aaed1",
+      "aero_table.json": "b23bc6ac8a899d3a3a2984fbc1a8c5eeac0715e548c4e5dc0d91e3bccd92fb14",
+      "propeller_map.json": "9de7c5780f3226dabb1da91a9a2219dd26308fa2605da6f244e277308ea0abab"
+    },
+    "fixed_geometry": {
+      "configuration_version": "metal_single_shared_v2",
+      "surface_parameters": {
+        "wing": {
+          "taper_ratio": 0.6,
+          "thickness_ratio": 0.12,
+          "naca": "2412",
+          "aspect_ratio": 7.5
+        },
+        "horizontal_tail": {
+          "aspect_ratio": 4.0,
+          "taper_ratio": 0.6,
+          "thickness_ratio": 0.12,
+          "naca": "0012"
+        },
+        "vertical_tail": {
+          "aspect_ratio": 1.6,
+          "taper_ratio": 0.6,
+          "thickness_ratio": 0.12,
+          "naca": "0012"
+        }
+      },
+      "wing_area_m2": 13.814368732731683,
+      "wing_span_m": 10.178789981893114,
+      "root_chord_m": 1.6964649969821857,
+      "tip_chord_m": 1.0178789981893113,
+      "mac_m": 1.385446414202118,
+      "wing_quarter_x_m": 2.9250000000000003,
+      "horizontal_tail_area_m2": 3.9695843963437856,
+      "vertical_tail_area_m2": 1.666531058523339,
+      "tail_arm_m": 3.375,
+      "fuselage_length_m": 7.5,
+      "fuselage_width_m": 1.2,
+      "fuselage_height_m": 1.35,
+      "tank_capacity_kg": 194.0872068315334,
+      "usable_tank_capacity_kg": 190.20546269490274,
+      "capacity_sizing_margin_fraction": 0.02,
+      "sizing_areas_m2": {
+        "landing_stall": 13.814368732731683,
+        "cruise_lift": 5.884718255948997,
+        "fuel_volume": 8.017966239863881
+      },
+      "controlling_area_constraint": "landing_stall",
+      "engine_count": 1,
+      "configuration": "low_wing_conventional_tail_fixed_tricycle_metal",
+      "axes": "x aft from nose, y right, z up"
+    },
+    "fixed_mass_kg": 1217.6274400190835,
+    "layout_ledger": {
+      "rows": [
+        {
+          "component": "data:weight:airframe:horizontal_tail:mass",
+          "category": "airframe",
+          "mass_kg": 16.60706036236361,
+          "x_m": 6.300000000000001,
+          "station_key": "horizontal_tail",
+          "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位",
+          "position_uncertainty_m": 0.375
+        },
+        {
+          "component": "data:weight:airframe:vertical_tail:mass",
+          "category": "airframe",
+          "mass_kg": 8.239872018110544,
+          "x_m": 6.300000000000001,
+          "station_key": "vertical_tail",
+          "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位",
+          "position_uncertainty_m": 0.375
+        },
+        {
+          "component": "data:weight:airframe:flight_controls:mass",
+          "category": "airframe",
+          "mass_kg": 17.007706999632845,
+          "x_m": 3.0,
+          "station_key": "controls",
+          "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位",
+          "position_uncertainty_m": 0.375
+        },
+        {
+          "component": "data:weight:airframe:fuselage:mass",
+          "category": "airframe",
+          "mass_kg": 109.37158260316696,
+          "x_m": 3.375,
+          "station_key": "fuselage",
+          "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位",
+          "position_uncertainty_m": 0.375
+        },
+        {
+          "component": "data:weight:airframe:landing_gear:main:mass",
+          "category": "airframe",
+          "mass_kg": 29.39919161079337,
+          "x_m": 3.1743803545563813,
+          "station_key": "main_gear",
+          "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位",
+          "position_uncertainty_m": 0.375
+        },
+        {
+          "component": "data:weight:airframe:landing_gear:front:mass",
+          "category": "airframe",
+          "mass_kg": 13.222566612595124,
+          "x_m": 1.125,
+          "station_key": "front_gear",
+          "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位",
+          "position_uncertainty_m": 0.375
+        },
+        {
+          "component": "data:weight:airframe:paint:mass",
+          "category": "airframe",
+          "mass_kg": 0.0,
+          "x_m": 3.375,
+          "station_key": "fuselage",
+          "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位",
+          "position_uncertainty_m": 0.375
+        },
+        {
+          "component": "data:weight:airframe:wing:mass",
+          "category": "airframe",
+          "mass_kg": 115.98072360735546,
+          "x_m": 2.9250000000000003,
+          "station_key": "wing",
+          "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位",
+          "position_uncertainty_m": 0.375
+        },
+        {
+          "component": "data:weight:furniture:passenger_seats:mass",
+          "category": "furniture",
+          "mass_kg": 43.41342589978344,
+          "x_m": 2.4,
+          "station_key": "front_seats",
+          "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位",
+          "position_uncertainty_m": 0.375
+        },
+        {
+          "component": "data:weight:propulsion:engine:mass",
+          "category": "propulsion",
+          "mass_kg": 208.9502604427356,
+          "x_m": 0.8999999999999999,
+          "station_key": "engine",
+          "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位",
+          "position_uncertainty_m": 0.375
+        },
+        {
+          "component": "data:weight:propulsion:fuel_lines:mass",
+          "category": "propulsion",
+          "mass_kg": 23.00859207889529,
+          "x_m": 2.9250000000000003,
+          "station_key": "fuel",
+          "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位",
+          "position_uncertainty_m": 0.375
+        },
+        {
+          "component": "data:weight:propulsion:unusable_fuel:mass",
+          "category": "unusable_fuel",
+          "mass_kg": 3.881744136630668,
+          "x_m": 2.9250000000000003,
+          "station_key": "fuel",
+          "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位",
+          "position_uncertainty_m": 0.375
+        },
+        {
+          "component": "data:weight:systems:life_support:insulation:mass",
+          "category": "systems",
+          "mass_kg": 0.0,
+          "x_m": 3.0,
+          "station_key": "systems",
+          "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位",
+          "position_uncertainty_m": 0.375
+        },
+        {
+          "component": "data:weight:systems:life_support:air_conditioning:mass",
+          "category": "systems",
+          "mass_kg": 38.459376727036584,
+          "x_m": 3.0,
+          "station_key": "systems",
+          "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位",
+          "position_uncertainty_m": 0.375
+        },
+        {
+          "component": "data:weight:systems:life_support:de_icing:mass",
+          "category": "systems",
+          "mass_kg": 0.0,
+          "x_m": 3.0,
+          "station_key": "systems",
+          "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位",
+          "position_uncertainty_m": 0.375
+        },
+        {
+          "component": "data:weight:systems:life_support:internal_lighting:mass",
+          "category": "systems",
+          "mass_kg": 0.0,
+          "x_m": 3.0,
+          "station_key": "systems",
+          "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位",
+          "position_uncertainty_m": 0.375
+        },
+        {
+          "component": "data:weight:systems:life_support:seat_installation:mass",
+          "category": "systems",
+          "mass_kg": 0.0,
+          "x_m": 3.0,
+          "station_key": "systems",
+          "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位",
+          "position_uncertainty_m": 0.375
+        },
+        {
+          "component": "data:weight:systems:life_support:fixed_oxygen:mass",
+          "category": "systems",
+          "mass_kg": 8.402526570819315,
+          "x_m": 3.0,
+          "station_key": "systems",
+          "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位",
+          "position_uncertainty_m": 0.375
+        },
+        {
+          "component": "data:weight:systems:life_support:security_kits:mass",
+          "category": "systems",
+          "mass_kg": 0.0,
+          "x_m": 3.0,
+          "station_key": "systems",
+          "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位",
+          "position_uncertainty_m": 0.375
+        },
+        {
+          "component": "data:weight:systems:avionics:mass",
+          "category": "systems",
+          "mass_kg": 59.874192840000006,
+          "x_m": 3.0,
+          "station_key": "systems",
+          "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位",
+          "position_uncertainty_m": 0.375
+        },
+        {
+          "component": "data:weight:systems:power:electric_systems:mass",
+          "category": "systems",
+          "mass_kg": 81.20684221083769,
+          "x_m": 3.0,
+          "station_key": "systems",
+          "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位",
+          "position_uncertainty_m": 0.375
+        },
+        {
+          "component": "data:weight:systems:power:hydraulic_systems:mass",
+          "category": "systems",
+          "mass_kg": 8.523207650397204,
+          "x_m": 3.0,
+          "station_key": "systems",
+          "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位",
+          "position_uncertainty_m": 0.375
+        },
+        {
+          "component": "data:weight:systems:recording:mass",
+          "category": "systems",
+          "mass_kg": 0.0,
+          "x_m": 3.0,
+          "station_key": "systems",
+          "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位",
+          "position_uncertainty_m": 0.375
+        },
+        {
+          "component": "payload_front_seats",
+          "category": "payload",
+          "mass_kg": 175.0,
+          "x_m": 2.4,
+          "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位"
+        },
+        {
+          "component": "payload_rear_seats",
+          "category": "payload",
+          "mass_kg": 140.0,
+          "x_m": 3.45,
+          "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位"
+        },
+        {
+          "component": "payload_baggage",
+          "category": "payload",
+          "mass_kg": 35.0,
+          "x_m": 4.35,
+          "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位"
+        },
+        {
+          "component": "takeoff_fuel",
+          "category": "usable_fuel",
+          "mass_kg": 82.07856764792984,
+          "x_m": 2.9250000000000003
+        }
+      ],
+      "loaded_mass_kg": 1217.6274400190837,
+      "cg_x_m": 2.6935669623754697,
+      "end_cg_x_m": 2.679748395060821,
+      "cg_mac_fraction": 0.08295417617590538,
+      "stations_source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位",
+      "layout": {
+        "version": "component_layout_v1",
+        "wing_quarter_fraction": 0.39,
+        "wing_incidence_deg": 0.0,
+        "tail_incidence_deg": 0.0,
+        "stations_fraction": {
+          "fuselage": 0.45,
+          "engine": 0.12,
+          "systems": 0.4,
+          "controls": 0.4,
+          "front_seats": 0.32,
+          "rear_seats": 0.46,
+          "baggage": 0.58,
+          "fuel": 0.39
+        },
+        "payload_fractions": {
+          "front_seats": 0.5,
+          "rear_seats": 0.4,
+          "baggage": 0.1
+        },
+        "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位"
+      },
+      "fuel_station_x_m": 2.9250000000000003,
+      "loading_sensitivity": {
+        "all_payload_at_station_cg_x_m": {
+          "front_seats": 2.5167887517952066,
+          "rear_seats": 2.8186052088834606,
+          "baggage": 3.0773050292448207
+        },
+        "component_position_cg_shift_m": {
+          "data:weight:airframe:horizontal_tail:mass": 0.005114575633897302,
+          "data:weight:airframe:vertical_tail:mass": 0.002537682632006902,
+          "data:weight:airframe:flight_controls:mass": 0.005237965173290081,
+          "data:weight:airframe:fuselage:mass": 0.03368381996675831,
+          "data:weight:airframe:landing_gear:main:mass": 0.00905424474819221,
+          "data:weight:airframe:landing_gear:front:mass": 0.004072232865945808,
+          "data:weight:airframe:paint:mass": 0.0,
+          "data:weight:airframe:wing:mass": 0.03571927662214695,
+          "data:weight:furniture:passenger_seats:mass": 0.013370292239934769,
+          "data:weight:propulsion:engine:mass": 0.06435166052499425,
+          "data:weight:propulsion:fuel_lines:mass": 0.007086093616164322,
+          "data:weight:propulsion:unusable_fuel:mass": 0.0011954839414703782,
+          "data:weight:systems:life_support:insulation:mass": 0.0,
+          "data:weight:systems:life_support:air_conditioning:mass": 0.011844564107731248,
+          "data:weight:systems:life_support:de_icing:mass": 0.0,
+          "data:weight:systems:life_support:internal_lighting:mass": 0.0,
+          "data:weight:systems:life_support:seat_installation:mass": 0.0,
+          "data:weight:systems:life_support:fixed_oxygen:mass": 0.002587776326729183,
+          "data:weight:systems:life_support:security_kits:mass": 0.0,
+          "data:weight:systems:avionics:mass": 0.018439813014273155,
+          "data:weight:systems:power:electric_systems:mass": 0.025009756538163147,
+          "data:weight:systems:power:hydraulic_systems:mass": 0.00262494320007182,
+          "data:weight:systems:recording:mass": 0.0
+        },
+        "full_tank_mass_kg": 1325.7543350660565,
+        "full_tank_cg_x_m": 2.7124423566379994,
+        "status": "position sensitivity only; seat/baggage limits and CG envelope not checked"
+      },
+      "limits": [
+        "安装发动机经验重量未独立拆分螺旋桨/附件；缺少目标部件称重数据。",
+        "部件位置±5%机长仅为未校准敏感性范围，不是制造公差。",
+        "全部座椅重量暂放前排站位；需具体座椅拆分，装载轨迹不是允许重心包线。"
+      ]
+    },
+    "points": [
+      {
+        "scenario": "legacy",
+        "status": "computed",
+        "project": {
+          "schema_version": 3,
+          "name": "新飞机方案 · A · A",
+          "payload_kg": 350.0,
+          "weight": {
+            "mode": "solve",
+            "value_kg": null
+          },
+          "mission": {
+            "kind": "range_only",
+            "range_m": 800000.0,
+            "endurance_s": null
+          },
+          "assumptions": {
+            "cruise_speed_m_s": 60.0,
+            "cruise_altitude_m": 2000.0,
+            "reserve_duration_s": 2700.0,
+            "reserve_basis": "cruise_fuel_flow",
+            "sources": {
+              "cruise_speed_m_s": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+              "cruise_altitude_m": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+              "reserve_duration_s": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+              "reserve_basis": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定"
+            }
+          },
+          "sizing": {
+            "template": "metal_single_v1",
+            "stall_speed_m_s": 28.0,
+            "climb_rate_m_s": 3.0,
+            "aspect_ratio": 7.5,
+            "cd0": 0.032,
+            "oswald_efficiency": 0.8,
+            "cl_max_clean": 1.4,
+            "cl_max_landing": 1.8,
+            "propeller_efficiency": 0.8,
+            "bsfc_kg_kwh": 0.3,
+            "fuel_model": "constant_bsfc",
+            "cruise_power_fraction": 0.75,
+            "seats": 4,
+            "fuselage_length_m": 7.5,
+            "tank_volume_fraction": 0.12,
+            "unusable_fuel_fraction": 0.02,
+            "source": "WingDesignHub V0.1.7 独立金属单发概念模板；系数为待校准工程假设，非真实型号数据"
+          },
+          "confirmation_sha256": "94fb8ae970c49b64764b21591727f242393edac44bb16a2c20a4062da5420c6a"
+        },
+        "drag_options": {
+          "panels": 240,
+          "re_stations": 3,
+          "cl_step": 0.1,
+          "ncrit": 9.0,
+          "trip_top": 1.0,
+          "trip_bottom": 1.0,
+          "area_samples": 12,
+          "geometry_tessellation": 1,
+          "strut_crossflow_cd": 1.2,
+          "junction_cd": 0.0015,
+          "cooling_cd": 0.001,
+          "roughness_cd": 0.0005,
+          "cache_only": false
+        },
+        "point": {
+          "mass_kg": 1217.6274400190835,
+          "cg_x_m": 2.6494313543653623,
+          "speed_m_s": 60.0,
+          "altitude_m": 2000.0,
+          "roc_m_s": 0.0,
+          "cd": 0.04055878204269041,
+          "components": {
+            "induced": 0.01064825786463998,
+            "profile": 0.006379867508086114,
+            "body": 0.020530656669964314,
+            "allowance": 0.003
+          },
+          "strut_cd": 0.012637304994661482,
+          "alpha_deg": 4.395151114603983,
+          "elevator_deg": -6.9333322790650485,
+          "residual_cl": 2.168343843367282e-08,
+          "residual_cm": -8.952373763138066e-08,
+          "point_directory": "point_000",
+          "polar_coverage": [
+            {
+              "surface": "MainWing",
+              "reynolds": [
+                3564006.6633398463,
+                4518801.423153996,
+                5729384.995807859
+              ],
+              "cl_grid": [
+                0.0,
+                0.1,
+                0.2,
+                0.3,
+                0.4,
+                0.5,
+                0.6
+              ],
+              "flap_deg": 0.0,
+              "mach": 0.18043530883564288,
+              "polar_count": 3,
+              "cache_hits": 3,
+              "recovered_points": 0,
+              "foil_sha256": "a6a7b339df082df4a6caf4f905fe4707a22bc03712fb26beda2918891af80bf1"
+            },
+            {
+              "surface": "HorizontalTail",
+              "reynolds": [
+                2616154.2742085685,
+                3341236.4552744073,
+                4267279.326801922
+              ],
+              "cl_grid": [
+                -0.2,
+                -0.1,
+                0.0
+              ],
+              "flap_deg": -6.9333322790650485,
+              "mach": 0.18043530883564288,
+              "polar_count": 3,
+              "cache_hits": 3,
+              "recovered_points": 0,
+              "foil_sha256": "152c2c25cdb2fbb966747e4dd2d852bb7f5483693243cf4c182206a6f7bd0f20"
+            },
+            {
+              "surface": "VerticalTail",
+              "reynolds": [
+                2680202.0871141762,
+                3458151.289290808,
+                4461906.211146918
+              ],
+              "cl_grid": [
+                0.0
+              ],
+              "flap_deg": 0.0,
+              "mach": 0.18043530883564288,
+              "polar_count": 3,
+              "cache_hits": 3,
+              "recovered_points": 0,
+              "foil_sha256": "83921c093f6fb18257e9fffbc61c4c37a58eafb5549a8a46f08e6e350b5e025b"
+            }
+          ]
+        },
+        "geometry_passed": true,
+        "geometry_measurements": {
+          "MainWing": {
+            "area_m2": 13.814368732731683,
+            "span_m": 10.178789981893114,
+            "mac_m": 1.3854464142021186,
+            "root_chord_m": 1.696464996982186,
+            "tip_chord_m": 1.0178789981893113,
+            "origin_m": [
+              2.5008837507544537,
+              0.0,
+              -0.324
+            ],
+            "incidence_deg": 0.0,
+            "bbox_min_m": [
+              -0.00015448983475785383,
+              0.0,
+              -0.07201882830293899
+            ],
+            "bbox_max_m": [
+              1.696464996982186,
+              5.089394990946557,
+              0.13439842715532346
+            ],
+            "surface_count": 2,
+            "airfoils": [
+              {
+                "Camber": 0.02,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              },
+              {
+                "Camber": 0.02,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              }
+            ]
+          },
+          "HorizontalTail": {
+            "area_m2": 3.969584396343785,
+            "span_m": 3.9847631780791115,
+            "mac_m": 1.0169447694056069,
+            "root_chord_m": 1.2452384931497225,
+            "tip_chord_m": 0.7471430958898334,
+            "origin_m": [
+              5.9886903767125705,
+              0.0,
+              0.162
+            ],
+            "incidence_deg": 0.0,
+            "bbox_min_m": [
+              0.0,
+              0.0,
+              -0.0747481042358679
+            ],
+            "bbox_max_m": [
+              1.2452384931497225,
+              1.9923815890395558,
+              0.07474810423586789
+            ],
+            "surface_count": 2,
+            "airfoils": [
+              {
+                "Camber": 0.0,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              },
+              {
+                "Camber": 0.0,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              }
+            ]
+          },
+          "VerticalTail": {
+            "area_m2": 1.666531058523339,
+            "span_m": 1.6329267263528215,
+            "mac_m": 1.0418412707198992,
+            "root_chord_m": 1.2757240049631418,
+            "tip_chord_m": 0.765434402977885,
+            "origin_m": [
+              5.981068998759215,
+              0.0,
+              0.27
+            ],
+            "incidence_deg": 0.0,
+            "bbox_min_m": [
+              0.0,
+              0.0,
+              -0.07657806229390177
+            ],
+            "bbox_max_m": [
+              1.2757240049631422,
+              1.6329267263528215,
+              0.07657806229390175
+            ],
+            "surface_count": 1,
+            "airfoils": [
+              {
+                "Camber": 0.0,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              },
+              {
+                "Camber": 0.0,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              }
+            ]
+          }
+        },
+        "elapsed_s": 8.703338399998756
+      },
+      {
+        "scenario": "leaf_stations",
+        "status": "computed",
+        "project": {
+          "schema_version": 3,
+          "name": "新飞机方案 · A · A",
+          "payload_kg": 350.0,
+          "weight": {
+            "mode": "solve",
+            "value_kg": null
+          },
+          "mission": {
+            "kind": "range_only",
+            "range_m": 800000.0,
+            "endurance_s": null
+          },
+          "assumptions": {
+            "cruise_speed_m_s": 60.0,
+            "cruise_altitude_m": 2000.0,
+            "reserve_duration_s": 2700.0,
+            "reserve_basis": "cruise_fuel_flow",
+            "sources": {
+              "cruise_speed_m_s": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+              "cruise_altitude_m": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+              "reserve_duration_s": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+              "reserve_basis": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定"
+            }
+          },
+          "sizing": {
+            "template": "metal_single_v1",
+            "stall_speed_m_s": 28.0,
+            "climb_rate_m_s": 3.0,
+            "aspect_ratio": 7.5,
+            "cd0": 0.032,
+            "oswald_efficiency": 0.8,
+            "cl_max_clean": 1.4,
+            "cl_max_landing": 1.8,
+            "propeller_efficiency": 0.8,
+            "bsfc_kg_kwh": 0.3,
+            "fuel_model": "constant_bsfc",
+            "cruise_power_fraction": 0.75,
+            "seats": 4,
+            "fuselage_length_m": 7.5,
+            "tank_volume_fraction": 0.12,
+            "unusable_fuel_fraction": 0.02,
+            "layout": {
+              "version": "component_layout_v1",
+              "wing_quarter_fraction": 0.39,
+              "wing_incidence_deg": 0.0,
+              "tail_incidence_deg": 0.0,
+              "stations_fraction": {
+                "fuselage": 0.45,
+                "engine": 0.12,
+                "systems": 0.4,
+                "controls": 0.4,
+                "front_seats": 0.32,
+                "rear_seats": 0.46,
+                "baggage": 0.58,
+                "fuel": 0.39
+              },
+              "payload_fractions": {
+                "front_seats": 0.5,
+                "rear_seats": 0.4,
+                "baggage": 0.1
+              },
+              "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位"
+            },
+            "source": "WingDesignHub V0.1.7 独立金属单发概念模板；系数为待校准工程假设，非真实型号数据"
+          },
+          "confirmation_sha256": "71b2c64cf72659fa8defd8b998e334a382297d13976a5bbf8c12bef60e13b4bb"
+        },
+        "drag_options": {
+          "panels": 240,
+          "re_stations": 3,
+          "cl_step": 0.1,
+          "ncrit": 9.0,
+          "trip_top": 1.0,
+          "trip_bottom": 1.0,
+          "area_samples": 12,
+          "geometry_tessellation": 1,
+          "strut_crossflow_cd": 1.2,
+          "junction_cd": 0.0015,
+          "cooling_cd": 0.001,
+          "roughness_cd": 0.0005,
+          "cache_only": false
+        },
+        "point": {
+          "mass_kg": 1217.6274400190835,
+          "cg_x_m": 2.6935669623754697,
+          "speed_m_s": 60.0,
+          "altitude_m": 2000.0,
+          "roc_m_s": 0.0,
+          "cd": 0.040376410557414866,
+          "components": {
+            "induced": 0.01048423348162536,
+            "profile": 0.0063615204058251945,
+            "body": 0.02053065666996431,
+            "allowance": 0.003
+          },
+          "strut_cd": 0.012637304994661482,
+          "alpha_deg": 4.318502511795215,
+          "elevator_deg": -6.39599069750383,
+          "residual_cl": 9.204747297708593e-09,
+          "residual_cm": -7.557100696609087e-08,
+          "point_directory": "point_000",
+          "polar_coverage": [
+            {
+              "surface": "MainWing",
+              "reynolds": [
+                3564006.6633398463,
+                4518801.423153996,
+                5729384.995807859
+              ],
+              "cl_grid": [
+                0.0,
+                0.1,
+                0.2,
+                0.3,
+                0.4,
+                0.5,
+                0.6
+              ],
+              "flap_deg": 0.0,
+              "mach": 0.18043530883564288,
+              "polar_count": 3,
+              "cache_hits": 3,
+              "recovered_points": 0,
+              "foil_sha256": "a6a7b339df082df4a6caf4f905fe4707a22bc03712fb26beda2918891af80bf1"
+            },
+            {
+              "surface": "HorizontalTail",
+              "reynolds": [
+                2616154.2742085685,
+                3341236.4552744073,
+                4267279.326801922
+              ],
+              "cl_grid": [
+                -0.2,
+                -0.1,
+                0.0
+              ],
+              "flap_deg": -6.39599069750383,
+              "mach": 0.18043530883564288,
+              "polar_count": 3,
+              "cache_hits": 3,
+              "recovered_points": 0,
+              "foil_sha256": "152c2c25cdb2fbb966747e4dd2d852bb7f5483693243cf4c182206a6f7bd0f20"
+            },
+            {
+              "surface": "VerticalTail",
+              "reynolds": [
+                2680202.0871141762,
+                3458151.289290808,
+                4461906.211146918
+              ],
+              "cl_grid": [
+                0.0
+              ],
+              "flap_deg": 0.0,
+              "mach": 0.18043530883564288,
+              "polar_count": 3,
+              "cache_hits": 3,
+              "recovered_points": 0,
+              "foil_sha256": "83921c093f6fb18257e9fffbc61c4c37a58eafb5549a8a46f08e6e350b5e025b"
+            }
+          ]
+        },
+        "geometry_passed": true,
+        "geometry_measurements": {
+          "MainWing": {
+            "area_m2": 13.814368732731683,
+            "span_m": 10.178789981893114,
+            "mac_m": 1.3854464142021186,
+            "root_chord_m": 1.696464996982186,
+            "tip_chord_m": 1.0178789981893113,
+            "origin_m": [
+              2.5008837507544537,
+              0.0,
+              -0.324
+            ],
+            "incidence_deg": 0.0,
+            "bbox_min_m": [
+              -0.00015448983475785383,
+              0.0,
+              -0.07201882830293899
+            ],
+            "bbox_max_m": [
+              1.696464996982186,
+              5.089394990946557,
+              0.13439842715532346
+            ],
+            "surface_count": 2,
+            "airfoils": [
+              {
+                "Camber": 0.02,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              },
+              {
+                "Camber": 0.02,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              }
+            ]
+          },
+          "HorizontalTail": {
+            "area_m2": 3.969584396343785,
+            "span_m": 3.9847631780791115,
+            "mac_m": 1.0169447694056069,
+            "root_chord_m": 1.2452384931497225,
+            "tip_chord_m": 0.7471430958898334,
+            "origin_m": [
+              5.9886903767125705,
+              0.0,
+              0.162
+            ],
+            "incidence_deg": 0.0,
+            "bbox_min_m": [
+              0.0,
+              0.0,
+              -0.0747481042358679
+            ],
+            "bbox_max_m": [
+              1.2452384931497225,
+              1.9923815890395558,
+              0.07474810423586789
+            ],
+            "surface_count": 2,
+            "airfoils": [
+              {
+                "Camber": 0.0,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              },
+              {
+                "Camber": 0.0,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              }
+            ]
+          },
+          "VerticalTail": {
+            "area_m2": 1.666531058523339,
+            "span_m": 1.6329267263528215,
+            "mac_m": 1.0418412707198992,
+            "root_chord_m": 1.2757240049631418,
+            "tip_chord_m": 0.765434402977885,
+            "origin_m": [
+              5.981068998759215,
+              0.0,
+              0.27
+            ],
+            "incidence_deg": 0.0,
+            "bbox_min_m": [
+              0.0,
+              0.0,
+              -0.07657806229390177
+            ],
+            "bbox_max_m": [
+              1.2757240049631422,
+              1.6329267263528215,
+              0.07657806229390175
+            ],
+            "surface_count": 1,
+            "airfoils": [
+              {
+                "Camber": 0.0,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              },
+              {
+                "Camber": 0.0,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              }
+            ]
+          }
+        },
+        "elapsed_s": 8.561525500001153
+      },
+      {
+        "scenario": "incidence",
+        "status": "computed",
+        "project": {
+          "schema_version": 3,
+          "name": "新飞机方案 · A · A",
+          "payload_kg": 350.0,
+          "weight": {
+            "mode": "solve",
+            "value_kg": null
+          },
+          "mission": {
+            "kind": "range_only",
+            "range_m": 800000.0,
+            "endurance_s": null
+          },
+          "assumptions": {
+            "cruise_speed_m_s": 60.0,
+            "cruise_altitude_m": 2000.0,
+            "reserve_duration_s": 2700.0,
+            "reserve_basis": "cruise_fuel_flow",
+            "sources": {
+              "cruise_speed_m_s": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+              "cruise_altitude_m": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+              "reserve_duration_s": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+              "reserve_basis": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定"
+            }
+          },
+          "sizing": {
+            "template": "metal_single_v1",
+            "stall_speed_m_s": 28.0,
+            "climb_rate_m_s": 3.0,
+            "aspect_ratio": 7.5,
+            "cd0": 0.032,
+            "oswald_efficiency": 0.8,
+            "cl_max_clean": 1.4,
+            "cl_max_landing": 1.8,
+            "propeller_efficiency": 0.8,
+            "bsfc_kg_kwh": 0.3,
+            "fuel_model": "constant_bsfc",
+            "cruise_power_fraction": 0.75,
+            "seats": 4,
+            "fuselage_length_m": 7.5,
+            "tank_volume_fraction": 0.12,
+            "unusable_fuel_fraction": 0.02,
+            "layout": {
+              "version": "component_layout_v1",
+              "wing_quarter_fraction": 0.39,
+              "wing_incidence_deg": 2.0,
+              "tail_incidence_deg": -1.0,
+              "stations_fraction": {
+                "fuselage": 0.45,
+                "engine": 0.12,
+                "systems": 0.4,
+                "controls": 0.4,
+                "front_seats": 0.32,
+                "rear_seats": 0.46,
+                "baggage": 0.58,
+                "fuel": 0.39
+              },
+              "payload_fractions": {
+                "front_seats": 0.5,
+                "rear_seats": 0.4,
+                "baggage": 0.1
+              },
+              "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位"
+            },
+            "source": "WingDesignHub V0.1.7 独立金属单发概念模板；系数为待校准工程假设，非真实型号数据"
+          },
+          "confirmation_sha256": "b6fbad4e5162d5cd7b32a50da59499daa20dea82a3c6157582784ca84a8c28b4"
+        },
+        "drag_options": {
+          "panels": 240,
+          "re_stations": 3,
+          "cl_step": 0.1,
+          "ncrit": 9.0,
+          "trip_top": 1.0,
+          "trip_bottom": 1.0,
+          "area_samples": 12,
+          "geometry_tessellation": 1,
+          "strut_crossflow_cd": 1.2,
+          "junction_cd": 0.0015,
+          "cooling_cd": 0.001,
+          "roughness_cd": 0.0005,
+          "cache_only": false
+        },
+        "point": {
+          "mass_kg": 1217.6274400190835,
+          "cg_x_m": 2.6935669623754697,
+          "speed_m_s": 60.0,
+          "altitude_m": 2000.0,
+          "roc_m_s": 0.0,
+          "cd": 0.040708460708133914,
+          "components": {
+            "induced": 0.0106329811380729,
+            "profile": 0.006547733214876147,
+            "body": 0.02052774635518487,
+            "allowance": 0.003
+          },
+          "strut_cd": 0.012637304994661482,
+          "alpha_deg": 2.385001182344843,
+          "elevator_deg": -2.350334311917523,
+          "residual_cl": -8.690536701383422e-08,
+          "residual_cm": 6.234382270153827e-08,
+          "point_directory": "point_000",
+          "polar_coverage": [
+            {
+              "surface": "MainWing",
+              "reynolds": [
+                3564006.6633398463,
+                4518801.423153996,
+                5729384.995807859
+              ],
+              "cl_grid": [
+                0.0,
+                0.1,
+                0.2,
+                0.3,
+                0.4,
+                0.5,
+                0.6
+              ],
+              "flap_deg": 0.0,
+              "mach": 0.18043530883564288,
+              "polar_count": 3,
+              "cache_hits": 3,
+              "recovered_points": 0,
+              "foil_sha256": "a6a7b339df082df4a6caf4f905fe4707a22bc03712fb26beda2918891af80bf1"
+            },
+            {
+              "surface": "HorizontalTail",
+              "reynolds": [
+                2616154.2742085685,
+                3358270.6237469995,
+                4310900.810975255
+              ],
+              "cl_grid": [
+                -0.2,
+                -0.1,
+                0.0
+              ],
+              "flap_deg": -2.350334311917523,
+              "mach": 0.18043530883564288,
+              "polar_count": 3,
+              "cache_hits": 3,
+              "recovered_points": 0,
+              "foil_sha256": "152c2c25cdb2fbb966747e4dd2d852bb7f5483693243cf4c182206a6f7bd0f20"
+            },
+            {
+              "surface": "VerticalTail",
+              "reynolds": [
+                2680202.0871141762,
+                3458151.289290808,
+                4461906.211146918
+              ],
+              "cl_grid": [
+                0.0
+              ],
+              "flap_deg": 0.0,
+              "mach": 0.18043530883564288,
+              "polar_count": 3,
+              "cache_hits": 3,
+              "recovered_points": 0,
+              "foil_sha256": "83921c093f6fb18257e9fffbc61c4c37a58eafb5549a8a46f08e6e350b5e025b"
+            }
+          ]
+        },
+        "geometry_passed": true,
+        "geometry_measurements": {
+          "MainWing": {
+            "area_m2": 13.814368732731683,
+            "span_m": 10.178789981893114,
+            "mac_m": 1.3854464142021186,
+            "root_chord_m": 1.696464996982186,
+            "tip_chord_m": 1.0178789981893113,
+            "origin_m": [
+              2.5011421109142566,
+              0.0,
+              -0.309198556357978
+            ],
+            "incidence_deg": 2.0,
+            "bbox_min_m": [
+              -0.00015448983475785383,
+              0.0,
+              -0.07201882830293904
+            ],
+            "bbox_max_m": [
+              1.6964649969821863,
+              5.089394990946557,
+              0.13439842715532346
+            ],
+            "surface_count": 2,
+            "airfoils": [
+              {
+                "Camber": 0.02,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              },
+              {
+                "Camber": 0.02,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              }
+            ]
+          },
+          "HorizontalTail": {
+            "area_m2": 3.969584396343785,
+            "span_m": 3.9847631780791115,
+            "mac_m": 1.0169447694056069,
+            "root_chord_m": 1.2452384931497225,
+            "tip_chord_m": 0.7471430958898334,
+            "origin_m": [
+              5.988737790676059,
+              0.0,
+              0.15656689792655015
+            ],
+            "incidence_deg": -1.0,
+            "bbox_min_m": [
+              -8.881784197001252e-16,
+              0.0,
+              -0.07474810423586789
+            ],
+            "bbox_max_m": [
+              1.2452384931497225,
+              1.9923815890395558,
+              0.07474810423586789
+            ],
+            "surface_count": 2,
+            "airfoils": [
+              {
+                "Camber": 0.0,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              },
+              {
+                "Camber": 0.0,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              }
+            ]
+          },
+          "VerticalTail": {
+            "area_m2": 1.666531058523339,
+            "span_m": 1.6329267263528215,
+            "mac_m": 1.0418412707198992,
+            "root_chord_m": 1.2757240049631418,
+            "tip_chord_m": 0.765434402977885,
+            "origin_m": [
+              5.981068998759215,
+              0.0,
+              0.27
+            ],
+            "incidence_deg": 0.0,
+            "bbox_min_m": [
+              0.0,
+              0.0,
+              -0.07657806229390177
+            ],
+            "bbox_max_m": [
+              1.2757240049631422,
+              1.6329267263528215,
+              0.07657806229390175
+            ],
+            "surface_count": 1,
+            "airfoils": [
+              {
+                "Camber": 0.0,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              },
+              {
+                "Camber": 0.0,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              }
+            ]
+          }
+        },
+        "elapsed_s": 8.69526009999754
+      },
+      {
+        "scenario": "strut_low_cd",
+        "status": "computed",
+        "project": {
+          "schema_version": 3,
+          "name": "新飞机方案 · A · A",
+          "payload_kg": 350.0,
+          "weight": {
+            "mode": "solve",
+            "value_kg": null
+          },
+          "mission": {
+            "kind": "range_only",
+            "range_m": 800000.0,
+            "endurance_s": null
+          },
+          "assumptions": {
+            "cruise_speed_m_s": 60.0,
+            "cruise_altitude_m": 2000.0,
+            "reserve_duration_s": 2700.0,
+            "reserve_basis": "cruise_fuel_flow",
+            "sources": {
+              "cruise_speed_m_s": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+              "cruise_altitude_m": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+              "reserve_duration_s": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+              "reserve_basis": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定"
+            }
+          },
+          "sizing": {
+            "template": "metal_single_v1",
+            "stall_speed_m_s": 28.0,
+            "climb_rate_m_s": 3.0,
+            "aspect_ratio": 7.5,
+            "cd0": 0.032,
+            "oswald_efficiency": 0.8,
+            "cl_max_clean": 1.4,
+            "cl_max_landing": 1.8,
+            "propeller_efficiency": 0.8,
+            "bsfc_kg_kwh": 0.3,
+            "fuel_model": "constant_bsfc",
+            "cruise_power_fraction": 0.75,
+            "seats": 4,
+            "fuselage_length_m": 7.5,
+            "tank_volume_fraction": 0.12,
+            "unusable_fuel_fraction": 0.02,
+            "source": "WingDesignHub V0.1.7 独立金属单发概念模板；系数为待校准工程假设，非真实型号数据"
+          },
+          "confirmation_sha256": "94fb8ae970c49b64764b21591727f242393edac44bb16a2c20a4062da5420c6a"
+        },
+        "drag_options": {
+          "panels": 240,
+          "re_stations": 3,
+          "cl_step": 0.1,
+          "ncrit": 9.0,
+          "trip_top": 1.0,
+          "trip_bottom": 1.0,
+          "area_samples": 12,
+          "geometry_tessellation": 1,
+          "strut_crossflow_cd": 0.3,
+          "junction_cd": 0.0015,
+          "cooling_cd": 0.001,
+          "roughness_cd": 0.0005,
+          "cache_only": false
+        },
+        "point": {
+          "mass_kg": 1217.6274400190835,
+          "cg_x_m": 2.6494313543653623,
+          "speed_m_s": 60.0,
+          "altitude_m": 2000.0,
+          "roc_m_s": 0.0,
+          "cd": 0.031080803296694298,
+          "components": {
+            "induced": 0.01064825786463998,
+            "profile": 0.006379867508086114,
+            "body": 0.011052677923968203,
+            "allowance": 0.003
+          },
+          "strut_cd": 0.0031593262486653705,
+          "alpha_deg": 4.395151114603983,
+          "elevator_deg": -6.9333322790650485,
+          "residual_cl": 2.168343843367282e-08,
+          "residual_cm": -8.952373763138066e-08,
+          "point_directory": "point_000",
+          "polar_coverage": [
+            {
+              "surface": "MainWing",
+              "reynolds": [
+                3564006.6633398463,
+                4518801.423153996,
+                5729384.995807859
+              ],
+              "cl_grid": [
+                0.0,
+                0.1,
+                0.2,
+                0.3,
+                0.4,
+                0.5,
+                0.6
+              ],
+              "flap_deg": 0.0,
+              "mach": 0.18043530883564288,
+              "polar_count": 3,
+              "cache_hits": 3,
+              "recovered_points": 0,
+              "foil_sha256": "a6a7b339df082df4a6caf4f905fe4707a22bc03712fb26beda2918891af80bf1"
+            },
+            {
+              "surface": "HorizontalTail",
+              "reynolds": [
+                2616154.2742085685,
+                3341236.4552744073,
+                4267279.326801922
+              ],
+              "cl_grid": [
+                -0.2,
+                -0.1,
+                0.0
+              ],
+              "flap_deg": -6.9333322790650485,
+              "mach": 0.18043530883564288,
+              "polar_count": 3,
+              "cache_hits": 3,
+              "recovered_points": 0,
+              "foil_sha256": "152c2c25cdb2fbb966747e4dd2d852bb7f5483693243cf4c182206a6f7bd0f20"
+            },
+            {
+              "surface": "VerticalTail",
+              "reynolds": [
+                2680202.0871141762,
+                3458151.289290808,
+                4461906.211146918
+              ],
+              "cl_grid": [
+                0.0
+              ],
+              "flap_deg": 0.0,
+              "mach": 0.18043530883564288,
+              "polar_count": 3,
+              "cache_hits": 3,
+              "recovered_points": 0,
+              "foil_sha256": "83921c093f6fb18257e9fffbc61c4c37a58eafb5549a8a46f08e6e350b5e025b"
+            }
+          ]
+        },
+        "geometry_passed": true,
+        "geometry_measurements": {
+          "MainWing": {
+            "area_m2": 13.814368732731683,
+            "span_m": 10.178789981893114,
+            "mac_m": 1.3854464142021186,
+            "root_chord_m": 1.696464996982186,
+            "tip_chord_m": 1.0178789981893113,
+            "origin_m": [
+              2.5008837507544537,
+              0.0,
+              -0.324
+            ],
+            "incidence_deg": 0.0,
+            "bbox_min_m": [
+              -0.00015448983475785383,
+              0.0,
+              -0.07201882830293899
+            ],
+            "bbox_max_m": [
+              1.696464996982186,
+              5.089394990946557,
+              0.13439842715532346
+            ],
+            "surface_count": 2,
+            "airfoils": [
+              {
+                "Camber": 0.02,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              },
+              {
+                "Camber": 0.02,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              }
+            ]
+          },
+          "HorizontalTail": {
+            "area_m2": 3.969584396343785,
+            "span_m": 3.9847631780791115,
+            "mac_m": 1.0169447694056069,
+            "root_chord_m": 1.2452384931497225,
+            "tip_chord_m": 0.7471430958898334,
+            "origin_m": [
+              5.9886903767125705,
+              0.0,
+              0.162
+            ],
+            "incidence_deg": 0.0,
+            "bbox_min_m": [
+              0.0,
+              0.0,
+              -0.0747481042358679
+            ],
+            "bbox_max_m": [
+              1.2452384931497225,
+              1.9923815890395558,
+              0.07474810423586789
+            ],
+            "surface_count": 2,
+            "airfoils": [
+              {
+                "Camber": 0.0,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              },
+              {
+                "Camber": 0.0,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              }
+            ]
+          },
+          "VerticalTail": {
+            "area_m2": 1.666531058523339,
+            "span_m": 1.6329267263528215,
+            "mac_m": 1.0418412707198992,
+            "root_chord_m": 1.2757240049631418,
+            "tip_chord_m": 0.765434402977885,
+            "origin_m": [
+              5.981068998759215,
+              0.0,
+              0.27
+            ],
+            "incidence_deg": 0.0,
+            "bbox_min_m": [
+              0.0,
+              0.0,
+              -0.07657806229390177
+            ],
+            "bbox_max_m": [
+              1.2757240049631422,
+              1.6329267263528215,
+              0.07657806229390175
+            ],
+            "surface_count": 1,
+            "airfoils": [
+              {
+                "Camber": 0.0,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              },
+              {
+                "Camber": 0.0,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              }
+            ]
+          }
+        },
+        "elapsed_s": 8.847331599998142
+      },
+      {
+        "scenario": "higher_speed",
+        "status": "computed",
+        "project": {
+          "schema_version": 3,
+          "name": "新飞机方案 · A · A",
+          "payload_kg": 350.0,
+          "weight": {
+            "mode": "solve",
+            "value_kg": null
+          },
+          "mission": {
+            "kind": "range_only",
+            "range_m": 800000.0,
+            "endurance_s": null
+          },
+          "assumptions": {
+            "cruise_speed_m_s": 60.0,
+            "cruise_altitude_m": 2000.0,
+            "reserve_duration_s": 2700.0,
+            "reserve_basis": "cruise_fuel_flow",
+            "sources": {
+              "cruise_speed_m_s": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+              "cruise_altitude_m": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+              "reserve_duration_s": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+              "reserve_basis": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定"
+            }
+          },
+          "sizing": {
+            "template": "metal_single_v1",
+            "stall_speed_m_s": 28.0,
+            "climb_rate_m_s": 3.0,
+            "aspect_ratio": 7.5,
+            "cd0": 0.032,
+            "oswald_efficiency": 0.8,
+            "cl_max_clean": 1.4,
+            "cl_max_landing": 1.8,
+            "propeller_efficiency": 0.8,
+            "bsfc_kg_kwh": 0.3,
+            "fuel_model": "constant_bsfc",
+            "cruise_power_fraction": 0.75,
+            "seats": 4,
+            "fuselage_length_m": 7.5,
+            "tank_volume_fraction": 0.12,
+            "unusable_fuel_fraction": 0.02,
+            "source": "WingDesignHub V0.1.7 独立金属单发概念模板；系数为待校准工程假设，非真实型号数据"
+          },
+          "confirmation_sha256": "94fb8ae970c49b64764b21591727f242393edac44bb16a2c20a4062da5420c6a"
+        },
+        "drag_options": {
+          "panels": 240,
+          "re_stations": 3,
+          "cl_step": 0.1,
+          "ncrit": 9.0,
+          "trip_top": 1.0,
+          "trip_bottom": 1.0,
+          "area_samples": 12,
+          "geometry_tessellation": 1,
+          "strut_crossflow_cd": 1.2,
+          "junction_cd": 0.0015,
+          "cooling_cd": 0.001,
+          "roughness_cd": 0.0005,
+          "cache_only": false
+        },
+        "point": {
+          "mass_kg": 1217.6274400190835,
+          "cg_x_m": 2.6494313543653623,
+          "speed_m_s": 66.0,
+          "altitude_m": 2000.0,
+          "roc_m_s": 0.0,
+          "cd": 0.037077921695675024,
+          "components": {
+            "induced": 0.007388537327139301,
+            "profile": 0.0062805782739007434,
+            "body": 0.02040880609463498,
+            "allowance": 0.003
+          },
+          "strut_cd": 0.012637304994661482,
+          "alpha_deg": 3.305311119824364,
+          "elevator_deg": -5.561578396436636,
+          "residual_cl": -5.471219699515473e-09,
+          "residual_cm": -1.374044648894124e-08,
+          "point_directory": "point_000",
+          "polar_coverage": [
+            {
+              "surface": "MainWing",
+              "reynolds": [
+                3920407.3296738314,
+                4970681.565469388,
+                6302323.495388647
+              ],
+              "cl_grid": [
+                0.0,
+                0.1,
+                0.2,
+                0.3,
+                0.4,
+                0.5
+              ],
+              "flap_deg": 0.0,
+              "mach": 0.19847883971920716,
+              "polar_count": 3,
+              "cache_hits": 3,
+              "recovered_points": 1,
+              "foil_sha256": "a6a7b339df082df4a6caf4f905fe4707a22bc03712fb26beda2918891af80bf1"
+            },
+            {
+              "surface": "HorizontalTail",
+              "reynolds": [
+                2877769.7016294254,
+                3675360.1008018507,
+                4694007.2594821155
+              ],
+              "cl_grid": [
+                -0.2,
+                -0.1,
+                0.0
+              ],
+              "flap_deg": -5.561578396436636,
+              "mach": 0.19847883971920716,
+              "polar_count": 3,
+              "cache_hits": 3,
+              "recovered_points": 0,
+              "foil_sha256": "152c2c25cdb2fbb966747e4dd2d852bb7f5483693243cf4c182206a6f7bd0f20"
+            },
+            {
+              "surface": "VerticalTail",
+              "reynolds": [
+                2948222.295825594,
+                3803966.418219884,
+                4908096.83226161
+              ],
+              "cl_grid": [
+                0.0
+              ],
+              "flap_deg": 0.0,
+              "mach": 0.19847883971920716,
+              "polar_count": 3,
+              "cache_hits": 3,
+              "recovered_points": 0,
+              "foil_sha256": "83921c093f6fb18257e9fffbc61c4c37a58eafb5549a8a46f08e6e350b5e025b"
+            }
+          ]
+        },
+        "geometry_passed": true,
+        "geometry_measurements": {
+          "MainWing": {
+            "area_m2": 13.814368732731683,
+            "span_m": 10.178789981893114,
+            "mac_m": 1.3854464142021186,
+            "root_chord_m": 1.696464996982186,
+            "tip_chord_m": 1.0178789981893113,
+            "origin_m": [
+              2.5008837507544537,
+              0.0,
+              -0.324
+            ],
+            "incidence_deg": 0.0,
+            "bbox_min_m": [
+              -0.00015448983475785383,
+              0.0,
+              -0.07201882830293899
+            ],
+            "bbox_max_m": [
+              1.696464996982186,
+              5.089394990946557,
+              0.13439842715532346
+            ],
+            "surface_count": 2,
+            "airfoils": [
+              {
+                "Camber": 0.02,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              },
+              {
+                "Camber": 0.02,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              }
+            ]
+          },
+          "HorizontalTail": {
+            "area_m2": 3.969584396343785,
+            "span_m": 3.9847631780791115,
+            "mac_m": 1.0169447694056069,
+            "root_chord_m": 1.2452384931497225,
+            "tip_chord_m": 0.7471430958898334,
+            "origin_m": [
+              5.9886903767125705,
+              0.0,
+              0.162
+            ],
+            "incidence_deg": 0.0,
+            "bbox_min_m": [
+              0.0,
+              0.0,
+              -0.0747481042358679
+            ],
+            "bbox_max_m": [
+              1.2452384931497225,
+              1.9923815890395558,
+              0.07474810423586789
+            ],
+            "surface_count": 2,
+            "airfoils": [
+              {
+                "Camber": 0.0,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              },
+              {
+                "Camber": 0.0,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              }
+            ]
+          },
+          "VerticalTail": {
+            "area_m2": 1.666531058523339,
+            "span_m": 1.6329267263528215,
+            "mac_m": 1.0418412707198992,
+            "root_chord_m": 1.2757240049631418,
+            "tip_chord_m": 0.765434402977885,
+            "origin_m": [
+              5.981068998759215,
+              0.0,
+              0.27
+            ],
+            "incidence_deg": 0.0,
+            "bbox_min_m": [
+              0.0,
+              0.0,
+              -0.07657806229390177
+            ],
+            "bbox_max_m": [
+              1.2757240049631422,
+              1.6329267263528215,
+              0.07657806229390175
+            ],
+            "surface_count": 1,
+            "airfoils": [
+              {
+                "Camber": 0.0,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              },
+              {
+                "Camber": 0.0,
+                "CamberLoc": 0.4,
+                "ThickChord": 0.12,
+                "SharpTEFlag": 1.0
+              }
+            ]
+          }
+        },
+        "elapsed_s": 8.727990800001862
+      }
+    ],
+    "fixed_missions": [
+      {
+        "name": "constant_eta_constant_bsfc",
+        "status": "aero_table_out_of_domain",
+        "error": "质量超出当前气动表，禁止外推"
+      },
+      {
+        "name": "constant_eta_native_sfc",
+        "status": "computed",
+        "mission": {
+          "segments": [
+            {
+              "segment": "climb",
+              "duration_s": 666.6666666666666,
+              "path_distance_m": 39022.19085710518,
+              "fuel_kg": 6.289067741526878,
+              "speed_m_s": 58.61011519694166,
+              "start_mass_kg": 1217.286812298462,
+              "end_mass_kg": 1210.9977445569352,
+              "fuel_by_method_kg": {
+                "native_engine_sfc_map": 6.289067741526992
+              },
+              "rated_power_fraction_min": 0.7754008891993998,
+              "rated_power_fraction_max": 0.8235502952378846
+            },
+            {
+              "segment": "cruise",
+              "duration_s": 11706.697128134103,
+              "path_distance_m": 702401.8276880461,
+              "fuel_kg": 61.57355490240866,
+              "speed_m_s": 60.0,
+              "start_mass_kg": 1210.9977445569352,
+              "end_mass_kg": 1149.4241896545266,
+              "fuel_by_method_kg": {
+                "native_engine_sfc_map": 61.57355490240871
+              },
+              "rated_power_fraction_min": 0.4891036679096562,
+              "rated_power_fraction_max": 0.5018435141900198
+            },
+            {
+              "segment": "descent",
+              "duration_s": 1000.0,
+              "path_distance_m": 58575.98145484865,
+              "fuel_kg": 3.8493406441477873,
+              "speed_m_s": 58.61011519694166,
+              "start_mass_kg": 1149.4241896545266,
+              "end_mass_kg": 1145.5748490103788,
+              "fuel_by_method_kg": {
+                "engine_map_low_load_base_bsfc": 3.84934064414767
+              },
+              "rated_power_fraction_min": 0.28179732430060317,
+              "rated_power_fraction_max": 0.3310962086177957
+            }
+          ],
+          "cruise_speed_used_m_s": 60.0,
+          "main_duration_s": 13373.363794800769,
+          "route_distance_m": 800000.0,
+          "takeoff_roll_fuel_kg": 0.34062772062143687,
+          "taxi_in_fuel_kg": 0.3784752451349299,
+          "taxi_out_fuel_kg": 0.3784752451349299,
+          "reserve_fuel_kg": 14.201153102096294,
+          "trip_fuel_from_takeoff_kg": 72.4310662538397,
+          "takeoff_fuel_kg": 86.632219355936,
+          "block_fuel_kg": 87.01069460107094,
+          "max_power_fraction": 0.9396269121065246,
+          "max_clean_cl": 0.4945253941657384,
+          "reserve_basis": "mean cruise fuel flow; not flown and not added to mission time/range",
+          "integration_step_s": 30.0,
+          "fuel_model": {
+            "provider": "FAST-GA 1.4.0 BasicICEngine native map and compute_max_power",
+            "source_sha256": "841bc4947900d3a3bf4eb9dd8fba42cc8ca2b7807bb3588f518529b10bcffa81",
+            "map_sha256": "466839d6647a0884df528e6ab824235aa85ad1b98a487457a1279eae26636cec",
+            "rpm": 2400.0,
+            "sea_level_power_fraction": [
+              0.8817204324892585,
+              0.8978494646853472,
+              0.9086021530016146,
+              0.92473118525157,
+              0.9354838732266803,
+              0.9462365616057924,
+              0.956989249805348,
+              0.9677419381485493,
+              0.9731182820732593,
+              0.9892473145566384,
+              1.0
+            ],
+            "fuel": "native FAST-GA 1.4.0 torque/RPM SFC with explicit domain guards",
+            "physical_validation_passed": false,
+            "sfc_units": "g/kWh",
+            "pme_bounds_bar": [
+              8.08191746,
+              20.6280777
+            ],
+            "equivalent_volume_m3": 0.006523942705180047,
+            "volume_role": "upstream scaling coordinate; not measured displacement",
+            "mixture_factors": {
+              "climb": 1.15,
+              "level_and_descent": 1.0
+            },
+            "low_load_policy": "base_bsfc",
+            "ground_policy": "declared base BSFC; no ground propeller matching",
+            "calibration_ids": [],
+            "data_role": "upstream generic map; no target-engine calibration or independent physical validation",
+            "model": "native_engine_sfc_map",
+            "label": "原生发动机耗油图＋显式低负荷/地面估算",
+            "base_bsfc_kg_kwh": 0.3,
+            "limits": [
+              "耗油图为上游通用图，转速/扭矩插值不代表具体发动机标定。",
+              "高度只影响可用功率；图内按实际轴扭矩查询，上游没有单独的高度/温度SFC修正。",
+              "爬升按上游富油系数1.15，平飞/下降为1；低负荷及地面基础估算单列覆盖。"
+            ]
+          },
+          "block_fuel_by_method_kg": {
+            "native_engine_sfc_map": 82.06377574603201,
+            "engine_map_low_load_base_bsfc": 3.84934064414767,
+            "engine_map_ground_base_bsfc": 1.0975782108912968
+          },
+          "economy_reference_fuel_fraction": 0.0
+        }
+      },
+      {
+        "name": "ccblade_native_sfc",
+        "status": "computed",
+        "mission": {
+          "segments": [
+            {
+              "segment": "climb",
+              "duration_s": 666.6666666666666,
+              "path_distance_m": 39022.19085710518,
+              "fuel_kg": 5.841172783693082,
+              "speed_m_s": 58.61011519694166,
+              "start_mass_kg": 1217.286812298462,
+              "end_mass_kg": 1211.445639514769,
+              "fuel_by_method_kg": {
+                "native_engine_sfc_map": 5.8411727836930565
+              },
+              "rated_power_fraction_min": 0.7298904907229428,
+              "rated_power_fraction_max": 0.768412505214047
+            },
+            {
+              "segment": "cruise",
+              "duration_s": 11706.697128134103,
+              "path_distance_m": 702401.8276880461,
+              "fuel_kg": 58.41215500294447,
+              "speed_m_s": 60.0,
+              "start_mass_kg": 1211.445639514769,
+              "end_mass_kg": 1153.0334845118246,
+              "fuel_by_method_kg": {
+                "native_engine_sfc_map": 58.41215500294339
+              },
+              "rated_power_fraction_min": 0.452124255575074,
+              "rated_power_fraction_max": 0.46321247136376037
+            },
+            {
+              "segment": "descent",
+              "duration_s": 1000.0,
+              "path_distance_m": 58575.98145484865,
+              "fuel_kg": 3.634120255534299,
+              "speed_m_s": 58.61011519694166,
+              "start_mass_kg": 1153.0334845118246,
+              "end_mass_kg": 1149.3993642562903,
+              "fuel_by_method_kg": {
+                "engine_map_low_load_base_bsfc": 3.634120255533735
+              },
+              "rated_power_fraction_min": 0.2661835471802261,
+              "rated_power_fraction_max": 0.31223672953125586
+            }
+          ],
+          "cruise_speed_used_m_s": 60.0,
+          "main_duration_s": 13373.363794800769,
+          "route_distance_m": 800000.0,
+          "takeoff_roll_fuel_kg": 0.34062772062143687,
+          "taxi_in_fuel_kg": 0.3784752451349299,
+          "taxi_out_fuel_kg": 0.3784752451349299,
+          "reserve_fuel_kg": 13.472016639853694,
+          "trip_fuel_from_takeoff_kg": 68.60655100792823,
+          "takeoff_fuel_kg": 82.07856764778192,
+          "block_fuel_kg": 82.45704289291686,
+          "max_power_fraction": 0.9727641388702277,
+          "max_clean_cl": 0.49470477511038186,
+          "reserve_basis": "mean cruise fuel flow; not flown and not added to mission time/range",
+          "integration_step_s": 30.0,
+          "fuel_model": {
+            "provider": "FAST-GA 1.4.0 BasicICEngine native map and compute_max_power",
+            "source_sha256": "841bc4947900d3a3bf4eb9dd8fba42cc8ca2b7807bb3588f518529b10bcffa81",
+            "map_sha256": "466839d6647a0884df528e6ab824235aa85ad1b98a487457a1279eae26636cec",
+            "rpm": 2400.0,
+            "sea_level_power_fraction": [
+              0.8817204324892585,
+              0.8978494646853472,
+              0.9086021530016146,
+              0.92473118525157,
+              0.9354838732266803,
+              0.9462365616057924,
+              0.956989249805348,
+              0.9677419381485493,
+              0.9731182820732593,
+              0.9892473145566384,
+              1.0
+            ],
+            "fuel": "native FAST-GA 1.4.0 torque/RPM SFC with explicit domain guards",
+            "physical_validation_passed": false,
+            "sfc_units": "g/kWh",
+            "pme_bounds_bar": [
+              8.08191746,
+              20.6280777
+            ],
+            "equivalent_volume_m3": 0.006523942705180047,
+            "volume_role": "upstream scaling coordinate; not measured displacement",
+            "mixture_factors": {
+              "climb": 1.15,
+              "level_and_descent": 1.0
+            },
+            "low_load_policy": "base_bsfc",
+            "ground_policy": "declared base BSFC; no ground propeller matching",
+            "calibration_ids": [],
+            "data_role": "upstream generic map; no target-engine calibration or independent physical validation",
+            "model": "native_engine_sfc_map",
+            "label": "原生发动机耗油图＋显式低负荷/地面估算",
+            "base_bsfc_kg_kwh": 0.3,
+            "limits": [
+              "耗油图为上游通用图，转速/扭矩插值不代表具体发动机标定。",
+              "高度只影响可用功率；图内按实际轴扭矩查询，上游没有单独的高度/温度SFC修正。",
+              "爬升按上游富油系数1.15，平飞/下降为1；低负荷及地面基础估算单列覆盖。"
+            ]
+          },
+          "block_fuel_by_method_kg": {
+            "native_engine_sfc_map": 77.7253444264899,
+            "engine_map_low_load_base_bsfc": 3.634120255533735,
+            "engine_map_ground_base_bsfc": 1.0975782108912968
+          },
+          "economy_reference_fuel_fraction": 0.0
+        }
+      },
+      {
+        "name": "strut_cd_0.3_ccblade_sfc",
+        "status": "computed",
+        "mission": {
+          "segments": [
+            {
+              "segment": "climb",
+              "duration_s": 666.6666666666666,
+              "path_distance_m": 39022.19085710518,
+              "fuel_kg": 4.902436748100399,
+              "speed_m_s": 58.61011519694166,
+              "start_mass_kg": 1217.286812298462,
+              "end_mass_kg": 1212.3843755503617,
+              "fuel_by_method_kg": {
+                "native_engine_sfc_map": 4.902436748100295
+              },
+              "rated_power_fraction_min": 0.6212194943594567,
+              "rated_power_fraction_max": 0.6402893207977329
+            },
+            {
+              "segment": "cruise",
+              "duration_s": 11706.697128134103,
+              "path_distance_m": 702401.8276880461,
+              "fuel_kg": 51.006850161759075,
+              "speed_m_s": 60.0,
+              "start_mass_kg": 1212.3843755503617,
+              "end_mass_kg": 1161.3775253886026,
+              "fuel_by_method_kg": {
+                "native_engine_sfc_map": 44.04747119463062,
+                "engine_map_low_load_base_bsfc": 6.9593789671287904
+              },
+              "rated_power_fraction_min": 0.3469901612330746,
+              "rated_power_fraction_max": 0.35657273622577523
+            },
+            {
+              "segment": "descent",
+              "duration_s": 1000.0,
+              "path_distance_m": 58575.98145484865,
+              "fuel_kg": 2.333555134899143,
+              "speed_m_s": 58.61011519694166,
+              "start_mass_kg": 1161.3775253886026,
+              "end_mass_kg": 1159.0439702537035,
+              "fuel_by_method_kg": {
+                "engine_map_low_load_base_bsfc": 2.333555134899269
+              },
+              "rated_power_fraction_min": 0.1728598432762099,
+              "rated_power_fraction_max": 0.19886556368079586
+            }
+          ],
+          "cruise_speed_used_m_s": 60.0,
+          "main_duration_s": 13373.363794800769,
+          "route_distance_m": 800000.0,
+          "takeoff_roll_fuel_kg": 0.34062772062143687,
+          "taxi_in_fuel_kg": 0.3784752451349299,
+          "taxi_out_fuel_kg": 0.3784752451349299,
+          "reserve_fuel_kg": 11.764077769277701,
+          "trip_fuel_from_takeoff_kg": 58.96194501051498,
+          "takeoff_fuel_kg": 70.72602277979269,
+          "block_fuel_kg": 71.10449802492762,
+          "max_power_fraction": 0.82793248324338,
+          "max_clean_cl": 0.4950805698068142,
+          "reserve_basis": "mean cruise fuel flow; not flown and not added to mission time/range",
+          "integration_step_s": 30.0,
+          "fuel_model": {
+            "provider": "FAST-GA 1.4.0 BasicICEngine native map and compute_max_power",
+            "source_sha256": "841bc4947900d3a3bf4eb9dd8fba42cc8ca2b7807bb3588f518529b10bcffa81",
+            "map_sha256": "466839d6647a0884df528e6ab824235aa85ad1b98a487457a1279eae26636cec",
+            "rpm": 2400.0,
+            "sea_level_power_fraction": [
+              0.8817204324892585,
+              0.8978494646853472,
+              0.9086021530016146,
+              0.92473118525157,
+              0.9354838732266803,
+              0.9462365616057924,
+              0.956989249805348,
+              0.9677419381485493,
+              0.9731182820732593,
+              0.9892473145566384,
+              1.0
+            ],
+            "fuel": "native FAST-GA 1.4.0 torque/RPM SFC with explicit domain guards",
+            "physical_validation_passed": false,
+            "sfc_units": "g/kWh",
+            "pme_bounds_bar": [
+              8.08191746,
+              20.6280777
+            ],
+            "equivalent_volume_m3": 0.006523942705180047,
+            "volume_role": "upstream scaling coordinate; not measured displacement",
+            "mixture_factors": {
+              "climb": 1.15,
+              "level_and_descent": 1.0
+            },
+            "low_load_policy": "base_bsfc",
+            "ground_policy": "declared base BSFC; no ground propeller matching",
+            "calibration_ids": [],
+            "data_role": "upstream generic map; no target-engine calibration or independent physical validation",
+            "model": "native_engine_sfc_map",
+            "label": "原生发动机耗油图＋显式低负荷/地面估算",
+            "base_bsfc_kg_kwh": 0.3,
+            "limits": [
+              "耗油图为上游通用图，转速/扭矩插值不代表具体发动机标定。",
+              "高度只影响可用功率；图内按实际轴扭矩查询，上游没有单独的高度/温度SFC修正。",
+              "爬升按上游富油系数1.15，平飞/下降为1；低负荷及地面基础估算单列覆盖。"
+            ]
+          },
+          "block_fuel_by_method_kg": {
+            "native_engine_sfc_map": 59.108893942265205,
+            "engine_map_low_load_base_bsfc": 10.898025871771544,
+            "engine_map_ground_base_bsfc": 1.0975782108912968
+          },
+          "economy_reference_fuel_fraction": 0.0
+        }
+      }
+    ],
+    "limits": [
+      "固定构型敏感性是独立合成飞机，不是 Archer II 实机预测。",
+      "低支柱系数仅为规定面积下的假设情景；未用于更新默认值或实机校准。",
+      "固定任务保留原始携油与干重，所需油量变化不重新生成装载或尺寸。",
+      "历史气动/桨表按原哈希复用；实际安装角/站位由本次单点原生计算检查。"
+    ]
+  },
+  "common_load_fuel_decomposition": {
+    "basis": "same fixed geometry, engine rating, common loaded mass and schedule; diagnostic only",
+    "loaded_mass_kg": 1267.4785695337196,
+    "fuel_inventory_kg": 131.92969716256584,
+    "design_mass_kg": 1217.601092913886,
+    "exceeds_design_mass": true,
+    "cg_x_m": 2.6602697295252344,
+    "rows": [
+      {
+        "name": "constant_eta_constant_bsfc",
+        "status": "computed",
+        "mission": {
+          "segments": [
+            {
+              "segment": "climb",
+              "duration_s": 666.6666666666666,
+              "path_distance_m": 39022.19085710518,
+              "fuel_kg": 6.895686095787141,
+              "speed_m_s": 58.61011519694166,
+              "start_mass_kg": 1267.1379418130982,
+              "end_mass_kg": 1260.242255717311,
+              "fuel_by_method_kg": {
+                "constant_bsfc": 6.895686095786947
+              },
+              "rated_power_fraction_min": 0.7978335447243519,
+              "rated_power_fraction_max": 0.8438772461942207
+            },
+            {
+              "segment": "cruise",
+              "duration_s": 11706.697128134103,
+              "path_distance_m": 702401.8276880461,
+              "fuel_kg": 74.48154190621199,
+              "speed_m_s": 60.0,
+              "start_mass_kg": 1260.242255717311,
+              "end_mass_kg": 1185.760713811099,
+              "fuel_by_method_kg": {
+                "constant_bsfc": 74.4815419062124
+              },
+              "rated_power_fraction_min": 0.4966444063043972,
+              "rated_power_fraction_max": 0.5120549728295806
+            },
+            {
+              "segment": "descent",
+              "duration_s": 1000.0,
+              "path_distance_m": 58575.98145484865,
+              "fuel_kg": 3.8627793446064516,
+              "speed_m_s": 58.61011519694166,
+              "start_mass_kg": 1185.760713811099,
+              "end_mass_kg": 1181.8979344664926,
+              "fuel_by_method_kg": {
+                "constant_bsfc": 3.8627793446069596
+              },
+              "rated_power_fraction_min": 0.28365946498848443,
+              "rated_power_fraction_max": 0.331202186171292
+            }
+          ],
+          "cruise_speed_used_m_s": 60.0,
+          "main_duration_s": 13373.363794800769,
+          "route_distance_m": 800000.0,
+          "takeoff_roll_fuel_kg": 0.34062772062143687,
+          "taxi_in_fuel_kg": 0.3784752451349299,
+          "taxi_out_fuel_kg": 0.3784752451349299,
+          "reserve_fuel_kg": 17.178215251121404,
+          "trip_fuel_from_takeoff_kg": 85.95911031236196,
+          "takeoff_fuel_kg": 103.13732556348336,
+          "block_fuel_kg": 103.5158008086183,
+          "max_power_fraction": 0.9668106916647651,
+          "max_clean_cl": 0.5146383832520378,
+          "reserve_basis": "mean cruise fuel flow; not flown and not added to mission time/range",
+          "integration_step_s": 30.0,
+          "fuel_model": {
+            "model": "constant_bsfc",
+            "label": "统一耗油率（原有概念假设）",
+            "base_bsfc_kg_kwh": 0.3,
+            "economy_bsfc_kg_kwh": null,
+            "calibration_ids": [],
+            "reference_power_fraction": [
+              0.55,
+              0.75
+            ],
+            "fraction_basis": "actual shaft power / sea-level rated installed power",
+            "reference_segments": [
+              "cruise",
+              "outbound",
+              "inbound",
+              "loiter"
+            ],
+            "data_source": {
+              "document": "Piper PA-28-181 VB-760, Fig.5-13 p.5-17; cruise example p.5-5",
+              "url": "https://www.summitaviationspokane.com/wp-content/uploads/2025/08/pa-28-181-archer-ii-poh.pdf",
+              "sha256": "0a51a23b0db5d4d1bbb063484a56d7ed12a0a1935da96e5c90e88dd13e1bd43c"
+            },
+            "limits": [
+              "经济参考系数仅在稳定平飞、55%–75% 额定功率范围使用；其余任务段采用已声明的基础耗油率并单列覆盖。",
+              "范围边界采用显式切换，耗油率可能跳变；当前用于逐案计算，不提供该模型的连续梯度。",
+              "系数按额定功率归一用于概念相似估算；发动机选型、转速/混合比分布和跨机型精度尚未验证。",
+              "55%/75% 为同源留出检查，独立试验数据仍缺；全机物理精度与专业评审待完成。"
+            ]
+          },
+          "block_fuel_by_method_kg": {
+            "constant_bsfc": 103.51580080861912
+          },
+          "economy_reference_fuel_fraction": 0.0
+        },
+        "half_step_relative_fuel_error": 8.622724945173132e-08
+      },
+      {
+        "name": "constant_eta_native_sfc",
+        "status": "computed",
+        "mission": {
+          "segments": [
+            {
+              "segment": "climb",
+              "duration_s": 666.6666666666666,
+              "path_distance_m": 39022.19085710518,
+              "fuel_kg": 6.490243993562217,
+              "speed_m_s": 58.61011519694166,
+              "start_mass_kg": 1267.1379418130982,
+              "end_mass_kg": 1260.647697819536,
+              "fuel_by_method_kg": {
+                "native_engine_sfc_map": 6.490243993562236
+              },
+              "rated_power_fraction_min": 0.7980139711807122,
+              "rated_power_fraction_max": 0.8438806061276415
+            },
+            {
+              "segment": "cruise",
+              "duration_s": 11706.697128134103,
+              "path_distance_m": 702401.8276880461,
+              "fuel_kg": 62.468922716145016,
+              "speed_m_s": 60.0,
+              "start_mass_kg": 1260.647697819536,
+              "end_mass_kg": 1198.178775103391,
+              "fuel_by_method_kg": {
+                "native_engine_sfc_map": 62.4689227161457
+              },
+              "rated_power_fraction_min": 0.4992173111228156,
+              "rated_power_fraction_max": 0.5121424129834891
+            },
+            {
+              "segment": "descent",
+              "duration_s": 1000.0,
+              "path_distance_m": 58575.98145484865,
+              "fuel_kg": 3.8673720405192853,
+              "speed_m_s": 58.61011519694166,
+              "start_mass_kg": 1198.178775103391,
+              "end_mass_kg": 1194.3114030628717,
+              "fuel_by_method_kg": {
+                "engine_map_low_load_base_bsfc": 3.867372040520117
+              },
+              "rated_power_fraction_min": 0.284295854344201,
+              "rated_power_fraction_max": 0.3312384041581652
+            }
+          ],
+          "cruise_speed_used_m_s": 60.0,
+          "main_duration_s": 13373.363794800769,
+          "route_distance_m": 800000.0,
+          "takeoff_roll_fuel_kg": 0.34062772062143687,
+          "taxi_in_fuel_kg": 0.3784752451349299,
+          "taxi_out_fuel_kg": 0.3784752451349299,
+          "reserve_fuel_kg": 14.407658239337637,
+          "trip_fuel_from_takeoff_kg": 73.5456417159829,
+          "takeoff_fuel_kg": 87.95329995532053,
+          "block_fuel_kg": 88.33177520045547,
+          "max_power_fraction": 0.9670293315404908,
+          "max_clean_cl": 0.5148001525683641,
+          "reserve_basis": "mean cruise fuel flow; not flown and not added to mission time/range",
+          "integration_step_s": 30.0,
+          "fuel_model": {
+            "provider": "FAST-GA 1.4.0 BasicICEngine native map and compute_max_power",
+            "source_sha256": "841bc4947900d3a3bf4eb9dd8fba42cc8ca2b7807bb3588f518529b10bcffa81",
+            "map_sha256": "466839d6647a0884df528e6ab824235aa85ad1b98a487457a1279eae26636cec",
+            "rpm": 2400.0,
+            "sea_level_power_fraction": [
+              0.8817204324892585,
+              0.8978494646853472,
+              0.9086021530016146,
+              0.92473118525157,
+              0.9354838732266803,
+              0.9462365616057924,
+              0.956989249805348,
+              0.9677419381485493,
+              0.9731182820732593,
+              0.9892473145566384,
+              1.0
+            ],
+            "fuel": "native FAST-GA 1.4.0 torque/RPM SFC with explicit domain guards",
+            "physical_validation_passed": false,
+            "sfc_units": "g/kWh",
+            "pme_bounds_bar": [
+              8.08191746,
+              20.6280777
+            ],
+            "equivalent_volume_m3": 0.006523942705180047,
+            "volume_role": "upstream scaling coordinate; not measured displacement",
+            "mixture_factors": {
+              "climb": 1.15,
+              "level_and_descent": 1.0
+            },
+            "low_load_policy": "base_bsfc",
+            "ground_policy": "declared base BSFC; no ground propeller matching",
+            "calibration_ids": [],
+            "data_role": "upstream generic map; no target-engine calibration or independent physical validation",
+            "model": "native_engine_sfc_map",
+            "label": "原生发动机耗油图＋显式低负荷/地面估算",
+            "base_bsfc_kg_kwh": 0.3,
+            "limits": [
+              "耗油图为上游通用图，转速/扭矩插值不代表具体发动机标定。",
+              "高度只影响可用功率；图内按实际轴扭矩查询，上游没有单独的高度/温度SFC修正。",
+              "爬升按上游富油系数1.15，平飞/下降为1；低负荷及地面基础估算单列覆盖。"
+            ]
+          },
+          "block_fuel_by_method_kg": {
+            "native_engine_sfc_map": 83.36682494904572,
+            "engine_map_low_load_base_bsfc": 3.867372040520117,
+            "engine_map_ground_base_bsfc": 1.0975782108912968
+          },
+          "economy_reference_fuel_fraction": 0.0
+        },
+        "half_step_relative_fuel_error": 1.4029582384722517e-07
+      },
+      {
+        "name": "ccblade_native_sfc",
+        "status": "computed",
+        "mission": {
+          "segments": [
+            {
+              "segment": "climb",
+              "duration_s": 666.6666666666666,
+              "path_distance_m": 39022.19085710518,
+              "fuel_kg": 6.028387703250473,
+              "speed_m_s": 58.61011519694166,
+              "start_mass_kg": 1267.1379418130982,
+              "end_mass_kg": 1261.1095541098477,
+              "fuel_by_method_kg": {
+                "native_engine_sfc_map": 6.028387703250899
+              },
+              "rated_power_fraction_min": 0.7523994235714413,
+              "rated_power_fraction_max": 0.7885860560534954
+            },
+            {
+              "segment": "cruise",
+              "duration_s": 11706.697128134103,
+              "path_distance_m": 702401.8276880461,
+              "fuel_kg": 59.18433628369917,
+              "speed_m_s": 60.0,
+              "start_mass_kg": 1261.1095541098477,
+              "end_mass_kg": 1201.9252178261486,
+              "fuel_by_method_kg": {
+                "native_engine_sfc_map": 59.18433628369854
+              },
+              "rated_power_fraction_min": 0.4613800544629163,
+              "rated_power_fraction_max": 0.47292458311612434
+            },
+            {
+              "segment": "descent",
+              "duration_s": 1000.0,
+              "path_distance_m": 58575.98145484865,
+              "fuel_kg": 3.649591758829729,
+              "speed_m_s": 58.61011519694166,
+              "start_mass_kg": 1201.9252178261486,
+              "end_mass_kg": 1198.2756260673189,
+              "fuel_by_method_kg": {
+                "engine_map_low_load_base_bsfc": 3.6495917588295574
+              },
+              "rated_power_fraction_min": 0.26837343495655486,
+              "rated_power_fraction_max": 0.31235836689673735
+            }
+          ],
+          "cruise_speed_used_m_s": 60.0,
+          "main_duration_s": 13373.363794800769,
+          "route_distance_m": 800000.0,
+          "takeoff_roll_fuel_kg": 0.34062772062143687,
+          "taxi_in_fuel_kg": 0.3784752451349299,
+          "taxi_out_fuel_kg": 0.3784752451349299,
+          "reserve_fuel_kg": 13.650110378439203,
+          "trip_fuel_from_takeoff_kg": 69.58141871153575,
+          "takeoff_fuel_kg": 83.23152908997496,
+          "block_fuel_kg": 83.61000433510989,
+          "max_power_fraction": 1.0027629989150681,
+          "max_clean_cl": 0.5149851205589812,
+          "reserve_basis": "mean cruise fuel flow; not flown and not added to mission time/range",
+          "integration_step_s": 30.0,
+          "fuel_model": {
+            "provider": "FAST-GA 1.4.0 BasicICEngine native map and compute_max_power",
+            "source_sha256": "841bc4947900d3a3bf4eb9dd8fba42cc8ca2b7807bb3588f518529b10bcffa81",
+            "map_sha256": "466839d6647a0884df528e6ab824235aa85ad1b98a487457a1279eae26636cec",
+            "rpm": 2400.0,
+            "sea_level_power_fraction": [
+              0.8817204324892585,
+              0.8978494646853472,
+              0.9086021530016146,
+              0.92473118525157,
+              0.9354838732266803,
+              0.9462365616057924,
+              0.956989249805348,
+              0.9677419381485493,
+              0.9731182820732593,
+              0.9892473145566384,
+              1.0
+            ],
+            "fuel": "native FAST-GA 1.4.0 torque/RPM SFC with explicit domain guards",
+            "physical_validation_passed": false,
+            "sfc_units": "g/kWh",
+            "pme_bounds_bar": [
+              8.08191746,
+              20.6280777
+            ],
+            "equivalent_volume_m3": 0.006523942705180047,
+            "volume_role": "upstream scaling coordinate; not measured displacement",
+            "mixture_factors": {
+              "climb": 1.15,
+              "level_and_descent": 1.0
+            },
+            "low_load_policy": "base_bsfc",
+            "ground_policy": "declared base BSFC; no ground propeller matching",
+            "calibration_ids": [],
+            "data_role": "upstream generic map; no target-engine calibration or independent physical validation",
+            "model": "native_engine_sfc_map",
+            "label": "原生发动机耗油图＋显式低负荷/地面估算",
+            "base_bsfc_kg_kwh": 0.3,
+            "limits": [
+              "耗油图为上游通用图，转速/扭矩插值不代表具体发动机标定。",
+              "高度只影响可用功率；图内按实际轴扭矩查询，上游没有单独的高度/温度SFC修正。",
+              "爬升按上游富油系数1.15，平飞/下降为1；低负荷及地面基础估算单列覆盖。"
+            ]
+          },
+          "block_fuel_by_method_kg": {
+            "native_engine_sfc_map": 78.86283436538851,
+            "engine_map_low_load_base_bsfc": 3.6495917588295574,
+            "engine_map_ground_base_bsfc": 1.0975782108912968
+          },
+          "economy_reference_fuel_fraction": 0.0
+        },
+        "half_step_relative_fuel_error": 1.2924832959448906e-07
+      }
+    ],
+    "physical_validation_passed": false
+  },
+  "climb_speed_sensitivity": {
+    "basis": "same geometry, mass, CG, installed power; steady climb ROC=3 m/s at 2000 m",
+    "cl_ceilings": [
+      0.5,
+      0.45
+    ],
+    "rows": [
+      {
+        "speed_m_s": 58.61011519694166,
+        "point": {
+          "mass_kg": 1217.6274400190835,
+          "cg_x_m": 2.6494313543653623,
+          "speed_m_s": 58.61011519694166,
+          "altitude_m": 2000.0,
+          "roc_m_s": 3.0,
+          "cd": 0.04163850493225566,
+          "components": {
+            "induced": 0.01162719135474903,
+            "profile": 0.006450284512674998,
+            "body": 0.02056102906483163,
+            "allowance": 0.003
+          },
+          "strut_cd": 0.012637304994661482,
+          "alpha_deg": 4.688163734701271,
+          "elevator_deg": -7.2997183841569475,
+          "residual_cl": 6.135609398327802e-08,
+          "residual_cm": -1.551275405908825e-07,
+          "point_directory": "point_000",
+          "polar_coverage": [
+            {
+              "surface": "MainWing",
+              "reynolds": [
+                3481447.3516836013,
+                4414124.532719323,
+                5596665.24353213
+              ],
+              "cl_grid": [
+                0.0,
+                0.1,
+                0.2,
+                0.3,
+                0.4,
+                0.5,
+                0.6
+              ],
+              "flap_deg": 0.0,
+              "mach": 0.17625557060754624,
+              "polar_count": 3,
+              "cache_hits": 3,
+              "recovered_points": 1,
+              "foil_sha256": "a6a7b339df082df4a6caf4f905fe4707a22bc03712fb26beda2918891af80bf1"
+            },
+            {
+              "surface": "HorizontalTail",
+              "reynolds": [
+                2555551.7230722583,
+                3263837.5590642383,
+                4168428.882023139
+              ],
+              "cl_grid": [
+                -0.2,
+                -0.1,
+                0.0
+              ],
+              "flap_deg": -7.2997183841569475,
+              "mach": 0.17625557060754624,
+              "polar_count": 3,
+              "cache_hits": 0,
+              "recovered_points": 0,
+              "foil_sha256": "152c2c25cdb2fbb966747e4dd2d852bb7f5483693243cf4c182206a6f7bd0f20"
+            },
+            {
+              "surface": "VerticalTail",
+              "reynolds": [
+                2618115.884614089,
+                3378044.0905631073,
+                4358547.283887839
+              ],
+              "cl_grid": [
+                0.0
+              ],
+              "flap_deg": 0.0,
+              "mach": 0.17625557060754624,
+              "polar_count": 3,
+              "cache_hits": 3,
+              "recovered_points": 1,
+              "foil_sha256": "83921c093f6fb18257e9fffbc61c4c37a58eafb5549a8a46f08e6e350b5e025b"
+            }
+          ]
+        },
+        "drag_n": 994.3764444963692,
+        "thrust_n": 1605.577058650062,
+        "propeller": {
+          "thrust_n": 1605.577058650062,
+          "torque_nm": 440.6078279470634,
+          "shaft_power_w": 110736.82523141199,
+          "efficiency": 0.8497900871584072,
+          "collective_deg": -0.12058481359466289,
+          "rpm": 2400.0,
+          "advance_ratio": 0.7711857262755482
+        },
+        "engine": {
+          "shaft_power_w": 110736.82523141199,
+          "torque_nm": 440.60782794706336,
+          "rpm": 2400.0,
+          "altitude_m": 2000.0,
+          "segment": "climb",
+          "pme_bar": 16.973911365513118,
+          "bsfc_kg_kwh": 0.2778625394214567,
+          "fuel_flow_kg_s": 0.008547115407297272,
+          "method": "native_engine_sfc_map",
+          "mixture_factor": 1.15,
+          "available_power_w": 113014.99246568869,
+          "power_fraction": 0.9798419025248499
+        }
+      },
+      {
+        "speed_m_s": 61.780485982394616,
+        "point": {
+          "mass_kg": 1217.6274400190835,
+          "cg_x_m": 2.6494313543653623,
+          "speed_m_s": 61.780485982394616,
+          "altitude_m": 2000.0,
+          "roc_m_s": 3.0,
+          "cd": 0.039292456010686455,
+          "components": {
+            "induced": 0.009492966590275854,
+            "profile": 0.006306501098120014,
+            "body": 0.020492988322290587,
+            "allowance": 0.003
+          },
+          "strut_cd": 0.012637304994661482,
+          "alpha_deg": 4.0314237206668535,
+          "elevator_deg": -6.4771484148387195,
+          "residual_cl": 1.5937834940693563e-09,
+          "residual_cm": -3.749272663167158e-08,
+          "point_directory": "point_001",
+          "polar_coverage": [
+            {
+              "surface": "MainWing",
+              "reynolds": [
+                3669767.72842714,
+                4652895.799673165,
+                5899403.157020825
+              ],
+              "cl_grid": [
+                0.0,
+                0.1,
+                0.2,
+                0.3,
+                0.4,
+                0.5,
+                0.6
+              ],
+              "flap_deg": 0.0,
+              "mach": 0.18578968447082464,
+              "polar_count": 3,
+              "cache_hits": 0,
+              "recovered_points": 0,
+              "foil_sha256": "a6a7b339df082df4a6caf4f905fe4707a22bc03712fb26beda2918891af80bf1"
+            },
+            {
+              "surface": "HorizontalTail",
+              "reynolds": [
+                2693788.0410920703,
+                3440386.866482443,
+                4393909.843874142
+              ],
+              "cl_grid": [
+                -0.2,
+                -0.1,
+                0.0
+              ],
+              "flap_deg": -6.4771484148387195,
+              "mach": 0.18578968447082464,
+              "polar_count": 3,
+              "cache_hits": 0,
+              "recovered_points": 0,
+              "foil_sha256": "152c2c25cdb2fbb966747e4dd2d852bb7f5483693243cf4c182206a6f7bd0f20"
+            },
+            {
+              "surface": "VerticalTail",
+              "reynolds": [
+                2759736.4578823694,
+                3560771.12088384,
+                4594312.235542027
+              ],
+              "cl_grid": [
+                0.0
+              ],
+              "flap_deg": 0.0,
+              "mach": 0.18578968447082464,
+              "polar_count": 3,
+              "cache_hits": 0,
+              "recovered_points": 0,
+              "foil_sha256": "83921c093f6fb18257e9fffbc61c4c37a58eafb5549a8a46f08e6e350b5e025b"
+            }
+          ]
+        },
+        "drag_n": 1042.6111538134203,
+        "thrust_n": 1622.4469682192453,
+        "propeller": {
+          "thrust_n": 1622.4469682192453,
+          "torque_nm": 466.0007814117364,
+          "shaft_power_w": 117118.77051601713,
+          "efficiency": 0.8558454100535451,
+          "collective_deg": 0.7993118674860498,
+          "rpm": 2400.0,
+          "advance_ratio": 0.8129011313472976
+        },
+        "engine": {
+          "shaft_power_w": 117118.77051601713,
+          "torque_nm": 466.0007814117364,
+          "rpm": 2400.0,
+          "altitude_m": 2000.0,
+          "segment": "climb",
+          "pme_bar": 17.952145781878826,
+          "bsfc_kg_kwh": 0.2795733660311863,
+          "fuel_flow_kg_s": 0.009095358027388046,
+          "method": "native_engine_sfc_map",
+          "mixture_factor": 1.15,
+          "available_power_w": 113014.99246568869,
+          "power_fraction": 1.0363118021847797
+        }
+      }
+    ],
+    "physical_validation_passed": false,
+    "limits": [
+      "两个速度均在原小迎角方法域内，不是最佳爬升速度搜索。",
+      "功率超限只记录，不改变发动机、任务或模型边界。"
+    ]
+  },
+  "clean_naca0012_reference": {
+    "reference": {
+      "id": "ladson_tm4074_table_ix_clean_0012",
+      "role": "independent_unfitted_airfoil_reference",
+      "url": "https://ntrs.nasa.gov/api/citations/19880019495/downloads/19880019495.pdf",
+      "document_sha256": "8e466706cbdf54b3c778ea2b089c4f52d87686bf7f6b1bd10d224b42c2d06902",
+      "pages": "p.3 tests/procedures, p.19 Table IX (PDF 5,21)",
+      "reynolds": 5950000.0,
+      "mach": 0.15,
+      "transition_xc_both_sides": 0.05,
+      "trip": "No.80 grit, approximately .01c wide strips",
+      "rows": [
+        {
+          "alpha_deg": -0.05,
+          "cl": -0.0126,
+          "cd": 0.00809
+        },
+        {
+          "alpha_deg": 2.05,
+          "cl": 0.2125,
+          "cd": 0.00816
+        },
+        {
+          "alpha_deg": 4.04,
+          "cl": 0.4316,
+          "cd": 0.00823
+        }
+      ],
+      "acceptance": {
+        "cd_relative": 0.15,
+        "alpha_absolute_deg": 0.4,
+        "panel_cd_relative": 0.02
+      },
+      "new_fit_parameters": [],
+      "limits": [
+        "测试修正约占测量系数的2%；不是完整不确定度预算。",
+        "匹配标称翼型、Re/Mach、CL和转捩位置；XFOIL不模拟砂粒附加阻力，实际模型制造/尾缘细节未一一重建。",
+        "采用本机几何导出的未偏舵NACA0012；不使用TMR为CFD专门缩短/封口的11.894%厚度截面。",
+        "不覆盖NACA2412、偏舵/缝隙、当前飞机完整Re/Mach域或整机独立精度。"
+      ],
+      "foil_sha256": "152c2c25cdb2fbb966747e4dd2d852bb7f5483693243cf4c182206a6f7bd0f20"
+    },
+    "polars": {
+      "tripped160": {
+        "solver_version": "6.99",
+        "condition_readback": [
+          0.15,
+          5950000.0,
+          9.0,
+          0.05,
+          0.05
+        ],
+        "rows": [
+          {
+            "alpha_deg": -0.113,
+            "cl": -0.0126,
+            "cd": 0.00788,
+            "cd_pressure": 0.00125,
+            "cm": -0.0001,
+            "transition_top": 0.05,
+            "transition_bottom": 0.05,
+            "requested_cl": -0.0126
+          },
+          {
+            "alpha_deg": 1.909,
+            "cl": 0.2125,
+            "cd": 0.00796,
+            "cd_pressure": 0.00135,
+            "cm": 0.0016,
+            "transition_top": 0.05,
+            "transition_bottom": 0.05,
+            "requested_cl": 0.2125
+          },
+          {
+            "alpha_deg": 3.886,
+            "cl": 0.4316,
+            "cd": 0.00819,
+            "cd_pressure": 0.00166,
+            "cm": 0.0034,
+            "transition_top": 0.05,
+            "transition_bottom": 0.05,
+            "requested_cl": 0.4316
+          }
+        ],
+        "reynolds": 5950000.0,
+        "cl_grid": [
+          -0.0126,
+          0.2125,
+          0.4316
+        ],
+        "cache_key": "4bf0244fc567eeb6b86c8aac716d8ae7e6820546db2c8c204a088132cc40809f",
+        "cache_hit": false
+      },
+      "tripped320": {
+        "solver_version": "6.99",
+        "condition_readback": [
+          0.15,
+          5950000.0,
+          9.0,
+          0.05,
+          0.05
+        ],
+        "rows": [
+          {
+            "alpha_deg": -0.113,
+            "cl": -0.0126,
+            "cd": 0.00789,
+            "cd_pressure": 0.00125,
+            "cm": -0.0001,
+            "transition_top": 0.05,
+            "transition_bottom": 0.05,
+            "requested_cl": -0.0126
+          },
+          {
+            "alpha_deg": 1.907,
+            "cl": 0.2125,
+            "cd": 0.00797,
+            "cd_pressure": 0.00135,
+            "cm": 0.0015,
+            "transition_top": 0.05,
+            "transition_bottom": 0.05,
+            "requested_cl": 0.2125
+          },
+          {
+            "alpha_deg": 3.88,
+            "cl": 0.4316,
+            "cd": 0.0082,
+            "cd_pressure": 0.00166,
+            "cm": 0.0033,
+            "transition_top": 0.05,
+            "transition_bottom": 0.05,
+            "requested_cl": 0.4316
+          }
+        ],
+        "reynolds": 5950000.0,
+        "cl_grid": [
+          -0.0126,
+          0.2125,
+          0.4316
+        ],
+        "cache_key": "a67a94bcf7ef16a14323f742cb632014fe6567347bc9c22c5181fe5b69a48370",
+        "cache_hit": false
+      },
+      "natural160": {
+        "solver_version": "6.99",
+        "condition_readback": [
+          0.15,
+          5950000.0,
+          9.0,
+          1.0,
+          1.0
+        ],
+        "rows": [
+          {
+            "alpha_deg": -0.117,
+            "cl": -0.0126,
+            "cd": 0.00498,
+            "cd_pressure": 0.00063,
+            "cm": -0.0002,
+            "transition_top": 0.4228,
+            "transition_bottom": 0.4038,
+            "requested_cl": -0.0126
+          },
+          {
+            "alpha_deg": 1.999,
+            "cl": 0.2125,
+            "cd": 0.00521,
+            "cd_pressure": 0.0008,
+            "cm": 0.0035,
+            "transition_top": 0.2446,
+            "transition_bottom": 0.5816,
+            "requested_cl": 0.2125
+          },
+          {
+            "alpha_deg": 4.094,
+            "cl": 0.4316,
+            "cd": 0.00588,
+            "cd_pressure": 0.00141,
+            "cm": 0.008,
+            "transition_top": 0.1026,
+            "transition_bottom": 0.7573,
+            "requested_cl": 0.4316
+          }
+        ],
+        "reynolds": 5950000.0,
+        "cl_grid": [
+          -0.0126,
+          0.2125,
+          0.4316
+        ],
+        "cache_key": "ca2e31bfd60cae57e60e456912c768dcdb88545365cbf0512453d7e7f5f0ba01",
+        "cache_hit": false
+      }
+    },
+    "comparison": [
+      {
+        "observed": {
+          "alpha_deg": -0.05,
+          "cl": -0.0126,
+          "cd": 0.00809
+        },
+        "predicted": {
+          "alpha_deg": -0.113,
+          "cl": -0.0126,
+          "cd": 0.00788,
+          "cd_pressure": 0.00125,
+          "cm": -0.0001,
+          "transition_top": 0.05,
+          "transition_bottom": 0.05,
+          "requested_cl": -0.0126
+        },
+        "cd_relative_error": -0.02595797280593326,
+        "alpha_error_deg": -0.063,
+        "panel_cd_relative_change": -0.0012674271229403677,
+        "natural_cd": 0.00498,
+        "inside_diagnostic_bands": true,
+        "panel_check": true
+      },
+      {
+        "observed": {
+          "alpha_deg": 2.05,
+          "cl": 0.2125,
+          "cd": 0.00816
+        },
+        "predicted": {
+          "alpha_deg": 1.909,
+          "cl": 0.2125,
+          "cd": 0.00796,
+          "cd_pressure": 0.00135,
+          "cm": 0.0016,
+          "transition_top": 0.05,
+          "transition_bottom": 0.05,
+          "requested_cl": 0.2125
+        },
+        "cd_relative_error": -0.02450980392156865,
+        "alpha_error_deg": -0.1409999999999998,
+        "panel_cd_relative_change": -0.0012547051442910462,
+        "natural_cd": 0.00521,
+        "inside_diagnostic_bands": true,
+        "panel_check": true
+      },
+      {
+        "observed": {
+          "alpha_deg": 4.04,
+          "cl": 0.4316,
+          "cd": 0.00823
+        },
+        "predicted": {
+          "alpha_deg": 3.886,
+          "cl": 0.4316,
+          "cd": 0.00819,
+          "cd_pressure": 0.00166,
+          "cm": 0.0034,
+          "transition_top": 0.05,
+          "transition_bottom": 0.05,
+          "requested_cl": 0.4316
+        },
+        "cd_relative_error": -0.004860267314702349,
+        "alpha_error_deg": -0.15399999999999991,
+        "panel_cd_relative_change": -0.0012195121951220633,
+        "natural_cd": 0.00588,
+        "inside_diagnostic_bands": true,
+        "panel_check": true
+      }
+    ],
+    "all_diagnostic_bands_met": true,
+    "panel_check_passed": true,
+    "whole_aircraft_validation_passed": false,
+    "physical_validation_scope": "clean 0012 three-point diagnostic only"
+  },
+  "redesign": {
+    "run_id": "4e6c872c43534117ae70bfa585f7eba4",
+    "seed_run_id": "907ed3361dd1465bafa3e555d0f263e4",
+    "changed": "opt-in leaf mass stations only",
+    "iterations": 14,
+    "checks": {
+      "mass_budget": true,
+      "mtow_upper_bound": true,
+      "fuel_capacity": true,
+      "landing_stall": true,
+      "power_available": true,
+      "clean_lift": true,
+      "range": true,
+      "endurance": true,
+      "aero_table_accuracy": true,
+      "propeller_table_accuracy": true,
+      "mission_step_accuracy": true,
+      "shaft_torque_balance": true
+    },
+    "deltas": {
+      "mtow_kg": {
+        "before": 1217.601092913886,
+        "after": 1215.534296883428,
+        "difference": -2.0667960304581356,
+        "relative": -0.0016974327983823034
+      },
+      "fuel_kg": {
+        "before": 82.45704289306478,
+        "after": 82.04512092783654,
+        "difference": -0.4119219652282453,
+        "relative": -0.004995594685131333
+      },
+      "rated_power_w": {
+        "before": 151390.09805397195,
+        "after": 150717.93332646778,
+        "difference": -672.1647275041614,
+        "relative": -0.0044399517283126855
+      },
+      "area_m2": {
+        "before": 13.814368732731683,
+        "after": 13.7909197701558,
+        "difference": -0.023448962575884025,
+        "relative": -0.0016974327983821924
+      },
+      "owe_kg": {
+        "before": 785.5488723711537,
+        "after": 783.8873413427922,
+        "difference": -1.6615310283615372,
+        "relative": -0.0021151211424265126
+      },
+      "cg_x_m": {
+        "before": 2.6494313543653623,
+        "after": 2.6946939428974885,
+        "difference": 0.04526258853212628,
+        "relative": 0.01708388800394811
+      },
+      "engine_mass_kg": {
+        "before": 208.9502604427356,
+        "after": 207.9116070300975,
+        "difference": -1.038653412638098,
+        "relative": -0.004970816549533574
+      }
+    },
+    "cg_mac_fraction": 0.08362635432118458,
+    "elapsed_s": 623.0640720999982,
+    "execution_profile": {
+      "execution_mode": "reuse",
+      "iteration_s": 471.79606689999855,
+      "final_native_audit_s": 101.6857854000009,
+      "audit_scope": "non-node AVL/Newton and direct CCBlade; existing verified XFOIL polar cache allowed",
+      "mesh_and_tolerances_changed": false
+    },
+    "audit": {
+      "timestep_half_relative_fuel_error": 1.3925824804417175e-07,
+      "efficiency_range": [
+        0.8467879497193027,
+        0.8670035817409285
+      ],
+      "fuel_method_fraction": {
+        "native_engine_sfc_map": 0.9426494081638613,
+        "engine_map_low_load_base_bsfc": 0.04403224938921566,
+        "engine_map_ground_base_bsfc": 0.013318342446932209
+      },
+      "minimum_torque_margin_nm": 12.210521376291013
+    }
+  },
+  "verification_checks": {
+    "legacy_geometry": true,
+    "legacy_trim": true,
+    "leaf_stations_geometry": true,
+    "leaf_stations_trim": true,
+    "incidence_geometry": true,
+    "incidence_trim": true,
+    "strut_low_cd_geometry": true,
+    "strut_low_cd_trim": true,
+    "higher_speed_geometry": true,
+    "higher_speed_trim": true,
+    "rotated_normalized_airfoils_unchanged": true,
+    "mass_ledger": true,
+    "moment_ledger": true,
+    "end_fuel_moment": true,
+    "shared_fuel_station": true,
+    "archived_mission_replay": true
+  },
+  "unchanged_physics_sources": {
+    "engine_fuel.py": true,
+    "propulsion_model.py": true,
+    "ccblade_adapter.py": true,
+    "aircraft_drag.py": true
+  },
+  "regression": {
+    "tests": 459,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsed_s": 585.708
+  },
+  "ui": {
+    "saved_reopened_equal": true,
+    "archive_id": "34e0c2ef0ddc4fbeab6e73144c21a263",
+    "bundle_bytes": 2208367,
+    "archive_ui_no_exception": true,
+    "layout_editor_reopened": true,
+    "actual_result_ui_no_exception": true,
+    "current_run_id": "4e6c872c43534117ae70bfa585f7eba4",
+    "source_matches": true
+  },
+  "wheel": {
+    "version": "0.3.3",
+    "source_files": 117,
+    "wheel_sha256": "9534fc8ff2ed03632f3c64fc68c1e2581449631553ea5fccd61c4d4238b41c7b",
+    "all_sources_match": true
+  },
+  "physical_validation_passed": false,
+  "independent_target_aircraft_validation_points": 0,
+  "independent_unfitted_clean_airfoil_comparison_points": 3,
+  "open_reviews": [
+    "RV-04 physical strut/fairing data",
+    "RV-05 optimal speed",
+    "RV-06 measured stations and CG limits",
+    "RV-08 equipment/empty-mass definition",
+    "RV-11 body/power moments",
+    "RV-12 matched 2412/flapped 0012 and operating-domain experiments",
+    "RV-14 installed full-scale propeller",
+    "RV-15 target-engine RPM/OAT/mixture"
+  ],
+  "next_node": "V0.3.4 first-level constraints",
+  "check_coverage": {
+    "inactive_requirements": [
+      "MTOW upper bound",
+      "endurance minimum"
+    ],
+    "legacy_boolean_convention": "absence of these requirements returns true; not an additional validated constraint",
+    "not_computed": [
+      "takeoff/landing distance",
+      "allowable CG envelope",
+      "full-aircraft structural sizing"
+    ],
+    "followup": "V0.3.4 separate not applicable, not computed, met and exceeded"
+  },
+  "numerical_recovery": {
+    "original_failed_run": "4f33b27f230146259d87007da2c59800",
+    "original_status": "polar_missing at iteration 12, HorizontalTail, CL=-0.2",
+    "bounded_probes": [
+      {
+        "name": "extended240",
+        "parsed": {
+          "solver_version": "6.99",
+          "condition_readback": [
+            0.18,
+            4262000.0,
+            9.0,
+            1.0,
+            1.0
+          ],
+          "rows": [],
+          "missing_cl": [
+            -0.2
+          ]
+        }
+      },
+      {
+        "name": "seed240",
+        "parsed": {
+          "solver_version": "6.99",
+          "condition_readback": [
+            0.18,
+            4262000.0,
+            9.0,
+            1.0,
+            1.0
+          ],
+          "rows": [
+            {
+              "alpha_deg": 2.391,
+              "cl": -0.2,
+              "cd": 0.00422,
+              "cd_pressure": 0.00054,
+              "cm": 0.0715,
+              "transition_top": 0.3802,
+              "transition_bottom": 0.7268,
+              "requested_cl": -0.2
+            }
+          ],
+          "missing_cl": []
+        }
+      },
+      {
+        "name": "extended320",
+        "parsed": {
+          "solver_version": "6.99",
+          "condition_readback": [
+            0.18,
+            4262000.0,
+            9.0,
+            1.0,
+            1.0
+          ],
+          "rows": [
+            {
+              "alpha_deg": 2.393,
+              "cl": -0.2,
+              "cd": 0.00424,
+              "cd_pressure": 0.00055,
+              "cm": 0.0715,
+              "transition_top": 0.3784,
+              "transition_bottom": 0.7295,
+              "requested_cl": -0.2
+            }
+          ],
+          "missing_cl": []
+        }
+      },
+      {
+        "name": "extended400",
+        "parsed": {
+          "solver_version": "6.99",
+          "condition_readback": [
+            0.18,
+            4262000.0,
+            9.0,
+            1.0,
+            1.0
+          ],
+          "rows": [],
+          "missing_cl": [
+            -0.2
+          ]
+        }
+      }
+    ],
+    "policy": "only after six earlier attempts fail: independent 320-panel start, 1000 iterations, unchanged criterion/physics, 60 s process limit",
+    "fixed_point_repeat_differences": {
+      "legacy": {
+        "cd": 0.0,
+        "alpha_deg": 0.0,
+        "elevator_deg": 0.0,
+        "cg_x_m": 0.0
+      },
+      "leaf_stations": {
+        "cd": 0.0,
+        "alpha_deg": 0.0,
+        "elevator_deg": 0.0,
+        "cg_x_m": 0.0
+      },
+      "incidence": {
+        "cd": 0.0,
+        "alpha_deg": 0.0,
+        "elevator_deg": 0.0,
+        "cg_x_m": 0.0
+      },
+      "strut_low_cd": {
+        "cd": 0.0,
+        "alpha_deg": 0.0,
+        "elevator_deg": 0.0,
+        "cg_x_m": 0.0
+      },
+      "higher_speed": {
+        "cd": 0.0,
+        "alpha_deg": 0.0,
+        "elevator_deg": 0.0,
+        "cg_x_m": 0.0
+      }
+    },
+    "prior_evidence": {
+      "original_source_identity": {
+        "adapters.py": "80e767a6fd9fdb6ac75e58663dd16980fcd5d519390ae47638c0fa0c81307788",
+        "aero_feedback.py": "853a1621ee72c6ae96730fbb7853201d78ca75620314ebc3b3230c2df88fefcb",
+        "aero_report.py": "867ca0f8750c137e1dc1cf2a5f0ae836f7346ad411ea2d376a881dae35e5ba17",
+        "aero_service.py": "fc9505665b62b0438d6c8ee25690924dee7174da840964a948505f826ec4074e",
+        "aero_ui.py": "7e32c902f91527df99cbbc822378874df6667e817d2fa354cdd1456a9116eb56",
+        "aircraft_aero.py": "9772b1833a2ed200010f4e0a30d5b65f18d05feceec3a1a107c3b24635ca55ff",
+        "aircraft_drag.py": "fbc2eafc75caad0ab1449941b1e2b71ae42d27b780c77f5baa6c3a58cdf6e286",
+        "aircraft_geometry.py": "1b96c2d3f3c3e763d4fac610b41495b32a7044573750e613883043cc8d5b03f0",
+        "aircraft_reference.py": "4f03723a1e212619f307e54cf846d6ca025f629768b707dbde2e04332775e11d",
+        "aircraft_trim.py": "0b5ba50bc99a9abccf3b4b924732ab63cdada03a01905227758f433bc5c3c439",
+        "aircraft_vsp_worker.py": "dbb472925901e00be9b8a9882c70eb935fb2ba98ee2ef584ad1bb3221ed6bb19",
+        "archive_evidence.py": "fb1743ad87b720bb711e56ef3d11d9958ebc2a60b3927a0a5139d9c46842d4de",
+        "avl_aircraft.py": "364a401ac78964d8c4f18c588ea50aea0c89114712777725eab20ad10582c085",
+        "avl_session.py": "60700e8a454810769004b0e2966875d20927d48a622797fd7ef1d6f1d17f9af6",
+        "batch_validation.py": "3e9ae784b950f55daa5ae3edd3ae2c04d7e8970be9046a807fbef2428537c8a5",
+        "bounded_output.py": "b6ad66abc7e4672ac3860c5d02f3a8f379b01f8adc12b73ac629c86b767dbf59",
+        "box_comparison.py": "bf8e8a4c19e59c24e53a9cbbcc2add9ef42ece3343f902663795c52a44e783b5",
+        "buckling.py": "a473b5d91d835f3f100473e11aad1185f6597854e8cdd87960a4b22658399720",
+        "calculix_benchmark.py": "f3bab4818455864f4324f62a96f1fff25cdaf42f08e8b42b6d548c8e20a630ec",
+        "ccblade_adapter.py": "af93dfee205f2b8e349b425cbf13f789899b9039d5355dffe1cd19aeb6254737",
+        "ccblade_benchmark.py": "34ab2197a16efb2eddf221d1f84b793c92cca3fcd4b2ab3f70322f6dd66c020f",
+        "cli.py": "87aedde2134f0c61fb889e8afe1cfe03f2ccd8dd124209d429de18533abd7415",
+        "comparison_archive.py": "b5f4a080052e5518120e1f853496ec0548eb49336d8de38be696e74be664021c",
+        "comparison_service.py": "6f855c742dd2867d936361d09d84890cbe8df3506038adc1cfb05ac09e2185bb",
+        "comparison_ui.py": "5885aca67a576d8df6873b795e66802f0549a66030b002dfcd17d40ee4d20fa3",
+        "computation_identity.py": "c03b3a464754ffed4ce12b6b1138873d3fe1ffdb3406567fb99eed8c2a190242",
+        "configuration.py": "4ed86770b5be810db956cff7246b507962fe471d116ec75f97bf31c5789f5426",
+        "coupled_archive.py": "f7064283f99355f438d1c04a6d117811032d3d740c37debf3afb07e2b37e2bb7",
+        "coupled_identity.py": "b119604f91aa83e30f47d80ed5f83b9ed200aa5db806f92118d1e7f559cdd5a8",
+        "coupled_report.py": "5bbe6f67cebaedaa798035d1ede0bd2a2d48fe27d29263ee144c9e1911f20cb4",
+        "coupled_service.py": "56636e12f8977ba95a654730629b923fd14adc3a2dd23c62c4226cf39ac60dfb",
+        "coupled_ui.py": "dd1afc06ff6c7a8fec69a847617419b538fe01150f454e74b8c2b9dee4238324",
+        "coupled_worker.py": "2bf2b4da15776a5142b32e4e808bb57951de354b5fac3d6d76443f5790ee9220",
+        "design_cards.py": "b142e8e06c6ca2dd025995512db9c906ff08858be5e88471f8ddef108f09cd73",
+        "design_comparison.py": "333e03a4e5da91f82453a4a99054076d4dd9233ad9b673062533c566093cb1c7",
+        "design_report.py": "202d8226a88ce27971781c241bf3808ef770577c4ffe21d7ae95fee6b2409f1f",
+        "design_service.py": "45abc8b6ac761c6c489fd27b0119b7e9258563f4548d6e86bae1d1bd2ad22c88",
+        "design_ui.py": "696a62887959b0c86bed0ecec9d55241dc3686ab32dda3e058362d5cc9e14fef",
+        "drag_geometry_worker.py": "a5f28e900c133e436ec6e801fda2605942174e5cbb0b09c3cfa27bff2ecd33bf",
+        "drag_report.py": "865fc455ae89d3cfc51521644541e2e7156290418e039e2b0143658ce9ad295a",
+        "drag_service.py": "7b61478ddec99e7b1fea7751cc0cd1c4e16e007008210a14f2b216716f2fd70a",
+        "drag_ui.py": "bba05565cb0374076fdea56e9dc5a7a886062f7f07252fb91a18226b4214fc06",
+        "engine_fuel.py": "753966d653278cef4e628987c8ff1e16b1dfc0476f1b356e6039e307a21d6f3b",
+        "exact_cache.py": "5376cc0b24faa7889af6955bf1c459ee38dde2c903a072aae64b462b6c8ab895",
+        "fastga_compat.py": "6ba7f14ef2c6046533ef6cef6d93355a1db91255bab46c9746f1ae5a14a94fab",
+        "fastga_diagnostics.py": "bc93d372e3e5bb7f5dc4e068f4dfb3b14dfda42600ec8f84a3b51e06f631b887",
+        "fastga_interface.py": "cb0852101644a0a5a9e34fb2cfb2a249d9a148988dfdc05a0cf28f41021c7b69",
+        "fastga_mass.py": "425d441f5b4e79e575dfa205d6b55f8b6da55ef211fda80a3abe6b1f86207f71",
+        "fastga_worker.py": "a25185200db8ebb0222eb307f3852c7c83c15ed9c98c3c8b1bc92fed8958375f",
+        "fea_mesh.py": "f99f1817b20d85089a64d4248684c64a8ba7180268fe11b91a14ed415dc729e3",
+        "feedback_evidence.py": "1703774e2ad22df762a25c063dc2eb898cefdadce65989a78cf31a28c0cb3c13",
+        "feedback_native.py": "6dd7bfc98bb61ac3bbf428e807bab0b353c30c41771535c5bd79fc05125f4555",
+        "feedback_report.py": "3d430acb4157fc0cea1398eaf7b4ccc55502beccba39298981248a485b262625",
+        "feedback_service.py": "8e03857ac8ed707a6e0529e3db45af425595c395c6b75371158c6414bc0cf4e9",
+        "feedback_ui.py": "1df581c24486036944554e61d6fedd5e35377cb9031ae0d683c6c26b21d951d1",
+        "feedback_worker.py": "3b0ff3d4bbc43f492a7f441f66ade57e965c755285cfce0efc3e52bcbd76667f",
+        "flight_loads.py": "4d9d7e8bcd24d59131337cbdb5953e90ed432853e5c6c4b359857a7395247890",
+        "flight_service.py": "72dcf0c2a247bd1ab560819a1a295141f459143377c964ecfac24129c4bc5645",
+        "flight_state.py": "042fc1a50ae186487b5f6a978fbae8a7f86bce1ab0abef81cc5dc35129c1f98b",
+        "flight_ui.py": "fb4b7a8a3ee36f1a3f01e65c719eed70c8150473f391047523d8d8ff74d0fa78",
+        "fuel_model.py": "2678359dc34e16e0aa7c881a479f25ed3645fb7bb9e6afd3697f82b945f0da66",
+        "fuel_validation.py": "1485a6bd9f9b870385fb5f475da73ba7a838e2eb0f1c38199c59732bfc8d64b4",
+        "geometry_report.py": "423e78b7d2b730c13dfcae8fa2c75bf3b83884e99e1b2afba3eae6ddecd0891d",
+        "geometry_service.py": "1c282b65e71a242399622b3c30eff57648ed18cab00c24fc0bb38dd1fa3d2f42",
+        "geometry_ui.py": "407a598773ed1c88a2dddd540b3c3c0af513225463117262527244711e0bdee1",
+        "incidence.py": "fd4d283b7361ed45c0e739c6cfb36ac518b43dc71a3d1a7637b8b0bf0c28a038",
+        "jobs.py": "5e8303ddfc2422fb46764cf966ea7e4420e61a18a10df22e850f14bc0c5344e6",
+        "job_events.py": "51031b8891b1e61da620cdd39652fdbfcd420883095b2ecec3a4e3b69032af83",
+        "job_runner.py": "abf8e51c5d325f9a25856cd667a40a4b547a4a952fdc945ea269a5572805279a",
+        "job_ui.py": "e9cba30185e4ba35f7ece73efb4b8a145898ffb8877f525bd56b13b7be94d98e",
+        "job_worker.py": "35f258f502a0594554aced0857937497beb526037ccfa57f0d5d15f1122f6bcb",
+        "layout.py": "237cf49abc667c48069e4b5c2a4c8221fbbeb40e0d3792db0dfa1d4b62bf65c7",
+        "layout_ui.py": "de991d2e8a4cbdb89c13851727a7ba4e1290d8c99bb6d2398ca0ef1362e2a5fb",
+        "mechanics.py": "aece8baec13b7d9a84e133720f82a33d70444a38c980b86cf727cbdab0973650",
+        "model.py": "345afae92c6b8dd09435ebb31ce234ddf40e0d5e615e8a2fca4f2e85cc058b11",
+        "oas_benchmark.py": "74d2900b9dbba587c701bd2fc92ba75a8bf09ec17678c03ac67c1f00cdff5c56",
+        "oas_wingbox.py": "e8d0b503f1f1ba3fb7d77abdda14d376820fff41ef32f1b5a97e187d0f2f737b",
+        "plate_buckling.py": "7448faec93a91382127a0ade183b69d26074062be66ddaab1607b249b1fd9c09",
+        "plate_service.py": "0c740429e6591a1b020a334beb344fe3f1a8325569498cfdd43da0b2d9fb7301",
+        "plate_ui.py": "47adf0c1efec842d669cb199dfa3f8dfb47d21e8bd67f9df846bbe0813e6b0d9",
+        "processes.py": "e7d030f653df07f94675b3aba7afadf116bb6135dcb4496da417ee92a4723233",
+        "project_archive.py": "8aa1cce87d350e22a0e76feec0fb4f66a0eccba3c6956bfc569dcc46cb5f3ac2",
+        "project_ui.py": "989efb79dd5d4f90de52db2f7d28bdfb48f0fa40844de85e517aa2922d1db049",
+        "propulsion_feedback.py": "537347f58d8aefbe7d422d5ba044060be8cc448f4014f6217a464075e4e1d7ab",
+        "propulsion_model.py": "5165440160107be26f49a43f3fdbaae1d103e3e012424111697d4a2d448dc167",
+        "propulsion_report.py": "85c46d94966087e75c915a8323db5d1d52ba72e74c2ad81b218ddf8046e5a6e7",
+        "propulsion_service.py": "cba6ea802d93884303dd306039720214ece3446a33234efb241881becf27affc",
+        "propulsion_ui.py": "ce01f1ccf7f38375dd9af837222d04ab59aae227f8d8f31e5b3cc41c3b512c82",
+        "reference_cruise.py": "7987b65965090c774f9043e126a10724fab4d48e3eb87120c33891cb3764242a",
+        "requirements.py": "1db85233b6076f074de58a9ea6a408a427db583dbe874408f69fab7a69d7f936",
+        "service.py": "281a26543222d289b14e301034e384d3fdd0271ae7eb603bdeb02002645b653e",
+        "shell_loads.py": "a06bdbb345ab2ac1cf18265eec95815accd6b3f2bb0732a7eaaee9c09208a397",
+        "shell_static.py": "1c23aabbf1395b4b2a7729b135428b130ff2d252397b3420bb3e287c7fee4da4",
+        "shell_validation.py": "30d6c706a44d32d131d0ab6c7f9e41508c82bd39aabe8f3cab26e28cab68be92",
+        "sizing.py": "385ff4137d2848ea27aee985eb55b62c4019ead6d8a6f6c113ae134ca007b02c",
+        "sizing_config.py": "e2ca8955a25fc1ccd77fab6bda0caf98c70c2cf721c2a3ede9b9beb30e7410c0",
+        "sizing_physics.py": "c3da907766f4596e4ad85c36e59767ecaaa4e38a0d9029ea1338bb528ffcf6bc",
+        "sizing_service.py": "e13f8f8d9fc91be4e19d5c1d2b5607634a1760c9cfbd5196872060f86f08a41f",
+        "sizing_ui.py": "5cbeb084db73b957be21d91b2f6d0260162271e585d717f000ff6717a8d06fdd",
+        "sizing_worker.py": "8a1beb33e3764ed21660e8fd2dfea387fa371d0f7ea5d06d8ebb966726d15cbb",
+        "static_service.py": "941de7a411c9814b8c73883b248aecbb04ebb812cf380bafb7e3f5f7b39528f9",
+        "structural_sensitivity.py": "cf1527dafd494a67281b12414e4f223e13e31c76252ff2f1f7592bd3ce77e6fc",
+        "structure_service.py": "5703dd5d078b0af7dfb078b661beace113b627e97c304b9d612af39fe45ad12b",
+        "tool_health.py": "ca04b7e9a06d2cc76e122002621c2c3b12b6d913a6d5db8a27533ed41ae46e39",
+        "tool_ui.py": "b346eeb68677cd4db8cebb05fee15dbe30cc0fc0b45dd4ca99654901c42cedc4",
+        "trim_report.py": "5793b363fb2eacf715f79cbf946c54ddf1fb04d56848195ebb056fab9e1971b8",
+        "trim_service.py": "c90a5ddee4f2db9c2c7b3cb7b3ac61ca806042f47d5687c0908c5df8f543da1d",
+        "trim_ui.py": "c8aa4d8a02c9fe0179fba2f46bc5a4592c691198b26994e713732b331059fc4c",
+        "vsp_structure_worker.py": "ee7cfff132602d9b5c6875b54c956cbc6d381fd4ef0228cdb7455add725899bc",
+        "vsp_worker.py": "aba49475b1221a2ad13d73644a38f508bcecc093859184e78e782282a7f73abd",
+        "xfoil_polars.py": "11ca5d93547c8b6e5196b35b7d1aefca3350fc92535c249299738370968b768f",
+        "__init__.py": "6985cc57c158e7210103046bcd4392e61abf0a75d577ed0426621d3dc202f9ff",
+        "fastga_plugins/furniture.py": "45b5a219b73c6380a63418f0e64f1f66d189c7943147f39faa2e98d118f719bf",
+        "fastga_plugins/reserve.py": "ceb05f0f889a91b66bea34856f0dbcf0de594e895f16edf0cdbdef0bbe2b2cda",
+        "fastga_plugins/unusable_fuel.py": "724433d55934a868696f27553b9924c75f99ca6594df274045dfaf9bf5a00f21",
+        "fastga_plugins/__init__.py": "652c53dda99eb1a2b439a1aca6f0ec81c25fed142d761e63ddf46af578a41a17",
+        "ccblade_worker.jl": "99dc9456c448b4fa1da20d5c28d6cd484ffb21aa17cad664c1f1356fe02faca4"
+      },
+      "reused_evidence": [
+        "local/v033/formal/fixed-fuel-common-load.json",
+        "local/v033/formal/speed.json"
+      ],
+      "reason": "unchanged mission/engine/propeller formulas; speed points did not use extended recovery",
+      "failed_original_run": "4f33b27f230146259d87007da2c59800",
+      "changed_sources": [
+        "xfoil_polars.py"
+      ]
+    },
+    "native_regression": "failed point plus independent initialization and neighbors, cache readback",
+    "first_failure_preserved": true
+  },
+  "metadata_correction": {
+    "cancelled_run": "dce819ced9d74217bbaa3024abf35a62",
+    "reason": "flight-state source text still said fuel at wing quarter chord; numerical ledger already correct",
+    "process_tree_terminated_before_edit": true,
+    "unit_checks": 10,
+    "final_source_identity": {
+      "adapters.py": "80e767a6fd9fdb6ac75e58663dd16980fcd5d519390ae47638c0fa0c81307788",
+      "aero_feedback.py": "853a1621ee72c6ae96730fbb7853201d78ca75620314ebc3b3230c2df88fefcb",
+      "aero_report.py": "867ca0f8750c137e1dc1cf2a5f0ae836f7346ad411ea2d376a881dae35e5ba17",
+      "aero_service.py": "fc9505665b62b0438d6c8ee25690924dee7174da840964a948505f826ec4074e",
+      "aero_ui.py": "7e32c902f91527df99cbbc822378874df6667e817d2fa354cdd1456a9116eb56",
+      "aircraft_aero.py": "9772b1833a2ed200010f4e0a30d5b65f18d05feceec3a1a107c3b24635ca55ff",
+      "aircraft_drag.py": "fbc2eafc75caad0ab1449941b1e2b71ae42d27b780c77f5baa6c3a58cdf6e286",
+      "aircraft_geometry.py": "1b96c2d3f3c3e763d4fac610b41495b32a7044573750e613883043cc8d5b03f0",
+      "aircraft_reference.py": "4f03723a1e212619f307e54cf846d6ca025f629768b707dbde2e04332775e11d",
+      "aircraft_trim.py": "0b5ba50bc99a9abccf3b4b924732ab63cdada03a01905227758f433bc5c3c439",
+      "aircraft_vsp_worker.py": "dbb472925901e00be9b8a9882c70eb935fb2ba98ee2ef584ad1bb3221ed6bb19",
+      "archive_evidence.py": "fb1743ad87b720bb711e56ef3d11d9958ebc2a60b3927a0a5139d9c46842d4de",
+      "avl_aircraft.py": "364a401ac78964d8c4f18c588ea50aea0c89114712777725eab20ad10582c085",
+      "avl_session.py": "60700e8a454810769004b0e2966875d20927d48a622797fd7ef1d6f1d17f9af6",
+      "batch_validation.py": "3e9ae784b950f55daa5ae3edd3ae2c04d7e8970be9046a807fbef2428537c8a5",
+      "bounded_output.py": "b6ad66abc7e4672ac3860c5d02f3a8f379b01f8adc12b73ac629c86b767dbf59",
+      "box_comparison.py": "bf8e8a4c19e59c24e53a9cbbcc2add9ef42ece3343f902663795c52a44e783b5",
+      "buckling.py": "a473b5d91d835f3f100473e11aad1185f6597854e8cdd87960a4b22658399720",
+      "calculix_benchmark.py": "f3bab4818455864f4324f62a96f1fff25cdaf42f08e8b42b6d548c8e20a630ec",
+      "ccblade_adapter.py": "af93dfee205f2b8e349b425cbf13f789899b9039d5355dffe1cd19aeb6254737",
+      "ccblade_benchmark.py": "34ab2197a16efb2eddf221d1f84b793c92cca3fcd4b2ab3f70322f6dd66c020f",
+      "cli.py": "87aedde2134f0c61fb889e8afe1cfe03f2ccd8dd124209d429de18533abd7415",
+      "comparison_archive.py": "b5f4a080052e5518120e1f853496ec0548eb49336d8de38be696e74be664021c",
+      "comparison_service.py": "6f855c742dd2867d936361d09d84890cbe8df3506038adc1cfb05ac09e2185bb",
+      "comparison_ui.py": "5885aca67a576d8df6873b795e66802f0549a66030b002dfcd17d40ee4d20fa3",
+      "computation_identity.py": "c03b3a464754ffed4ce12b6b1138873d3fe1ffdb3406567fb99eed8c2a190242",
+      "configuration.py": "4ed86770b5be810db956cff7246b507962fe471d116ec75f97bf31c5789f5426",
+      "coupled_archive.py": "f7064283f99355f438d1c04a6d117811032d3d740c37debf3afb07e2b37e2bb7",
+      "coupled_identity.py": "b119604f91aa83e30f47d80ed5f83b9ed200aa5db806f92118d1e7f559cdd5a8",
+      "coupled_report.py": "5bbe6f67cebaedaa798035d1ede0bd2a2d48fe27d29263ee144c9e1911f20cb4",
+      "coupled_service.py": "56636e12f8977ba95a654730629b923fd14adc3a2dd23c62c4226cf39ac60dfb",
+      "coupled_ui.py": "dd1afc06ff6c7a8fec69a847617419b538fe01150f454e74b8c2b9dee4238324",
+      "coupled_worker.py": "2bf2b4da15776a5142b32e4e808bb57951de354b5fac3d6d76443f5790ee9220",
+      "design_cards.py": "b142e8e06c6ca2dd025995512db9c906ff08858be5e88471f8ddef108f09cd73",
+      "design_comparison.py": "333e03a4e5da91f82453a4a99054076d4dd9233ad9b673062533c566093cb1c7",
+      "design_report.py": "202d8226a88ce27971781c241bf3808ef770577c4ffe21d7ae95fee6b2409f1f",
+      "design_service.py": "45abc8b6ac761c6c489fd27b0119b7e9258563f4548d6e86bae1d1bd2ad22c88",
+      "design_ui.py": "696a62887959b0c86bed0ecec9d55241dc3686ab32dda3e058362d5cc9e14fef",
+      "drag_geometry_worker.py": "a5f28e900c133e436ec6e801fda2605942174e5cbb0b09c3cfa27bff2ecd33bf",
+      "drag_report.py": "865fc455ae89d3cfc51521644541e2e7156290418e039e2b0143658ce9ad295a",
+      "drag_service.py": "7b61478ddec99e7b1fea7751cc0cd1c4e16e007008210a14f2b216716f2fd70a",
+      "drag_ui.py": "bba05565cb0374076fdea56e9dc5a7a886062f7f07252fb91a18226b4214fc06",
+      "engine_fuel.py": "753966d653278cef4e628987c8ff1e16b1dfc0476f1b356e6039e307a21d6f3b",
+      "exact_cache.py": "5376cc0b24faa7889af6955bf1c459ee38dde2c903a072aae64b462b6c8ab895",
+      "fastga_compat.py": "6ba7f14ef2c6046533ef6cef6d93355a1db91255bab46c9746f1ae5a14a94fab",
+      "fastga_diagnostics.py": "bc93d372e3e5bb7f5dc4e068f4dfb3b14dfda42600ec8f84a3b51e06f631b887",
+      "fastga_interface.py": "cb0852101644a0a5a9e34fb2cfb2a249d9a148988dfdc05a0cf28f41021c7b69",
+      "fastga_mass.py": "425d441f5b4e79e575dfa205d6b55f8b6da55ef211fda80a3abe6b1f86207f71",
+      "fastga_worker.py": "a25185200db8ebb0222eb307f3852c7c83c15ed9c98c3c8b1bc92fed8958375f",
+      "fea_mesh.py": "f99f1817b20d85089a64d4248684c64a8ba7180268fe11b91a14ed415dc729e3",
+      "feedback_evidence.py": "1703774e2ad22df762a25c063dc2eb898cefdadce65989a78cf31a28c0cb3c13",
+      "feedback_native.py": "6dd7bfc98bb61ac3bbf428e807bab0b353c30c41771535c5bd79fc05125f4555",
+      "feedback_report.py": "3d430acb4157fc0cea1398eaf7b4ccc55502beccba39298981248a485b262625",
+      "feedback_service.py": "8e03857ac8ed707a6e0529e3db45af425595c395c6b75371158c6414bc0cf4e9",
+      "feedback_ui.py": "1df581c24486036944554e61d6fedd5e35377cb9031ae0d683c6c26b21d951d1",
+      "feedback_worker.py": "3b0ff3d4bbc43f492a7f441f66ade57e965c755285cfce0efc3e52bcbd76667f",
+      "flight_loads.py": "4d9d7e8bcd24d59131337cbdb5953e90ed432853e5c6c4b359857a7395247890",
+      "flight_service.py": "72dcf0c2a247bd1ab560819a1a295141f459143377c964ecfac24129c4bc5645",
+      "flight_state.py": "74f4ccd2c0fa9724ab506055f4a152b7bfb0b2b04aa9781779b5bf1a54039b2f",
+      "flight_ui.py": "fb4b7a8a3ee36f1a3f01e65c719eed70c8150473f391047523d8d8ff74d0fa78",
+      "fuel_model.py": "2678359dc34e16e0aa7c881a479f25ed3645fb7bb9e6afd3697f82b945f0da66",
+      "fuel_validation.py": "1485a6bd9f9b870385fb5f475da73ba7a838e2eb0f1c38199c59732bfc8d64b4",
+      "geometry_report.py": "423e78b7d2b730c13dfcae8fa2c75bf3b83884e99e1b2afba3eae6ddecd0891d",
+      "geometry_service.py": "1c282b65e71a242399622b3c30eff57648ed18cab00c24fc0bb38dd1fa3d2f42",
+      "geometry_ui.py": "407a598773ed1c88a2dddd540b3c3c0af513225463117262527244711e0bdee1",
+      "incidence.py": "fd4d283b7361ed45c0e739c6cfb36ac518b43dc71a3d1a7637b8b0bf0c28a038",
+      "jobs.py": "5e8303ddfc2422fb46764cf966ea7e4420e61a18a10df22e850f14bc0c5344e6",
+      "job_events.py": "51031b8891b1e61da620cdd39652fdbfcd420883095b2ecec3a4e3b69032af83",
+      "job_runner.py": "abf8e51c5d325f9a25856cd667a40a4b547a4a952fdc945ea269a5572805279a",
+      "job_ui.py": "e9cba30185e4ba35f7ece73efb4b8a145898ffb8877f525bd56b13b7be94d98e",
+      "job_worker.py": "35f258f502a0594554aced0857937497beb526037ccfa57f0d5d15f1122f6bcb",
+      "layout.py": "237cf49abc667c48069e4b5c2a4c8221fbbeb40e0d3792db0dfa1d4b62bf65c7",
+      "layout_ui.py": "de991d2e8a4cbdb89c13851727a7ba4e1290d8c99bb6d2398ca0ef1362e2a5fb",
+      "mechanics.py": "aece8baec13b7d9a84e133720f82a33d70444a38c980b86cf727cbdab0973650",
+      "model.py": "345afae92c6b8dd09435ebb31ce234ddf40e0d5e615e8a2fca4f2e85cc058b11",
+      "oas_benchmark.py": "74d2900b9dbba587c701bd2fc92ba75a8bf09ec17678c03ac67c1f00cdff5c56",
+      "oas_wingbox.py": "e8d0b503f1f1ba3fb7d77abdda14d376820fff41ef32f1b5a97e187d0f2f737b",
+      "plate_buckling.py": "7448faec93a91382127a0ade183b69d26074062be66ddaab1607b249b1fd9c09",
+      "plate_service.py": "0c740429e6591a1b020a334beb344fe3f1a8325569498cfdd43da0b2d9fb7301",
+      "plate_ui.py": "47adf0c1efec842d669cb199dfa3f8dfb47d21e8bd67f9df846bbe0813e6b0d9",
+      "processes.py": "e7d030f653df07f94675b3aba7afadf116bb6135dcb4496da417ee92a4723233",
+      "project_archive.py": "8aa1cce87d350e22a0e76feec0fb4f66a0eccba3c6956bfc569dcc46cb5f3ac2",
+      "project_ui.py": "989efb79dd5d4f90de52db2f7d28bdfb48f0fa40844de85e517aa2922d1db049",
+      "propulsion_feedback.py": "537347f58d8aefbe7d422d5ba044060be8cc448f4014f6217a464075e4e1d7ab",
+      "propulsion_model.py": "5165440160107be26f49a43f3fdbaae1d103e3e012424111697d4a2d448dc167",
+      "propulsion_report.py": "85c46d94966087e75c915a8323db5d1d52ba72e74c2ad81b218ddf8046e5a6e7",
+      "propulsion_service.py": "cba6ea802d93884303dd306039720214ece3446a33234efb241881becf27affc",
+      "propulsion_ui.py": "ce01f1ccf7f38375dd9af837222d04ab59aae227f8d8f31e5b3cc41c3b512c82",
+      "reference_cruise.py": "7987b65965090c774f9043e126a10724fab4d48e3eb87120c33891cb3764242a",
+      "requirements.py": "1db85233b6076f074de58a9ea6a408a427db583dbe874408f69fab7a69d7f936",
+      "service.py": "281a26543222d289b14e301034e384d3fdd0271ae7eb603bdeb02002645b653e",
+      "shell_loads.py": "a06bdbb345ab2ac1cf18265eec95815accd6b3f2bb0732a7eaaee9c09208a397",
+      "shell_static.py": "1c23aabbf1395b4b2a7729b135428b130ff2d252397b3420bb3e287c7fee4da4",
+      "shell_validation.py": "30d6c706a44d32d131d0ab6c7f9e41508c82bd39aabe8f3cab26e28cab68be92",
+      "sizing.py": "385ff4137d2848ea27aee985eb55b62c4019ead6d8a6f6c113ae134ca007b02c",
+      "sizing_config.py": "e2ca8955a25fc1ccd77fab6bda0caf98c70c2cf721c2a3ede9b9beb30e7410c0",
+      "sizing_physics.py": "c3da907766f4596e4ad85c36e59767ecaaa4e38a0d9029ea1338bb528ffcf6bc",
+      "sizing_service.py": "e13f8f8d9fc91be4e19d5c1d2b5607634a1760c9cfbd5196872060f86f08a41f",
+      "sizing_ui.py": "5cbeb084db73b957be21d91b2f6d0260162271e585d717f000ff6717a8d06fdd",
+      "sizing_worker.py": "8a1beb33e3764ed21660e8fd2dfea387fa371d0f7ea5d06d8ebb966726d15cbb",
+      "static_service.py": "941de7a411c9814b8c73883b248aecbb04ebb812cf380bafb7e3f5f7b39528f9",
+      "structural_sensitivity.py": "cf1527dafd494a67281b12414e4f223e13e31c76252ff2f1f7592bd3ce77e6fc",
+      "structure_service.py": "5703dd5d078b0af7dfb078b661beace113b627e97c304b9d612af39fe45ad12b",
+      "tool_health.py": "ca04b7e9a06d2cc76e122002621c2c3b12b6d913a6d5db8a27533ed41ae46e39",
+      "tool_ui.py": "b346eeb68677cd4db8cebb05fee15dbe30cc0fc0b45dd4ca99654901c42cedc4",
+      "trim_report.py": "5793b363fb2eacf715f79cbf946c54ddf1fb04d56848195ebb056fab9e1971b8",
+      "trim_service.py": "c90a5ddee4f2db9c2c7b3cb7b3ac61ca806042f47d5687c0908c5df8f543da1d",
+      "trim_ui.py": "c8aa4d8a02c9fe0179fba2f46bc5a4592c691198b26994e713732b331059fc4c",
+      "vsp_structure_worker.py": "ee7cfff132602d9b5c6875b54c956cbc6d381fd4ef0228cdb7455add725899bc",
+      "vsp_worker.py": "aba49475b1221a2ad13d73644a38f508bcecc093859184e78e782282a7f73abd",
+      "xfoil_polars.py": "0e0c15a8719fa3aa7578fdbbb90b43229babb24e16375a42eb99e46848b7df43",
+      "__init__.py": "6985cc57c158e7210103046bcd4392e61abf0a75d577ed0426621d3dc202f9ff",
+      "fastga_plugins/furniture.py": "45b5a219b73c6380a63418f0e64f1f66d189c7943147f39faa2e98d118f719bf",
+      "fastga_plugins/reserve.py": "ceb05f0f889a91b66bea34856f0dbcf0de594e895f16edf0cdbdef0bbe2b2cda",
+      "fastga_plugins/unusable_fuel.py": "724433d55934a868696f27553b9924c75f99ca6594df274045dfaf9bf5a00f21",
+      "fastga_plugins/__init__.py": "652c53dda99eb1a2b439a1aca6f0ec81c25fed142d761e63ddf46af578a41a17",
+      "ccblade_worker.jl": "99dc9456c448b4fa1da20d5c28d6cd484ffb21aa17cad664c1f1356fe02faca4"
+    }
+  },
+  "evidence_storage": {
+    "runs": [
+      {
+        "run_id": "4f33b27f230146259d87007da2c59800",
+        "status": "polar_missing",
+        "file_count": 30263,
+        "stored_bytes": 1098941359,
+        "native_directory_bytes": 1003110747,
+        "archive_bytes": 88756921
+      },
+      {
+        "run_id": "dce819ced9d74217bbaa3024abf35a62",
+        "status": "cancelled",
+        "file_count": 17094,
+        "stored_bytes": 505091051,
+        "native_directory_bytes": 501981880,
+        "archive_bytes": 0
+      },
+      {
+        "run_id": "4e6c872c43534117ae70bfa585f7eba4",
+        "status": "concept_checked_with_limits",
+        "file_count": 33955,
+        "stored_bytes": 1115619033,
+        "native_directory_bytes": 998782498,
+        "archive_bytes": 105640825
+      }
+    ],
+    "scope": "three whole-aircraft attempts only; excludes shared cache, fixed-point checks and regression temp files",
+    "history_deleted": false
+  }
+}

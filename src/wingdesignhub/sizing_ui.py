@@ -29,13 +29,15 @@ def assumptions(base, key):
         else:st.caption('默认 0.30 是混合比未细分的概念假设；在 Piper 经济巡航点高估约 26.5%。可按任务选择经济参考，或填入有依据的基础值。')
         values['seats'] = st.number_input('总座位数（仅用于设备重量）', min_value=2, max_value=6,
                                            value=base.seats, step=1, key=key+'_seats')
+        from .layout_ui import editor
+        values['layout']=editor(base.layout,key)
         if any(v != getattr(base, n) for n, v in values.items()):
             values['source'] = '用户调整的概念假设；随方案确认'
         result = replace(base, **values)
         st.caption(result.source)
-        st.caption('模板固定参数：梢根比 0.6、厚弦比 0.12、四分之一弦后掠 0°；尾容量系数平尾 0.7/垂尾 0.04，尾臂 0.45 倍机身长；极限过载 5.7。机身宽 1.2 m、高 1.35 m；翼四分之一弦站位 0.39 倍机身长。')
+        st.caption('模板固定参数：梢根比 0.6、厚弦比 0.12、四分之一弦后掠 0°；尾容量系数平尾 0.7/垂尾 0.04，尾臂 0.45 倍机身长；极限过载 5.7。机身宽 1.2 m、高 1.35 m；机翼站位默认0.39倍机长，启用布置后按配置。')
         st.caption('任务采用标准大气、无风、密度比例可用功率；下降率 2 m/s、爬升速度 1.3 倍净构型失速速度。滑行各 300 s/10% 功率，起飞地面段 30 s/90% 功率；下降至少 5% 功率。油箱与功率各留 2% 定尺寸余量。')
-        st.caption('部件重心站位为概念假设：机体 0.44、动力 0.12、系统/座椅 0.40 倍机身长；载荷与燃油位于机翼四分之一弦。重心包线后续校核。')
+        st.caption('重心按本次布局台账计算，重心包线后续校核。' if result.layout is not None else '旧版概念站位：机体0.44、动力0.12、系统/座椅0.40倍机长，载荷和燃油位于翼四分之一弦；不是允许重心包线。')
     return result
 
 

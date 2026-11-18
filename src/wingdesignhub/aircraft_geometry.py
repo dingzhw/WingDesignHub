@@ -10,7 +10,7 @@ BODY_ROTATION = np.diag([-1., 1., -1.])
 LIMITS = [
     '常规低翼、常规尾翼、单发前三点金属飞机概念外形；总体尺寸沿用本次已收敛结果。',
     '翼型、尾翼展弦比、垂向位置、椭圆机身截面及动力/起落架包络是版本化模板假设，尚未经过气动或布置优化。',
-    '主翼采用几何 NACA2412，尾翼 NACA0012；升力面零扭转、零安装角、零上反角、四分之一弦零后掠。原总体极曲线保持不变。',
+    '主翼NACA2412、尾翼NACA0012；翼/平尾安装角按布局配置（默认零），零扭转/上反及四分之一弦无后掠。AVL安装角采用线性边界条件，CAD实体绕四分之一弦旋转。',
     '螺旋桨仅为直径 1.9 m 的无推力盘，发动机包络含在前机身；起落架仅为支柱和轮罩外形，尺寸未作匹配或强度校核。',
     '气动接口使用全翼毛面积、全翼展和平均气动弦；主翼与机身重叠面积仍在参考面积中。参考点采用总体估算起飞重心 x，y/z 暂取零。',
     '几何任务导出升力面和机身分组、截面及 DegenGeom；独立气动子任务记录求解状态，黏性阻力、配平、动力影响和重心包线仍待接入。',
@@ -95,6 +95,9 @@ def build_geometry_contract(project, record, options=None, *, trial=False):
                  tail_x,.12*g['fuselage_height_m'],spec=hs)
     vt = surface('VerticalTail',g['vertical_tail_area_m2'],math.sqrt(vs['aspect_ratio']*g['vertical_tail_area_m2']),vs['taper_ratio'],
                  tail_x,.2*g['fuselage_height_m'],vertical=True,spec=vs)
+    if project.sizing.layout is not None:
+        wing['incidence_deg']=project.sizing.layout['wing_incidence_deg']
+        ht['incidence_deg']=project.sizing.layout['tail_incidence_deg']
     cg = float(s['cg']['cg_x_m'])
     if not math.isfinite(cg) or not 0<cg<g['fuselage_length_m']:raise ValueError('总体重心站位无效')
     ref = {'area_m2':g['wing_area_m2'],'span_m':g['wing_span_m'],'chord_m':g['mac_m'],
@@ -116,6 +119,8 @@ def build_geometry_contract(project, record, options=None, *, trial=False):
                     'half_track_m':.18*g['wing_span_m'],'wheel_center_z_m':-1.15,
                     'fairing_length_m':.55,'fairing_fineness':1.8},
             'assumptions':{'configuration_version':CONFIGURATION_VERSION,
+                           'layout':project.sizing.layout,
+                           'incidence_convention':'CAD rotates about quarter chord; AVL ANGLE changes tangency on unrotated reference sections per linear theory',
                            'tail_aspect_ratios':[hs['aspect_ratio'],vs['aspect_ratio']],'tail_taper':hs['taper_ratio'],'controls_status':'not_defined',
                            'source':'WingDesignHub conventional_single_v1 concept template; not manufacturer geometry'},
             'analysis_contract':{'status':'geometry_ready_aerodynamics_not_run','flow_condition':None,

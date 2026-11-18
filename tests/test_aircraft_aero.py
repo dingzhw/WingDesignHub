@@ -52,8 +52,15 @@ def test_export_preserves_reference_sections_and_declares_controls():
     assert 'elevator 1.0 0.7 0.0 1.0 0.0 1.0' in text
     assert 'rudder 1.0 0.7 0.0 0.0 1.0 1.0' in text
     assert '\nMN ' in cmd and '\nD1 D1 0.0\n' in cmd and '\nMRF\n' in cmd
-    bad=deepcopy(i);bad['surfaces'][0]['incidence_deg']=2
-    with pytest.raises(ValueError,match='零安装角'):make_contract(bad,p,s)
+    angled=deepcopy(i);angled['surfaces'][0]['incidence_deg']=2
+    angled_text=avl_input(make_contract(angled,p,s))
+    assert '\nANGLE\n2\n' in angled_text
+    # AVL incidence changes tangency, not the reference SECTION coordinates.
+    angle_lines=angled_text.splitlines()
+    assert [angle_lines[j+1] for j,x in enumerate(angle_lines) if x=='SECTION']==[lines[j+1] for j,x in enumerate(lines) if x=='SECTION']
+    for surface,angle in ((0,3.1),(1,float('nan')),(2,1.)):
+        bad=deepcopy(i);bad['surfaces'][surface]['incidence_deg']=angle
+        with pytest.raises(ValueError,match='安装角'):make_contract(bad,p,s)
 
 
 def test_mrf_numeric_precision_fixed_integer_fields_and_errors():

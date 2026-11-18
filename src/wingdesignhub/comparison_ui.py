@@ -108,6 +108,22 @@ def render(base,root):
             save_controls(request,root,st.session_state.get('comparison_result'),key='comparison')
         except (ValueError,TypeError,KeyError) as exc:st.error(str(exc))
     with st.expander('模型精度检查：公开同条件巡航点'):
+        st.caption('V0.3.3：Archer II 构型/重量/装载来源与通用发动机图核查；完整实机条件不足的项目单列。')
+        if st.button('核查 Archer II 构型与重量、耗油',key='aircraft-reference'):
+            from .aircraft_reference import run_aircraft_reference
+            with st.spinner('正在复算固定公开基准，约需数十秒…'):
+                st.session_state['aircraft_reference']=run_aircraft_reference(root)
+        if 'aircraft_reference' in st.session_state:
+            reference=st.session_state['aircraft_reference']
+            if reference['status']=='failed':st.error(reference.get('error','基准计算失败'))
+            else:
+                s=reference['summary'];m=s['mass']
+                st.write('固定公开外廓与额定功率下，模板空重相对手册标准空重偏差：'+f"{m['standard_empty_relative_error']:.1%}")
+                st.caption('尾翼、设备和空重口径仍有差别；该偏差用于查找原因，未计为实机验证通过。')
+                st.dataframe([{'功率比例':r['power_fraction'],'数据角色':r['role'],'手册 gal/h':r['fuel_us_gal_h'],
+                    '通用图2400rpm gal/h':r['generic_map_rpm_sensitivity'][1]['fuel_us_gal_h']} for r in s['fuel_rows']],hide_index=True)
+                for line in s['limits']:st.caption(line)
+                st.download_button('下载公开基准、分项输入与偏差记录',json.dumps(reference,ensure_ascii=False,indent=2),'aircraft-reference.json')
         st.caption('V0.2.0：65% 点已改为校准数据，55%/75% 仅为同源留出；外部资料条件差异单列。')
         if st.button('核查耗油模型与留出数据',key='fuel-evidence'):
             from .fuel_validation import run_fuel_validation

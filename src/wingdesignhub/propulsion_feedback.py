@@ -74,7 +74,8 @@ class PropulsionFeedback:
 
     def evaluate(self,design_mass,geo,fuel_guess,power_guess,mass_model,iteration,dt):
         p=self.p;options=self.options.aero;weights=mass_model.evaluate(design_mass,power_guess,geo,p)
-        rows,dry,moment=dry_ledger(weights,geo,p);fuel_x=geo['wing_quarter_x_m']
+        from .layout import fuel_station
+        rows,dry,moment=dry_ledger(weights,geo,p);fuel_x=fuel_station(geo,p)
         upper=max(60.,1.6*fuel_guess);schedule=feedback_schedule(design_mass,geo,p,options)
         ref=dry+min(fuel_guess,upper);cg=(moment+(ref-dry)*fuel_x)/ref
         native=self.native_factory(self.root,self.work/'native'/f'trial_{iteration:03d}',p,geo,cg,design_mass,options.drag)

@@ -56,8 +56,9 @@ def make_contract(interface, project, sizing_summary, options=None, *, trial=Fal
         raise ValueError('本版只接收常规机翼/平尾/垂尾构型')
     # Keep the exporter narrow: reject unsupported topology rather than silently flatten it.
     for s in surfaces:
-        if len(s['sections'])!=2 or any(s[k]!=0 for k in ('incidence_deg','twist_deg','dihedral_deg','quarter_sweep_deg')):
-            raise ValueError('本版接收已验证的零安装角/扭转/上反及四分之一弦无后掠模板')
+        if (len(s['sections'])!=2 or any(s[k]!=0 for k in ('twist_deg','dihedral_deg','quarter_sweep_deg'))
+                or not math.isfinite(s['incidence_deg']) or abs(s['incidence_deg'])>3 or (s['vertical'] and s['incidence_deg']!=0)):
+            raise ValueError('本版翼/平尾安装角限正负3度，扭转/上反/后掠及垂尾安装角须为零')
     values=np.array([refs['area_m2'],refs['span_m'],refs['chord_m'],*refs['moment_reference_geometry_m']],float)
     if not np.isfinite(values).all() or min(values[:3])<=0:raise ValueError('气动参考量无效')
     v=o.speed_m_s if o.speed_m_s is not None else sizing_summary['mission']['cruise_speed_used_m_s']

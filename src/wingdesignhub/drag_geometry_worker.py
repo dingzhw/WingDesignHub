@@ -34,11 +34,13 @@ def exposed_strips(strips, surfaces, ids, samples):
                 chord=surface['root_chord_m']+(surface['tip_chord_m']-surface['root_chord_m'])*fraction
                 xle=surface['quarter_x_m']-.25*chord
                 for xc in (np.arange(samples)+.5)/samples:
-                    # Geometry is zero incidence/sweep/dihedral; use its camber line.
+                    # Sample physical camber with the same quarter-chord incidence as CAD.
                     m,p=surface['camber'],surface['camber_location']
                     camber=(m/p**2*(2*p*xc-xc*xc) if xc<p else m/(1-p)**2*(1-2*p+2*p*xc-xc*xc)) if m else 0.
                     if vertical:point=[xle+xc*chord,-camber*chord,surface['z_m']+span]
                     else:point=[xle+xc*chord,span*(-1 if '(YDUP)' in name else 1),surface['z_m']+camber*chord]
+                    from .incidence import rotate_points
+                    point=rotate_points(point,surface['quarter_x_m'],surface['z_m'],surface['incidence_deg']).tolist()
                     points.append(point);weights.append(chord)
             exposed=outside_other(points,ids,own);fraction=float(np.dot(exposed,weights)/sum(weights))
             result.append({'surface':name,'strip_id':row['strip_id'],'gross_area_m2':row['area_m2'],

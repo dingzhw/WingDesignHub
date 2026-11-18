@@ -56,7 +56,8 @@ def build(contract):
                 pid=vsp.GetXSecParm(x,key)
                 if not pid or not np.isclose(vsp.SetParmVal(pid,value),value,rtol=1e-10,atol=1e-10):
                     raise ValueError('翼型参数无效：'+key)
-        locate(gid,s['sections'][0]['leading_edge_m'],(90. if s['vertical'] else 0.,0.,0.))
+        from .incidence import physical_origin
+        locate(gid,physical_origin(s),(90. if s['vertical'] else 0.,s['incidence_deg'],0.))
         vsp.Update()
     f = contract['fuselage']; gid = add('FUSELAGE','Fuselage');setp(gid,'Length','Design',f['length_m'])
     xs = vsp.GetXSecSurf(gid,0)
@@ -106,6 +107,7 @@ def measurements(ids,contract):
             'root_chord_m':vsp.GetParmVal(vsp.FindParm(sec,'Root_Chord','XSec')),
             'tip_chord_m':vsp.GetParmVal(vsp.FindParm(sec,'Tip_Chord','XSec')),
             'origin_m':[vsp.GetParmVal(gid,a+'_Location','XForm') for a in 'XYZ'],
+            'incidence_deg':vsp.GetParmVal(gid,'Y_Rel_Rotation','XForm'),
             'bbox_min_m':xyz(vsp.GetGeomBBoxMin(gid,0,False)),
             'bbox_max_m':xyz(vsp.GetGeomBBoxMax(gid,0,False)),
             'surface_count':vsp.GetTotalNumSurfs(gid)}
@@ -133,8 +135,10 @@ def check_measurements(actual,contract):
         checks.append({'name':name,'passed':ok,'max_abs_difference':float(np.max(np.abs(np.asarray(a)-np.asarray(b))))})
     for s in contract['lifting_surfaces']:
         a=actual['lifting_surfaces'][s['name']]
+        close(s['name']+'/incidence',a['incidence_deg'],s['incidence_deg'])
         for k in ('area_m2','span_m','mac_m','root_chord_m','tip_chord_m'):close(s['name']+'/'+k,a[k],s[k])
-        close(s['name']+'/origin',a['origin_m'],s['sections'][0]['leading_edge_m'])
+        from .incidence import physical_origin
+        close(s['name']+'/origin',a['origin_m'],physical_origin(s))
         close(s['name']+'/surfaces',a['surface_count'],2 if s['symmetric'] else 1)
         for i,foil in enumerate(a['airfoils']):
             close(s['name']+f'/airfoil_{i}',list(foil.values()),[s['camber'],s['camber_location'],s['thickness_ratio'],1.])
@@ -173,6 +177,9 @@ def check_degen(objects,contract):
         area=0.;integral=0.;max_error=0.;copies=[o for o in objects if o['name']==s['name']]
         for obj in copies:
             stick=obj['sticks'][0];le=np.array(stick['le_m']);te=np.array(stick['te_m'])
+            from .incidence import rotate_points
+            le=rotate_points(le,s['quarter_x_m'],s['z_m'],-s['incidence_deg'])
+            te=rotate_points(te,s['quarter_x_m'],s['z_m'],-s['incidence_deg'])
             chord=te[:,0]-le[:,0];coordinate=le[:,2]-s['z_m'] if s['vertical'] else np.abs(le[:,1])
             ds=np.abs(np.diff(coordinate));c0=chord[:-1];c1=chord[1:]
             # Exact integral of piecewise-linear chord and squared chord.
