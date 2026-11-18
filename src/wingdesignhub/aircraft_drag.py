@@ -90,7 +90,7 @@ def finish_ledger(rows, q, area):
     return {'cd_total':math.fsum(r['cd'] for r in rows),'drag_n':math.fsum(r['drag_n'] for r in rows), 'rows':rows}
 
 
-def solve_drag(contract, work, root, xfoil, *, prepared_geometry=None, polar_workers=1):
+def solve_drag(contract, work, root, xfoil, *, prepared_geometry=None, polar_workers=1,use_geometry_cache=False):
     work=Path(work);o=DragOptions(**contract['options']);f=contract['flow'];ref=contract['references']
     from .adapters import sha256
     raw_strips=json.loads((work/'trim_strip_loads.json').read_text('utf-8'))['strips']
@@ -100,7 +100,16 @@ def solve_drag(contract, work, root, xfoil, *, prepared_geometry=None, polar_wor
                   'strips':[{k:s[k] for k in keys} for s in raw_strips]}
     names=['drag_geometry.json','compgeom.json',*[f'airfoils/{n}.dat' for n in ('MainWing','HorizontalTail','VerticalTail')]]
     if prepared_geometry is None:
-        execute([sys.executable,'-X','utf8','-m','wingdesignhub.drag_geometry_worker',str(work)],work,timeout=180)
+        from .computation_identity import sources,environment
+        from .exact_cache import ExactCache
+        cache=ExactCache(Path(root)/'local/cache/computation','drag_geometry')
+        identity={'geometry':geometry_key,'sources':sources(('drag_geometry_worker',)),
+                  'environment':environment(root,'geometry')}
+        hit=use_geometry_cache and cache.restore(identity,work)
+        if not hit:
+            execute([sys.executable,'-X','utf8','-m','wingdesignhub.drag_geometry_worker',str(work)],work,timeout=180)
+            if use_geometry_cache:cache.publish(identity,work,names)
+        write_json(work/'drag_geometry_cache.json',{'cache_hit':hit,'identity':identity})
     else:
         prepared_geometry=Path(prepared_geometry)
         saved=json.loads((prepared_geometry/'prepared_geometry.json').read_text('utf-8'))

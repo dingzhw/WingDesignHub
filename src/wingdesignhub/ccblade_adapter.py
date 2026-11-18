@@ -45,9 +45,11 @@ def run_batch(root,work,request,*,use_cache=False):
     from .exact_cache import ExactCache
     cache=ExactCache(Path(root)/'local/cache/computation','ccblade')
     identity={'request':request,'sources':sources(('ccblade_adapter',)),'environment':environment(root,'ccblade')}
+    if 'airfoil_path' in request:identity['airfoil_sha256']=sha256(Path(request['airfoil_path']))
+    from .batch_validation import cacheable_batch
     if use_cache and cache.restore(identity,work):
         result=json.loads((work/'result.json').read_text('utf-8'))
-        if len(result['points'])!=len(request['points']):raise PropulsionError('ccblade_output_invalid','缓存输出点数不符')
+        if not cacheable_batch(request,result):raise PropulsionError('ccblade_output_invalid','缓存包含求解失败点')
         write_json(work/'cache_reuse.json',{'cache_hit':True,'identity':identity});return result
     write_json(work/'request.json',request)
     (work/'input.toml').write_text(toml_request(request),encoding='utf-8')
@@ -59,7 +61,8 @@ def run_batch(root,work,request,*,use_cache=False):
     result['metadata'].update(worker_sha256=sha256(work/'worker.jl'),julia_sha256=sha256(cfg['julia']),
         environment_sha256={n:sha256(Path(cfg['project'])/n) for n in ('Project.toml','Manifest.toml')})
     write_json(work/'result.json',result)
-    if use_cache and all(p['status']=='valid' for p in result['points']):
+    reusable=cacheable_batch(request,result)
+    if use_cache and reusable:
         cache.publish(identity,work,[p.name for p in work.iterdir() if p.is_file()])
     write_json(work/'cache_reuse.json',{'cache_hit':False,'identity':identity});return result
 

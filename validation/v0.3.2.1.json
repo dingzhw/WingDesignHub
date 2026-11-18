@@ -1,0 +1,287 @@
+{
+  "version": "0.3.2.1",
+  "rows": [
+    {
+      "mode": "cold",
+      "elapsed_s": 4508.7844043000005,
+      "run_id": "4d31151d1de442a199c0d6490076901e",
+      "bundle_bytes": 7217968,
+      "bundle_build_s": 2.1548634999999194,
+      "save_reopen": true,
+      "schemes": [
+        {
+          "run_id": "f3d53e6f32534150970ce6bc114a5703",
+          "mtow_kg": 1217.601092913886,
+          "fuel_kg": 82.45704289306478,
+          "power_w": 151390.09805397195,
+          "area_m2": 13.814368732731683,
+          "cg_x_m": 2.6494313543653623,
+          "iterations": 14,
+          "execution_profile": {
+            "execution_mode": "reuse",
+            "iteration_s": 826.1922478999986,
+            "final_native_audit_s": 88.33072150000226,
+            "audit_scope": "non-node AVL/Newton and direct CCBlade; existing verified XFOIL polar cache allowed",
+            "mesh_and_tolerances_changed": false
+          }
+        },
+        {
+          "run_id": "31136c25ae244a82beb1b10dd4fcb899",
+          "mtow_kg": 1217.2206218372323,
+          "fuel_kg": 80.87687900744886,
+          "power_w": 148975.7044437265,
+          "area_m2": 13.810052074529239,
+          "cg_x_m": 2.658776075944807,
+          "iterations": 15,
+          "execution_profile": {
+            "execution_mode": "reuse",
+            "iteration_s": 1535.588800999998,
+            "final_native_audit_s": 111.36957130000155,
+            "audit_scope": "non-node AVL/Newton and direct CCBlade; existing verified XFOIL polar cache allowed",
+            "mesh_and_tolerances_changed": false
+          }
+        },
+        {
+          "run_id": "9b847d72b4844b64aef335743bbd1851",
+          "mtow_kg": 1219.94932623043,
+          "fuel_kg": 79.92272746877254,
+          "power_w": 147587.9320070138,
+          "area_m2": 13.841010759495632,
+          "cg_x_m": 2.666084842955997,
+          "iterations": 16,
+          "execution_profile": {
+            "execution_mode": "reuse",
+            "iteration_s": 1679.9226550999992,
+            "final_native_audit_s": 107.72669630000019,
+            "audit_scope": "non-node AVL/Newton and direct CCBlade; existing verified XFOIL polar cache allowed",
+            "mesh_and_tolerances_changed": false
+          }
+        }
+      ]
+    },
+    {
+      "mode": "warm",
+      "elapsed_s": 800.4409625999979,
+      "run_id": "c8312a0cfc414483aac7b70d8b75daa1",
+      "bundle_bytes": 6801864,
+      "bundle_build_s": 2.0287021000003733,
+      "save_reopen": true,
+      "schemes": [
+        {
+          "run_id": "3165b551441c47c884649c4b97908d5c",
+          "mtow_kg": 1217.601092913886,
+          "fuel_kg": 82.45704289306478,
+          "power_w": 151390.09805397195,
+          "area_m2": 13.814368732731683,
+          "cg_x_m": 2.6494313543653623,
+          "iterations": 14,
+          "execution_profile": {
+            "execution_mode": "reuse",
+            "iteration_s": 108.8237224000004,
+            "final_native_audit_s": 91.82609199999933,
+            "audit_scope": "non-node AVL/Newton and direct CCBlade; existing verified XFOIL polar cache allowed",
+            "mesh_and_tolerances_changed": false
+          }
+        },
+        {
+          "run_id": "3a36f4138dde4740ab8fce6fc087bb66",
+          "mtow_kg": 1217.2206218372323,
+          "fuel_kg": 80.87687900744886,
+          "power_w": 148975.7044437265,
+          "area_m2": 13.810052074529239,
+          "cg_x_m": 2.658776075944807,
+          "iterations": 15,
+          "execution_profile": {
+            "execution_mode": "reuse",
+            "iteration_s": 120.62226079999891,
+            "final_native_audit_s": 90.97267500000089,
+            "audit_scope": "non-node AVL/Newton and direct CCBlade; existing verified XFOIL polar cache allowed",
+            "mesh_and_tolerances_changed": false
+          }
+        },
+        {
+          "run_id": "1b308ca813d24f8ba3e9125add9c65a0",
+          "mtow_kg": 1219.94932623043,
+          "fuel_kg": 79.92272746877254,
+          "power_w": 147587.9320070138,
+          "area_m2": 13.841010759495632,
+          "cg_x_m": 2.666084842955997,
+          "iterations": 16,
+          "execution_profile": {
+            "execution_mode": "reuse",
+            "iteration_s": 129.6230156999991,
+            "final_native_audit_s": 91.01249349999853,
+            "audit_scope": "non-node AVL/Newton and direct CCBlade; existing verified XFOIL polar cache allowed",
+            "mesh_and_tolerances_changed": false
+          }
+        }
+      ]
+    }
+  ],
+  "same_model_three_design_speedup_verified": false,
+  "independent_physical_validation": false,
+  "cache_basis": "new computation namespace; existing verified XFOIL cache retained",
+  "cold_warm_max_relative_differences": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "a_relative_to_v032": 0.0,
+  "three_design_three_minute_target_met": false,
+  "date": "2026-11-18",
+  "status": "implementation_and_numerical_checks_complete_performance_limited",
+  "module_validation": {
+    "ccblade_s": {
+      "native": 40.91634659999909,
+      "cold": 40.29899149999983,
+      "warm": 0.09373409999898286
+    },
+    "drag_s": {
+      "native": 2.7541356999972777,
+      "cold": 2.125997199997073,
+      "warm": 0.14528250000148546
+    },
+    "points": 150,
+    "valid": 93,
+    "out_of_domain": 57,
+    "batch_identical": true,
+    "drag_identical": true,
+    "physical_model_changed": false
+  },
+  "physics": {
+    "unchanged_files": {
+      "ccblade_worker.jl": "99dc9456c448b4fa1da20d5c28d6cd484ffb21aa17cad664c1f1356fe02faca4",
+      "propulsion_model.py": "5165440160107be26f49a43f3fdbaae1d103e3e012424111697d4a2d448dc167",
+      "engine_fuel.py": "753966d653278cef4e628987c8ff1e16b1dfc0476f1b356e6039e307a21d6f3b",
+      "sizing.py": "2ea486f1e2d55e53bb04869495260e6e45133bb21d9e2e6923cc9e60687f0b04",
+      "sizing_physics.py": "87995f3d53f55631cc4787cb9199ad3744e417aecb294646a61b78f69a3d8665",
+      "aircraft_trim.py": "0b5ba50bc99a9abccf3b4b924732ab63cdada03a01905227758f433bc5c3c439",
+      "aircraft_aero.py": "38fe036640af07e409dc58372ad548486f6c0e8462729e3e8773ee2b5e811360",
+      "aircraft_geometry.py": "b41270ed26eb09653085fb6ddc4b8c917275b20e015855e20cb13121ef961deb",
+      "xfoil_polars.py": "11ca5d93547c8b6e5196b35b7d1aefca3350fc92535c249299738370968b768f",
+      "drag_geometry_worker.py": "e7133fba5c37ce147126896783e2ca3115765638c3cbe2a6b9c95c8f349ff37f",
+      "aero_feedback.py": "58de52c55fa5e4621325c4d0a2af96f1e56fe878c4c79f42848d8d4d95c5dc52",
+      "fastga_mass.py": "425d441f5b4e79e575dfa205d6b55f8b6da55ef211fda80a3abe6b1f86207f71",
+      "configuration.py": "4ed86770b5be810db956cff7246b507962fe471d116ec75f97bf31c5789f5426"
+    },
+    "drag_physics_tail_unchanged": true
+  },
+  "regression": {
+    "tests": 444,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "elapsed_s": 548.501
+  },
+  "ui": {
+    "real_cards_visible": true,
+    "metric_count": 12,
+    "reopened_archive_visible": true,
+    "no_extra_solve": true,
+    "status": "compared_with_limits"
+  },
+  "timing": {
+    "cold": {
+      "fresh_process_count": {
+        "wingdesignhub.sizing_worker": 3,
+        "wingdesignhub.coupled_worker": 3,
+        "wingdesignhub.aircraft_vsp_worker": 45,
+        "wingdesignhub.drag_geometry_worker": 45,
+        "xfoil.exe": 2913,
+        "julia.exe": 5,
+        "avl.exe": 54
+      },
+      "fresh_process_s": {
+        "wingdesignhub.sizing_worker": 27.711827600000106,
+        "wingdesignhub.aircraft_vsp_worker": 51.53234530000191,
+        "wingdesignhub.drag_geometry_worker": 89.74693129998923,
+        "xfoil.exe": 2619.37376749995,
+        "julia.exe": 195.19264970000222,
+        "avl.exe": 151.25483569998323,
+        "wingdesignhub.coupled_worker": 4352.276935700007
+      },
+      "native_packs": [
+        {
+          "elapsed_s": 30.987105100000917,
+          "file_count": 36474,
+          "uncompressed_bytes": 1198941111,
+          "archive_bytes": 105404389
+        },
+        {
+          "elapsed_s": 35.745172700000694,
+          "file_count": 40231,
+          "uncompressed_bytes": 1296485817,
+          "archive_bytes": 113787093
+        },
+        {
+          "elapsed_s": 41.184548900000664,
+          "file_count": 42875,
+          "uncompressed_bytes": 1384728946,
+          "archive_bytes": 120983538
+        }
+      ],
+      "avl_session_calls": 1800,
+      "avl_cache_hits": 360,
+      "scope": "nested process times overlap; do not add to phase totals"
+    },
+    "warm": {
+      "fresh_process_count": {
+        "wingdesignhub.sizing_worker": 3,
+        "wingdesignhub.coupled_worker": 3,
+        "xfoil.exe": 3,
+        "avl.exe": 54,
+        "julia.exe": 3
+      },
+      "fresh_process_s": {
+        "wingdesignhub.sizing_worker": 29.832885600000736,
+        "xfoil.exe": 0.3096968999961973,
+        "avl.exe": 150.72202380001545,
+        "julia.exe": 116.34679629999664,
+        "wingdesignhub.coupled_worker": 636.0440586999975
+      },
+      "native_packs": [
+        {
+          "elapsed_s": 36.04940189999979,
+          "file_count": 33604,
+          "uncompressed_bytes": 966169158,
+          "archive_bytes": 104821292
+        },
+        {
+          "elapsed_s": 37.53135409999959,
+          "file_count": 37156,
+          "uncompressed_bytes": 1047086089,
+          "archive_bytes": 112698686
+        },
+        {
+          "elapsed_s": 39.5600755000014,
+          "file_count": 39595,
+          "uncompressed_bytes": 1118702411,
+          "archive_bytes": 119823631
+        }
+      ],
+      "avl_session_calls": 0,
+      "avl_cache_hits": 2160,
+      "scope": "nested process times overlap; do not add to phase totals"
+    }
+  },
+  "task": {
+    "payload_including_crew_kg": 350,
+    "range_km": 800,
+    "cruise_m_s": 60,
+    "altitude_m": 2000,
+    "reserve_min": 45,
+    "aspect_ratios": [
+      7.5,
+      8.25,
+      9
+    ]
+  },
+  "limits": [
+    "Exact-input reuse only; no change to physical models or query domains.",
+    "Cold means empty new computation namespace, with existing verified XFOIL cache retained.",
+    "No same-model three-native-design reference: fivefold gate remains unverified.",
+    "No new independent full-aircraft physical validation.",
+    "Validation scripts require the local baseline records and configured native solvers."
+  ],
+  "next_main_node": "V0.3.3 configuration assumptions and a specific single-engine baseline"
+}

@@ -98,7 +98,8 @@ class NativeFeedbackGeometry:
         write_json(work/'drag_contract.json',drag)
         shutil.copy2(work/'strip_loads.json',work/'trim_strip_loads.json')
         for name in ('aircraft.vsp3','geometry_contract.json'):shutil.copy2(self.geometry_work/name,work/name)
-        result=solve_drag(drag,work,self.root,self.tools['xfoil'],prepared_geometry=self.prepared,polar_workers=3)
+        result=solve_drag(drag,work,self.root,self.tools['xfoil'],prepared_geometry=self.prepared,polar_workers=3,
+                          use_geometry_cache=self.execution_mode=='reuse')
         write_json(work/'drag_summary.json',result)
         if self.prepared is None:self.prepared=work
         point={'mass_kg':mass,'cg_x_m':cg,'speed_m_s':speed,'altitude_m':altitude,'roc_m_s':roc,
