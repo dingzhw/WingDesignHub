@@ -1,0 +1,5360 @@
+{
+  "version": "0.3.4",
+  "software_acceptance_passed": true,
+  "physical_validation_passed": false,
+  "acceptance_checks": {
+    "full_regression": true,
+    "frozen_sources": true,
+    "representative_converged": true,
+    "native_numerical_checks": true,
+    "four_states": true,
+    "landing_propagation": true,
+    "takeoff_power_propagation": true,
+    "impossible_case_retained": true,
+    "fixed_weight_preserved": true,
+    "upper_bound_not_clipped": true,
+    "duration_tasks_converged": true,
+    "ground_refinement": true,
+    "native_candidate_coverage": true,
+    "saved_reopened_equal": true,
+    "ui_four_states": true,
+    "exceeded_not_ranked": true,
+    "noncontrolling_baseline_consistency": true,
+    "pre_failure_trajectory_unchanged": true
+  },
+  "regression": {
+    "tests": 479,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": 786.872
+  },
+  "first_regression_before_fixed_weight_and_hash_fixes": {
+    "tests": 474,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": 728.547
+  },
+  "affected_regression_after_fixes": {
+    "tests": 56,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": 30.828
+  },
+  "source_file_count": 123,
+  "public_reference": {
+    "registration_version": "v0.3.4-before-model-comparison",
+    "role": "unfitted_public_performance_check",
+    "calibration": false,
+    "source": "Piper PA-28-181 Archer II POH VB-760, Figures 5-5, 5-9, 5-25",
+    "url": "https://www.summitaviationspokane.com/wp-content/uploads/2025/08/pa-28-181-archer-ii-poh.pdf",
+    "pdf_sha256": "0a51a23b0db5d4d1bbb063484a56d7ed12a0a1935da96e5c90e88dd13e1bd43c",
+    "condition_note": "原厂手册镜像；图中例题对应的零风读数区间经图页检查，未将有风例题数值当作零风数据。区间为读图不确定度，不是测量误差带。",
+    "aircraft": {
+      "wing_area_ft2": 170,
+      "span_ft": 35,
+      "rated_power_hp": 180,
+      "propeller_diameter_in": 76
+    },
+    "cases": [
+      {
+        "id": "takeoff_clean",
+        "pdf_page": 74,
+        "printed_page": "5-13",
+        "pressure_altitude_ft": 2000,
+        "temperature_f": 70,
+        "mass_lb": 2400,
+        "headwind_kts": 0,
+        "obstacle_ft": 50,
+        "distance_ft_interval": [
+          2250,
+          2350
+        ],
+        "configuration": "flaps up, full throttle before brake release, paved level dry runway"
+      },
+      {
+        "id": "landing",
+        "pdf_page": 88,
+        "printed_page": "5-29",
+        "pressure_altitude_ft": 2300,
+        "temperature_f": 70,
+        "mass_lb": 2264,
+        "headwind_kts": 0,
+        "obstacle_ft": 50,
+        "distance_ft_interval": [
+          1360,
+          1430
+        ],
+        "configuration": "40 deg flap, 76 mph IAS approach, full-stall touchdown, maximum braking, paved level dry runway"
+      },
+      {
+        "id": "climb",
+        "pdf_page": 78,
+        "printed_page": "5-15",
+        "pressure_altitude_ft": 0,
+        "temperature_f": 59,
+        "mass_lb": 2550,
+        "speed_ias_kts": 76,
+        "roc_fpm_interval": [
+          650,
+          700
+        ],
+        "configuration": "flaps up, full throttle, full rich at sea level"
+      }
+    ],
+    "mismatches_to_report": [
+      "Engineering CLmax/CD and transient assumptions are not Piper flap data",
+      "No measured full-scale fixed-pitch propeller curve; loss factor is unchanged research assumption",
+      "Landing uses 1.3Vs approach and 1.15Vs touchdown, unlike handbook full-stall procedure",
+      "Climb engineering parabolic polar and constant efficiency are not a matched aircraft polar/propeller",
+      "IAS-to-TAS at sea level approximated, instrument/calibration error unavailable"
+    ],
+    "acceptance": "报告固定构型差异和敏感性，不据此调整系数；数值正确性另以解析关系验收。"
+  },
+  "public_comparisons": [
+    {
+      "case": {
+        "id": "takeoff_clean",
+        "pdf_page": 74,
+        "printed_page": "5-13",
+        "pressure_altitude_ft": 2000,
+        "temperature_f": 70,
+        "mass_lb": 2400,
+        "headwind_kts": 0,
+        "obstacle_ft": 50,
+        "distance_ft_interval": [
+          2250,
+          2350
+        ],
+        "configuration": "flaps up, full throttle before brake release, paved level dry runway"
+      },
+      "model": {
+        "total_m": 648.6011052255691,
+        "ground_roll_m": 422.96528435228606,
+        "acceleration_m": 355.2899491382352,
+        "rotation_m": 67.67533521405082,
+        "transition_m": 56.82923232163533,
+        "obstacle_m": 168.80658855164768,
+        "stall_m_s": 29.424058788717748,
+        "liftoff_m_s": 33.83766760702541,
+        "safety_m_s": 35.30887054646129,
+        "climb_gradient": 0.08991514748807927,
+        "rho_kg_m3": 1.115361403569134,
+        "field_available_power_w": 122212.63188370924,
+        "method": "newton_ground_roll_ideal_disk_v1",
+        "assumptions": "density-lapse shaft power; disk loss factor; no ground effect; sequential acceleration/climb"
+      },
+      "model_in_source_units": 2127.956381973652,
+      "reference_interval": [
+        2250,
+        2350
+      ],
+      "relative_difference_interval": [
+        -0.09448664596865886,
+        -0.054241608011710296
+      ],
+      "role": "unfitted_public_performance_check",
+      "physical_validation_passed": false
+    },
+    {
+      "case": {
+        "id": "landing",
+        "pdf_page": 88,
+        "printed_page": "5-29",
+        "pressure_altitude_ft": 2300,
+        "temperature_f": 70,
+        "mass_lb": 2264,
+        "headwind_kts": 0,
+        "obstacle_ft": 50,
+        "distance_ft_interval": [
+          1360,
+          1430
+        ],
+        "configuration": "40 deg flap, 76 mph IAS approach, full-stall touchdown, maximum braking, paved level dry runway"
+      },
+      "model": {
+        "total_m": 504.1806225586209,
+        "ground_roll_m": 198.89275512648223,
+        "braking_m": 140.60461128903762,
+        "approach_m": 276.32503869355423,
+        "flare_m": 28.96282873858443,
+        "delay_m": 58.2881438374446,
+        "stall_m_s": 25.342671233671567,
+        "approach_m_s": 32.94547260377304,
+        "touchdown_m_s": 29.1440719187223,
+        "rho_kg_m3": 1.1031554205817757,
+        "method": "newton_ground_roll_ideal_disk_v1",
+        "assumptions": "touchdown at 1.15Vs; flare entry 1.3Vs; lift dump CL=.3; zero residual thrust"
+      },
+      "model_in_source_units": 1654.135900782877,
+      "reference_interval": [
+        1360,
+        1430
+      ],
+      "relative_difference_interval": [
+        0.15673839215585805,
+        0.21627639763446838
+      ],
+      "role": "unfitted_public_performance_check",
+      "physical_validation_passed": false
+    },
+    {
+      "case": {
+        "id": "climb",
+        "pdf_page": 78,
+        "printed_page": "5-15",
+        "pressure_altitude_ft": 0,
+        "temperature_f": 59,
+        "mass_lb": 2550,
+        "speed_ias_kts": 76,
+        "roc_fpm_interval": [
+          650,
+          700
+        ],
+        "configuration": "flaps up, full throttle, full rich at sea level"
+      },
+      "model": {
+        "roc_m_s": 6.2216150416186755,
+        "speed_m_s": 39.097777777744
+      },
+      "model_in_source_units": 1224.727370397377,
+      "reference_interval": [
+        650,
+        700
+      ],
+      "relative_difference_interval": [
+        0.74961052913911,
+        0.8841959544575031
+      ],
+      "role": "unfitted_public_performance_check",
+      "physical_validation_passed": false,
+      "enhanced_domain": {
+        "cl_required": 0.7670744354444214,
+        "schedule_cl_ceiling": 0.5,
+        "status": "not_calculated",
+        "reason": "handbook best-climb speed outside declared enhanced low-CL schedule; engineering polar only"
+      }
+    }
+  ],
+  "fixed_assumption_sensitivity": [
+    {
+      "case": "baseline",
+      "field": {
+        "takeoff": {
+          "calculation_status": "computed",
+          "total_m": 681.186949610149,
+          "ground_roll_m": 426.86787330925165,
+          "acceleration_m": 358.56135824663113,
+          "rotation_m": 68.30651506262049,
+          "transition_m": 64.45748992293282,
+          "obstacle_m": 189.86158637796453,
+          "stall_m_s": 29.698484809834998,
+          "liftoff_m_s": 34.153257531310246,
+          "safety_m_s": 35.638181771801996,
+          "climb_gradient": 0.08001165351880671,
+          "rho_kg_m3": 1.225,
+          "field_available_power_w": 150717.93332646778,
+          "method": "newton_ground_roll_ideal_disk_v1",
+          "assumptions": "density-lapse shaft power; disk loss factor; no ground effect; sequential acceleration/climb"
+        },
+        "landing": {
+          "calculation_status": "computed",
+          "total_m": 544.5623928012426,
+          "ground_roll_m": 236.07619041042796,
+          "braking_m": 171.67619041042795,
+          "approach_m": 273.13108694178214,
+          "flare_m": 35.35511544903248,
+          "delay_m": 64.39999999999999,
+          "stall_m_s": 28.0,
+          "approach_m_s": 36.4,
+          "touchdown_m_s": 32.199999999999996,
+          "rho_kg_m3": 1.225,
+          "method": "newton_ground_roll_ideal_disk_v1",
+          "assumptions": "touchdown at 1.15Vs; flare entry 1.3Vs; lift dump CL=.3; zero residual thrust"
+        }
+      },
+      "loading": [
+        {
+          "name": "规定装载 / 起飞",
+          "mass_kg": 1215.5556674373126,
+          "cg_x_m": 2.6946939428974885,
+          "cg_mac": 0.08362635432118458,
+          "remaining_usable_fuel_kg": 81.66832609452037,
+          "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+        },
+        {
+          "name": "规定装载 / 主任务结束",
+          "mass_kg": 1147.6681097189949,
+          "cg_x_m": 2.6810707398024287,
+          "cg_mac": 0.07378491986972698,
+          "remaining_usable_fuel_kg": 13.780768376202488,
+          "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+        }
+      ],
+      "longitudinal": [
+        {
+          "loading_case": "规定装载 / 起飞",
+          "points": [
+            {
+              "alpha_deg": 4.360749404345696,
+              "elevator_deg": -11.215172959628875,
+              "tail_cl": -0.28472833894246774,
+              "tail_lift_n": -1838.2032641697847,
+              "static_margin": 0.4692204886749391,
+              "cma_per_rad": -2.6576417160274404,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": -0.05,
+              "lift_residual": 5.551115123125783e-17,
+              "moment_residual": -5.551115123125783e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            },
+            {
+              "alpha_deg": 4.12387280475742,
+              "elevator_deg": -9.149249792652213,
+              "tail_cl": -0.20536325957738855,
+              "tail_lift_n": -1325.8231179158463,
+              "static_margin": 0.4692204886749391,
+              "cma_per_rad": -2.6576417160274404,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": 0.0,
+              "lift_residual": -5.551115123125783e-17,
+              "moment_residual": 9.71445146547012e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            },
+            {
+              "alpha_deg": 3.886996205169146,
+              "elevator_deg": -7.083326625675551,
+              "tail_cl": -0.12599818021230913,
+              "tail_lift_n": -813.4429716619063,
+              "static_margin": 0.4692204886749391,
+              "cma_per_rad": -2.6576417160274404,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": 0.05,
+              "lift_residual": -5.551115123125783e-17,
+              "moment_residual": 2.42861286636753e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            }
+          ]
+        },
+        {
+          "loading_case": "规定装载 / 主任务结束",
+          "points": [
+            {
+              "alpha_deg": 4.052969169045293,
+              "elevator_deg": -10.881744371386779,
+              "tail_cl": -0.28472833894246796,
+              "tail_lift_n": -1838.2032641697863,
+              "static_margin": 0.4790619231263967,
+              "cma_per_rad": -2.7133831155933548,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": -0.05,
+              "lift_residual": 5.551115123125783e-17,
+              "moment_residual": 0.0,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            },
+            {
+              "alpha_deg": 3.8160925694570187,
+              "elevator_deg": -8.815821204410115,
+              "tail_cl": -0.20536325957738866,
+              "tail_lift_n": -1325.823117915847,
+              "static_margin": 0.4790619231263967,
+              "cma_per_rad": -2.7133831155933548,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": 0.0,
+              "lift_residual": 0.0,
+              "moment_residual": 2.7755575615628914e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            },
+            {
+              "alpha_deg": 3.5792159698687445,
+              "elevator_deg": -6.749898037433452,
+              "tail_cl": -0.12599818021230919,
+              "tail_lift_n": -813.4429716619067,
+              "static_margin": 0.4790619231263967,
+              "cma_per_rad": -2.7133831155933548,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": 0.05,
+              "lift_residual": 5.551115123125783e-17,
+              "moment_residual": -1.0408340855860843e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "disk_low",
+      "field": {
+        "takeoff": {
+          "calculation_status": "computed",
+          "total_m": 885.6930617625039,
+          "ground_roll_m": 509.9795719976621,
+          "acceleration_m": 441.6730569350416,
+          "rotation_m": 68.30651506262049,
+          "transition_m": 94.58461403917431,
+          "obstacle_m": 281.12887572566746,
+          "stall_m_s": 29.698484809834998,
+          "liftoff_m_s": 34.153257531310246,
+          "safety_m_s": 35.638181771801996,
+          "climb_gradient": 0.05413053393094781,
+          "rho_kg_m3": 1.225,
+          "field_available_power_w": 150717.93332646778,
+          "method": "newton_ground_roll_ideal_disk_v1",
+          "assumptions": "density-lapse shaft power; disk loss factor; no ground effect; sequential acceleration/climb"
+        },
+        "landing": {
+          "calculation_status": "computed",
+          "total_m": 544.5623928012426,
+          "ground_roll_m": 236.07619041042796,
+          "braking_m": 171.67619041042795,
+          "approach_m": 273.13108694178214,
+          "flare_m": 35.35511544903248,
+          "delay_m": 64.39999999999999,
+          "stall_m_s": 28.0,
+          "approach_m_s": 36.4,
+          "touchdown_m_s": 32.199999999999996,
+          "rho_kg_m3": 1.225,
+          "method": "newton_ground_roll_ideal_disk_v1",
+          "assumptions": "touchdown at 1.15Vs; flare entry 1.3Vs; lift dump CL=.3; zero residual thrust"
+        }
+      },
+      "loading": [
+        {
+          "name": "规定装载 / 起飞",
+          "mass_kg": 1215.5556674373126,
+          "cg_x_m": 2.6946939428974885,
+          "cg_mac": 0.08362635432118458,
+          "remaining_usable_fuel_kg": 81.66832609452037,
+          "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+        },
+        {
+          "name": "规定装载 / 主任务结束",
+          "mass_kg": 1147.6681097189949,
+          "cg_x_m": 2.6810707398024287,
+          "cg_mac": 0.07378491986972698,
+          "remaining_usable_fuel_kg": 13.780768376202488,
+          "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+        }
+      ],
+      "longitudinal": [
+        {
+          "loading_case": "规定装载 / 起飞",
+          "points": [
+            {
+              "alpha_deg": 4.360749404345696,
+              "elevator_deg": -11.215172959628875,
+              "tail_cl": -0.28472833894246774,
+              "tail_lift_n": -1838.2032641697847,
+              "static_margin": 0.4692204886749391,
+              "cma_per_rad": -2.6576417160274404,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": -0.05,
+              "lift_residual": 5.551115123125783e-17,
+              "moment_residual": -5.551115123125783e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            },
+            {
+              "alpha_deg": 4.12387280475742,
+              "elevator_deg": -9.149249792652213,
+              "tail_cl": -0.20536325957738855,
+              "tail_lift_n": -1325.8231179158463,
+              "static_margin": 0.4692204886749391,
+              "cma_per_rad": -2.6576417160274404,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": 0.0,
+              "lift_residual": -5.551115123125783e-17,
+              "moment_residual": 9.71445146547012e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            },
+            {
+              "alpha_deg": 3.886996205169146,
+              "elevator_deg": -7.083326625675551,
+              "tail_cl": -0.12599818021230913,
+              "tail_lift_n": -813.4429716619063,
+              "static_margin": 0.4692204886749391,
+              "cma_per_rad": -2.6576417160274404,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": 0.05,
+              "lift_residual": -5.551115123125783e-17,
+              "moment_residual": 2.42861286636753e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            }
+          ]
+        },
+        {
+          "loading_case": "规定装载 / 主任务结束",
+          "points": [
+            {
+              "alpha_deg": 4.052969169045293,
+              "elevator_deg": -10.881744371386779,
+              "tail_cl": -0.28472833894246796,
+              "tail_lift_n": -1838.2032641697863,
+              "static_margin": 0.4790619231263967,
+              "cma_per_rad": -2.7133831155933548,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": -0.05,
+              "lift_residual": 5.551115123125783e-17,
+              "moment_residual": 0.0,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            },
+            {
+              "alpha_deg": 3.8160925694570187,
+              "elevator_deg": -8.815821204410115,
+              "tail_cl": -0.20536325957738866,
+              "tail_lift_n": -1325.823117915847,
+              "static_margin": 0.4790619231263967,
+              "cma_per_rad": -2.7133831155933548,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": 0.0,
+              "lift_residual": 0.0,
+              "moment_residual": 2.7755575615628914e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            },
+            {
+              "alpha_deg": 3.5792159698687445,
+              "elevator_deg": -6.749898037433452,
+              "tail_cl": -0.12599818021230919,
+              "tail_lift_n": -813.4429716619067,
+              "static_margin": 0.4790619231263967,
+              "cma_per_rad": -2.7133831155933548,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": 0.05,
+              "lift_residual": 5.551115123125783e-17,
+              "moment_residual": -1.0408340855860843e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "disk_high",
+      "field": {
+        "takeoff": {
+          "calculation_status": "computed",
+          "total_m": 566.0476555998542,
+          "ground_roll_m": 372.62173939867466,
+          "acceleration_m": 304.31522433605414,
+          "rotation_m": 68.30651506262049,
+          "transition_m": 49.249783011035724,
+          "obstacle_m": 144.17613319014387,
+          "stall_m_s": 29.698484809834998,
+          "liftoff_m_s": 34.153257531310246,
+          "safety_m_s": 35.638181771801996,
+          "climb_gradient": 0.10511841094878245,
+          "rho_kg_m3": 1.225,
+          "field_available_power_w": 150717.93332646778,
+          "method": "newton_ground_roll_ideal_disk_v1",
+          "assumptions": "density-lapse shaft power; disk loss factor; no ground effect; sequential acceleration/climb"
+        },
+        "landing": {
+          "calculation_status": "computed",
+          "total_m": 544.5623928012426,
+          "ground_roll_m": 236.07619041042796,
+          "braking_m": 171.67619041042795,
+          "approach_m": 273.13108694178214,
+          "flare_m": 35.35511544903248,
+          "delay_m": 64.39999999999999,
+          "stall_m_s": 28.0,
+          "approach_m_s": 36.4,
+          "touchdown_m_s": 32.199999999999996,
+          "rho_kg_m3": 1.225,
+          "method": "newton_ground_roll_ideal_disk_v1",
+          "assumptions": "touchdown at 1.15Vs; flare entry 1.3Vs; lift dump CL=.3; zero residual thrust"
+        }
+      },
+      "loading": [
+        {
+          "name": "规定装载 / 起飞",
+          "mass_kg": 1215.5556674373126,
+          "cg_x_m": 2.6946939428974885,
+          "cg_mac": 0.08362635432118458,
+          "remaining_usable_fuel_kg": 81.66832609452037,
+          "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+        },
+        {
+          "name": "规定装载 / 主任务结束",
+          "mass_kg": 1147.6681097189949,
+          "cg_x_m": 2.6810707398024287,
+          "cg_mac": 0.07378491986972698,
+          "remaining_usable_fuel_kg": 13.780768376202488,
+          "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+        }
+      ],
+      "longitudinal": [
+        {
+          "loading_case": "规定装载 / 起飞",
+          "points": [
+            {
+              "alpha_deg": 4.360749404345696,
+              "elevator_deg": -11.215172959628875,
+              "tail_cl": -0.28472833894246774,
+              "tail_lift_n": -1838.2032641697847,
+              "static_margin": 0.4692204886749391,
+              "cma_per_rad": -2.6576417160274404,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": -0.05,
+              "lift_residual": 5.551115123125783e-17,
+              "moment_residual": -5.551115123125783e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            },
+            {
+              "alpha_deg": 4.12387280475742,
+              "elevator_deg": -9.149249792652213,
+              "tail_cl": -0.20536325957738855,
+              "tail_lift_n": -1325.8231179158463,
+              "static_margin": 0.4692204886749391,
+              "cma_per_rad": -2.6576417160274404,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": 0.0,
+              "lift_residual": -5.551115123125783e-17,
+              "moment_residual": 9.71445146547012e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            },
+            {
+              "alpha_deg": 3.886996205169146,
+              "elevator_deg": -7.083326625675551,
+              "tail_cl": -0.12599818021230913,
+              "tail_lift_n": -813.4429716619063,
+              "static_margin": 0.4692204886749391,
+              "cma_per_rad": -2.6576417160274404,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": 0.05,
+              "lift_residual": -5.551115123125783e-17,
+              "moment_residual": 2.42861286636753e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            }
+          ]
+        },
+        {
+          "loading_case": "规定装载 / 主任务结束",
+          "points": [
+            {
+              "alpha_deg": 4.052969169045293,
+              "elevator_deg": -10.881744371386779,
+              "tail_cl": -0.28472833894246796,
+              "tail_lift_n": -1838.2032641697863,
+              "static_margin": 0.4790619231263967,
+              "cma_per_rad": -2.7133831155933548,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": -0.05,
+              "lift_residual": 5.551115123125783e-17,
+              "moment_residual": 0.0,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            },
+            {
+              "alpha_deg": 3.8160925694570187,
+              "elevator_deg": -8.815821204410115,
+              "tail_cl": -0.20536325957738866,
+              "tail_lift_n": -1325.823117915847,
+              "static_margin": 0.4790619231263967,
+              "cma_per_rad": -2.7133831155933548,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": 0.0,
+              "lift_residual": 0.0,
+              "moment_residual": 2.7755575615628914e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            },
+            {
+              "alpha_deg": 3.5792159698687445,
+              "elevator_deg": -6.749898037433452,
+              "tail_cl": -0.12599818021230919,
+              "tail_lift_n": -813.4429716619067,
+              "static_margin": 0.4790619231263967,
+              "cma_per_rad": -2.7133831155933548,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": 0.05,
+              "lift_residual": 5.551115123125783e-17,
+              "moment_residual": -1.0408340855860843e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "braking_low",
+      "field": {
+        "takeoff": {
+          "calculation_status": "computed",
+          "total_m": 681.186949610149,
+          "ground_roll_m": 426.86787330925165,
+          "acceleration_m": 358.56135824663113,
+          "rotation_m": 68.30651506262049,
+          "transition_m": 64.45748992293282,
+          "obstacle_m": 189.86158637796453,
+          "stall_m_s": 29.698484809834998,
+          "liftoff_m_s": 34.153257531310246,
+          "safety_m_s": 35.638181771801996,
+          "climb_gradient": 0.08001165351880671,
+          "rho_kg_m3": 1.225,
+          "field_available_power_w": 150717.93332646778,
+          "method": "newton_ground_roll_ideal_disk_v1",
+          "assumptions": "density-lapse shaft power; disk loss factor; no ground effect; sequential acceleration/climb"
+        },
+        "landing": {
+          "calculation_status": "computed",
+          "total_m": 614.8638639180017,
+          "ground_roll_m": 306.37766152718706,
+          "braking_m": 241.97766152718708,
+          "approach_m": 273.13108694178214,
+          "flare_m": 35.35511544903248,
+          "delay_m": 64.39999999999999,
+          "stall_m_s": 28.0,
+          "approach_m_s": 36.4,
+          "touchdown_m_s": 32.199999999999996,
+          "rho_kg_m3": 1.225,
+          "method": "newton_ground_roll_ideal_disk_v1",
+          "assumptions": "touchdown at 1.15Vs; flare entry 1.3Vs; lift dump CL=.3; zero residual thrust"
+        }
+      },
+      "loading": [
+        {
+          "name": "规定装载 / 起飞",
+          "mass_kg": 1215.5556674373126,
+          "cg_x_m": 2.6946939428974885,
+          "cg_mac": 0.08362635432118458,
+          "remaining_usable_fuel_kg": 81.66832609452037,
+          "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+        },
+        {
+          "name": "规定装载 / 主任务结束",
+          "mass_kg": 1147.6681097189949,
+          "cg_x_m": 2.6810707398024287,
+          "cg_mac": 0.07378491986972698,
+          "remaining_usable_fuel_kg": 13.780768376202488,
+          "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+        }
+      ],
+      "longitudinal": [
+        {
+          "loading_case": "规定装载 / 起飞",
+          "points": [
+            {
+              "alpha_deg": 4.360749404345696,
+              "elevator_deg": -11.215172959628875,
+              "tail_cl": -0.28472833894246774,
+              "tail_lift_n": -1838.2032641697847,
+              "static_margin": 0.4692204886749391,
+              "cma_per_rad": -2.6576417160274404,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": -0.05,
+              "lift_residual": 5.551115123125783e-17,
+              "moment_residual": -5.551115123125783e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            },
+            {
+              "alpha_deg": 4.12387280475742,
+              "elevator_deg": -9.149249792652213,
+              "tail_cl": -0.20536325957738855,
+              "tail_lift_n": -1325.8231179158463,
+              "static_margin": 0.4692204886749391,
+              "cma_per_rad": -2.6576417160274404,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": 0.0,
+              "lift_residual": -5.551115123125783e-17,
+              "moment_residual": 9.71445146547012e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            },
+            {
+              "alpha_deg": 3.886996205169146,
+              "elevator_deg": -7.083326625675551,
+              "tail_cl": -0.12599818021230913,
+              "tail_lift_n": -813.4429716619063,
+              "static_margin": 0.4692204886749391,
+              "cma_per_rad": -2.6576417160274404,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": 0.05,
+              "lift_residual": -5.551115123125783e-17,
+              "moment_residual": 2.42861286636753e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            }
+          ]
+        },
+        {
+          "loading_case": "规定装载 / 主任务结束",
+          "points": [
+            {
+              "alpha_deg": 4.052969169045293,
+              "elevator_deg": -10.881744371386779,
+              "tail_cl": -0.28472833894246796,
+              "tail_lift_n": -1838.2032641697863,
+              "static_margin": 0.4790619231263967,
+              "cma_per_rad": -2.7133831155933548,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": -0.05,
+              "lift_residual": 5.551115123125783e-17,
+              "moment_residual": 0.0,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            },
+            {
+              "alpha_deg": 3.8160925694570187,
+              "elevator_deg": -8.815821204410115,
+              "tail_cl": -0.20536325957738866,
+              "tail_lift_n": -1325.823117915847,
+              "static_margin": 0.4790619231263967,
+              "cma_per_rad": -2.7133831155933548,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": 0.0,
+              "lift_residual": 0.0,
+              "moment_residual": 2.7755575615628914e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            },
+            {
+              "alpha_deg": 3.5792159698687445,
+              "elevator_deg": -6.749898037433452,
+              "tail_cl": -0.12599818021230919,
+              "tail_lift_n": -813.4429716619067,
+              "static_margin": 0.4790619231263967,
+              "cma_per_rad": -2.7133831155933548,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": 0.05,
+              "lift_residual": 5.551115123125783e-17,
+              "moment_residual": -1.0408340855860843e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "moment_zero",
+      "field": {
+        "takeoff": {
+          "calculation_status": "computed",
+          "total_m": 681.186949610149,
+          "ground_roll_m": 426.86787330925165,
+          "acceleration_m": 358.56135824663113,
+          "rotation_m": 68.30651506262049,
+          "transition_m": 64.45748992293282,
+          "obstacle_m": 189.86158637796453,
+          "stall_m_s": 29.698484809834998,
+          "liftoff_m_s": 34.153257531310246,
+          "safety_m_s": 35.638181771801996,
+          "climb_gradient": 0.08001165351880671,
+          "rho_kg_m3": 1.225,
+          "field_available_power_w": 150717.93332646778,
+          "method": "newton_ground_roll_ideal_disk_v1",
+          "assumptions": "density-lapse shaft power; disk loss factor; no ground effect; sequential acceleration/climb"
+        },
+        "landing": {
+          "calculation_status": "computed",
+          "total_m": 544.5623928012426,
+          "ground_roll_m": 236.07619041042796,
+          "braking_m": 171.67619041042795,
+          "approach_m": 273.13108694178214,
+          "flare_m": 35.35511544903248,
+          "delay_m": 64.39999999999999,
+          "stall_m_s": 28.0,
+          "approach_m_s": 36.4,
+          "touchdown_m_s": 32.199999999999996,
+          "rho_kg_m3": 1.225,
+          "method": "newton_ground_roll_ideal_disk_v1",
+          "assumptions": "touchdown at 1.15Vs; flare entry 1.3Vs; lift dump CL=.3; zero residual thrust"
+        }
+      },
+      "loading": [
+        {
+          "name": "规定装载 / 起飞",
+          "mass_kg": 1215.5556674373126,
+          "cg_x_m": 2.6946939428974885,
+          "cg_mac": 0.08362635432118458,
+          "remaining_usable_fuel_kg": 81.66832609452037,
+          "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+        },
+        {
+          "name": "规定装载 / 主任务结束",
+          "mass_kg": 1147.6681097189949,
+          "cg_x_m": 2.6810707398024287,
+          "cg_mac": 0.07378491986972698,
+          "remaining_usable_fuel_kg": 13.780768376202488,
+          "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+        }
+      ],
+      "longitudinal": [
+        {
+          "loading_case": "规定装载 / 起飞",
+          "points": [
+            {
+              "alpha_deg": 4.12387280475742,
+              "elevator_deg": -9.149249792652213,
+              "tail_cl": -0.20536325957738855,
+              "tail_lift_n": -1325.8231179158463,
+              "static_margin": 0.4692204886749391,
+              "cma_per_rad": -2.6576417160274404,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": -0.0,
+              "lift_residual": -5.551115123125783e-17,
+              "moment_residual": 9.71445146547012e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            }
+          ]
+        },
+        {
+          "loading_case": "规定装载 / 主任务结束",
+          "points": [
+            {
+              "alpha_deg": 3.8160925694570187,
+              "elevator_deg": -8.815821204410115,
+              "tail_cl": -0.20536325957738866,
+              "tail_lift_n": -1325.823117915847,
+              "static_margin": 0.4790619231263967,
+              "cma_per_rad": -2.7133831155933548,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": -0.0,
+              "lift_residual": 0.0,
+              "moment_residual": 2.7755575615628914e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "hot_high",
+      "field": {
+        "takeoff": {
+          "calculation_status": "computed",
+          "total_m": 1814.1479606951675,
+          "ground_roll_m": 887.2717405163808,
+          "acceleration_m": 809.2236904830437,
+          "rotation_m": 78.04805003333702,
+          "transition_m": 277.2455600899346,
+          "obstacle_m": 649.6306600888521,
+          "stall_m_s": 33.933934797103056,
+          "liftoff_m_s": 39.02402501666851,
+          "safety_m_s": 40.720721756523666,
+          "climb_gradient": 0.02345303111313791,
+          "rho_kg_m3": 0.9382881506370451,
+          "field_available_power_w": 115442.32728875829,
+          "method": "newton_ground_roll_ideal_disk_v1",
+          "assumptions": "density-lapse shaft power; disk loss factor; no ground effect; sequential acceleration/climb"
+        },
+        "landing": {
+          "calculation_status": "computed",
+          "total_m": 611.6111551160643,
+          "ground_roll_m": 297.7195336600628,
+          "braking_m": 224.13512641078336,
+          "approach_m": 267.73307581556077,
+          "flare_m": 46.15854564044076,
+          "delay_m": 73.5844072492794,
+          "stall_m_s": 31.99322054316496,
+          "approach_m_s": 41.59118670611445,
+          "touchdown_m_s": 36.7922036246397,
+          "rho_kg_m3": 0.9382881506370451,
+          "method": "newton_ground_roll_ideal_disk_v1",
+          "assumptions": "touchdown at 1.15Vs; flare entry 1.3Vs; lift dump CL=.3; zero residual thrust"
+        }
+      },
+      "loading": [
+        {
+          "name": "规定装载 / 起飞",
+          "mass_kg": 1215.5556674373126,
+          "cg_x_m": 2.6946939428974885,
+          "cg_mac": 0.08362635432118458,
+          "remaining_usable_fuel_kg": 81.66832609452037,
+          "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+        },
+        {
+          "name": "规定装载 / 主任务结束",
+          "mass_kg": 1147.6681097189949,
+          "cg_x_m": 2.6810707398024287,
+          "cg_mac": 0.07378491986972698,
+          "remaining_usable_fuel_kg": 13.780768376202488,
+          "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+        }
+      ],
+      "longitudinal": [
+        {
+          "loading_case": "规定装载 / 起飞",
+          "points": [
+            {
+              "alpha_deg": 4.360749404345696,
+              "elevator_deg": -11.215172959628875,
+              "tail_cl": -0.28472833894246774,
+              "tail_lift_n": -1838.2032641697847,
+              "static_margin": 0.4692204886749391,
+              "cma_per_rad": -2.6576417160274404,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": -0.05,
+              "lift_residual": 5.551115123125783e-17,
+              "moment_residual": -5.551115123125783e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            },
+            {
+              "alpha_deg": 4.12387280475742,
+              "elevator_deg": -9.149249792652213,
+              "tail_cl": -0.20536325957738855,
+              "tail_lift_n": -1325.8231179158463,
+              "static_margin": 0.4692204886749391,
+              "cma_per_rad": -2.6576417160274404,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": 0.0,
+              "lift_residual": -5.551115123125783e-17,
+              "moment_residual": 9.71445146547012e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            },
+            {
+              "alpha_deg": 3.886996205169146,
+              "elevator_deg": -7.083326625675551,
+              "tail_cl": -0.12599818021230913,
+              "tail_lift_n": -813.4429716619063,
+              "static_margin": 0.4692204886749391,
+              "cma_per_rad": -2.6576417160274404,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": 0.05,
+              "lift_residual": -5.551115123125783e-17,
+              "moment_residual": 2.42861286636753e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            }
+          ]
+        },
+        {
+          "loading_case": "规定装载 / 主任务结束",
+          "points": [
+            {
+              "alpha_deg": 4.052969169045293,
+              "elevator_deg": -10.881744371386779,
+              "tail_cl": -0.28472833894246796,
+              "tail_lift_n": -1838.2032641697863,
+              "static_margin": 0.4790619231263967,
+              "cma_per_rad": -2.7133831155933548,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": -0.05,
+              "lift_residual": 5.551115123125783e-17,
+              "moment_residual": 0.0,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            },
+            {
+              "alpha_deg": 3.8160925694570187,
+              "elevator_deg": -8.815821204410115,
+              "tail_cl": -0.20536325957738866,
+              "tail_lift_n": -1325.823117915847,
+              "static_margin": 0.4790619231263967,
+              "cma_per_rad": -2.7133831155933548,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": 0.0,
+              "lift_residual": 0.0,
+              "moment_residual": 2.7755575615628914e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            },
+            {
+              "alpha_deg": 3.5792159698687445,
+              "elevator_deg": -6.749898037433452,
+              "tail_cl": -0.12599818021230919,
+              "tail_lift_n": -813.4429716619067,
+              "static_margin": 0.4790619231263967,
+              "cma_per_rad": -2.7133831155933548,
+              "cla_per_rad": 5.663950701582789,
+              "moment_bias": 0.05,
+              "lift_residual": 5.551115123125783e-17,
+              "moment_residual": -1.0408340855860843e-17,
+              "method": "finite_wing_linear_tail_v1",
+              "speed_m_s": 60.0,
+              "altitude_m": 2000.0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "initial_sizing": [
+    {
+      "case": "baseline",
+      "run_id": "68f6d8aea024481d8e63ea0265e2bb03",
+      "status": "constraints_not_met",
+      "elapsed_s": 10.64032899999438,
+      "metrics": {
+        "mtow_kg": 1292.8380021480818,
+        "area_m2": 14.667973753720075,
+        "span_m": 10.488555818266907,
+        "power_kw": 163.33011797374738,
+        "block_fuel_kg": 116.60559383918627,
+        "cg_mac": 0.08222137200179858,
+        "status": "constraints_not_met",
+        "iterations": 35,
+        "constraint_states": [
+          {
+            "id": "mass_budget",
+            "label": "质量预算或闭合残差",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "numerical"
+          },
+          {
+            "id": "mtow_upper_bound",
+            "label": "起飞重量上限",
+            "status": "not_applicable",
+            "reason": "当前任务未规定该项",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "fuel_capacity",
+            "label": "油箱容量",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "landing_stall",
+            "label": "着陆构型失速速度",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "power_available",
+            "label": "任务可用功率",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "clean_lift",
+            "label": "净构型升力",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "range",
+            "label": "规定航程",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "endurance",
+            "label": "最低航时或留空时间",
+            "status": "not_applicable",
+            "reason": "当前任务未规定该项",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "takeoff_distance",
+            "label": "越障起飞距离",
+            "status": "met",
+            "reason": "干燥跑道工程模型；并非具体机型实测性能",
+            "value": 674.4277640359492,
+            "limit": 800.0,
+            "margin": 125.57223596405083,
+            "unit": "m",
+            "kind": "design"
+          },
+          {
+            "id": "landing_distance",
+            "label": "越障着陆距离",
+            "status": "met",
+            "reason": "干燥跑道工程模型；并非具体机型实测性能",
+            "value": 544.5623928012427,
+            "limit": 700.0,
+            "margin": 155.4376071987573,
+            "unit": "m",
+            "kind": "design"
+          },
+          {
+            "id": "climb_sea_level",
+            "label": "海平面爬升需用功率",
+            "status": "met",
+            "reason": "爬升率要求 3m/s；需用与安装额定功率在同一基准比较",
+            "value": 140087.25348895133,
+            "limit": 163330.11797374737,
+            "margin": 23242.86448479604,
+            "unit": "W",
+            "kind": "design"
+          },
+          {
+            "id": "climb_cruise_altitude",
+            "label": "巡航高度爬升需用功率",
+            "status": "met",
+            "reason": "爬升率要求 3m/s；需用与安装额定功率在同一基准比较",
+            "value": 160127.5666409288,
+            "limit": 163330.11797374737,
+            "margin": 3202.551332818577,
+            "unit": "W",
+            "kind": "design"
+          },
+          {
+            "id": "loading_cg",
+            "label": "规定装载CG研究范围",
+            "status": "exceeded",
+            "reason": "实际装载和主任务结束；仅显式声明的分配场景",
+            "value": [
+              0.06869871073061065,
+              0.08222137200179858
+            ],
+            "limit": [
+              0.15,
+              0.35
+            ],
+            "margin": -0.08130128926938934,
+            "unit": "MAC",
+            "kind": "design"
+          },
+          {
+            "id": "longitudinal_static",
+            "label": "纵向静稳定一级筛查",
+            "status": "met",
+            "reason": "固定舵面线性升力斜率，缺失机身/动力修正",
+            "value": 0.4694522906421153,
+            "limit": 0.05,
+            "margin": 0.4194522906421153,
+            "unit": "MAC",
+            "kind": "design"
+          },
+          {
+            "id": "longitudinal_control",
+            "label": "纵向配平角度与舵量（含Cm扰动）",
+            "status": "exceeded",
+            "reason": "所有装载及给定Cm扰动角点；超过角度域表示当前一级方案尚不能确认可用",
+            "value": 1.1272114727385885,
+            "limit": 1.0,
+            "margin": -0.12721147273858846,
+            "unit": "fraction",
+            "kind": "design"
+          },
+          {
+            "id": "lateral_control",
+            "label": "横航向操稳包线",
+            "status": "not_calculated",
+            "reason": "后续节点，当前概念筛查不包含此项",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "structural_feedback",
+            "label": "结构定尺寸质量反馈",
+            "status": "not_calculated",
+            "reason": "后续节点，当前概念筛查不包含此项",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          }
+        ],
+        "first_level": {
+          "config": {
+            "version": "concept_constraints_v1",
+            "takeoff_limit_m": 800.0,
+            "landing_limit_m": 700.0,
+            "field_altitude_m": 0.0,
+            "temperature_delta_k": 0.0,
+            "obstacle_m": 15.24,
+            "takeoff_cl_max": 1.6,
+            "takeoff_cd_increment": 0.025,
+            "landing_cd_increment": 0.075,
+            "rolling_friction": 0.025,
+            "braking_friction": 0.3,
+            "disk_power_factor": 0.65,
+            "approach_deg": 3.0,
+            "flare_load_factor": 1.2,
+            "rotation_time_s": 2.0,
+            "landing_delay_s": 2.0,
+            "schedule_cl_ceiling": 0.5,
+            "schedule_max_speed_m_s": 90.0,
+            "cg_min_mac": 0.15,
+            "cg_max_mac": 0.35,
+            "static_margin_min": 0.05,
+            "wing_cm_ac": -0.05,
+            "moment_bias_abs": 0.05,
+            "tail_dynamic_pressure_ratio": 0.9,
+            "downwash_gradient": 0.35,
+            "elevator_effectiveness": 0.6,
+            "alpha_zero_lift_deg": -2.0,
+            "alpha_limit_deg": 6.0,
+            "elevator_limit_deg": 10.0,
+            "loading_cases": [],
+            "source": "V0.3.4 一级概念研究假设；干燥水平硬跑道、无风，非具体机型性能或适航限值"
+          },
+          "method": "first_level_concept_v1",
+          "field_basis": {
+            "mass_kg": 1292.8380021480818,
+            "area_m2": 14.667973753720075,
+            "rated_power_w": 163330.11797374737,
+            "mass_definition": "design MTOW; landing at MTOW is conservative, not inferred from end-of-mission mass"
+          },
+          "field": {
+            "takeoff": {
+              "calculation_status": "computed",
+              "total_m": 674.4277640359492,
+              "ground_roll_m": 424.9010122432617,
+              "acceleration_m": 356.59449718064116,
+              "rotation_m": 68.30651506262049,
+              "transition_m": 63.29132200078239,
+              "obstacle_m": 186.2354297919051,
+              "stall_m_s": 29.698484809834998,
+              "liftoff_m_s": 34.153257531310246,
+              "safety_m_s": 35.638181771801996,
+              "climb_gradient": 0.08155928139023659,
+              "rho_kg_m3": 1.225,
+              "field_available_power_w": 163330.11797374737,
+              "method": "newton_ground_roll_ideal_disk_v1",
+              "assumptions": "density-lapse shaft power; disk loss factor; no ground effect; sequential acceleration/climb"
+            },
+            "landing": {
+              "calculation_status": "computed",
+              "total_m": 544.5623928012427,
+              "ground_roll_m": 236.07619041042804,
+              "braking_m": 171.67619041042803,
+              "approach_m": 273.13108694178214,
+              "flare_m": 35.355115449032496,
+              "delay_m": 64.4,
+              "stall_m_s": 28.000000000000004,
+              "approach_m_s": 36.400000000000006,
+              "touchdown_m_s": 32.2,
+              "rho_kg_m3": 1.225,
+              "method": "newton_ground_roll_ideal_disk_v1",
+              "assumptions": "touchdown at 1.15Vs; flare entry 1.3Vs; lift dump CL=.3; zero residual thrust"
+            }
+          },
+          "loading": [
+            {
+              "name": "规定装载 / 起飞",
+              "mass_kg": 1292.904379204359,
+              "cg_x_m": 2.6854777229480633,
+              "cg_mac": 0.08222137200179858,
+              "remaining_usable_fuel_kg": 116.1972685442519,
+              "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+            },
+            {
+              "name": "规定装载 / 主任务结束",
+              "mass_kg": 1196.4709338247299,
+              "cg_x_m": 2.6661726501976073,
+              "cg_mac": 0.06869871073061065,
+              "remaining_usable_fuel_kg": 19.76382316462268,
+              "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+            }
+          ],
+          "longitudinal": [
+            {
+              "loading_case": "规定装载 / 起飞",
+              "points": [
+                {
+                  "alpha_deg": 4.39082988076781,
+                  "elevator_deg": -11.272114727385885,
+                  "tail_cl": -0.2857966505823386,
+                  "tail_lift_n": -2023.8825762574525,
+                  "static_margin": 0.4694522906421153,
+                  "cma_per_rad": -2.669295054110254,
+                  "cla_per_rad": 5.685977270361597,
+                  "moment_bias": -0.05,
+                  "lift_residual": -5.551115123125783e-17,
+                  "moment_residual": 5.551115123125783e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 4.1465371151427854,
+                  "elevator_deg": -9.198157380536074,
+                  "tail_cl": -0.20643157121725916,
+                  "tail_lift_n": -1461.8549913890372,
+                  "static_margin": 0.4694522906421153,
+                  "cma_per_rad": -2.669295054110254,
+                  "cla_per_rad": 5.685977270361597,
+                  "moment_bias": 0.0,
+                  "lift_residual": -5.551115123125783e-17,
+                  "moment_residual": 2.7755575615628914e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 3.9022443495177606,
+                  "elevator_deg": -7.124200033686265,
+                  "tail_cl": -0.1270664918521798,
+                  "tail_lift_n": -899.8274065206223,
+                  "static_margin": 0.4694522906421153,
+                  "cma_per_rad": -2.669295054110254,
+                  "cla_per_rad": 5.685977270361597,
+                  "moment_bias": 0.05,
+                  "lift_residual": -5.551115123125783e-17,
+                  "moment_residual": 6.938893903907228e-18,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                }
+              ]
+            },
+            {
+              "loading_case": "规定装载 / 主任务结束",
+              "points": [
+                {
+                  "alpha_deg": 3.9797735572613875,
+                  "elevator_deg": -10.826803710253927,
+                  "tail_cl": -0.2857966505823386,
+                  "tail_lift_n": -2023.8825762574525,
+                  "static_margin": 0.4829749519133033,
+                  "cma_per_rad": -2.746184598733028,
+                  "cla_per_rad": 5.685977270361597,
+                  "moment_bias": -0.05,
+                  "lift_residual": 5.551115123125783e-17,
+                  "moment_residual": 0.0,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 3.7354807916363626,
+                  "elevator_deg": -8.75284636340412,
+                  "tail_cl": -0.20643157121725925,
+                  "tail_lift_n": -1461.8549913890377,
+                  "static_margin": 0.4829749519133033,
+                  "cma_per_rad": -2.746184598733028,
+                  "cla_per_rad": 5.685977270361597,
+                  "moment_bias": 0.0,
+                  "lift_residual": 0.0,
+                  "moment_residual": 4.163336342344337e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 3.491188026011338,
+                  "elevator_deg": -6.67888901655431,
+                  "tail_cl": -0.12706649185217989,
+                  "tail_lift_n": -899.827406520623,
+                  "static_margin": 0.4829749519133033,
+                  "cma_per_rad": -2.746184598733028,
+                  "cla_per_rad": 5.685977270361597,
+                  "moment_bias": 0.05,
+                  "lift_residual": 0.0,
+                  "moment_residual": 0.0,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                }
+              ]
+            }
+          ],
+          "limits": [
+            "起降为干燥水平硬跑道、无风、规定工程襟翼/摩擦及作用盘损失模型；未经具体全尺寸桨、襟翼和试飞标定。",
+            "场地温度/高度仅用于起降；任务仍采用规定巡航高度的标准大气。起降段耗油仍沿用30s/90%功率，距离校核与瞬态燃油尚未联算。",
+            "CG研究区间来自用户假设，不是允许装载包线；额外装载分配须另核座椅/行李舱限重。",
+            "纵向一级模型采用有限翼升力斜率和线性下洗；未包括机身、滑流、推力线及黏性俯仰矩修正。给定Cm扰动是情景范围，不是统计置信区间。",
+            "AVL/XFOIL和一级模型的俯仰力矩均有误差；力矩平衡、低角度余量与局部静稳定分别报告，完整操稳/操纵力仍未计算。",
+            "速度为低CL域内9个候选的初步最小需用功率选择；增强模型沿用并验证实际工况，不宣称原生气动全域最优。"
+          ],
+          "speed_selection": {
+            "candidates_m_s": [
+              58.610115196941656,
+              62.53385079732395,
+              66.45758639770624,
+              70.38132199808854,
+              74.30505759847082,
+              78.22879319885313,
+              82.15252879923541,
+              86.07626439961771,
+              90.0
+            ],
+            "initial_climb_m_s": 58.610115196941656,
+            "initial_loiter_m_s": 58.610115196941656,
+            "cl_ceiling": 0.5,
+            "method": "finite candidate minimum conceptual shaft power",
+            "actual_mission_speeds_m_s": {
+              "climb": 58.610115196941656,
+              "cruise": 60.0,
+              "descent": 58.610115196941656
+            }
+          }
+        }
+      },
+      "diagnostics": []
+    },
+    {
+      "case": "landing_tight",
+      "run_id": "222df0aa480c48aa8af550ddfa5dc4c6",
+      "status": "constraints_not_met",
+      "elapsed_s": 12.173331800004235,
+      "metrics": {
+        "mtow_kg": 1444.4696708426013,
+        "area_m2": 20.472946595400572,
+        "span_m": 12.391412327313795,
+        "power_kw": 182.97671760477218,
+        "block_fuel_kg": 145.58205111132878,
+        "cg_mac": 0.12258986029549808,
+        "status": "constraints_not_met",
+        "iterations": 40,
+        "constraint_states": [
+          {
+            "id": "mass_budget",
+            "label": "质量预算或闭合残差",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "numerical"
+          },
+          {
+            "id": "mtow_upper_bound",
+            "label": "起飞重量上限",
+            "status": "not_applicable",
+            "reason": "当前任务未规定该项",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "fuel_capacity",
+            "label": "油箱容量",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "landing_stall",
+            "label": "着陆构型失速速度",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "power_available",
+            "label": "任务可用功率",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "clean_lift",
+            "label": "净构型升力",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "range",
+            "label": "规定航程",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "endurance",
+            "label": "最低航时或留空时间",
+            "status": "not_applicable",
+            "reason": "当前任务未规定该项",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "takeoff_distance",
+            "label": "越障起飞距离",
+            "status": "met",
+            "reason": "干燥跑道工程模型；并非具体机型实测性能",
+            "value": 548.9683651996631,
+            "limit": 800.0,
+            "margin": 251.03163480033686,
+            "unit": "m",
+            "kind": "design"
+          },
+          {
+            "id": "landing_distance",
+            "label": "越障着陆距离",
+            "status": "met",
+            "reason": "干燥跑道工程模型；并非具体机型实测性能",
+            "value": 499.9999999754279,
+            "limit": 500.0,
+            "margin": 2.4572102574893506e-08,
+            "unit": "m",
+            "kind": "design"
+          },
+          {
+            "id": "climb_sea_level",
+            "label": "海平面爬升需用功率",
+            "status": "met",
+            "reason": "爬升率要求 3m/s；需用与安装额定功率在同一基准比较",
+            "value": 145616.48657424652,
+            "limit": 182976.7176047722,
+            "margin": 37360.23103052567,
+            "unit": "W",
+            "kind": "design"
+          },
+          {
+            "id": "climb_cruise_altitude",
+            "label": "巡航高度爬升需用功率",
+            "status": "met",
+            "reason": "爬升率要求 3m/s；需用与安装额定功率在同一基准比较",
+            "value": 166857.49780271674,
+            "limit": 182976.7176047722,
+            "margin": 16119.21980205545,
+            "unit": "W",
+            "kind": "design"
+          },
+          {
+            "id": "loading_cg",
+            "label": "规定装载CG研究范围",
+            "status": "exceeded",
+            "reason": "实际装载和主任务结束；仅显式声明的分配场景",
+            "value": [
+              0.11102587559358981,
+              0.12258986029549808
+            ],
+            "limit": [
+              0.15,
+              0.35
+            ],
+            "margin": -0.03897412440641018,
+            "unit": "MAC",
+            "kind": "design"
+          },
+          {
+            "id": "longitudinal_static",
+            "label": "纵向静稳定一级筛查",
+            "status": "met",
+            "reason": "固定舵面线性升力斜率，缺失机身/动力修正",
+            "value": 0.42225788462923486,
+            "limit": 0.05,
+            "margin": 0.37225788462923487,
+            "unit": "MAC",
+            "kind": "design"
+          },
+          {
+            "id": "longitudinal_control",
+            "label": "纵向配平角度与舵量（含Cm扰动）",
+            "status": "met",
+            "reason": "所有装载及给定Cm扰动角点；超过角度域表示当前一级方案尚不能确认可用",
+            "value": 0.8921781980385987,
+            "limit": 1.0,
+            "margin": 0.10782180196140134,
+            "unit": "fraction",
+            "kind": "design"
+          },
+          {
+            "id": "lateral_control",
+            "label": "横航向操稳包线",
+            "status": "not_calculated",
+            "reason": "后续节点，当前概念筛查不包含此项",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "structural_feedback",
+            "label": "结构定尺寸质量反馈",
+            "status": "not_calculated",
+            "reason": "后续节点，当前概念筛查不包含此项",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          }
+        ],
+        "first_level": {
+          "config": {
+            "version": "concept_constraints_v1",
+            "takeoff_limit_m": 800.0,
+            "landing_limit_m": 500.0,
+            "field_altitude_m": 0.0,
+            "temperature_delta_k": 0.0,
+            "obstacle_m": 15.24,
+            "takeoff_cl_max": 1.6,
+            "takeoff_cd_increment": 0.025,
+            "landing_cd_increment": 0.075,
+            "rolling_friction": 0.025,
+            "braking_friction": 0.3,
+            "disk_power_factor": 0.65,
+            "approach_deg": 3.0,
+            "flare_load_factor": 1.2,
+            "rotation_time_s": 2.0,
+            "landing_delay_s": 2.0,
+            "schedule_cl_ceiling": 0.5,
+            "schedule_max_speed_m_s": 90.0,
+            "cg_min_mac": 0.15,
+            "cg_max_mac": 0.35,
+            "static_margin_min": 0.05,
+            "wing_cm_ac": -0.05,
+            "moment_bias_abs": 0.05,
+            "tail_dynamic_pressure_ratio": 0.9,
+            "downwash_gradient": 0.35,
+            "elevator_effectiveness": 0.6,
+            "alpha_zero_lift_deg": -2.0,
+            "alpha_limit_deg": 6.0,
+            "elevator_limit_deg": 10.0,
+            "loading_cases": [],
+            "source": "V0.3.4 一级概念研究假设；干燥水平硬跑道、无风，非具体机型性能或适航限值"
+          },
+          "method": "first_level_concept_v1",
+          "field_basis": {
+            "mass_kg": 1444.4696708426013,
+            "area_m2": 20.472946595400572,
+            "rated_power_w": 182976.7176047722,
+            "mass_definition": "design MTOW; landing at MTOW is conservative, not inferred from end-of-mission mass"
+          },
+          "field": {
+            "takeoff": {
+              "calculation_status": "computed",
+              "total_m": 548.9683651996631,
+              "ground_roll_m": 336.56170541214374,
+              "acceleration_m": 275.4479216874147,
+              "rotation_m": 61.11378372472905,
+              "transition_m": 45.62165348267372,
+              "obstacle_m": 166.78500630484564,
+              "stall_m_s": 26.57121031509959,
+              "liftoff_m_s": 30.556891862364527,
+              "safety_m_s": 31.88545237811951,
+              "climb_gradient": 0.09099602817035314,
+              "rho_kg_m3": 1.225,
+              "field_available_power_w": 182976.7176047722,
+              "method": "newton_ground_roll_ideal_disk_v1",
+              "assumptions": "density-lapse shaft power; disk loss factor; no ground effect; sequential acceleration/climb"
+            },
+            "landing": {
+              "calculation_status": "computed",
+              "total_m": 499.9999999754279,
+              "ground_roll_m": 195.04312491041202,
+              "braking_m": 137.4244970494467,
+              "approach_m": 276.6555774471414,
+              "flare_m": 28.30129761787448,
+              "delay_m": 57.618627860965304,
+              "stall_m_s": 25.05157733085448,
+              "approach_m_s": 32.567050530110826,
+              "touchdown_m_s": 28.809313930482652,
+              "rho_kg_m3": 1.225,
+              "method": "newton_ground_roll_ideal_disk_v1",
+              "assumptions": "touchdown at 1.15Vs; flare entry 1.3Vs; lift dump CL=.3; zero residual thrust"
+            }
+          },
+          "loading": [
+            {
+              "name": "规定装载 / 起飞",
+              "mass_kg": 1444.5636727861022,
+              "cg_x_m": 2.7101089244105623,
+              "cg_mac": 0.12258986029549808,
+              "remaining_usable_fuel_kg": 145.12460931731684,
+              "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+            },
+            {
+              "name": "规定装载 / 主任务结束",
+              "mass_kg": 1324.3620720609233,
+              "cg_x_m": 2.6906050048916272,
+              "cg_mac": 0.11102587559358981,
+              "remaining_usable_fuel_kg": 24.92300859213806,
+              "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+            }
+          ],
+          "longitudinal": [
+            {
+              "loading_case": "规定装载 / 起飞",
+              "points": [
+                {
+                  "alpha_deg": 3.269761679571477,
+                  "elevator_deg": -8.921781980385987,
+                  "tail_cl": -0.23597303665495234,
+                  "tail_lift_n": -2755.534813179763,
+                  "static_margin": 0.42225788462923486,
+                  "cma_per_rad": -2.4565322643426475,
+                  "cla_per_rad": 5.81761135496526,
+                  "moment_bias": -0.05,
+                  "lift_residual": 0.0,
+                  "moment_residual": 2.7755575615628914e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 2.9811487914017403,
+                  "elevator_deg": -6.799811167446074,
+                  "tail_cl": -0.156607957289873,
+                  "tail_lift_n": -1828.7626605586504,
+                  "static_margin": 0.42225788462923486,
+                  "cma_per_rad": -2.4565322643426475,
+                  "cla_per_rad": 5.81761135496526,
+                  "moment_bias": 0.0,
+                  "lift_residual": -5.551115123125783e-17,
+                  "moment_residual": 2.7755575615628914e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 2.6925359032320033,
+                  "elevator_deg": -4.67784035450616,
+                  "tail_cl": -0.07724287792479362,
+                  "tail_lift_n": -901.9905079375368,
+                  "static_margin": 0.42225788462923486,
+                  "cma_per_rad": -2.4565322643426475,
+                  "cla_per_rad": 5.81761135496526,
+                  "moment_bias": 0.05,
+                  "lift_residual": 0.0,
+                  "moment_residual": 2.0816681711721685e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                }
+              ]
+            },
+            {
+              "loading_case": "规定装载 / 主任务结束",
+              "points": [
+                {
+                  "alpha_deg": 2.9026707346185496,
+                  "elevator_deg": -8.524100123353652,
+                  "tail_cl": -0.23597303665495242,
+                  "tail_lift_n": -2755.534813179764,
+                  "static_margin": 0.43382186933114314,
+                  "cma_per_rad": -2.5238070330531137,
+                  "cla_per_rad": 5.81761135496526,
+                  "moment_bias": -0.05,
+                  "lift_residual": 0.0,
+                  "moment_residual": 2.7755575615628914e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 2.6140578464488127,
+                  "elevator_deg": -6.402129310413737,
+                  "tail_cl": -0.15660795728987306,
+                  "tail_lift_n": -1828.762660558651,
+                  "static_margin": 0.43382186933114314,
+                  "cma_per_rad": -2.5238070330531137,
+                  "cla_per_rad": 5.81761135496526,
+                  "moment_bias": 0.0,
+                  "lift_residual": 0.0,
+                  "moment_residual": 1.3877787807814457e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 2.325444958279076,
+                  "elevator_deg": -4.280158497473823,
+                  "tail_cl": -0.07724287792479366,
+                  "tail_lift_n": -901.9905079375372,
+                  "static_margin": 0.43382186933114314,
+                  "cma_per_rad": -2.5238070330531137,
+                  "cla_per_rad": 5.81761135496526,
+                  "moment_bias": 0.05,
+                  "lift_residual": 0.0,
+                  "moment_residual": -2.0816681711721685e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                }
+              ]
+            }
+          ],
+          "limits": [
+            "起降为干燥水平硬跑道、无风、规定工程襟翼/摩擦及作用盘损失模型；未经具体全尺寸桨、襟翼和试飞标定。",
+            "场地温度/高度仅用于起降；任务仍采用规定巡航高度的标准大气。起降段耗油仍沿用30s/90%功率，距离校核与瞬态燃油尚未联算。",
+            "CG研究区间来自用户假设，不是允许装载包线；额外装载分配须另核座椅/行李舱限重。",
+            "纵向一级模型采用有限翼升力斜率和线性下洗；未包括机身、滑流、推力线及黏性俯仰矩修正。给定Cm扰动是情景范围，不是统计置信区间。",
+            "AVL/XFOIL和一级模型的俯仰力矩均有误差；力矩平衡、低角度余量与局部静稳定分别报告，完整操稳/操纵力仍未计算。",
+            "速度为低CL域内9个候选的初步最小需用功率选择；增强模型沿用并验证实际工况，不宣称原生气动全域最优。"
+          ],
+          "speed_selection": {
+            "candidates_m_s": [
+              52.4384226152312,
+              57.133619788327294,
+              61.8288169614234,
+              66.52401413451949,
+              71.2192113076156,
+              75.9144084807117,
+              80.60960565380779,
+              85.30480282690391,
+              90.0
+            ],
+            "initial_climb_m_s": 52.4384226152312,
+            "initial_loiter_m_s": 52.4384226152312,
+            "cl_ceiling": 0.5,
+            "method": "finite candidate minimum conceptual shaft power",
+            "actual_mission_speeds_m_s": {
+              "climb": 52.4384226152312,
+              "cruise": 60.0,
+              "descent": 52.4384226152312
+            }
+          }
+        }
+      },
+      "diagnostics": []
+    },
+    {
+      "case": "takeoff_tight",
+      "run_id": "9cdde0297cd44674a335185bb729e372",
+      "status": "constraints_not_met",
+      "elapsed_s": 13.330870999998297,
+      "metrics": {
+        "mtow_kg": 1450.3618526426997,
+        "area_m2": 16.455170371394473,
+        "span_m": 11.109175387284987,
+        "power_kw": 225.06324468255042,
+        "block_fuel_kg": 131.11212082417512,
+        "cg_mac": 0.030429335114654885,
+        "status": "constraints_not_met",
+        "iterations": 45,
+        "constraint_states": [
+          {
+            "id": "mass_budget",
+            "label": "质量预算或闭合残差",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "numerical"
+          },
+          {
+            "id": "mtow_upper_bound",
+            "label": "起飞重量上限",
+            "status": "not_applicable",
+            "reason": "当前任务未规定该项",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "fuel_capacity",
+            "label": "油箱容量",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "landing_stall",
+            "label": "着陆构型失速速度",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "power_available",
+            "label": "任务可用功率",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "clean_lift",
+            "label": "净构型升力",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "range",
+            "label": "规定航程",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "endurance",
+            "label": "最低航时或留空时间",
+            "status": "not_applicable",
+            "reason": "当前任务未规定该项",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "takeoff_distance",
+            "label": "越障起飞距离",
+            "status": "met",
+            "reason": "干燥跑道工程模型；并非具体机型实测性能",
+            "value": 537.6764039397244,
+            "limit": 550.0,
+            "margin": 12.323596060275577,
+            "unit": "m",
+            "kind": "design"
+          },
+          {
+            "id": "landing_distance",
+            "label": "越障着陆距离",
+            "status": "met",
+            "reason": "干燥跑道工程模型；并非具体机型实测性能",
+            "value": 544.5623928012427,
+            "limit": 700.0,
+            "margin": 155.4376071987573,
+            "unit": "m",
+            "kind": "design"
+          },
+          {
+            "id": "climb_sea_level",
+            "label": "海平面爬升需用功率",
+            "status": "met",
+            "reason": "爬升率要求 3m/s；需用与安装额定功率在同一基准比较",
+            "value": 157155.96862428173,
+            "limit": 225063.24468255043,
+            "margin": 67907.2760582687,
+            "unit": "W",
+            "kind": "design"
+          },
+          {
+            "id": "climb_cruise_altitude",
+            "label": "巡航高度爬升需用功率",
+            "status": "met",
+            "reason": "爬升率要求 3m/s；需用与安装额定功率在同一基准比较",
+            "value": 179638.06279412238,
+            "limit": 225063.24468255043,
+            "margin": 45425.18188842805,
+            "unit": "W",
+            "kind": "design"
+          },
+          {
+            "id": "loading_cg",
+            "label": "规定装载CG研究范围",
+            "status": "exceeded",
+            "reason": "实际装载和主任务结束；仅显式声明的分配场景",
+            "value": [
+              0.012716594084323492,
+              0.030429335114654885
+            ],
+            "limit": [
+              0.15,
+              0.35
+            ],
+            "margin": -0.1372834059156765,
+            "unit": "MAC",
+            "kind": "design"
+          },
+          {
+            "id": "longitudinal_static",
+            "label": "纵向静稳定一级筛查",
+            "status": "met",
+            "reason": "固定舵面线性升力斜率，缺失机身/动力修正",
+            "value": 0.5189835741703346,
+            "limit": 0.05,
+            "margin": 0.4689835741703346,
+            "unit": "MAC",
+            "kind": "design"
+          },
+          {
+            "id": "longitudinal_control",
+            "label": "纵向配平角度与舵量（含Cm扰动）",
+            "status": "exceeded",
+            "reason": "所有装载及给定Cm扰动角点；超过角度域表示当前一级方案尚不能确认可用",
+            "value": 1.236139592872147,
+            "limit": 1.0,
+            "margin": -0.23613959287214703,
+            "unit": "fraction",
+            "kind": "design"
+          },
+          {
+            "id": "lateral_control",
+            "label": "横航向操稳包线",
+            "status": "not_calculated",
+            "reason": "后续节点，当前概念筛查不包含此项",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "structural_feedback",
+            "label": "结构定尺寸质量反馈",
+            "status": "not_calculated",
+            "reason": "后续节点，当前概念筛查不包含此项",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          }
+        ],
+        "first_level": {
+          "config": {
+            "version": "concept_constraints_v1",
+            "takeoff_limit_m": 550.0,
+            "landing_limit_m": 700.0,
+            "field_altitude_m": 0.0,
+            "temperature_delta_k": 0.0,
+            "obstacle_m": 15.24,
+            "takeoff_cl_max": 1.6,
+            "takeoff_cd_increment": 0.025,
+            "landing_cd_increment": 0.075,
+            "rolling_friction": 0.025,
+            "braking_friction": 0.3,
+            "disk_power_factor": 0.65,
+            "approach_deg": 3.0,
+            "flare_load_factor": 1.2,
+            "rotation_time_s": 2.0,
+            "landing_delay_s": 2.0,
+            "schedule_cl_ceiling": 0.5,
+            "schedule_max_speed_m_s": 90.0,
+            "cg_min_mac": 0.15,
+            "cg_max_mac": 0.35,
+            "static_margin_min": 0.05,
+            "wing_cm_ac": -0.05,
+            "moment_bias_abs": 0.05,
+            "tail_dynamic_pressure_ratio": 0.9,
+            "downwash_gradient": 0.35,
+            "elevator_effectiveness": 0.6,
+            "alpha_zero_lift_deg": -2.0,
+            "alpha_limit_deg": 6.0,
+            "elevator_limit_deg": 10.0,
+            "loading_cases": [],
+            "source": "V0.3.4 一级概念研究假设；干燥水平硬跑道、无风，非具体机型性能或适航限值"
+          },
+          "method": "first_level_concept_v1",
+          "field_basis": {
+            "mass_kg": 1450.3618526426997,
+            "area_m2": 16.455170371394473,
+            "rated_power_w": 225063.24468255043,
+            "mass_definition": "design MTOW; landing at MTOW is conservative, not inferred from end-of-mission mass"
+          },
+          "field": {
+            "takeoff": {
+              "calculation_status": "computed",
+              "total_m": 537.6764039397244,
+              "ground_roll_m": 360.5016684107666,
+              "acceleration_m": 292.19515334814616,
+              "rotation_m": 68.30651506262048,
+              "transition_m": 45.232341315622435,
+              "obstacle_m": 131.94239421333538,
+              "stall_m_s": 29.698484809834994,
+              "liftoff_m_s": 34.15325753131024,
+              "safety_m_s": 35.63818177180199,
+              "climb_gradient": 0.11474207905035765,
+              "rho_kg_m3": 1.225,
+              "field_available_power_w": 225063.24468255043,
+              "method": "newton_ground_roll_ideal_disk_v1",
+              "assumptions": "density-lapse shaft power; disk loss factor; no ground effect; sequential acceleration/climb"
+            },
+            "landing": {
+              "calculation_status": "computed",
+              "total_m": 544.5623928012427,
+              "ground_roll_m": 236.07619041042804,
+              "braking_m": 171.67619041042803,
+              "approach_m": 273.13108694178214,
+              "flare_m": 35.355115449032496,
+              "delay_m": 64.4,
+              "stall_m_s": 28.000000000000004,
+              "approach_m_s": 36.400000000000006,
+              "touchdown_m_s": 32.2,
+              "rho_kg_m3": 1.225,
+              "method": "newton_ground_roll_ideal_disk_v1",
+              "assumptions": "touchdown at 1.15Vs; flare entry 1.3Vs; lift dump CL=.3; zero residual thrust"
+            }
+          },
+          "loading": [
+            {
+              "name": "规定装载 / 起飞",
+              "mass_kg": 1450.4561509525615,
+              "cg_x_m": 2.5929911047789176,
+              "cg_mac": 0.030429335114654885,
+              "remaining_usable_fuel_kg": 130.54946271246874,
+              "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+            },
+            {
+              "name": "规定装载 / 主任务结束",
+              "mass_kg": 1342.182443069238,
+              "cg_x_m": 2.566207984256473,
+              "cg_mac": 0.012716594084323492,
+              "remaining_usable_fuel_kg": 22.275754829145114,
+              "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+            }
+          ],
+          "longitudinal": [
+            {
+              "loading_case": "规定装载 / 起飞",
+              "points": [
+                {
+                  "alpha_deg": 4.570846531932135,
+                  "elevator_deg": -12.361395928721471,
+                  "tail_cl": -0.3250234223382264,
+                  "tail_lift_n": -2734.8985704973497,
+                  "static_margin": 0.5189835741703346,
+                  "cma_per_rad": -2.973210151028894,
+                  "cla_per_rad": 5.7289099289548275,
+                  "moment_bias": -0.05,
+                  "lift_residual": 0.0,
+                  "moment_residual": 5.551115123125783e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 4.312098690361156,
+                  "elevator_deg": -10.271778916263543,
+                  "tail_cl": -0.24565834297314695,
+                  "tail_lift_n": -2067.0838002833684,
+                  "static_margin": 0.5189835741703346,
+                  "cma_per_rad": -2.973210151028894,
+                  "cla_per_rad": 5.7289099289548275,
+                  "moment_bias": 0.0,
+                  "lift_residual": 1.1102230246251565e-16,
+                  "moment_residual": 1.3877787807814457e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 4.053350848790175,
+                  "elevator_deg": -8.182161903805616,
+                  "tail_cl": -0.16629326360806762,
+                  "tail_lift_n": -1399.269030069388,
+                  "static_margin": 0.5189835741703346,
+                  "cma_per_rad": -2.973210151028894,
+                  "cla_per_rad": 5.7289099289548275,
+                  "moment_bias": 0.05,
+                  "lift_residual": 0.0,
+                  "moment_residual": 2.7755575615628914e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                }
+              ]
+            },
+            {
+              "loading_case": "规定装载 / 主任务结束",
+              "points": [
+                {
+                  "alpha_deg": 4.15944642458228,
+                  "elevator_deg": -11.915712479092461,
+                  "tail_cl": -0.32502342233822634,
+                  "tail_lift_n": -2734.8985704973493,
+                  "static_margin": 0.536696315200666,
+                  "cma_per_rad": -3.074684848986565,
+                  "cla_per_rad": 5.7289099289548275,
+                  "moment_bias": -0.05,
+                  "lift_residual": -5.551115123125783e-17,
+                  "moment_residual": 8.326672684688674e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 3.900698583011301,
+                  "elevator_deg": -9.826095466634532,
+                  "tail_cl": -0.24565834297314687,
+                  "tail_lift_n": -2067.083800283368,
+                  "static_margin": 0.536696315200666,
+                  "cma_per_rad": -3.074684848986565,
+                  "cla_per_rad": 5.7289099289548275,
+                  "moment_bias": 0.0,
+                  "lift_residual": -5.551115123125783e-17,
+                  "moment_residual": 1.3877787807814457e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 3.6419507414403216,
+                  "elevator_deg": -7.736478454176607,
+                  "tail_cl": -0.16629326360806757,
+                  "tail_lift_n": -1399.2690300693876,
+                  "static_margin": 0.536696315200666,
+                  "cma_per_rad": -3.074684848986565,
+                  "cla_per_rad": 5.7289099289548275,
+                  "moment_bias": 0.05,
+                  "lift_residual": 5.551115123125783e-17,
+                  "moment_residual": 2.7755575615628914e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                }
+              ]
+            }
+          ],
+          "limits": [
+            "起降为干燥水平硬跑道、无风、规定工程襟翼/摩擦及作用盘损失模型；未经具体全尺寸桨、襟翼和试飞标定。",
+            "场地温度/高度仅用于起降；任务仍采用规定巡航高度的标准大气。起降段耗油仍沿用30s/90%功率，距离校核与瞬态燃油尚未联算。",
+            "CG研究区间来自用户假设，不是允许装载包线；额外装载分配须另核座椅/行李舱限重。",
+            "纵向一级模型采用有限翼升力斜率和线性下洗；未包括机身、滑流、推力线及黏性俯仰矩修正。给定Cm扰动是情景范围，不是统计置信区间。",
+            "AVL/XFOIL和一级模型的俯仰力矩均有误差；力矩平衡、低角度余量与局部静稳定分别报告，完整操稳/操纵力仍未计算。",
+            "速度为低CL域内9个候选的初步最小需用功率选择；增强模型沿用并验证实际工况，不宣称原生气动全域最优。"
+          ],
+          "speed_selection": {
+            "candidates_m_s": [
+              58.61011519694166,
+              62.53385079732396,
+              66.45758639770625,
+              70.38132199808854,
+              74.30505759847082,
+              78.22879319885313,
+              82.15252879923541,
+              86.07626439961771,
+              90.0
+            ],
+            "initial_climb_m_s": 58.61011519694166,
+            "initial_loiter_m_s": 58.61011519694166,
+            "cl_ceiling": 0.5,
+            "method": "finite candidate minimum conceptual shaft power",
+            "actual_mission_speeds_m_s": {
+              "climb": 58.61011519694166,
+              "cruise": 60.0,
+              "descent": 58.61011519694166
+            }
+          }
+        }
+      },
+      "diagnostics": []
+    },
+    {
+      "case": "impossible_takeoff",
+      "run_id": "4ae38d8a72414bcb879bdab03fc733f1",
+      "status": "out_of_domain",
+      "elapsed_s": 8.657069300003059,
+      "metrics": null,
+      "diagnostics": [
+        "起飞距离要求在40–400kW及一级爬升梯度域内不可达"
+      ]
+    },
+    {
+      "case": "fixed_mass",
+      "run_id": "a8668d17c794475880d2b35a3074fb7e",
+      "status": "constraints_not_met",
+      "elapsed_s": 9.418173400001251,
+      "metrics": {
+        "mtow_kg": 1500.0,
+        "area_m2": 17.018343051506314,
+        "span_m": 11.297679978044048,
+        "power_kw": 189.50183747194592,
+        "block_fuel_kg": 135.29026101349774,
+        "cg_mac": 0.08301751387628065,
+        "status": "constraints_not_met",
+        "iterations": 4,
+        "constraint_states": [
+          {
+            "id": "mass_budget",
+            "label": "质量预算或闭合残差",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "mtow_upper_bound",
+            "label": "起飞重量上限",
+            "status": "not_applicable",
+            "reason": "当前任务未规定该项",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "fuel_capacity",
+            "label": "油箱容量",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "landing_stall",
+            "label": "着陆构型失速速度",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "power_available",
+            "label": "任务可用功率",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "clean_lift",
+            "label": "净构型升力",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "range",
+            "label": "规定航程",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "endurance",
+            "label": "最低航时或留空时间",
+            "status": "not_applicable",
+            "reason": "当前任务未规定该项",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "takeoff_distance",
+            "label": "越障起飞距离",
+            "status": "met",
+            "reason": "干燥跑道工程模型；并非具体机型实测性能",
+            "value": 702.214787056835,
+            "limit": 800.0,
+            "margin": 97.78521294316499,
+            "unit": "m",
+            "kind": "design"
+          },
+          {
+            "id": "landing_distance",
+            "label": "越障着陆距离",
+            "status": "met",
+            "reason": "干燥跑道工程模型；并非具体机型实测性能",
+            "value": 544.5623928012426,
+            "limit": 700.0,
+            "margin": 155.4376071987574,
+            "unit": "m",
+            "kind": "design"
+          },
+          {
+            "id": "climb_sea_level",
+            "label": "海平面爬升需用功率",
+            "status": "met",
+            "reason": "爬升率要求 3m/s；需用与安装额定功率在同一基准比较",
+            "value": 162534.5788755354,
+            "limit": 189501.8374719459,
+            "margin": 26967.25859641051,
+            "unit": "W",
+            "kind": "design"
+          },
+          {
+            "id": "climb_cruise_altitude",
+            "label": "巡航高度爬升需用功率",
+            "status": "met",
+            "reason": "爬升率要求 3m/s；需用与安装额定功率在同一基准比较",
+            "value": 185786.1151685744,
+            "limit": 189501.8374719459,
+            "margin": 3715.722303371498,
+            "unit": "W",
+            "kind": "design"
+          },
+          {
+            "id": "loading_cg",
+            "label": "规定装载CG研究范围",
+            "status": "exceeded",
+            "reason": "实际装载和主任务结束；仅显式声明的分配场景",
+            "value": [
+              0.06868025343928984,
+              0.08301751387628065
+            ],
+            "limit": [
+              0.15,
+              0.35
+            ],
+            "margin": -0.08131974656071016,
+            "unit": "MAC",
+            "kind": "design"
+          },
+          {
+            "id": "longitudinal_static",
+            "label": "纵向静稳定一级筛查",
+            "status": "met",
+            "reason": "固定舵面线性升力斜率，缺失机身/动力修正",
+            "value": 0.46571541663836113,
+            "limit": 0.05,
+            "margin": 0.41571541663836115,
+            "unit": "MAC",
+            "kind": "design"
+          },
+          {
+            "id": "longitudinal_control",
+            "label": "纵向配平角度与舵量（含Cm扰动）",
+            "status": "exceeded",
+            "reason": "所有装载及给定Cm扰动角点；超过角度域表示当前一级方案尚不能确认可用",
+            "value": 1.0801784373953316,
+            "limit": 1.0,
+            "margin": -0.08017843739533159,
+            "unit": "fraction",
+            "kind": "design"
+          },
+          {
+            "id": "lateral_control",
+            "label": "横航向操稳包线",
+            "status": "not_calculated",
+            "reason": "后续节点，当前概念筛查不包含此项",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "structural_feedback",
+            "label": "结构定尺寸质量反馈",
+            "status": "not_calculated",
+            "reason": "后续节点，当前概念筛查不包含此项",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          }
+        ],
+        "first_level": {
+          "config": {
+            "version": "concept_constraints_v1",
+            "takeoff_limit_m": 800.0,
+            "landing_limit_m": 700.0,
+            "field_altitude_m": 0.0,
+            "temperature_delta_k": 0.0,
+            "obstacle_m": 15.24,
+            "takeoff_cl_max": 1.6,
+            "takeoff_cd_increment": 0.025,
+            "landing_cd_increment": 0.075,
+            "rolling_friction": 0.025,
+            "braking_friction": 0.3,
+            "disk_power_factor": 0.65,
+            "approach_deg": 3.0,
+            "flare_load_factor": 1.2,
+            "rotation_time_s": 2.0,
+            "landing_delay_s": 2.0,
+            "schedule_cl_ceiling": 0.5,
+            "schedule_max_speed_m_s": 90.0,
+            "cg_min_mac": 0.15,
+            "cg_max_mac": 0.35,
+            "static_margin_min": 0.05,
+            "wing_cm_ac": -0.05,
+            "moment_bias_abs": 0.05,
+            "tail_dynamic_pressure_ratio": 0.9,
+            "downwash_gradient": 0.35,
+            "elevator_effectiveness": 0.6,
+            "alpha_zero_lift_deg": -2.0,
+            "alpha_limit_deg": 6.0,
+            "elevator_limit_deg": 10.0,
+            "loading_cases": [],
+            "source": "V0.3.4 一级概念研究假设；干燥水平硬跑道、无风，非具体机型性能或适航限值"
+          },
+          "method": "first_level_concept_v1",
+          "field_basis": {
+            "mass_kg": 1500.0,
+            "area_m2": 17.018343051506314,
+            "rated_power_w": 189501.8374719459,
+            "mass_definition": "design MTOW; landing at MTOW is conservative, not inferred from end-of-mission mass"
+          },
+          "field": {
+            "takeoff": {
+              "calculation_status": "computed",
+              "total_m": 702.214787056835,
+              "ground_roll_m": 440.0024173235261,
+              "acceleration_m": 371.69590226090565,
+              "rotation_m": 68.30651506262048,
+              "transition_m": 66.53028868756203,
+              "obstacle_m": 195.6820810457468,
+              "stall_m_s": 29.698484809834994,
+              "liftoff_m_s": 34.15325753131024,
+              "safety_m_s": 35.63818177180199,
+              "climb_gradient": 0.07764630200439873,
+              "rho_kg_m3": 1.225,
+              "field_available_power_w": 189501.8374719459,
+              "method": "newton_ground_roll_ideal_disk_v1",
+              "assumptions": "density-lapse shaft power; disk loss factor; no ground effect; sequential acceleration/climb"
+            },
+            "landing": {
+              "calculation_status": "computed",
+              "total_m": 544.5623928012426,
+              "ground_roll_m": 236.07619041042796,
+              "braking_m": 171.67619041042798,
+              "approach_m": 273.13108694178214,
+              "flare_m": 35.35511544903248,
+              "delay_m": 64.39999999999999,
+              "stall_m_s": 27.999999999999996,
+              "approach_m_s": 36.4,
+              "touchdown_m_s": 32.199999999999996,
+              "rho_kg_m3": 1.225,
+              "method": "newton_ground_roll_ideal_disk_v1",
+              "assumptions": "touchdown at 1.15Vs; flare entry 1.3Vs; lift dump CL=.3; zero residual thrust"
+            }
+          },
+          "loading": [
+            {
+              "name": "规定装载 / 起飞",
+              "mass_kg": 1414.991275873717,
+              "cg_x_m": 2.66822438939435,
+              "cg_mac": 0.08301751387628065,
+              "remaining_usable_fuel_kg": 134.81650641981787,
+              "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+            },
+            {
+              "name": "规定装载 / 主任务结束",
+              "mass_kg": 1303.1055115094991,
+              "cg_x_m": 2.646177413758876,
+              "cg_mac": 0.06868025343928984,
+              "remaining_usable_fuel_kg": 22.93074205559995,
+              "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+            }
+          ],
+          "longitudinal": [
+            {
+              "loading_case": "规定装载 / 起飞",
+              "points": [
+                {
+                  "alpha_deg": 4.120315785271062,
+                  "elevator_deg": -10.801784373953316,
+                  "tail_cl": -0.27802056839073874,
+                  "tail_lift_n": -2460.51393020766,
+                  "static_margin": 0.46571541663836113,
+                  "cma_per_rad": -2.6741146965736666,
+                  "cla_per_rad": 5.741950128849136,
+                  "moment_bias": -0.05,
+                  "lift_residual": 0.0,
+                  "moment_residual": 2.7755575615628914e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 3.8571774147647893,
+                  "elevator_deg": -8.70741095514882,
+                  "tail_cl": -0.19865548902565935,
+                  "tail_lift_n": -1758.1238715147242,
+                  "static_margin": 0.46571541663836113,
+                  "cma_per_rad": -2.6741146965736666,
+                  "cla_per_rad": 5.741950128849136,
+                  "moment_bias": 0.0,
+                  "lift_residual": 5.551115123125783e-17,
+                  "moment_residual": -4.163336342344337e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 3.594039044258515,
+                  "elevator_deg": -6.613037536344326,
+                  "tail_cl": -0.11929040966058005,
+                  "tail_lift_n": -1055.7338128217891,
+                  "static_margin": 0.46571541663836113,
+                  "cma_per_rad": -2.6741146965736666,
+                  "cla_per_rad": 5.741950128849136,
+                  "moment_bias": 0.05,
+                  "lift_residual": 0.0,
+                  "moment_residual": 2.7755575615628914e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                }
+              ]
+            },
+            {
+              "loading_case": "规定装载 / 主任务结束",
+              "points": [
+                {
+                  "alpha_deg": 3.709259461764631,
+                  "elevator_deg": -10.356473356821347,
+                  "tail_cl": -0.27802056839073874,
+                  "tail_lift_n": -2460.51393020766,
+                  "static_margin": 0.48005267707535193,
+                  "cma_per_rad": -2.7564385309871895,
+                  "cla_per_rad": 5.741950128849136,
+                  "moment_bias": -0.05,
+                  "lift_residual": 0.0,
+                  "moment_residual": -2.7755575615628914e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 3.4461210912583575,
+                  "elevator_deg": -8.262099938016853,
+                  "tail_cl": -0.19865548902565938,
+                  "tail_lift_n": -1758.1238715147244,
+                  "static_margin": 0.48005267707535193,
+                  "cma_per_rad": -2.7564385309871895,
+                  "cla_per_rad": 5.741950128849136,
+                  "moment_bias": 0.0,
+                  "lift_residual": 5.551115123125783e-17,
+                  "moment_residual": -2.7755575615628914e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 3.182982720752084,
+                  "elevator_deg": -6.1677265192123585,
+                  "tail_cl": -0.11929040966058,
+                  "tail_lift_n": -1055.7338128217887,
+                  "static_margin": 0.48005267707535193,
+                  "cma_per_rad": -2.7564385309871895,
+                  "cla_per_rad": 5.741950128849136,
+                  "moment_bias": 0.05,
+                  "lift_residual": 0.0,
+                  "moment_residual": -1.3877787807814457e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                }
+              ]
+            }
+          ],
+          "limits": [
+            "起降为干燥水平硬跑道、无风、规定工程襟翼/摩擦及作用盘损失模型；未经具体全尺寸桨、襟翼和试飞标定。",
+            "场地温度/高度仅用于起降；任务仍采用规定巡航高度的标准大气。起降段耗油仍沿用30s/90%功率，距离校核与瞬态燃油尚未联算。",
+            "CG研究区间来自用户假设，不是允许装载包线；额外装载分配须另核座椅/行李舱限重。",
+            "纵向一级模型采用有限翼升力斜率和线性下洗；未包括机身、滑流、推力线及黏性俯仰矩修正。给定Cm扰动是情景范围，不是统计置信区间。",
+            "AVL/XFOIL和一级模型的俯仰力矩均有误差；力矩平衡、低角度余量与局部静稳定分别报告，完整操稳/操纵力仍未计算。",
+            "速度为低CL域内9个候选的初步最小需用功率选择；增强模型沿用并验证实际工况，不宣称原生气动全域最优。"
+          ],
+          "speed_selection": {
+            "candidates_m_s": [
+              58.610115196941656,
+              62.53385079732395,
+              66.45758639770624,
+              70.38132199808854,
+              74.30505759847082,
+              78.22879319885313,
+              82.15252879923541,
+              86.07626439961771,
+              90.0
+            ],
+            "initial_climb_m_s": 58.610115196941656,
+            "initial_loiter_m_s": 58.610115196941656,
+            "cl_ceiling": 0.5,
+            "method": "finite candidate minimum conceptual shaft power",
+            "actual_mission_speeds_m_s": {
+              "climb": 58.610115196941656,
+              "cruise": 60.0,
+              "descent": 58.610115196941656
+            }
+          }
+        }
+      },
+      "diagnostics": []
+    },
+    {
+      "case": "upper_bound",
+      "run_id": "e1e5b9a52d22478ea9046e4303d67921",
+      "status": "constraints_not_met",
+      "elapsed_s": 11.640316500001063,
+      "metrics": {
+        "mtow_kg": 1292.8380021480818,
+        "area_m2": 14.667973753720075,
+        "span_m": 10.488555818266907,
+        "power_kw": 163.33011797374738,
+        "block_fuel_kg": 116.60559383918627,
+        "cg_mac": 0.08222137200179858,
+        "status": "constraints_not_met",
+        "iterations": 35,
+        "constraint_states": [
+          {
+            "id": "mass_budget",
+            "label": "质量预算或闭合残差",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "numerical"
+          },
+          {
+            "id": "mtow_upper_bound",
+            "label": "起飞重量上限",
+            "status": "exceeded",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "fuel_capacity",
+            "label": "油箱容量",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "landing_stall",
+            "label": "着陆构型失速速度",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "power_available",
+            "label": "任务可用功率",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "clean_lift",
+            "label": "净构型升力",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "range",
+            "label": "规定航程",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "endurance",
+            "label": "最低航时或留空时间",
+            "status": "not_applicable",
+            "reason": "当前任务未规定该项",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "takeoff_distance",
+            "label": "越障起飞距离",
+            "status": "met",
+            "reason": "干燥跑道工程模型；并非具体机型实测性能",
+            "value": 674.4277640359492,
+            "limit": 800.0,
+            "margin": 125.57223596405083,
+            "unit": "m",
+            "kind": "design"
+          },
+          {
+            "id": "landing_distance",
+            "label": "越障着陆距离",
+            "status": "met",
+            "reason": "干燥跑道工程模型；并非具体机型实测性能",
+            "value": 544.5623928012427,
+            "limit": 700.0,
+            "margin": 155.4376071987573,
+            "unit": "m",
+            "kind": "design"
+          },
+          {
+            "id": "climb_sea_level",
+            "label": "海平面爬升需用功率",
+            "status": "met",
+            "reason": "爬升率要求 3m/s；需用与安装额定功率在同一基准比较",
+            "value": 140087.25348895133,
+            "limit": 163330.11797374737,
+            "margin": 23242.86448479604,
+            "unit": "W",
+            "kind": "design"
+          },
+          {
+            "id": "climb_cruise_altitude",
+            "label": "巡航高度爬升需用功率",
+            "status": "met",
+            "reason": "爬升率要求 3m/s；需用与安装额定功率在同一基准比较",
+            "value": 160127.5666409288,
+            "limit": 163330.11797374737,
+            "margin": 3202.551332818577,
+            "unit": "W",
+            "kind": "design"
+          },
+          {
+            "id": "loading_cg",
+            "label": "规定装载CG研究范围",
+            "status": "exceeded",
+            "reason": "实际装载和主任务结束；仅显式声明的分配场景",
+            "value": [
+              0.06869871073061065,
+              0.08222137200179858
+            ],
+            "limit": [
+              0.15,
+              0.35
+            ],
+            "margin": -0.08130128926938934,
+            "unit": "MAC",
+            "kind": "design"
+          },
+          {
+            "id": "longitudinal_static",
+            "label": "纵向静稳定一级筛查",
+            "status": "met",
+            "reason": "固定舵面线性升力斜率，缺失机身/动力修正",
+            "value": 0.4694522906421153,
+            "limit": 0.05,
+            "margin": 0.4194522906421153,
+            "unit": "MAC",
+            "kind": "design"
+          },
+          {
+            "id": "longitudinal_control",
+            "label": "纵向配平角度与舵量（含Cm扰动）",
+            "status": "exceeded",
+            "reason": "所有装载及给定Cm扰动角点；超过角度域表示当前一级方案尚不能确认可用",
+            "value": 1.1272114727385885,
+            "limit": 1.0,
+            "margin": -0.12721147273858846,
+            "unit": "fraction",
+            "kind": "design"
+          },
+          {
+            "id": "lateral_control",
+            "label": "横航向操稳包线",
+            "status": "not_calculated",
+            "reason": "后续节点，当前概念筛查不包含此项",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "structural_feedback",
+            "label": "结构定尺寸质量反馈",
+            "status": "not_calculated",
+            "reason": "后续节点，当前概念筛查不包含此项",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          }
+        ],
+        "first_level": {
+          "config": {
+            "version": "concept_constraints_v1",
+            "takeoff_limit_m": 800.0,
+            "landing_limit_m": 700.0,
+            "field_altitude_m": 0.0,
+            "temperature_delta_k": 0.0,
+            "obstacle_m": 15.24,
+            "takeoff_cl_max": 1.6,
+            "takeoff_cd_increment": 0.025,
+            "landing_cd_increment": 0.075,
+            "rolling_friction": 0.025,
+            "braking_friction": 0.3,
+            "disk_power_factor": 0.65,
+            "approach_deg": 3.0,
+            "flare_load_factor": 1.2,
+            "rotation_time_s": 2.0,
+            "landing_delay_s": 2.0,
+            "schedule_cl_ceiling": 0.5,
+            "schedule_max_speed_m_s": 90.0,
+            "cg_min_mac": 0.15,
+            "cg_max_mac": 0.35,
+            "static_margin_min": 0.05,
+            "wing_cm_ac": -0.05,
+            "moment_bias_abs": 0.05,
+            "tail_dynamic_pressure_ratio": 0.9,
+            "downwash_gradient": 0.35,
+            "elevator_effectiveness": 0.6,
+            "alpha_zero_lift_deg": -2.0,
+            "alpha_limit_deg": 6.0,
+            "elevator_limit_deg": 10.0,
+            "loading_cases": [],
+            "source": "V0.3.4 一级概念研究假设；干燥水平硬跑道、无风，非具体机型性能或适航限值"
+          },
+          "method": "first_level_concept_v1",
+          "field_basis": {
+            "mass_kg": 1292.8380021480818,
+            "area_m2": 14.667973753720075,
+            "rated_power_w": 163330.11797374737,
+            "mass_definition": "design MTOW; landing at MTOW is conservative, not inferred from end-of-mission mass"
+          },
+          "field": {
+            "takeoff": {
+              "calculation_status": "computed",
+              "total_m": 674.4277640359492,
+              "ground_roll_m": 424.9010122432617,
+              "acceleration_m": 356.59449718064116,
+              "rotation_m": 68.30651506262049,
+              "transition_m": 63.29132200078239,
+              "obstacle_m": 186.2354297919051,
+              "stall_m_s": 29.698484809834998,
+              "liftoff_m_s": 34.153257531310246,
+              "safety_m_s": 35.638181771801996,
+              "climb_gradient": 0.08155928139023659,
+              "rho_kg_m3": 1.225,
+              "field_available_power_w": 163330.11797374737,
+              "method": "newton_ground_roll_ideal_disk_v1",
+              "assumptions": "density-lapse shaft power; disk loss factor; no ground effect; sequential acceleration/climb"
+            },
+            "landing": {
+              "calculation_status": "computed",
+              "total_m": 544.5623928012427,
+              "ground_roll_m": 236.07619041042804,
+              "braking_m": 171.67619041042803,
+              "approach_m": 273.13108694178214,
+              "flare_m": 35.355115449032496,
+              "delay_m": 64.4,
+              "stall_m_s": 28.000000000000004,
+              "approach_m_s": 36.400000000000006,
+              "touchdown_m_s": 32.2,
+              "rho_kg_m3": 1.225,
+              "method": "newton_ground_roll_ideal_disk_v1",
+              "assumptions": "touchdown at 1.15Vs; flare entry 1.3Vs; lift dump CL=.3; zero residual thrust"
+            }
+          },
+          "loading": [
+            {
+              "name": "规定装载 / 起飞",
+              "mass_kg": 1292.904379204359,
+              "cg_x_m": 2.6854777229480633,
+              "cg_mac": 0.08222137200179858,
+              "remaining_usable_fuel_kg": 116.1972685442519,
+              "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+            },
+            {
+              "name": "规定装载 / 主任务结束",
+              "mass_kg": 1196.4709338247299,
+              "cg_x_m": 2.6661726501976073,
+              "cg_mac": 0.06869871073061065,
+              "remaining_usable_fuel_kg": 19.76382316462268,
+              "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+            }
+          ],
+          "longitudinal": [
+            {
+              "loading_case": "规定装载 / 起飞",
+              "points": [
+                {
+                  "alpha_deg": 4.39082988076781,
+                  "elevator_deg": -11.272114727385885,
+                  "tail_cl": -0.2857966505823386,
+                  "tail_lift_n": -2023.8825762574525,
+                  "static_margin": 0.4694522906421153,
+                  "cma_per_rad": -2.669295054110254,
+                  "cla_per_rad": 5.685977270361597,
+                  "moment_bias": -0.05,
+                  "lift_residual": -5.551115123125783e-17,
+                  "moment_residual": 5.551115123125783e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 4.1465371151427854,
+                  "elevator_deg": -9.198157380536074,
+                  "tail_cl": -0.20643157121725916,
+                  "tail_lift_n": -1461.8549913890372,
+                  "static_margin": 0.4694522906421153,
+                  "cma_per_rad": -2.669295054110254,
+                  "cla_per_rad": 5.685977270361597,
+                  "moment_bias": 0.0,
+                  "lift_residual": -5.551115123125783e-17,
+                  "moment_residual": 2.7755575615628914e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 3.9022443495177606,
+                  "elevator_deg": -7.124200033686265,
+                  "tail_cl": -0.1270664918521798,
+                  "tail_lift_n": -899.8274065206223,
+                  "static_margin": 0.4694522906421153,
+                  "cma_per_rad": -2.669295054110254,
+                  "cla_per_rad": 5.685977270361597,
+                  "moment_bias": 0.05,
+                  "lift_residual": -5.551115123125783e-17,
+                  "moment_residual": 6.938893903907228e-18,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                }
+              ]
+            },
+            {
+              "loading_case": "规定装载 / 主任务结束",
+              "points": [
+                {
+                  "alpha_deg": 3.9797735572613875,
+                  "elevator_deg": -10.826803710253927,
+                  "tail_cl": -0.2857966505823386,
+                  "tail_lift_n": -2023.8825762574525,
+                  "static_margin": 0.4829749519133033,
+                  "cma_per_rad": -2.746184598733028,
+                  "cla_per_rad": 5.685977270361597,
+                  "moment_bias": -0.05,
+                  "lift_residual": 5.551115123125783e-17,
+                  "moment_residual": 0.0,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 3.7354807916363626,
+                  "elevator_deg": -8.75284636340412,
+                  "tail_cl": -0.20643157121725925,
+                  "tail_lift_n": -1461.8549913890377,
+                  "static_margin": 0.4829749519133033,
+                  "cma_per_rad": -2.746184598733028,
+                  "cla_per_rad": 5.685977270361597,
+                  "moment_bias": 0.0,
+                  "lift_residual": 0.0,
+                  "moment_residual": 4.163336342344337e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 3.491188026011338,
+                  "elevator_deg": -6.67888901655431,
+                  "tail_cl": -0.12706649185217989,
+                  "tail_lift_n": -899.827406520623,
+                  "static_margin": 0.4829749519133033,
+                  "cma_per_rad": -2.746184598733028,
+                  "cla_per_rad": 5.685977270361597,
+                  "moment_bias": 0.05,
+                  "lift_residual": 0.0,
+                  "moment_residual": 0.0,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                }
+              ]
+            }
+          ],
+          "limits": [
+            "起降为干燥水平硬跑道、无风、规定工程襟翼/摩擦及作用盘损失模型；未经具体全尺寸桨、襟翼和试飞标定。",
+            "场地温度/高度仅用于起降；任务仍采用规定巡航高度的标准大气。起降段耗油仍沿用30s/90%功率，距离校核与瞬态燃油尚未联算。",
+            "CG研究区间来自用户假设，不是允许装载包线；额外装载分配须另核座椅/行李舱限重。",
+            "纵向一级模型采用有限翼升力斜率和线性下洗；未包括机身、滑流、推力线及黏性俯仰矩修正。给定Cm扰动是情景范围，不是统计置信区间。",
+            "AVL/XFOIL和一级模型的俯仰力矩均有误差；力矩平衡、低角度余量与局部静稳定分别报告，完整操稳/操纵力仍未计算。",
+            "速度为低CL域内9个候选的初步最小需用功率选择；增强模型沿用并验证实际工况，不宣称原生气动全域最优。"
+          ],
+          "speed_selection": {
+            "candidates_m_s": [
+              58.610115196941656,
+              62.53385079732395,
+              66.45758639770624,
+              70.38132199808854,
+              74.30505759847082,
+              78.22879319885313,
+              82.15252879923541,
+              86.07626439961771,
+              90.0
+            ],
+            "initial_climb_m_s": 58.610115196941656,
+            "initial_loiter_m_s": 58.610115196941656,
+            "cl_ceiling": 0.5,
+            "method": "finite candidate minimum conceptual shaft power",
+            "actual_mission_speeds_m_s": {
+              "climb": 58.610115196941656,
+              "cruise": 60.0,
+              "descent": 58.610115196941656
+            }
+          }
+        }
+      },
+      "diagnostics": []
+    },
+    {
+      "case": "endurance",
+      "run_id": "a2bbd81778c54e0da24e342fec4509ed",
+      "status": "constraints_not_met",
+      "elapsed_s": 16.42014499999641,
+      "metrics": {
+        "mtow_kg": 1310.48513198016,
+        "area_m2": 14.868190359957929,
+        "span_m": 10.55989714437051,
+        "power_kw": 165.55956032660393,
+        "block_fuel_kg": 125.48453988220594,
+        "cg_mac": 0.08310930544121378,
+        "status": "constraints_not_met",
+        "iterations": 35,
+        "constraint_states": [
+          {
+            "id": "mass_budget",
+            "label": "质量预算或闭合残差",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "numerical"
+          },
+          {
+            "id": "mtow_upper_bound",
+            "label": "起飞重量上限",
+            "status": "not_applicable",
+            "reason": "当前任务未规定该项",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "fuel_capacity",
+            "label": "油箱容量",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "landing_stall",
+            "label": "着陆构型失速速度",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "power_available",
+            "label": "任务可用功率",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "clean_lift",
+            "label": "净构型升力",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "range",
+            "label": "规定航程",
+            "status": "not_applicable",
+            "reason": "当前任务未规定该项",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "endurance",
+            "label": "最低航时或留空时间",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "takeoff_distance",
+            "label": "越障起飞距离",
+            "status": "met",
+            "reason": "干燥跑道工程模型；并非具体机型实测性能",
+            "value": 676.8343522068727,
+            "limit": 800.0,
+            "margin": 123.16564779312728,
+            "unit": "m",
+            "kind": "design"
+          },
+          {
+            "id": "landing_distance",
+            "label": "越障着陆距离",
+            "status": "met",
+            "reason": "干燥跑道工程模型；并非具体机型实测性能",
+            "value": 544.5623928012426,
+            "limit": 700.0,
+            "margin": 155.4376071987574,
+            "unit": "m",
+            "kind": "design"
+          },
+          {
+            "id": "climb_sea_level",
+            "label": "海平面爬升需用功率",
+            "status": "met",
+            "reason": "爬升率要求 3m/s；需用与安装额定功率在同一基准比较",
+            "value": 141999.43269936388,
+            "limit": 165559.56032660394,
+            "margin": 23560.127627240057,
+            "unit": "W",
+            "kind": "design"
+          },
+          {
+            "id": "climb_cruise_altitude",
+            "label": "巡航高度爬升需用功率",
+            "status": "met",
+            "reason": "爬升率要求 3m/s；需用与安装额定功率在同一基准比较",
+            "value": 162313.29443784698,
+            "limit": 165559.56032660394,
+            "margin": 3246.265888756956,
+            "unit": "W",
+            "kind": "design"
+          },
+          {
+            "id": "loading_cg",
+            "label": "规定装载CG研究范围",
+            "status": "exceeded",
+            "reason": "实际装载和主任务结束；仅显式声明的分配场景",
+            "value": [
+              0.06856374036866504,
+              0.08310930544121378
+            ],
+            "limit": [
+              0.15,
+              0.35
+            ],
+            "margin": -0.08143625963133495,
+            "unit": "MAC",
+            "kind": "design"
+          },
+          {
+            "id": "longitudinal_static",
+            "label": "纵向静稳定一级筛查",
+            "status": "met",
+            "reason": "固定舵面线性升力斜率，缺失机身/动力修正",
+            "value": 0.4683027444041696,
+            "limit": 0.05,
+            "margin": 0.4183027444041696,
+            "unit": "MAC",
+            "kind": "design"
+          },
+          {
+            "id": "longitudinal_control",
+            "label": "纵向配平角度与舵量（含Cm扰动）",
+            "status": "exceeded",
+            "reason": "所有装载及给定Cm扰动角点；超过角度域表示当前一级方案尚不能确认可用",
+            "value": 1.1261079228561557,
+            "limit": 1.0,
+            "margin": -0.12610792285615569,
+            "unit": "fraction",
+            "kind": "design"
+          },
+          {
+            "id": "lateral_control",
+            "label": "横航向操稳包线",
+            "status": "not_calculated",
+            "reason": "后续节点，当前概念筛查不包含此项",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "structural_feedback",
+            "label": "结构定尺寸质量反馈",
+            "status": "not_calculated",
+            "reason": "后续节点，当前概念筛查不包含此项",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          }
+        ],
+        "first_level": {
+          "config": {
+            "version": "concept_constraints_v1",
+            "takeoff_limit_m": 800.0,
+            "landing_limit_m": 700.0,
+            "field_altitude_m": 0.0,
+            "temperature_delta_k": 0.0,
+            "obstacle_m": 15.24,
+            "takeoff_cl_max": 1.6,
+            "takeoff_cd_increment": 0.025,
+            "landing_cd_increment": 0.075,
+            "rolling_friction": 0.025,
+            "braking_friction": 0.3,
+            "disk_power_factor": 0.65,
+            "approach_deg": 3.0,
+            "flare_load_factor": 1.2,
+            "rotation_time_s": 2.0,
+            "landing_delay_s": 2.0,
+            "schedule_cl_ceiling": 0.5,
+            "schedule_max_speed_m_s": 90.0,
+            "cg_min_mac": 0.15,
+            "cg_max_mac": 0.35,
+            "static_margin_min": 0.05,
+            "wing_cm_ac": -0.05,
+            "moment_bias_abs": 0.05,
+            "tail_dynamic_pressure_ratio": 0.9,
+            "downwash_gradient": 0.35,
+            "elevator_effectiveness": 0.6,
+            "alpha_zero_lift_deg": -2.0,
+            "alpha_limit_deg": 6.0,
+            "elevator_limit_deg": 10.0,
+            "loading_cases": [],
+            "source": "V0.3.4 一级概念研究假设；干燥水平硬跑道、无风，非具体机型性能或适航限值"
+          },
+          "method": "first_level_concept_v1",
+          "field_basis": {
+            "mass_kg": 1310.48513198016,
+            "area_m2": 14.868190359957929,
+            "rated_power_w": 165559.56032660394,
+            "mass_definition": "design MTOW; landing at MTOW is conservative, not inferred from end-of-mission mass"
+          },
+          "field": {
+            "takeoff": {
+              "calculation_status": "computed",
+              "total_m": 676.8343522068727,
+              "ground_roll_m": 426.22238491856507,
+              "acceleration_m": 357.9158698559446,
+              "rotation_m": 68.30651506262048,
+              "transition_m": 63.56845804696833,
+              "obstacle_m": 187.04350924133936,
+              "stall_m_s": 29.698484809834994,
+              "liftoff_m_s": 34.15325753131024,
+              "safety_m_s": 35.63818177180199,
+              "climb_gradient": 0.08120925163537568,
+              "rho_kg_m3": 1.225,
+              "field_available_power_w": 165559.56032660394,
+              "method": "newton_ground_roll_ideal_disk_v1",
+              "assumptions": "density-lapse shaft power; disk loss factor; no ground effect; sequential acceleration/climb"
+            },
+            "landing": {
+              "calculation_status": "computed",
+              "total_m": 544.5623928012426,
+              "ground_roll_m": 236.07619041042796,
+              "braking_m": 171.67619041042795,
+              "approach_m": 273.13108694178214,
+              "flare_m": 35.35511544903248,
+              "delay_m": 64.39999999999999,
+              "stall_m_s": 28.0,
+              "approach_m_s": 36.4,
+              "touchdown_m_s": 32.199999999999996,
+              "rho_kg_m3": 1.225,
+              "method": "newton_ground_roll_ideal_disk_v1",
+              "assumptions": "touchdown at 1.15Vs; flare entry 1.3Vs; lift dump CL=.3; zero residual thrust"
+            }
+          },
+          "loading": [
+            {
+              "name": "规定装载 / 起飞",
+              "mass_kg": 1310.5623715869665,
+              "cg_x_m": 2.6851247781228516,
+              "cg_mac": 0.08310930544121378,
+              "remaining_usable_fuel_kg": 125.07064098138943,
+              "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+            },
+            {
+              "name": "规定装载 / 主任务结束",
+              "mass_kg": 1205.4958854486028,
+              "cg_x_m": 2.664218156226823,
+              "cg_mac": 0.06856374036866504,
+              "remaining_usable_fuel_kg": 20.00415484302573,
+              "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+            }
+          ],
+          "longitudinal": [
+            {
+              "loading_case": "规定装载 / 起飞",
+              "points": [
+                {
+                  "alpha_deg": 4.394774331583172,
+                  "elevator_deg": -11.261079228561556,
+                  "tail_cl": -0.2851251378816604,
+                  "tail_lift_n": -2060.6093592450766,
+                  "static_margin": 0.4683027444041696,
+                  "cma_per_rad": -2.665069921318682,
+                  "cla_per_rad": 5.6909124560213735,
+                  "moment_bias": -0.05,
+                  "lift_residual": 5.551115123125783e-17,
+                  "moment_residual": -2.7755575615628914e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 4.1488199292028884,
+                  "elevator_deg": -9.185321775226884,
+                  "tail_cl": -0.20576005851658108,
+                  "tail_lift_n": -1487.0351505592496,
+                  "static_margin": 0.4683027444041696,
+                  "cma_per_rad": -2.665069921318682,
+                  "cla_per_rad": 5.6909124560213735,
+                  "moment_bias": 0.0,
+                  "lift_residual": -5.551115123125783e-17,
+                  "moment_residual": 4.163336342344337e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 3.9028655268226062,
+                  "elevator_deg": -7.109564321892212,
+                  "tail_cl": -0.12639497915150175,
+                  "tail_lift_n": -913.4609418734221,
+                  "static_margin": 0.4683027444041696,
+                  "cma_per_rad": -2.665069921318682,
+                  "cla_per_rad": 5.6909124560213735,
+                  "moment_bias": 0.05,
+                  "lift_residual": -5.551115123125783e-17,
+                  "moment_residual": 3.122502256758253e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                }
+              ]
+            },
+            {
+              "loading_case": "规定装载 / 主任务结束",
+              "points": [
+                {
+                  "alpha_deg": 3.9529497556342075,
+                  "elevator_deg": -10.782435937950176,
+                  "tail_cl": -0.2851251378816604,
+                  "tail_lift_n": -2060.6093592450766,
+                  "static_margin": 0.48284830947671836,
+                  "cma_per_rad": -2.7478474587699195,
+                  "cla_per_rad": 5.6909124560213735,
+                  "moment_bias": -0.05,
+                  "lift_residual": 5.551115123125783e-17,
+                  "moment_residual": 2.7755575615628914e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 3.706995353253925,
+                  "elevator_deg": -8.706678484615503,
+                  "tail_cl": -0.20576005851658097,
+                  "tail_lift_n": -1487.0351505592487,
+                  "static_margin": 0.48284830947671836,
+                  "cma_per_rad": -2.7478474587699195,
+                  "cla_per_rad": 5.6909124560213735,
+                  "moment_bias": 0.0,
+                  "lift_residual": 0.0,
+                  "moment_residual": 4.163336342344337e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 3.461040950873642,
+                  "elevator_deg": -6.630921031280833,
+                  "tail_cl": -0.12639497915150164,
+                  "tail_lift_n": -913.4609418734213,
+                  "static_margin": 0.48284830947671836,
+                  "cma_per_rad": -2.7478474587699195,
+                  "cla_per_rad": 5.6909124560213735,
+                  "moment_bias": 0.05,
+                  "lift_residual": 5.551115123125783e-17,
+                  "moment_residual": 0.0,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                }
+              ]
+            }
+          ],
+          "limits": [
+            "起降为干燥水平硬跑道、无风、规定工程襟翼/摩擦及作用盘损失模型；未经具体全尺寸桨、襟翼和试飞标定。",
+            "场地温度/高度仅用于起降；任务仍采用规定巡航高度的标准大气。起降段耗油仍沿用30s/90%功率，距离校核与瞬态燃油尚未联算。",
+            "CG研究区间来自用户假设，不是允许装载包线；额外装载分配须另核座椅/行李舱限重。",
+            "纵向一级模型采用有限翼升力斜率和线性下洗；未包括机身、滑流、推力线及黏性俯仰矩修正。给定Cm扰动是情景范围，不是统计置信区间。",
+            "AVL/XFOIL和一级模型的俯仰力矩均有误差；力矩平衡、低角度余量与局部静稳定分别报告，完整操稳/操纵力仍未计算。",
+            "速度为低CL域内9个候选的初步最小需用功率选择；增强模型沿用并验证实际工况，不宣称原生气动全域最优。"
+          ],
+          "speed_selection": {
+            "candidates_m_s": [
+              58.61011519694166,
+              62.53385079732396,
+              66.45758639770625,
+              70.38132199808854,
+              74.30505759847082,
+              78.22879319885313,
+              82.15252879923541,
+              86.07626439961771,
+              90.0
+            ],
+            "initial_climb_m_s": 58.61011519694166,
+            "initial_loiter_m_s": 58.61011519694166,
+            "cl_ceiling": 0.5,
+            "method": "finite candidate minimum conceptual shaft power",
+            "actual_mission_speeds_m_s": {
+              "climb": 58.61011519694166,
+              "cruise": 60.0,
+              "descent": 58.61011519694166
+            }
+          }
+        }
+      },
+      "diagnostics": []
+    },
+    {
+      "case": "loiter",
+      "run_id": "8fde0f604551457b86d6032fd995e8b1",
+      "status": "constraints_not_met",
+      "elapsed_s": 14.415128300002834,
+      "metrics": {
+        "mtow_kg": 1240.0751918260248,
+        "area_m2": 14.069350016105194,
+        "span_m": 10.272298920922665,
+        "power_kw": 156.66435163627168,
+        "block_fuel_kg": 90.06097380597407,
+        "cg_mac": 0.07957036749051123,
+        "status": "constraints_not_met",
+        "iterations": 33,
+        "constraint_states": [
+          {
+            "id": "mass_budget",
+            "label": "质量预算或闭合残差",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "numerical"
+          },
+          {
+            "id": "mtow_upper_bound",
+            "label": "起飞重量上限",
+            "status": "not_applicable",
+            "reason": "当前任务未规定该项",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "fuel_capacity",
+            "label": "油箱容量",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "landing_stall",
+            "label": "着陆构型失速速度",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "power_available",
+            "label": "任务可用功率",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "clean_lift",
+            "label": "净构型升力",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "range",
+            "label": "规定航程",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "endurance",
+            "label": "最低航时或留空时间",
+            "status": "met",
+            "reason": "按本次模型与已记录残差检查",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "takeoff_distance",
+            "label": "越障起飞距离",
+            "status": "met",
+            "reason": "干燥跑道工程模型；并非具体机型实测性能",
+            "value": 667.1834811799487,
+            "limit": 800.0,
+            "margin": 132.81651882005133,
+            "unit": "m",
+            "kind": "design"
+          },
+          {
+            "id": "landing_distance",
+            "label": "越障着陆距离",
+            "status": "met",
+            "reason": "干燥跑道工程模型；并非具体机型实测性能",
+            "value": 544.5623928012426,
+            "limit": 700.0,
+            "margin": 155.4376071987574,
+            "unit": "m",
+            "kind": "design"
+          },
+          {
+            "id": "climb_sea_level",
+            "label": "海平面爬升需用功率",
+            "status": "met",
+            "reason": "爬升率要求 3m/s；需用与安装额定功率在同一基准比较",
+            "value": 134370.06605162786,
+            "limit": 156664.35163627166,
+            "margin": 22294.285584643803,
+            "unit": "W",
+            "kind": "design"
+          },
+          {
+            "id": "climb_cruise_altitude",
+            "label": "巡航高度爬升需用功率",
+            "status": "met",
+            "reason": "爬升率要求 3m/s；需用与安装额定功率在同一基准比较",
+            "value": 153592.5016041879,
+            "limit": 156664.35163627166,
+            "margin": 3071.8500320837484,
+            "unit": "W",
+            "kind": "design"
+          },
+          {
+            "id": "loading_cg",
+            "label": "规定装载CG研究范围",
+            "status": "exceeded",
+            "reason": "实际装载和主任务结束；仅显式声明的分配场景",
+            "value": [
+              0.0692797572301941,
+              0.07957036749051123
+            ],
+            "limit": [
+              0.15,
+              0.35
+            ],
+            "margin": -0.0807202427698059,
+            "unit": "MAC",
+            "kind": "design"
+          },
+          {
+            "id": "longitudinal_static",
+            "label": "纵向静稳定一级筛查",
+            "status": "met",
+            "reason": "固定舵面线性升力斜率，缺失机身/动力修正",
+            "value": 0.47289910390974377,
+            "limit": 0.05,
+            "margin": 0.4228991039097438,
+            "unit": "MAC",
+            "kind": "design"
+          },
+          {
+            "id": "longitudinal_control",
+            "label": "纵向配平角度与舵量（含Cm扰动）",
+            "status": "exceeded",
+            "reason": "所有装载及给定Cm扰动角点；超过角度域表示当前一级方案尚不能确认可用",
+            "value": 1.1304812789642187,
+            "limit": 1.0,
+            "margin": -0.13048127896421868,
+            "unit": "fraction",
+            "kind": "design"
+          },
+          {
+            "id": "lateral_control",
+            "label": "横航向操稳包线",
+            "status": "not_calculated",
+            "reason": "后续节点，当前概念筛查不包含此项",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          },
+          {
+            "id": "structural_feedback",
+            "label": "结构定尺寸质量反馈",
+            "status": "not_calculated",
+            "reason": "后续节点，当前概念筛查不包含此项",
+            "value": null,
+            "limit": null,
+            "margin": null,
+            "unit": "",
+            "kind": "design"
+          }
+        ],
+        "first_level": {
+          "config": {
+            "version": "concept_constraints_v1",
+            "takeoff_limit_m": 800.0,
+            "landing_limit_m": 700.0,
+            "field_altitude_m": 0.0,
+            "temperature_delta_k": 0.0,
+            "obstacle_m": 15.24,
+            "takeoff_cl_max": 1.6,
+            "takeoff_cd_increment": 0.025,
+            "landing_cd_increment": 0.075,
+            "rolling_friction": 0.025,
+            "braking_friction": 0.3,
+            "disk_power_factor": 0.65,
+            "approach_deg": 3.0,
+            "flare_load_factor": 1.2,
+            "rotation_time_s": 2.0,
+            "landing_delay_s": 2.0,
+            "schedule_cl_ceiling": 0.5,
+            "schedule_max_speed_m_s": 90.0,
+            "cg_min_mac": 0.15,
+            "cg_max_mac": 0.35,
+            "static_margin_min": 0.05,
+            "wing_cm_ac": -0.05,
+            "moment_bias_abs": 0.05,
+            "tail_dynamic_pressure_ratio": 0.9,
+            "downwash_gradient": 0.35,
+            "elevator_effectiveness": 0.6,
+            "alpha_zero_lift_deg": -2.0,
+            "alpha_limit_deg": 6.0,
+            "elevator_limit_deg": 10.0,
+            "loading_cases": [],
+            "source": "V0.3.4 一级概念研究假设；干燥水平硬跑道、无风，非具体机型性能或适航限值"
+          },
+          "method": "first_level_concept_v1",
+          "field_basis": {
+            "mass_kg": 1240.0751918260248,
+            "area_m2": 14.069350016105194,
+            "rated_power_w": 156664.35163627166,
+            "mass_definition": "design MTOW; landing at MTOW is conservative, not inferred from end-of-mission mass"
+          },
+          "field": {
+            "takeoff": {
+              "calculation_status": "computed",
+              "total_m": 667.1834811799487,
+              "ground_roll_m": 420.907660987149,
+              "acceleration_m": 352.6011459245285,
+              "rotation_m": 68.30651506262048,
+              "transition_m": 62.46105313889767,
+              "obstacle_m": 183.814767053902,
+              "stall_m_s": 29.698484809834994,
+              "liftoff_m_s": 34.15325753131024,
+              "safety_m_s": 35.63818177180199,
+              "climb_gradient": 0.08262605293805658,
+              "rho_kg_m3": 1.225,
+              "field_available_power_w": 156664.35163627166,
+              "method": "newton_ground_roll_ideal_disk_v1",
+              "assumptions": "density-lapse shaft power; disk loss factor; no ground effect; sequential acceleration/climb"
+            },
+            "landing": {
+              "calculation_status": "computed",
+              "total_m": 544.5623928012426,
+              "ground_roll_m": 236.07619041042796,
+              "braking_m": 171.67619041042795,
+              "approach_m": 273.13108694178214,
+              "flare_m": 35.35511544903248,
+              "delay_m": 64.39999999999999,
+              "stall_m_s": 28.0,
+              "approach_m_s": 36.4,
+              "touchdown_m_s": 32.199999999999996,
+              "rho_kg_m3": 1.225,
+              "method": "newton_ground_roll_ideal_disk_v1",
+              "assumptions": "touchdown at 1.15Vs; flare entry 1.3Vs; lift dump CL=.3; zero residual thrust"
+            }
+          },
+          "loading": [
+            {
+              "name": "规定装载 / 起飞",
+              "mass_kg": 1240.1415267869006,
+              "cg_x_m": 2.6867097156224924,
+              "cg_mac": 0.07957036749051123,
+              "remaining_usable_fuel_kg": 89.66931292688339,
+              "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+            },
+            {
+              "name": "规定装载 / 主任务结束",
+              "mass_kg": 1169.5251258557971,
+              "cg_x_m": 2.6723216517087094,
+              "cg_mac": 0.0692797572301941,
+              "remaining_usable_fuel_kg": 19.05291199577998,
+              "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+            }
+          ],
+          "longitudinal": [
+            {
+              "loading_case": "规定装载 / 起飞",
+              "points": [
+                {
+                  "alpha_deg": 4.378756981119507,
+                  "elevator_deg": -11.304812789642186,
+                  "tail_cl": -0.28780465611395306,
+                  "tail_lift_n": -1914.6167649266033,
+                  "static_margin": 0.47289910390974377,
+                  "cma_per_rad": -2.681818974141315,
+                  "cla_per_rad": 5.671017246531217,
+                  "moment_bias": -0.05,
+                  "lift_residual": -1.1102230246251565e-16,
+                  "moment_residual": 5.551115123125783e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 4.139501133489017,
+                  "elevator_deg": -9.236312103953122,
+                  "tail_cl": -0.20843957674887362,
+                  "tail_lift_n": -1386.6415974854374,
+                  "static_margin": 0.47289910390974377,
+                  "cma_per_rad": -2.681818974141315,
+                  "cla_per_rad": 5.671017246531217,
+                  "moment_bias": 0.0,
+                  "lift_residual": 0.0,
+                  "moment_residual": 0.0,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 3.900245285858528,
+                  "elevator_deg": -7.167811418264061,
+                  "tail_cl": -0.12907449738379434,
+                  "tail_lift_n": -858.6664300442727,
+                  "static_margin": 0.47289910390974377,
+                  "cma_per_rad": -2.681818974141315,
+                  "cla_per_rad": 5.671017246531217,
+                  "moment_bias": 0.05,
+                  "lift_residual": 0.0,
+                  "moment_residual": 1.0408340855860843e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                }
+              ]
+            },
+            {
+              "loading_case": "规定装载 / 主任务结束",
+              "points": [
+                {
+                  "alpha_deg": 4.06494080986431,
+                  "elevator_deg": -10.964845270782385,
+                  "tail_cl": -0.2878046561139529,
+                  "tail_lift_n": -1914.6167649266022,
+                  "static_margin": 0.483189714170061,
+                  "cma_per_rad": -2.740177202404905,
+                  "cla_per_rad": 5.671017246531217,
+                  "moment_bias": -0.05,
+                  "lift_residual": 0.0,
+                  "moment_residual": 5.551115123125783e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 3.8256849622338196,
+                  "elevator_deg": -8.89634458509332,
+                  "tail_cl": -0.20843957674887348,
+                  "tail_lift_n": -1386.6415974854365,
+                  "static_margin": 0.483189714170061,
+                  "cma_per_rad": -2.740177202404905,
+                  "cla_per_rad": 5.671017246531217,
+                  "moment_bias": 0.0,
+                  "lift_residual": 0.0,
+                  "moment_residual": 0.0,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                },
+                {
+                  "alpha_deg": 3.58642911460333,
+                  "elevator_deg": -6.827843899404258,
+                  "tail_cl": -0.12907449738379412,
+                  "tail_lift_n": -858.6664300442712,
+                  "static_margin": 0.483189714170061,
+                  "cma_per_rad": -2.740177202404905,
+                  "cla_per_rad": 5.671017246531217,
+                  "moment_bias": 0.05,
+                  "lift_residual": 0.0,
+                  "moment_residual": 2.0816681711721685e-17,
+                  "method": "finite_wing_linear_tail_v1",
+                  "speed_m_s": 60.0,
+                  "altitude_m": 2000.0
+                }
+              ]
+            }
+          ],
+          "limits": [
+            "起降为干燥水平硬跑道、无风、规定工程襟翼/摩擦及作用盘损失模型；未经具体全尺寸桨、襟翼和试飞标定。",
+            "场地温度/高度仅用于起降；任务仍采用规定巡航高度的标准大气。起降段耗油仍沿用30s/90%功率，距离校核与瞬态燃油尚未联算。",
+            "CG研究区间来自用户假设，不是允许装载包线；额外装载分配须另核座椅/行李舱限重。",
+            "纵向一级模型采用有限翼升力斜率和线性下洗；未包括机身、滑流、推力线及黏性俯仰矩修正。给定Cm扰动是情景范围，不是统计置信区间。",
+            "AVL/XFOIL和一级模型的俯仰力矩均有误差；力矩平衡、低角度余量与局部静稳定分别报告，完整操稳/操纵力仍未计算。",
+            "速度为低CL域内9个候选的初步最小需用功率选择；增强模型沿用并验证实际工况，不宣称原生气动全域最优。"
+          ],
+          "speed_selection": {
+            "candidates_m_s": [
+              58.610115196941656,
+              62.53385079732395,
+              66.45758639770624,
+              70.38132199808854,
+              74.30505759847082,
+              78.22879319885313,
+              82.15252879923541,
+              86.07626439961771,
+              90.0
+            ],
+            "initial_climb_m_s": 58.610115196941656,
+            "initial_loiter_m_s": 58.610115196941656,
+            "cl_ceiling": 0.5,
+            "method": "finite candidate minimum conceptual shaft power",
+            "actual_mission_speeds_m_s": {
+              "climb": 58.610115196941656,
+              "outbound": 60.0,
+              "loiter": 58.610115196941656,
+              "inbound": 60.0,
+              "descent": 58.610115196941656
+            }
+          }
+        }
+      },
+      "diagnostics": []
+    }
+  ],
+  "representative": {
+    "run_id": "698cce20be83410789d3ca9fa7824ee1",
+    "elapsed_s": 1852.7055890000047,
+    "cache_basis": "reuse mode with pre-existing polar/computation caches; not a cold-start speed claim",
+    "metrics": {
+      "mtow_kg": 1215.611792275607,
+      "area_m2": 13.791798998935143,
+      "span_m": 10.170471596342697,
+      "power_kw": 150.720222736762,
+      "block_fuel_kg": 82.04672910743598,
+      "cg_mac": 0.08362964185933197,
+      "status": "constraints_not_met",
+      "iterations": 16,
+      "constraint_states": [
+        {
+          "id": "mass_budget",
+          "label": "质量预算或闭合残差",
+          "status": "met",
+          "reason": "按本次模型与已记录残差检查",
+          "value": null,
+          "limit": null,
+          "margin": null,
+          "unit": "",
+          "kind": "numerical"
+        },
+        {
+          "id": "mtow_upper_bound",
+          "label": "起飞重量上限",
+          "status": "not_applicable",
+          "reason": "当前任务未规定该项",
+          "value": null,
+          "limit": null,
+          "margin": null,
+          "unit": "",
+          "kind": "design"
+        },
+        {
+          "id": "fuel_capacity",
+          "label": "油箱容量",
+          "status": "met",
+          "reason": "按本次模型与已记录残差检查",
+          "value": null,
+          "limit": null,
+          "margin": null,
+          "unit": "",
+          "kind": "design"
+        },
+        {
+          "id": "landing_stall",
+          "label": "着陆构型失速速度",
+          "status": "met",
+          "reason": "按本次模型与已记录残差检查",
+          "value": null,
+          "limit": null,
+          "margin": null,
+          "unit": "",
+          "kind": "design"
+        },
+        {
+          "id": "power_available",
+          "label": "任务可用功率",
+          "status": "met",
+          "reason": "按本次模型与已记录残差检查",
+          "value": null,
+          "limit": null,
+          "margin": null,
+          "unit": "",
+          "kind": "design"
+        },
+        {
+          "id": "clean_lift",
+          "label": "净构型升力",
+          "status": "met",
+          "reason": "按本次模型与已记录残差检查",
+          "value": null,
+          "limit": null,
+          "margin": null,
+          "unit": "",
+          "kind": "design"
+        },
+        {
+          "id": "range",
+          "label": "规定航程",
+          "status": "met",
+          "reason": "按本次模型与已记录残差检查",
+          "value": null,
+          "limit": null,
+          "margin": null,
+          "unit": "",
+          "kind": "design"
+        },
+        {
+          "id": "endurance",
+          "label": "最低航时或留空时间",
+          "status": "not_applicable",
+          "reason": "当前任务未规定该项",
+          "value": null,
+          "limit": null,
+          "margin": null,
+          "unit": "",
+          "kind": "design"
+        },
+        {
+          "id": "aero_table_accuracy",
+          "label": "气动表直接复算",
+          "status": "met",
+          "reason": "按本次模型与已记录残差检查",
+          "value": null,
+          "limit": null,
+          "margin": null,
+          "unit": "",
+          "kind": "numerical"
+        },
+        {
+          "id": "propeller_table_accuracy",
+          "label": "桨图直接复算",
+          "status": "met",
+          "reason": "按本次模型与已记录残差检查",
+          "value": null,
+          "limit": null,
+          "margin": null,
+          "unit": "",
+          "kind": "numerical"
+        },
+        {
+          "id": "mission_step_accuracy",
+          "label": "任务积分步长",
+          "status": "met",
+          "reason": "按本次模型与已记录残差检查",
+          "value": null,
+          "limit": null,
+          "margin": null,
+          "unit": "",
+          "kind": "numerical"
+        },
+        {
+          "id": "shaft_torque_balance",
+          "label": "发动机与桨轴扭矩一致性",
+          "status": "met",
+          "reason": "按本次模型与已记录残差检查",
+          "value": null,
+          "limit": null,
+          "margin": null,
+          "unit": "",
+          "kind": "numerical"
+        },
+        {
+          "id": "takeoff_distance",
+          "label": "越障起飞距离",
+          "status": "met",
+          "reason": "干燥跑道工程模型；并非具体机型实测性能",
+          "value": 681.2443601931398,
+          "limit": 800.0,
+          "margin": 118.75563980686024,
+          "unit": "m",
+          "kind": "design"
+        },
+        {
+          "id": "landing_distance",
+          "label": "越障着陆距离",
+          "status": "met",
+          "reason": "干燥跑道工程模型；并非具体机型实测性能",
+          "value": 544.5623928012426,
+          "limit": 700.0,
+          "margin": 155.4376071987574,
+          "unit": "m",
+          "kind": "design"
+        },
+        {
+          "id": "climb_sea_level",
+          "label": "海平面爬升需用功率",
+          "status": "met",
+          "reason": "爬升率要求 3m/s；需用与安装额定功率在同一基准比较",
+          "value": 124105.26428908408,
+          "limit": 150720.222736762,
+          "margin": 26614.958447677913,
+          "unit": "W",
+          "kind": "design"
+        },
+        {
+          "id": "climb_cruise_altitude",
+          "label": "巡航高度爬升需用功率",
+          "status": "met",
+          "reason": "爬升率要求 3m/s；需用与安装额定功率在同一基准比较",
+          "value": 147764.92425172744,
+          "limit": 150720.222736762,
+          "margin": 2955.298485034553,
+          "unit": "W",
+          "kind": "design"
+        },
+        {
+          "id": "loading_cg",
+          "label": "规定装载CG研究范围",
+          "status": "exceeded",
+          "reason": "实际装载和主任务结束；仅显式声明的分配场景",
+          "value": [
+            0.07378850421288484,
+            0.08362964185933197
+          ],
+          "limit": [
+            0.15,
+            0.35
+          ],
+          "margin": -0.07621149578711515,
+          "unit": "MAC",
+          "kind": "design"
+        },
+        {
+          "id": "longitudinal_static",
+          "label": "纵向静稳定一级筛查",
+          "status": "met",
+          "reason": "固定舵面线性升力斜率，缺失机身/动力修正",
+          "value": 0.46921600201532604,
+          "limit": 0.05,
+          "margin": 0.41921600201532605,
+          "unit": "MAC",
+          "kind": "design"
+        },
+        {
+          "id": "longitudinal_control",
+          "label": "纵向配平角度与舵量（含Cm扰动）",
+          "status": "exceeded",
+          "reason": "所有装载及给定Cm扰动角点；超过角度域表示当前一级方案尚不能确认可用",
+          "value": 1.1214816796103688,
+          "limit": 1.0,
+          "margin": -0.12148167961036882,
+          "unit": "fraction",
+          "kind": "design"
+        },
+        {
+          "id": "lateral_control",
+          "label": "横航向操稳包线",
+          "status": "not_calculated",
+          "reason": "后续节点，当前概念筛查不包含此项",
+          "value": null,
+          "limit": null,
+          "margin": null,
+          "unit": "",
+          "kind": "design"
+        },
+        {
+          "id": "structural_feedback",
+          "label": "结构定尺寸质量反馈",
+          "status": "not_calculated",
+          "reason": "后续节点，当前概念筛查不包含此项",
+          "value": null,
+          "limit": null,
+          "margin": null,
+          "unit": "",
+          "kind": "design"
+        }
+      ],
+      "first_level": {
+        "config": {
+          "version": "concept_constraints_v1",
+          "takeoff_limit_m": 800.0,
+          "landing_limit_m": 700.0,
+          "field_altitude_m": 0.0,
+          "temperature_delta_k": 0.0,
+          "obstacle_m": 15.24,
+          "takeoff_cl_max": 1.6,
+          "takeoff_cd_increment": 0.025,
+          "landing_cd_increment": 0.075,
+          "rolling_friction": 0.025,
+          "braking_friction": 0.3,
+          "disk_power_factor": 0.65,
+          "approach_deg": 3.0,
+          "flare_load_factor": 1.2,
+          "rotation_time_s": 2.0,
+          "landing_delay_s": 2.0,
+          "schedule_cl_ceiling": 0.5,
+          "schedule_max_speed_m_s": 90.0,
+          "cg_min_mac": 0.15,
+          "cg_max_mac": 0.35,
+          "static_margin_min": 0.05,
+          "wing_cm_ac": -0.05,
+          "moment_bias_abs": 0.05,
+          "tail_dynamic_pressure_ratio": 0.9,
+          "downwash_gradient": 0.35,
+          "elevator_effectiveness": 0.6,
+          "alpha_zero_lift_deg": -2.0,
+          "alpha_limit_deg": 6.0,
+          "elevator_limit_deg": 10.0,
+          "loading_cases": [],
+          "source": "V0.3.4 一级概念研究假设；干燥水平硬跑道、无风，非具体机型性能或适航限值"
+        },
+        "method": "first_level_concept_v1",
+        "field_basis": {
+          "mass_kg": 1215.611792275607,
+          "area_m2": 13.791798998935143,
+          "rated_power_w": 150720.222736762,
+          "mass_definition": "design MTOW; landing at MTOW is conservative, not inferred from end-of-mission mass"
+        },
+        "field": {
+          "takeoff": {
+            "calculation_status": "computed",
+            "total_m": 681.2443601931398,
+            "ground_roll_m": 426.8946565416746,
+            "acceleration_m": 358.5881414790541,
+            "rotation_m": 68.30651506262048,
+            "transition_m": 64.46515496866434,
+            "obstacle_m": 189.88454868280093,
+            "stall_m_s": 29.698484809834994,
+            "liftoff_m_s": 34.15325753131024,
+            "safety_m_s": 35.63818177180199,
+            "climb_gradient": 0.08000203982315639,
+            "rho_kg_m3": 1.225,
+            "field_available_power_w": 150720.222736762,
+            "method": "newton_ground_roll_ideal_disk_v1",
+            "assumptions": "density-lapse shaft power; disk loss factor; no ground effect; sequential acceleration/climb"
+          },
+          "landing": {
+            "calculation_status": "computed",
+            "total_m": 544.5623928012426,
+            "ground_roll_m": 236.07619041042796,
+            "braking_m": 171.67619041042795,
+            "approach_m": 273.13108694178214,
+            "flare_m": 35.35511544903248,
+            "delay_m": 64.39999999999999,
+            "stall_m_s": 28.0,
+            "approach_m_s": 36.4,
+            "touchdown_m_s": 32.199999999999996,
+            "rho_kg_m3": 1.225,
+            "method": "newton_ground_roll_ideal_disk_v1",
+            "assumptions": "touchdown at 1.15Vs; flare entry 1.3Vs; lift dump CL=.3; zero residual thrust"
+          }
+        },
+        "loading": [
+          {
+            "name": "规定装载 / 起飞",
+            "mass_kg": 1215.5910174842138,
+            "cg_x_m": 2.6946911525133106,
+            "cg_mac": 0.08362964185933197,
+            "remaining_usable_fuel_kg": 81.66992855059408,
+            "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+          },
+          {
+            "name": "规定装载 / 主任务结束",
+            "mass_kg": 1147.7021520534372,
+            "cg_x_m": 2.6810679260284895,
+            "cg_mac": 0.07378850421288484,
+            "remaining_usable_fuel_kg": 13.781063119817588,
+            "source": "component ledger; airborne burn + takeoff roll; reserve and taxi-in retained"
+          }
+        ],
+        "longitudinal": [
+          {
+            "loading_case": "规定装载 / 起飞",
+            "points": [
+              {
+                "alpha_deg": 4.36056495657795,
+                "elevator_deg": -11.214816796103689,
+                "tail_cl": -0.28472148087852545,
+                "tail_lift_n": -1838.3347768584977,
+                "static_margin": 0.46921600201532604,
+                "cma_per_rad": -2.657626826676651,
+                "cla_per_rad": 5.663973128072995,
+                "moment_bias": -0.05,
+                "lift_residual": 0.0,
+                "moment_residual": 5.551115123125783e-17,
+                "method": "finite_wing_linear_tail_v1",
+                "speed_m_s": 60.0,
+                "altitude_m": 2000.0
+              },
+              {
+                "alpha_deg": 4.123680806173356,
+                "elevator_deg": -9.148885449076014,
+                "tail_cl": -0.2053564015134461,
+                "tail_lift_n": -1325.9056302595898,
+                "static_margin": 0.46921600201532604,
+                "cma_per_rad": -2.657626826676651,
+                "cla_per_rad": 5.663973128072995,
+                "moment_bias": 0.0,
+                "lift_residual": -5.551115123125783e-17,
+                "moment_residual": 5.551115123125783e-17,
+                "method": "finite_wing_linear_tail_v1",
+                "speed_m_s": 60.0,
+                "altitude_m": 2000.0
+              },
+              {
+                "alpha_deg": 3.8867966557687623,
+                "elevator_deg": -7.082954102048338,
+                "tail_cl": -0.12599132214836667,
+                "tail_lift_n": -813.4764836606811,
+                "static_margin": 0.46921600201532604,
+                "cma_per_rad": -2.657626826676651,
+                "cla_per_rad": 5.663973128072995,
+                "moment_bias": 0.05,
+                "lift_residual": -5.551115123125783e-17,
+                "moment_residual": 1.734723475976807e-17,
+                "method": "finite_wing_linear_tail_v1",
+                "speed_m_s": 60.0,
+                "altitude_m": 2000.0
+              }
+            ]
+          },
+          {
+            "loading_case": "规定装载 / 主任务结束",
+            "points": [
+              {
+                "alpha_deg": 4.052798413935618,
+                "elevator_deg": -10.881403041574488,
+                "tail_cl": -0.2847214808785251,
+                "tail_lift_n": -1838.3347768584954,
+                "static_margin": 0.4790571396617732,
+                "cma_per_rad": -2.7133667658557954,
+                "cla_per_rad": 5.663973128072995,
+                "moment_bias": -0.05,
+                "lift_residual": 0.0,
+                "moment_residual": 0.0,
+                "method": "finite_wing_linear_tail_v1",
+                "speed_m_s": 60.0,
+                "altitude_m": 2000.0
+              },
+              {
+                "alpha_deg": 3.815914263531024,
+                "elevator_deg": -8.815471694546812,
+                "tail_cl": -0.20535640151344572,
+                "tail_lift_n": -1325.9056302595873,
+                "static_margin": 0.4790571396617732,
+                "cma_per_rad": -2.7133667658557954,
+                "cla_per_rad": 5.663973128072995,
+                "moment_bias": 0.0,
+                "lift_residual": -5.551115123125783e-17,
+                "moment_residual": -1.3877787807814457e-17,
+                "method": "finite_wing_linear_tail_v1",
+                "speed_m_s": 60.0,
+                "altitude_m": 2000.0
+              },
+              {
+                "alpha_deg": 3.579030113126431,
+                "elevator_deg": -6.749540347519138,
+                "tail_cl": -0.1259913221483664,
+                "tail_lift_n": -813.4764836606793,
+                "static_margin": 0.4790571396617732,
+                "cma_per_rad": -2.7133667658557954,
+                "cla_per_rad": 5.663973128072995,
+                "moment_bias": 0.05,
+                "lift_residual": 0.0,
+                "moment_residual": 3.122502256758253e-17,
+                "method": "finite_wing_linear_tail_v1",
+                "speed_m_s": 60.0,
+                "altitude_m": 2000.0
+              }
+            ]
+          }
+        ],
+        "limits": [
+          "起降为干燥水平硬跑道、无风、规定工程襟翼/摩擦及作用盘损失模型；未经具体全尺寸桨、襟翼和试飞标定。",
+          "场地温度/高度仅用于起降；任务仍采用规定巡航高度的标准大气。起降段耗油仍沿用30s/90%功率，距离校核与瞬态燃油尚未联算。",
+          "CG研究区间来自用户假设，不是允许装载包线；额外装载分配须另核座椅/行李舱限重。",
+          "纵向一级模型采用有限翼升力斜率和线性下洗；未包括机身、滑流、推力线及黏性俯仰矩修正。给定Cm扰动是情景范围，不是统计置信区间。",
+          "AVL/XFOIL和一级模型的俯仰力矩均有误差；力矩平衡、低角度余量与局部静稳定分别报告，完整操稳/操纵力仍未计算。",
+          "速度为低CL域内9个候选的初步最小需用功率选择；增强模型沿用并验证实际工况，不宣称原生气动全域最优。"
+        ],
+        "speed_selection": {
+          "candidates_m_s": [
+            58.610115196941656,
+            62.53385079732395,
+            66.45758639770624,
+            70.38132199808854,
+            74.30505759847082,
+            78.22879319885313,
+            82.15252879923541,
+            86.07626439961771,
+            90.0
+          ],
+          "initial_climb_m_s": 58.610115196941656,
+          "initial_loiter_m_s": 58.610115196941656,
+          "cl_ceiling": 0.5,
+          "method": "finite candidate minimum conceptual shaft power",
+          "actual_mission_speeds_m_s": {
+            "climb": 58.610115196941656,
+            "cruise": 60.0,
+            "descent": 58.610115196941656
+          }
+        }
+      }
+    },
+    "state_counts": {
+      "met": 15,
+      "not_applicable": 2,
+      "exceeded": 2,
+      "not_calculated": 2
+    },
+    "native_numerical_checks": {
+      "mass_budget": true,
+      "mtow_upper_bound": true,
+      "fuel_capacity": true,
+      "landing_stall": true,
+      "power_available": true,
+      "clean_lift": true,
+      "range": true,
+      "endurance": true,
+      "aero_table_accuracy": true,
+      "propeller_table_accuracy": true,
+      "mission_step_accuracy": true,
+      "shaft_torque_balance": true
+    },
+    "native_audit": {
+      "speed_schedule_m_s": [
+        58.610115196941656,
+        58.610115196941656,
+        35.0262432398846
+      ],
+      "direct_aero_checks": [
+        {
+          "mass_kg": 1189.7137273585447,
+          "speed_m_s": 58.610115196941656,
+          "altitude_m": 500.0,
+          "roc_m_s": 3.0,
+          "interpolated_cd": 0.03804860269919429,
+          "direct_cd": 0.037950249888065356,
+          "relative_cd_error": 0.002591624861997488,
+          "point_directory": "point_016",
+          "passed": true
+        },
+        {
+          "mass_kg": 1209.405246802636,
+          "speed_m_s": 58.610115196941656,
+          "altitude_m": 1500.0,
+          "roc_m_s": 3.0,
+          "interpolated_cd": 0.0402792198153189,
+          "direct_cd": 0.0401882226585799,
+          "relative_cd_error": 0.0022642742256124837,
+          "point_directory": "point_017",
+          "passed": true
+        },
+        {
+          "mass_kg": 1199.5594870805903,
+          "speed_m_s": 60.0,
+          "altitude_m": 2000.0,
+          "roc_m_s": 0.0,
+          "interpolated_cd": 0.04016487936561245,
+          "direct_cd": 0.04013479107227597,
+          "relative_cd_error": 0.0007496810755112104,
+          "point_directory": "point_018",
+          "passed": true
+        },
+        {
+          "mass_kg": 1189.7137273585447,
+          "speed_m_s": 58.610115196941656,
+          "altitude_m": 500.0,
+          "roc_m_s": -2.0,
+          "interpolated_cd": 0.038060274841362,
+          "direct_cd": 0.03796292624466366,
+          "relative_cd_error": 0.0025643069786283057,
+          "point_directory": "point_019",
+          "passed": true
+        },
+        {
+          "mass_kg": 1209.405246802636,
+          "speed_m_s": 58.610115196941656,
+          "altitude_m": 1500.0,
+          "roc_m_s": -2.0,
+          "interpolated_cd": 0.040294732660219,
+          "direct_cd": 0.040204409107575424,
+          "relative_cd_error": 0.0022466081369805213,
+          "point_directory": "point_020",
+          "passed": true
+        },
+        {
+          "mass_kg": 1199.5594870805903,
+          "speed_m_s": 58.610115196941656,
+          "altitude_m": 2000.0,
+          "roc_m_s": 0.0,
+          "interpolated_cd": 0.0412378939883423,
+          "direct_cd": 0.04120342013052876,
+          "relative_cd_error": 0.0008366746669168368,
+          "point_directory": "point_021",
+          "passed": true
+        }
+      ],
+      "direct_propeller_checks": [
+        {
+          "passed": true,
+          "speed_m_s": 58.610115196941656,
+          "altitude_m": 500.0,
+          "collective_deg": -0.7493757687176834,
+          "relative_thrust_error": 0.0009119426426247301,
+          "relative_power_error": 0.0014912353344896934,
+          "predicted": {
+            "thrust_n": 1663.5311817494844,
+            "torque_nm": 453.15304337919366,
+            "shaft_power_w": 113889.78176255454,
+            "efficiency": 0.8560886910760452,
+            "collective_deg": -0.7493757687176834,
+            "rpm": 2400.0,
+            "advance_ratio": 0.7711857262755482
+          },
+          "direct": {
+            "thrust_n": 1662.0141367275112,
+            "torque_nm": 452.4772855489751,
+            "shaft_power_w": 113719.9452957529,
+            "efficiency": 0.8565853576451111
+          }
+        },
+        {
+          "passed": true,
+          "speed_m_s": 58.610115196941656,
+          "altitude_m": 1500.0,
+          "collective_deg": -0.38486959173915203,
+          "relative_thrust_error": 0.0009399284370565919,
+          "relative_power_error": 0.0016113577300344017,
+          "predicted": {
+            "thrust_n": 1613.615633359988,
+            "torque_nm": 441.5685442408597,
+            "shaft_power_w": 110978.27957147396,
+            "efficiency": 0.8521865586671463,
+            "collective_deg": -0.38486959173915203,
+            "rpm": 2400.0,
+            "advance_ratio": 0.7711857262755482
+          },
+          "direct": {
+            "thrust_n": 1612.0989501397137,
+            "torque_nm": 440.8570193537572,
+            "shaft_power_w": 110799.45386282055,
+            "efficiency": 0.8527596651653032
+          }
+        },
+        {
+          "passed": true,
+          "speed_m_s": 60.0,
+          "altitude_m": 2000.0,
+          "collective_deg": -2.0008045685074096,
+          "relative_thrust_error": 8.891947178568671e-10,
+          "relative_power_error": 3.986602106320625e-06,
+          "predicted": {
+            "thrust_n": 1006.3246832258217,
+            "torque_nm": 277.0958265127891,
+            "shaft_power_w": 69641.7770330376,
+            "efficiency": 0.867000865944384,
+            "collective_deg": -2.0008045685074096,
+            "rpm": 2400.0,
+            "advance_ratio": 0.7894736842105263
+          },
+          "direct": {
+            "thrust_n": 1006.3246841206403,
+            "torque_nm": 277.0947218419834,
+            "shaft_power_w": 69641.49939898259,
+            "efficiency": 0.8670043231165773
+          }
+        },
+        {
+          "passed": true,
+          "speed_m_s": 58.610115196941656,
+          "altitude_m": 500.0,
+          "collective_deg": -4.058495975697733,
+          "relative_thrust_error": 0.0008966125039875372,
+          "relative_power_error": 0.001353738731642351,
+          "predicted": {
+            "thrust_n": 654.8170021681254,
+            "torque_nm": 180.1513342702497,
+            "shaft_power_w": 45276.96866222525,
+            "efficiency": 0.847647293181301,
+            "collective_deg": -4.058495975697733,
+            "rpm": 2400.0,
+            "advance_ratio": 0.7711857262755482
+          },
+          "direct": {
+            "thrust_n": 654.2298850561579,
+            "torque_nm": 179.90745643149103,
+            "shaft_power_w": 45215.675476095836,
+            "efficiency": 0.8480353002510134
+          }
+        },
+        {
+          "passed": true,
+          "speed_m_s": 58.610115196941656,
+          "altitude_m": 1500.0,
+          "collective_deg": -4.026330912625203,
+          "relative_thrust_error": 0.0008981501756606391,
+          "relative_power_error": 0.0010870843794026364,
+          "predicted": {
+            "thrust_n": 604.958865991592,
+            "torque_nm": 166.46634545061812,
+            "shaft_power_w": 41837.55583500821,
+            "efficiency": 0.847485186873882,
+            "collective_deg": -4.026330912625203,
+            "rpm": 2400.0,
+            "advance_ratio": 0.7711857262755482
+          },
+          "direct": {
+            "thrust_n": 604.4155220798342,
+            "torque_nm": 166.2853824867825,
+            "shaft_power_w": 41792.074881587585,
+            "efficiency": 0.8476454800650712
+          }
+        },
+        {
+          "passed": true,
+          "speed_m_s": 58.610115196941656,
+          "altitude_m": 2000.0,
+          "collective_deg": -2.471465596399605,
+          "relative_thrust_error": 2.931540446904357e-05,
+          "relative_power_error": 0.0012529791405269108,
+          "predicted": {
+            "thrust_n": 986.0949309216184,
+            "torque_nm": 266.33043324307897,
+            "shaft_power_w": 66936.1386003075,
+            "efficiency": 0.8634369819499981,
+            "collective_deg": -2.471465596399605,
+            "rpm": 2400.0,
+            "advance_ratio": 0.7711857262755482
+          },
+          "direct": {
+            "thrust_n": 986.1238386933633,
+            "torque_nm": 265.99672676573795,
+            "shaft_power_w": 66852.2690148939,
+            "efficiency": 0.8645455514964179
+          }
+        }
+      ],
+      "timestep_half_relative_fuel_error": 1.3927172037853097e-07,
+      "checks": {
+        "aero_table_accuracy": true,
+        "propeller_table_accuracy": true,
+        "mission_step_accuracy": true,
+        "shaft_torque_balance": true
+      }
+    },
+    "first_level_eligible": false
+  },
+  "field_refinement": {
+    "takeoff": {
+      "n80_m": 681.2443601931398,
+      "n160_m": 681.2620262590085,
+      "relative_difference": 2.5931382034882766e-05
+    },
+    "landing": {
+      "n80_m": 544.5623928012426,
+      "n160_m": 544.5621402545289,
+      "relative_difference": 4.6376105689027725e-07
+    }
+  },
+  "speed_candidates": {
+    "selected": [
+      {
+        "altitude_m": 0.0,
+        "candidate_best_speed_m_s": 58.610115196941656
+      },
+      {
+        "altitude_m": 2000.0,
+        "candidate_best_speed_m_s": 58.610115196941656
+      }
+    ],
+    "source_run": "698cce20be83410789d3ca9fa7824ee1",
+    "elapsed_s": 188.7993134000062,
+    "basis": "same geometry/mass/CG/rated power; requested ROC=3m/s; finite candidates, no mission replacement or map extrapolation",
+    "physical_validation_passed": false,
+    "rows": [
+      {
+        "speed_m_s": 58.610115196941656,
+        "altitude_m": 0.0,
+        "roc_m_s": 3.0,
+        "status": "computed",
+        "propeller": {
+          "thrust_n": 1698.433592340597,
+          "torque_nm": 461.760654846084,
+          "shaft_power_w": 116053.11047850156,
+          "efficiency": 0.8577571776490925,
+          "collective_deg": -0.8847490519762278,
+          "rpm": 2400.0,
+          "advance_ratio": 0.7711857262755482
+        },
+        "available_power_w": 140996.33773937405,
+        "power_margin_w": 24943.22726087249,
+        "aerodynamics": {
+          "cd": 0.03750235853237516,
+          "alpha_deg": 3.463957544802916,
+          "elevator_deg": -5.379963022182453,
+          "residual_cl": -3.749778265671466e-09,
+          "residual_cm": -8.782216211200566e-09
+        }
+      },
+      {
+        "speed_m_s": 61.54062095678874,
+        "altitude_m": 0.0,
+        "roc_m_s": 3.0,
+        "status": "computed",
+        "propeller": {
+          "thrust_n": 1736.2711459417196,
+          "torque_nm": 492.72864671891324,
+          "shaft_power_w": 123836.21573963026,
+          "efficiency": 0.862842940027066,
+          "collective_deg": 0.03772289300904196,
+          "rpm": 2400.0,
+          "advance_ratio": 0.8097450125893255
+        },
+        "available_power_w": 140996.33773937405,
+        "power_margin_w": 17160.121999743787,
+        "aerodynamics": {
+          "cd": 0.03610664946763559,
+          "alpha_deg": 2.969079492114823,
+          "elevator_deg": -4.789355942823932,
+          "residual_cl": -1.7779606342749332e-08,
+          "residual_cm": -2.308479989804324e-08
+        }
+      },
+      {
+        "speed_m_s": 64.47112671663582,
+        "altitude_m": 0.0,
+        "roc_m_s": 3.0,
+        "status": "computed",
+        "propeller": {
+          "thrust_n": 1784.7192327895505,
+          "torque_nm": 528.1081742433356,
+          "shaft_power_w": 132728.06084028652,
+          "efficiency": 0.8669068099265677,
+          "collective_deg": 0.9805922663405076,
+          "rpm": 2400.0,
+          "advance_ratio": 0.8483042989031029
+        },
+        "available_power_w": 140996.33773937405,
+        "power_margin_w": 8268.276899087534,
+        "aerodynamics": {
+          "cd": 0.035030930232430646,
+          "alpha_deg": 2.5400689464643995,
+          "elevator_deg": -4.274812135851275,
+          "residual_cl": -6.002232039170607e-08,
+          "residual_cm": -5.302845413474033e-08
+        }
+      },
+      {
+        "speed_m_s": 58.610115196941656,
+        "altitude_m": 2000.0,
+        "roc_m_s": 3.0,
+        "status": "computed",
+        "propeller": {
+          "thrust_n": 1598.917113634362,
+          "torque_nm": 438.68182151945786,
+          "shaft_power_w": 110252.7670199134,
+          "efficiency": 0.8499806286362446,
+          "collective_deg": -0.1458683838084469,
+          "rpm": 2400.0,
+          "advance_ratio": 0.7711857262755482
+        },
+        "available_power_w": 112514.92043389409,
+        "power_margin_w": 2262.15341398069,
+        "aerodynamics": {
+          "cd": 0.04147018365406764,
+          "alpha_deg": 4.605424670241598,
+          "elevator_deg": -6.725621033281278,
+          "residual_cl": 3.773418116859162e-08,
+          "residual_cm": -1.338353454172214e-07
+        }
+      },
+      {
+        "speed_m_s": 61.54062095678874,
+        "altitude_m": 2000.0,
+        "roc_m_s": 3.0,
+        "status": "computed",
+        "propeller": {
+          "thrust_n": 1614.8035323206313,
+          "torque_nm": 462.1856312972496,
+          "shaft_power_w": 116159.918710256,
+          "efficiency": 0.8555103447524487,
+          "collective_deg": 0.7062158302994905,
+          "rpm": 2400.0,
+          "advance_ratio": 0.8097450125893255
+        },
+        "available_power_w": 112514.92043389409,
+        "power_margin_w": -3644.9982763619046,
+        "aerodynamics": {
+          "cd": 0.03932443206130025,
+          "alpha_deg": 4.0026224765938245,
+          "elevator_deg": -6.0147573417123095,
+          "residual_cl": -2.2296778867669786e-09,
+          "residual_cm": -3.449383584319676e-08
+        }
+      },
+      {
+        "speed_m_s": 64.47112671663582,
+        "altitude_m": 2000.0,
+        "roc_m_s": 3.0,
+        "status": "computed",
+        "propeller": {
+          "thrust_n": 1641.7372346128009,
+          "torque_nm": 489.6288776811166,
+          "shaft_power_w": 123057.15880867289,
+          "efficiency": 0.8601258985079167,
+          "collective_deg": 1.5890236775555158,
+          "rpm": 2400.0,
+          "advance_ratio": 0.8483042989031029
+        },
+        "available_power_w": 112514.92043389409,
+        "power_margin_w": -10542.238374778797,
+        "aerodynamics": {
+          "cd": 0.03767995882559225,
+          "alpha_deg": 3.4802643721476696,
+          "elevator_deg": -5.395097327904836,
+          "residual_cl": -3.675142523640318e-09,
+          "residual_cm": -8.997334086102704e-09
+        }
+      }
+    ]
+  },
+  "ui": {
+    "saved_reopened_equal": true,
+    "archive_ui_no_exception": true,
+    "actual_result_ui_no_exception": true,
+    "four_states_visible": true,
+    "specialist_four_states_visible": true,
+    "exceeded_card_excluded": true,
+    "editor_reopened": true,
+    "bundle_bytes": 2446101,
+    "archive_id": "fb0f921f2b414d8ba36b972e09d03c76",
+    "current_run_id": "698cce20be83410789d3ca9fa7824ee1",
+    "source_matches": true
+  },
+  "noncontrolling_constraint_baseline": {
+    "run_id": "4e6c872c43534117ae70bfa585f7eba4",
+    "input_equivalence_checked": true,
+    "relative_tolerance": 0.001,
+    "basis": "Same input except name/confirmation/new first-level profile; expected unchanged controlling area/power and native schedule. This is numerical/model regression, not aircraft validation.",
+    "quantities": {
+      "mtow": {
+        "previous": 1215.534296883428,
+        "current": 1215.611792275607,
+        "relative_difference": 6.375417985138299e-05
+      },
+      "area": {
+        "previous": 13.7909197701558,
+        "current": 13.791798998935143,
+        "relative_difference": 6.375417985138299e-05
+      },
+      "power": {
+        "previous": 150717.93332646778,
+        "current": 150720.222736762,
+        "relative_difference": 1.5190032424561295e-05
+      },
+      "fuel": {
+        "previous": 82.04512092783654,
+        "current": 82.04672910743598,
+        "relative_difference": 1.9601160693660802e-05
+      }
+    }
+  },
+  "limits": [
+    "No target-aircraft fit. Unfitted public data are partial-condition checks, not complete aircraft validation.",
+    "Low-speed disk/friction/flap and linear-tail models are declared concept assumptions; pitch-moment sensitivity is not a confidence interval.",
+    "Actual representative CG and perturbed elevator limits remain exceeded; numerical convergence does not establish feasibility.",
+    "Native finite candidates do not change the recorded mission or constitute a global optimum. Full stability envelope and structural mass feedback remain future nodes."
+  ],
+  "numerical_recovery": {
+    "failed_run_id": "2586c59b7aeb4fd88964000e4c87a327",
+    "status": "polar_missing",
+    "completed_outer_iterations_before_failure": 10,
+    "reynolds": 4263355.778699075,
+    "cl": -0.2,
+    "flap_deg": -6.08660065241418,
+    "correction": "One final zero-CL initialization at original panels, 200 iterations / 60 seconds; unchanged physical inputs and convergence criteria.",
+    "independent_probes": [
+      {
+        "panels": 240,
+        "seed": 0.0,
+        "status": "converged",
+        "parsed": {
+          "solver_version": "6.99",
+          "condition_readback": [
+            0.18,
+            4263000.0,
+            9.0,
+            1.0,
+            1.0
+          ],
+          "rows": [
+            {
+              "alpha_deg": 2.389,
+              "cl": -0.2,
+              "cd": 0.00423,
+              "cd_pressure": 0.00054,
+              "cm": 0.0714,
+              "transition_top": 0.3797,
+              "transition_bottom": 0.7264,
+              "requested_cl": -0.2
+            }
+          ]
+        }
+      },
+      {
+        "panels": 280,
+        "seed": 0.0,
+        "status": "converged",
+        "parsed": {
+          "solver_version": "6.99",
+          "condition_readback": [
+            0.18,
+            4263000.0,
+            9.0,
+            1.0,
+            1.0
+          ],
+          "rows": [
+            {
+              "alpha_deg": 2.391,
+              "cl": -0.2,
+              "cd": 0.00423,
+              "cd_pressure": 0.00054,
+              "cm": 0.0714,
+              "transition_top": 0.3798,
+              "transition_bottom": 0.7286,
+              "requested_cl": -0.2
+            }
+          ]
+        }
+      },
+      {
+        "panels": 320,
+        "seed": -0.1,
+        "status": "converged",
+        "parsed": {
+          "solver_version": "6.99",
+          "condition_readback": [
+            0.18,
+            4263000.0,
+            9.0,
+            1.0,
+            1.0
+          ],
+          "rows": [
+            {
+              "alpha_deg": 2.391,
+              "cl": -0.2,
+              "cd": 0.00423,
+              "cd_pressure": 0.00054,
+              "cm": 0.0714,
+              "transition_top": 0.3791,
+              "transition_bottom": 0.7286,
+              "requested_cl": -0.2
+            }
+          ]
+        }
+      },
+      {
+        "panels": 360,
+        "seed": -0.1,
+        "status": "converged",
+        "parsed": {
+          "solver_version": "6.99",
+          "condition_readback": [
+            0.18,
+            4263000.0,
+            9.0,
+            1.0,
+            1.0
+          ],
+          "rows": [
+            {
+              "alpha_deg": 2.39,
+              "cl": -0.2,
+              "cd": 0.00424,
+              "cd_pressure": 0.00054,
+              "cm": 0.0714,
+              "transition_top": 0.3784,
+              "transition_bottom": 0.7287,
+              "requested_cl": -0.2
+            }
+          ]
+        }
+      },
+      {
+        "panels": 400,
+        "seed": -0.1,
+        "status": "converged",
+        "parsed": {
+          "solver_version": "6.99",
+          "condition_readback": [
+            0.18,
+            4263000.0,
+            9.0,
+            1.0,
+            1.0
+          ],
+          "rows": [
+            {
+              "alpha_deg": 2.393,
+              "cl": -0.2,
+              "cd": 0.00424,
+              "cd_pressure": 0.00054,
+              "cm": 0.0715,
+              "transition_top": 0.3774,
+              "transition_bottom": 0.73,
+              "requested_cl": -0.2
+            }
+          ]
+        }
+      }
+    ],
+    "targeted_tests": {
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": 96.442
+    },
+    "pre_failure_trajectory_comparison": [
+      {
+        "iteration": 1,
+        "physical_fields_identical": true
+      },
+      {
+        "iteration": 2,
+        "physical_fields_identical": true
+      },
+      {
+        "iteration": 3,
+        "physical_fields_identical": true
+      },
+      {
+        "iteration": 4,
+        "physical_fields_identical": true
+      },
+      {
+        "iteration": 5,
+        "physical_fields_identical": true
+      },
+      {
+        "iteration": 6,
+        "physical_fields_identical": true
+      },
+      {
+        "iteration": 7,
+        "physical_fields_identical": true
+      },
+      {
+        "iteration": 8,
+        "physical_fields_identical": true
+      },
+      {
+        "iteration": 9,
+        "physical_fields_identical": true
+      },
+      {
+        "iteration": 10,
+        "physical_fields_identical": true
+      }
+    ]
+  },
+  "wheel": {
+    "version": "0.3.4",
+    "source_files_checked": 123,
+    "all_frozen_sources_match": true,
+    "sha256": "53a790e7b32bbd859fed814a7e997db29635b6cbb3f40a12f3473280bfa5bc2e"
+  },
+  "evidence_storage": {
+    "2586c59b7aeb4fd88964000e4c87a327": {
+      "total_bytes": 1021020974,
+      "native_zip_bytes": 82267057
+    },
+    "698cce20be83410789d3ca9fa7824ee1": {
+      "total_bytes": 1327942752,
+      "native_zip_bytes": 121067373
+    }
+  }
+}

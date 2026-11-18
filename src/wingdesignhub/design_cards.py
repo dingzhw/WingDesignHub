@@ -4,7 +4,7 @@ import json
 import math
 
 STATUS={'concept_checked_with_limits':'已收敛，已检查约束满足（概念模型）',
-        'constraints_not_met':'已收敛，存在约束超限','not_converged':'未收敛',
+        'constraints_not_met':'已收敛，存在约束超限','constraints_not_evaluated':'已收敛，必要约束未算全','not_converged':'未收敛',
         'out_of_domain':'模型范围或任务冲突','failed':'计算失败',
         'needs_confirmation':'需求待确认','invalid_input':'需求无效',
         'engine_sfc_out_of_domain':'发动机耗油图越界','propeller_tip_mach_exceeded':'桨尖马赫数超限'}
@@ -25,6 +25,7 @@ CHECK_LABELS={'mass_budget':'质量预算或闭合残差','mtow_upper_bound':'�
 
 
 def make_card(project,record):
+    from .constraint_states import states
     s=record.get('summary',{});status=record['status']
     converged=s.get('converged') is True and 'geometry' in s
     eligible=status=='concept_checked_with_limits' and converged and bool(s.get('checks')) and all(s['checks'].values())
@@ -55,12 +56,14 @@ def make_card(project,record):
             'analysis_model':'coupled' if record.get('mode')=='overall_propulsion' else 'initial',
             'analysis_options':record.get('options',{}),'enhanced':enhanced,'parent_run_id':record.get('parent_run_id'),
             'eligible':eligible,'converged':converged,'metrics':metrics,'margins':margins,'controls':controls,
-            'checks':s.get('checks',{}),'diagnostics':diagnostics,'input':project.to_dict(),
+            'checks':s.get('checks',{}),'constraint_states':s.get('constraint_states',states(s,project)),
+            'first_level_complete':s.get('first_level_complete',False),
+            'diagnostics':diagnostics,'input':project.to_dict(),
             'definition_sha256':project.definition_hash(),'software_version':record['version'],
             'solver_versions':s.get('versions',{}),'iterations':len(s.get('iterations',[])),
             'final_residuals':s.get('iterations',[{}])[-1].get('residuals',{}) if s.get('iterations') else {},
             'geometry':s.get('geometry') if converged else None,
-            'limits':s.get('limits',[])+(['CG 为站位估算；气动任务表已接入，起降距离和结构质量回写尚未接通。'] if 'aerodynamic_feedback' in s or 'propulsion_feedback' in s else ['CG 为站位估算；配平、起降距离和结构质量回写尚未接通。']),
+            'limits':s.get('limits',[])+['完整操稳包线与结构质量回写待接通；一级约束覆盖以本次四态检查表为准。'],
             'physical_validation_passed':False}
 
 
@@ -81,7 +84,8 @@ def card_html(card):
     if m['range_m'] is not None:stated+=f" {m['range_m']/1000:g} km"
     if m['endurance_s'] is not None:stated+=f"，要求时长 {m['endurance_s']/3600:g} h"
     stated+=f"；巡航 {a['cruise_speed_m_s']*3.6:g} km/h、{a['cruise_altitude_m']:g} m，额外储备 {a['reserve_duration_s']/60:g} min。"
-    check_text='；'.join(CHECK_LABELS.get(k,k)+('：满足' if v else '：未满足') for k,v in card['checks'].items())
+    from .constraint_states import display_rows
+    check_text='；'.join(r['项目']+'：'+r['状态']+'（'+r['类别']+'）' for r in display_rows(card))
     labels={'landing_stall':'着陆构型失速','cruise_lift':'巡航升力','fuel_volume':'油箱容量','cruise':'巡航需用功率',
             'climb_at_cruise_altitude':'巡航高度爬升','loiter':'留空需用功率'}
     control_text='；'.join(('翼面积' if k=='wing_area' else '功率')+'：'+labels.get(v,v) for k,v in card['controls'].items())
@@ -111,5 +115,5 @@ def comparison_markdown(summary):
         lines.append('| '+' | '.join([name,c['status_label'],*vals])+' |')
     lines+=['','方案 1 为差分基准；未收敛或未满足约束的方案不参与有效结果差分。','',
             '分析方法：'+summary.get('analysis_label','初步总体（概念气动与推进）')+'。',
-            '输入差异、方法覆盖、完整假设与诊断见 comparison.json 及各方案卡。起降距离、操稳包线及结构质量反馈待完成；配平覆盖以各方案实际记录为准。']
+            '输入差异、方法覆盖、完整假设与诊断见 comparison.json 及各方案卡。起降和纵向一级约束按各方案四态记录；完整操稳包线及结构质量反馈待完成。']
     return '\n'.join(lines)+'\n'

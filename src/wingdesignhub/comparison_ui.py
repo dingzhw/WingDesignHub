@@ -31,10 +31,16 @@ def show_results(r,request,root):
             enhanced=card.get('enhanced',{})
             if enhanced:
                 st.caption(f"任务最大需用/可用功率 {enhanced['max_power_fraction']:.4f}；最小轴扭矩余量 {enhanced['minimum_torque_margin_nm']:.2f} N·m")
-            failed=[k for k,v in card['checks'].items() if not v]
-            if failed:
+            states=card.get('constraint_states')
+            if states:
+                failed=[r['label'] for r in states if r['status']=='exceeded']
+                if failed:st.error('超限：'+'、'.join(failed))
+                with st.expander('约束状态与适用条件'):
+                    from .constraint_ui import render as show_constraints
+                    show_constraints({'constraint_states':states})
+            elif any(not v for v in card['checks'].values()):
                 from .sizing_ui import CHECKS
-                st.error('未满足：'+'、'.join(CHECKS.get(k,k) for k in failed))
+                st.error('历史未满足项：'+'、'.join(CHECKS.get(k,k) for k,v in card['checks'].items() if not v))
     st.dataframe([{'方案':c['name'],**{f'{label}（{unit}）':c['metrics'][k] for k,(label,unit) in METRICS.items()}} for c in s['cards']],hide_index=True)
     st.caption('相对 A 的变化；空白表示该方案或基准没有可用于比较的有效结果。')
     st.dataframe([{'方案':s['cards'][d['scheme']]['name'],**{METRICS[k][0]+'变化%':None if v['relative'] is None else 100*v['relative'] for k,v in d['values'].items()}} for d in s['deltas']],hide_index=True)

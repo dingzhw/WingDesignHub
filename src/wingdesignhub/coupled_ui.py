@@ -23,14 +23,15 @@ def show_files(record,files,key):
                       for r in s['redesign_comparison']['rows']],hide_index=True)
         st.caption('相同需求重新定尺寸。发动机质量、实际携油、重心与原生外形均已更新；具体发动机及桨产品仍待选型。')
         st.write(f"任务最大需用/可用功率：{s['mission']['max_power_fraction']:.4f}")
-        st.dataframe([{'检查项':CHECK_LABELS.get(k,k),'结果':'满足' if v else '未满足'} for k,v in s['checks'].items()],hide_index=True)
+        from .constraint_ui import render as show_constraints
+        show_constraints(s)
         with st.expander('匹配、耗油覆盖和迭代明细'):
             st.dataframe([{'耗油方法':k,'燃油 kg':v} for k,v in s['mission']['block_fuel_by_method_kg'].items()],hide_index=True)
             st.dataframe(s['mission']['segments'],hide_index=True);st.dataframe(s['iterations'],hide_index=True)
             st.json(s.get('propulsion_feedback',{}))
     with st.expander('推进闭环假设与适用边界'):
         st.json(record.get('options',{}))
-        for line in LIMITS:st.caption(line)
+        for line in s.get('limits',LIMITS):st.caption(line)
     for name,label in [('report.html','导出推进闭环报告'),('report.md','下载推进闭环摘要'),
                        ('aircraft_parameters.json','下载闭环后总体参数'),('final_geometry/aircraft.vsp3','下载闭环后全机几何')]:
         if name in files:st.download_button(label,files[name],Path(name).name,key=key+'_'+name)

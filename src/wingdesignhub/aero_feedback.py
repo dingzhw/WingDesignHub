@@ -63,6 +63,8 @@ def dry_ledger(weights,geo,p):
 def feedback_schedule(design_mass,geo,p,options):
     old=speed_schedule(design_mass,geo,p)
     floor=math.sqrt(2*design_mass*G/(density(p.assumptions.cruise_altitude_m)*geo['wing_area_m2']*options.schedule_cl_ceiling))
+    if p.sizing.first_level is not None and max(floor,old[0],old[1])>p.sizing.first_level['schedule_max_speed_m_s']+1e-8:
+        raise FeedbackError('speed_schedule_out_of_domain','增强模型CL有效域要求的速度超过本次规定上限')
     return max(old[0],floor),max(old[1],floor),old[2]
 
 

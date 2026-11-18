@@ -24,13 +24,14 @@ def show_files(record,files,key):
         with st.expander('同条件差异、任务明细与收敛检查'):
             st.json(s.get('aerodynamic_feedback',{}).get('same_condition_comparison',{}))
             st.dataframe(s['mission']['segments'],hide_index=True);st.dataframe(s['iterations'],hide_index=True)
-            st.dataframe([{'检查项':CHECK_LABELS.get(k,k),'结果':'满足' if v else '未满足'} for k,v in s['checks'].items()],hide_index=True)
+            from .constraint_ui import render as show_constraints
+            show_constraints(s)
             st.json(s.get('aerodynamic_feedback',{}).get('direct_checks',[]))
             st.caption('固定外形、装载和发动机的假设敏感性：需用燃油/功率变化；不代表已重新定尺寸。')
             st.dataframe(s.get('aerodynamic_feedback',{}).get('fixed_design_sensitivity',{}).get('rows',[]),hide_index=True)
     with st.expander('本次假设和适用边界'):
         st.json(record.get('options',{}))
-        for line in LIMITS:st.caption(line)
+        for line in s.get('limits',LIMITS):st.caption(line)
         st.json(record.get('diagnostic_context',s.get('diagnostic_context',{})))
     for name,label in [('report.html','导出气动反馈报告'),('report.md','下载气动反馈摘要'),('aircraft_parameters.json','下载反馈后参数'),('aero_table.json','下载多工况气动表')]:
         if name in files:st.download_button(label,files[name],name,key=key+'_'+name)

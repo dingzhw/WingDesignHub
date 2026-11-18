@@ -1,0 +1,101 @@
+{
+  "schema_version": 3,
+  "name": "V0.3.4 需求驱动单发概念方案",
+  "payload_kg": 350.0,
+  "weight": {
+    "mode": "solve",
+    "value_kg": null
+  },
+  "mission": {
+    "kind": "range_only",
+    "range_m": 800000.0,
+    "endurance_s": null
+  },
+  "assumptions": {
+    "cruise_speed_m_s": 60.0,
+    "cruise_altitude_m": 2000.0,
+    "reserve_duration_s": 2700.0,
+    "reserve_basis": "cruise_fuel_flow",
+    "sources": {
+      "cruise_speed_m_s": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+      "cruise_altitude_m": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+      "reserve_duration_s": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定",
+      "reserve_basis": "WingDesignHub V0.1.6 概念演示假设，须按项目需求复核；非适航储备规定"
+    }
+  },
+  "sizing": {
+    "template": "metal_single_v1",
+    "stall_speed_m_s": 28.0,
+    "climb_rate_m_s": 3.0,
+    "aspect_ratio": 7.5,
+    "cd0": 0.032,
+    "oswald_efficiency": 0.8,
+    "cl_max_clean": 1.4,
+    "cl_max_landing": 1.8,
+    "propeller_efficiency": 0.8,
+    "bsfc_kg_kwh": 0.3,
+    "fuel_model": "constant_bsfc",
+    "cruise_power_fraction": 0.75,
+    "seats": 4,
+    "fuselage_length_m": 7.5,
+    "tank_volume_fraction": 0.12,
+    "unusable_fuel_fraction": 0.02,
+    "layout": {
+      "version": "component_layout_v1",
+      "wing_quarter_fraction": 0.39,
+      "wing_incidence_deg": 0.0,
+      "tail_incidence_deg": 0.0,
+      "stations_fraction": {
+        "fuselage": 0.45,
+        "engine": 0.12,
+        "systems": 0.4,
+        "controls": 0.4,
+        "front_seats": 0.32,
+        "rear_seats": 0.46,
+        "baggage": 0.58,
+        "fuel": 0.39
+      },
+      "payload_fractions": {
+        "front_seats": 0.5,
+        "rear_seats": 0.4,
+        "baggage": 0.1
+      },
+      "source": "WingDesignHub V0.3.3 概念布置研究假设；部件站位须由布置/称重资料核实，非 Piper 实机站位"
+    },
+    "first_level": {
+      "version": "concept_constraints_v1",
+      "takeoff_limit_m": 800.0,
+      "landing_limit_m": 700.0,
+      "field_altitude_m": 0.0,
+      "temperature_delta_k": 0.0,
+      "obstacle_m": 15.24,
+      "takeoff_cl_max": 1.6,
+      "takeoff_cd_increment": 0.025,
+      "landing_cd_increment": 0.075,
+      "rolling_friction": 0.025,
+      "braking_friction": 0.3,
+      "disk_power_factor": 0.65,
+      "approach_deg": 3.0,
+      "flare_load_factor": 1.2,
+      "rotation_time_s": 2.0,
+      "landing_delay_s": 2.0,
+      "schedule_cl_ceiling": 0.5,
+      "schedule_max_speed_m_s": 90.0,
+      "cg_min_mac": 0.15,
+      "cg_max_mac": 0.35,
+      "static_margin_min": 0.05,
+      "wing_cm_ac": -0.05,
+      "moment_bias_abs": 0.05,
+      "tail_dynamic_pressure_ratio": 0.9,
+      "downwash_gradient": 0.35,
+      "elevator_effectiveness": 0.6,
+      "alpha_zero_lift_deg": -2.0,
+      "alpha_limit_deg": 6.0,
+      "elevator_limit_deg": 10.0,
+      "loading_cases": [],
+      "source": "V0.3.4 一级概念研究假设；干燥水平硬跑道、无风，非具体机型性能或适航限值"
+    },
+    "source": "WingDesignHub V0.1.7 独立金属单发概念模板；系数为待校准工程假设，非真实型号数据"
+  },
+  "confirmation_sha256": "4c34a2fe82f661b3ccc4285e501474c13a25d0d3943cd19080a5d85ac9578fce"
+}

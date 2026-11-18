@@ -101,6 +101,26 @@ def test_html_escapes_user_names(actual):
     assert '<script>' not in html and '&lt;script&gt;' in html
 
 
+def test_new_constraint_exceedance_is_explained_in_comparison_ui(actual):
+    from streamlit.testing.v1 import AppTest
+    from wingdesignhub.constraint_states import row
+    root,request,result=actual;r=deepcopy(result)
+    r['status']='comparison_incomplete'
+    for c in r['summary']['cards']:
+        c.update(eligible=False,status='constraints_not_met',status_label='部分概念约束超限')
+        c['constraint_states']=[row('loading_cg','规定装载CG研究范围','exceeded',value=.08,limit=[.15,.35],unit='MAC'),
+            row('range','航程','met'),row('endurance','航时','not_applicable'),row('structure','结构','not_calculated')]
+    app=AppTest.from_string('''import streamlit as st
+from wingdesignhub.comparison_ui import show_results
+show_results(st.session_state['r'],st.session_state['request'],st.session_state['root'])''')
+    for key,value in {'r':r,'request':request,'root':root}.items():app.session_state[key]=value
+    app.run()
+    assert not app.exception
+    assert len([x for x in app.error if '规定装载CG研究范围' in x.value])==3
+    shown=[x.value for x in app.dataframe if '状态' in x.value.columns]
+    assert len(shown)==3 and all(set(x['状态'])=={'满足','超限','不适用','未计算'} for x in shown)
+
+
 def test_single_child_failure_is_preserved_and_other_runs_continue(actual,monkeypatch):
     root,req,r=actual;records=[get_results(root,x) for x in r['child_runs']]
     failed=deepcopy(records[1]);failed.update(status='failed',error='synthetic process failure',summary={})

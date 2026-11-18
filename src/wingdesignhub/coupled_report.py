@@ -17,5 +17,6 @@ def write_report(project,record,work):
     md=['# '+project.name+' — 推进闭环总体','', '状态：'+record['status'],'来源初值：'+record['parent_run_id'],'',
         '|指标|单位|原方案|闭环后|变化|','|---|---|---:|---:|---:|']
     md += [f"|{r['quantity']}|{r['unit']}|{r['before']:.3f}|{r['after']:.3f}|{r['relative_change']:.2%}|" for r in rows]
-    md += ['',record.get('error',''),*s.get('diagnostics',[]),'',*LIMITS]
+    from .constraint_states import markdown
+    md += ['',markdown(s,project),record.get('error',''),*s.get('diagnostics',[]),'',*s.get('limits',LIMITS)]
     (work/'report.md').write_text('\n'.join(md)+'\n',encoding='utf-8')

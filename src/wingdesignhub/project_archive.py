@@ -42,6 +42,7 @@ def raw_definition(data,kind):
     obj=dict(data);obj.pop('confirmation_sha256',None)
     def normalize(x):
         if isinstance(x,dict):return {k:normalize(v) for k,v in x.items()}
+        if isinstance(x,list):return [normalize(v) for v in x]
         return float(x) if type(x) in (int,float) else x
     return digest(json.dumps(normalize(obj),ensure_ascii=False,sort_keys=True,allow_nan=False).encode())
 

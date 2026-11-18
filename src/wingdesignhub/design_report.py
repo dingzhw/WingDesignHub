@@ -15,7 +15,12 @@ def table(headers,rows):
 def design_report_html(project,record):
     card=make_card(project,record);s=record.get('summary',{});sections=[]
     coverage='气动配平/阻力任务表与燃油、功率迭代已接通；起降距离、操稳重心包线和结构定尺寸质量反馈尚未覆盖。' if 'aerodynamic_feedback' in s or 'propulsion_feedback' in s else '配平、起降距离、操稳重心包线和结构定尺寸质量反馈尚未覆盖。'
+    if s.get('first_level'):coverage='已进行起降、双高度爬升、装载CG和纵向一级概念筛查；完整操稳包线与结构质量回写待接入。'
+    from .constraint_states import display_rows
     sections.append('<h2>工程覆盖与评审状态</h2><p>本报告保留实际计算状态、诊断及已检查约束；专业评审待签署。'+coverage+'</p>')
+    rows=display_rows(s,project)
+    sections.append('<h2>约束四态与数值证据</h2>'+table(list(rows[0]) if rows else [],[list(r.values()) for r in rows]))
+    if s.get('first_level'):sections.append('<h2>一级模型分段结果与敏感性</h2><pre>'+escape(json.dumps(s['first_level'],ensure_ascii=False,indent=2))+'</pre>')
     if s.get('converged') and 'geometry' in s:
         ms=s['mission'];fuel=ms.get('fuel_model',{})
         sections += ['<h2>任务与燃油账目</h2>',table(['任务段','时长 s','航迹 m','耗油 kg','使用方法'],[
@@ -44,8 +49,9 @@ def comparison_report_html(summary,record=None):
     if summary.get('analysis_options'):text+='<pre>'+escape(json.dumps(summary['analysis_options'],ensure_ascii=False,indent=2))+'</pre>'
     for c in summary.get('cards',[]):
         text+='<h3>'+escape(c['name'])+'</h3><p>'+escape('；'.join(c['diagnostics']))+'</p>'
-        text+=table(['检查项','结果'],[(CHECK_LABELS.get(k,k),'满足' if v else '未满足') for k,v in c['checks'].items()])
+        from .constraint_states import display_rows
+        text+=table(['检查项','结果','类别','说明'],[(r['项目'],r['状态'],r['类别'],r['说明']) for r in display_rows(c)])
         if c.get('enhanced'):text+='<h4>推进与耗油覆盖</h4><pre>'+escape(json.dumps(c['enhanced'],ensure_ascii=False,indent=2))+'</pre>'
         text+='<ul>'+''.join('<li>'+escape(x)+'</li>' for x in c.get('limits',[]))+'</ul>'
         text+='<pre>'+escape(json.dumps({'run_id':c['run_id'],'definition_sha256':c['definition_sha256'],'input':c['input']},ensure_ascii=False,indent=2))+'</pre>'
-    return text+'<p>概念模型；专业评审待签署。起降距离、操稳包线和结构质量反馈待完成；配平覆盖以各方案实际记录为准。完整子任务报告与假设保存在方案包中。</p></html>'
+    return text+'<p>概念模型；专业评审待签署。起降与纵向一级约束按各方案四态记录；完整操稳包线和结构质量反馈待完成。完整子任务报告与假设保存在方案包中。</p></html>'

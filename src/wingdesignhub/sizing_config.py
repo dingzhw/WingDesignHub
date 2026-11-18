@@ -39,6 +39,7 @@ class SizingAssumptions:
     tank_volume_fraction: float = .12
     unusable_fuel_fraction: float = .02
     layout: dict | None = None
+    first_level: dict | None = None
     source: str = 'WingDesignHub V0.1.7 独立金属单发概念模板；系数为待校准工程假设，非真实型号数据'
 
     def to_dict(self): return asdict(self)
@@ -50,6 +51,13 @@ class SizingAssumptions:
         result=cls(**data);result.validate();return result
 
     def validate(self):
+        from .first_level_config import validate_first_level
+        validate_first_level(self.first_level)
+        if self.first_level is not None:
+            if self.first_level['takeoff_cl_max']<self.cl_max_clean or self.first_level['takeoff_cl_max']>self.cl_max_landing:
+                raise ValueError('起飞CLmax须在净构型与着陆构型CLmax之间')
+            if self.first_level['loading_cases'] and self.layout is None:
+                raise ValueError('指定装载分配前须启用部件/座位布置')
         from .layout import validate_layout
         validate_layout(self.layout)
         from .fuel_model import FUEL_MODELS

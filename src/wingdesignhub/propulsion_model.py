@@ -157,11 +157,15 @@ class PropulsiveFlight:
 
 def propulsion_constraints(mass,geo,p,flight,schedule):
     # Existing constraint definitions, with the engine's actual RPM/height capacity.
-    base=constraints(mass,geo,p,flight_model=flight,schedule=schedule)
+    base=constraints(mass,geo,p,flight_model=flight,schedule=schedule,include_field=False)
     h=p.assumptions.cruise_altitude_m
     from .sizing_physics import RHO0
     correction=(density(h)/RHO0)/(flight.engine.available(h,flight.propeller.rpm)/flight.engine.rated_power_w)
-    demands={k:v*correction for k,v in base['power_constraints_w'].items()}
+    demands={k:v*(flight.engine.rated_power_w/flight.engine.available(0.,flight.propeller.rpm) if k=='climb_at_sea_level' else correction) for k,v in base['power_constraints_w'].items()}
+    if p.sizing.first_level is not None:
+        from .field_performance import takeoff_power
+        field_power=takeoff_power(mass,geo['wing_area_m2'],p)
+        if field_power is not None:demands['takeoff_distance']=field_power
     return {**base,'power_constraints_w':demands,'controlling_power_constraint':max(demands,key=demands.get),
             'installed_power_w':max(demands.values())*1.02,
             'basis':'required sea-level rated engine power at selected RPM; fixed installed engine retained for mission'}

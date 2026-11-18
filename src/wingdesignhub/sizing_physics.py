@@ -40,6 +40,10 @@ def geometry(mass, fuel_capacity, p):
     areas={'landing_stall':2*mass*G/(RHO0*a.stall_speed_m_s**2*a.cl_max_landing),
            'cruise_lift':2*mass*G/(rho*p.assumptions.cruise_speed_m_s**2*.8*a.cl_max_clean),
            'fuel_volume':(1.02*max(fuel_capacity,1)*math.sqrt(a.aspect_ratio)/(a.tank_volume_fraction*thickness*FUEL_DENSITY*(1-a.unusable_fuel_fraction)))**(2/3)}
+    if a.first_level is not None:
+        from .field_performance import landing_area
+        field_area=landing_area(mass,p)
+        if field_area is not None:areas['landing_distance']=field_area
     area=max(areas.values());span=math.sqrt(area*a.aspect_ratio);taper=parameters['wing']['taper_ratio']
     root=2*area/(span*(1+taper));tip=taper*root;mac=2/3*root*(1+taper+taper*taper)/(1+taper)
     arm=.45*a.fuselage_length_m
@@ -59,10 +63,23 @@ def speed_schedule(mass, geo, p):
     vs=math.sqrt(2*mass*G/(density(h)*s*a.cl_max_clean))
     climb_speed=1.3*vs;loiter_cl=min(math.sqrt(3*a.cd0*math.pi*a.oswald_efficiency*a.aspect_ratio),.8*a.cl_max_clean)
     loiter_speed=math.sqrt(2*mass*G/(density(h)*s*loiter_cl))
+    if a.first_level is not None:
+        candidates=speed_candidates(mass,geo,p)
+        climb_speed=min(candidates,key=lambda v:flight_power(mass,s,v,h,a.climb_rate_m_s,a)[0])
+        loiter_speed=min(candidates,key=lambda v:flight_power(mass,s,v,h,0.,a)[0])
     return climb_speed,loiter_speed,vs
 
 
-def constraints(mass, geo, p, *, flight_model=None, schedule=None):
+def speed_candidates(mass,geo,p):
+    """Finite clean, low-CL search; no stall/high-lift or global optimum claim."""
+    c=p.sizing.first_level
+    lo=math.sqrt(2*mass*G/(density(p.assumptions.cruise_altitude_m)*geo['wing_area_m2']*c['schedule_cl_ceiling']))
+    hi=c['schedule_max_speed_m_s']
+    if lo>hi:raise DesignDomainError('速度候选有效域为空：所需CL下限速度超过规定搜索上限')
+    return [lo+(hi-lo)*i/8 for i in range(9)]
+
+
+def constraints(mass, geo, p, *, flight_model=None, schedule=None, include_field=True):
     a=p.sizing;h=p.assumptions.cruise_altitude_m;s=geo['wing_area_m2']
     climb,loiter,vs=schedule or speed_schedule(mass,geo,p);sigma=density(h)/RHO0
     power_at=flight_model or (lambda mm,ss,v,z,r,aa:flight_power(mm,ss,v,z,r,aa))
@@ -70,6 +87,12 @@ def constraints(mass, geo, p, *, flight_model=None, schedule=None):
     pcl=power_at(mass,s,climb,h,a.climb_rate_m_s,a)[0]/sigma
     pl=power_at(mass,s,loiter,h,0,a)[0]/(sigma*a.cruise_power_fraction)
     demand={'cruise':pc,'climb_at_cruise_altitude':pcl,'loiter':pl}
+    if a.first_level is not None:
+        demand['climb_at_sea_level']=power_at(mass,s,climb,0.,a.climb_rate_m_s,a)[0]
+        if include_field:
+            from .field_performance import takeoff_power
+            field_power=takeoff_power(mass,s,p)
+            if field_power is not None:demand['takeoff_distance']=field_power
     return {'installed_power_w':max(demand.values())*1.02,'power_constraints_w':demand,
             'controlling_power_constraint':max(demand,key=demand.get),'clean_stall_at_altitude_m_s':vs,
             'landing_stall_m_s':math.sqrt(2*mass*G/(RHO0*s*a.cl_max_landing))}

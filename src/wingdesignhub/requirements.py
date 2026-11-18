@@ -67,6 +67,7 @@ class DesignProject:
     def to_dict(self):
         data=asdict(self)
         if data['sizing'].get('layout') is None:data['sizing'].pop('layout',None)
+        if data['sizing'].get('first_level') is None:data['sizing'].pop('first_level',None)
         return data
 
     @classmethod
@@ -122,6 +123,7 @@ class DesignProject:
         # Normalize numeric forms so 350 and 350.0 represent the same definition.
         def normalize(value):
             if isinstance(value, dict): return {k: normalize(v) for k, v in value.items()}
+            if isinstance(value, list): return [normalize(v) for v in value]
             if type(value) in (int, float): return float(value)
             return value
         return hashlib.sha256(json.dumps(normalize(data), ensure_ascii=False, sort_keys=True, allow_nan=False).encode('utf-8')).hexdigest()

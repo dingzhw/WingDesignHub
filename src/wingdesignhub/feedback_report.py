@@ -21,5 +21,6 @@ def write_report(project,record,work):
     md=['# '+project.name+' — 气动驱动总体','', '状态：'+record['status'],'来源总体：'+record['parent_run_id'],'',
         '|指标|单位|原总体|反馈后|变化|','|---|---|---:|---:|---:|']
     md += [f"|{r['quantity']}|{r['unit']}|{r['legacy']:.3f}|{r['feedback']:.3f}|{r['relative_change']:.2%}|" for r in rows]
-    md += ['',record.get('error',''),*summary.get('diagnostics',[]),'','同条件比较：','```json',json.dumps(audit.get('same_condition_comparison',{}),ensure_ascii=False,indent=2),'```','',*LIMITS]
+    from .constraint_states import markdown
+    md += ['',markdown(summary,project),record.get('error',''),*summary.get('diagnostics',[]),'','同条件比较：','```json',json.dumps(audit.get('same_condition_comparison',{}),ensure_ascii=False,indent=2),'```','',*summary.get('limits',LIMITS)]
     (work/'report.md').write_text('\n'.join(md)+'\n',encoding='utf-8')

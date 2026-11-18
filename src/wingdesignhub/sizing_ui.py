@@ -31,12 +31,14 @@ def assumptions(base, key):
                                            value=base.seats, step=1, key=key+'_seats')
         from .layout_ui import editor
         values['layout']=editor(base.layout,key)
+        from .first_level_ui import editor as first_editor
+        values['first_level']=first_editor(base.first_level,key)
         if any(v != getattr(base, n) for n, v in values.items()):
             values['source'] = '用户调整的概念假设；随方案确认'
         result = replace(base, **values)
         st.caption(result.source)
         st.caption('模板固定参数：梢根比 0.6、厚弦比 0.12、四分之一弦后掠 0°；尾容量系数平尾 0.7/垂尾 0.04，尾臂 0.45 倍机身长；极限过载 5.7。机身宽 1.2 m、高 1.35 m；机翼站位默认0.39倍机长，启用布置后按配置。')
-        st.caption('任务采用标准大气、无风、密度比例可用功率；下降率 2 m/s、爬升速度 1.3 倍净构型失速速度。滑行各 300 s/10% 功率，起飞地面段 30 s/90% 功率；下降至少 5% 功率。油箱与功率各留 2% 定尺寸余量。')
+        st.caption('初步任务采用标准大气、无风、密度比例可用功率；下降率2m/s。一级约束启用时爬升/留空从有效域内候选选择，否则沿用1.3Vs爬升。滑行各300s/10%功率，起飞地面段耗油仍按30s/90%功率；油箱与功率各留2%定尺寸余量。')
         st.caption('重心按本次布局台账计算，重心包线后续校核。' if result.layout is not None else '旧版概念站位：机体0.44、动力0.12、系统/座椅0.40倍机长，载荷和燃油位于翼四分之一弦；不是允许重心包线。')
     return result
 
@@ -57,9 +59,11 @@ def results(record, project, root):
     st.caption('当前参数、几何与总体报告来源：'+selected)
     status = record['status']; s = record.get('summary', {})
     if status == 'concept_checked_with_limits':
-        st.warning('总体迭代已收敛，当前模型检查项满足；具体适用边界见本次运行记录。起降距离和结构重量闭环仍待接入。')
+        st.warning('总体迭代已收敛，已计算约束满足；未计算项目、工程假设和模型边界见下表。')
     elif status == 'constraints_not_met':
         st.error('迭代已收敛，但存在未满足的约束，请查看余量与检查表。')
+    elif status == 'constraints_not_evaluated':
+        st.warning('总体已收敛，但必要的一级约束尚未算全，请按检查表诊断处理。')
     elif status == 'not_converged':
         st.error('总体迭代未收敛，以下仅为最后一次试算。')
     elif status == 'failed':
@@ -83,7 +87,14 @@ def results(record, project, root):
                 ('转场航程（留空另列）',ms['route_distance_m']/1000,'km'),('估算起飞重心站位',s['cg']['cg_x_m'],'m')]], hide_index=True)
         if s['upper_bound_margin_kg'] is not None:
             st.write(f"起飞重量上限余量：{s['upper_bound_margin_kg']:.2f} kg")
-        st.dataframe([{'检查项': CHECKS.get(k,k), '结果': '满足' if v else '未满足'} for k,v in s['checks'].items()], hide_index=True)
+        from .constraint_ui import render as show_constraints
+        show_constraints(s,project)
+        if s.get('first_level'):
+            with st.expander('起降分段、装载轨迹与尾翼力矩敏感性'):
+                st.write(s['first_level']['field'])
+                st.dataframe(s['first_level']['loading'],hide_index=True)
+                st.dataframe([{'装载场景':case['loading_case'],**pt} for case in s['first_level']['longitudinal'] for pt in case['points']],hide_index=True)
+                st.write(s['first_level']['speed_selection'])
         with st.expander('查看构型、迭代和质量/任务明细'):
             work=Path(root)/'runs'/record['run_id']
             if (work/'geometry.svg').is_file(): st.image((work/'geometry.svg').read_text(encoding='utf-8'))

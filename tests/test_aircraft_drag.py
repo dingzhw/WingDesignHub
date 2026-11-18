@@ -235,6 +235,30 @@ def test_native_tail_extended_iteration_budget_and_independent_start_agree(nativ
     with pytest.raises(PolarError,match='迭代上限'):commands(spec,iterations=1001)
 
 
+def test_native_tail_zero_seed_recovers_same_conditions_and_mesh_agreement(native):
+    from wingdesignhub.xfoil_polars import read_attempts
+    from wingdesignhub.adapters import execute
+    import shutil
+    root,p,s,g,t,d=native;foil=root/'runs'/d['run_id']/'airfoils/HorizontalTail.dat'
+    spec=PolarSpec(4263355.778699075,.180435308835643,(-.2,-.1,0.),
+                   flap_deg=-6.08660065241418,panels=240)
+    work=root/'tail_zero';cache=root/'tail_zero_cache'
+    result=run_polar(foil,spec,'C:/apps/XFOIL6.99/xfoil.exe',work,cache)
+    recovered=result['recovery'][0]
+    assert recovered['directory']=='recovery_0_zero_seed' and len(recovered['attempts'])==8
+    assert read_attempts(work,spec)['rows']==result['rows']
+    text=(work/recovered['directory']/'stdin.txt').read_text('utf8')
+    assert text.index('CL 0')<text.index('PACC')<text.index('CL -0.2')
+    check=root/'tail_zero_fine';check.mkdir();shutil.copy2(foil,check/'foil.dat')
+    fine=replace(spec,cl_grid=(-.2,),panels=400)
+    execute(['C:/apps/XFOIL6.99/xfoil.exe'],check,stdin=commands(fine,warm_start=-.1),timeout=60)
+    other=parse_polar((check/'polar.txt').read_text('utf8'),fine)['rows'][0]
+    row=result['rows'][0]
+    assert abs(row['cd']/other['cd']-1)<.01 and abs(row['cm']-other['cm'])<.001
+    hit=run_polar(foil,spec,'C:/apps/XFOIL6.99/xfoil.exe',root/'tail_zero_hit',cache,True)
+    assert hit['cache_hit'] and hit['rows']==result['rows']
+
+
 def test_native_archive_report_and_semantic_tamper_rejection(native):
     from wingdesignhub.project_archive import build_bundle,read_bundle,digest,encoded
     from wingdesignhub.service import generate_report

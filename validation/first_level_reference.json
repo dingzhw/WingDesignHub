@@ -1,0 +1,17 @@
+{
+  "registration_version": "v0.3.4-before-model-comparison",
+  "role": "unfitted_public_performance_check",
+  "calibration": false,
+  "source": "Piper PA-28-181 Archer II POH VB-760, Figures 5-5, 5-9, 5-25",
+  "url": "https://www.summitaviationspokane.com/wp-content/uploads/2025/08/pa-28-181-archer-ii-poh.pdf",
+  "pdf_sha256": "0a51a23b0db5d4d1bbb063484a56d7ed12a0a1935da96e5c90e88dd13e1bd43c",
+  "condition_note": "原厂手册镜像；图中例题对应的零风读数区间经图页检查，未将有风例题数值当作零风数据。区间为读图不确定度，不是测量误差带。",
+  "aircraft": {"wing_area_ft2": 170, "span_ft": 35, "rated_power_hp": 180, "propeller_diameter_in": 76},
+  "cases": [
+    {"id":"takeoff_clean","pdf_page":74,"printed_page":"5-13","pressure_altitude_ft":2000,"temperature_f":70,"mass_lb":2400,"headwind_kts":0,"obstacle_ft":50,"distance_ft_interval":[2250,2350],"configuration":"flaps up, full throttle before brake release, paved level dry runway"},
+    {"id":"landing","pdf_page":88,"printed_page":"5-29","pressure_altitude_ft":2300,"temperature_f":70,"mass_lb":2264,"headwind_kts":0,"obstacle_ft":50,"distance_ft_interval":[1360,1430],"configuration":"40 deg flap, 76 mph IAS approach, full-stall touchdown, maximum braking, paved level dry runway"},
+    {"id":"climb","pdf_page":78,"printed_page":"5-15","pressure_altitude_ft":0,"temperature_f":59,"mass_lb":2550,"speed_ias_kts":76,"roc_fpm_interval":[650,700],"configuration":"flaps up, full throttle, full rich at sea level"}
+  ],
+  "mismatches_to_report": ["Engineering CLmax/CD and transient assumptions are not Piper flap data", "No measured full-scale fixed-pitch propeller curve; loss factor is unchanged research assumption", "Landing uses 1.3Vs approach and 1.15Vs touchdown, unlike handbook full-stall procedure", "Climb engineering parabolic polar and constant efficiency are not a matched aircraft polar/propeller", "IAS-to-TAS at sea level approximated, instrument/calibration error unavailable"],
+  "acceptance": "报告固定构型差异和敏感性，不据此调整系数；数值正确性另以解析关系验收。"
+}

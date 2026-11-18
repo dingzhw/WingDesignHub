@@ -43,7 +43,7 @@ def main(work):
     r['versions']={n:version(n) for n in ('fast-oad-cs23','fast-oad-core','openmdao','numpy','wingdesignhub')}
     write_json(work/'summary.json',r)
     lines=[f'# {p.name} — 初步总体设计','',f'状态：{r["status"]}',
-           '概念模型结果；配平、起降距离和实际结构强度尚未验收。','']
+           '概念模型结果；起降和纵向一级检查按四态记录，实机性能及详细结构强度尚未验收。','']
     if 'geometry' in r:
         lines += [f'- 设计起飞重量：{r["design_mtow_kg"]:.3f} kg',f'- 计算装载质量：{r["required_loaded_mass_kg"]:.3f} kg',
                   f'- 质量预算余量：{r["mass_budget_margin_kg"]:.3f} kg',f'- 空重（含不可用燃油）：{r["weights"]["owe_kg"]:.3f} kg',
@@ -52,7 +52,8 @@ def main(work):
                   f'- 起飞携带可用燃油：{r["mission"]["takeoff_fuel_kg"]:.3f} kg；含出场滑行的总可用燃油：{r["mission"]["block_fuel_kg"]:.3f} kg',
                   f'- 额外储备油：{r["mission"]["reserve_fuel_kg"]:.3f} kg（已包含）',
                   f'- 主任务航程：{r["mission"]["route_distance_m"]/1000:.3f} km；空中时长：{r["mission"]["main_duration_s"]/3600:.3f} h','']
-        lines += [f'- {k}：{"满足" if v else "未满足"}' for k,v in r['checks'].items()]
+        from .constraint_states import markdown
+        lines += [markdown(r,p)]
         (work/'geometry.svg').write_text(geometry_svg(r['geometry']),encoding='utf-8')
         write_json(work/'aircraft_parameters.json',{'geometry':r['geometry'],'weights':r['weights'],'power':r['power'],'cg':r['cg']})
     lines += ['']+r.get('diagnostics',[])+r.get('limits',[])

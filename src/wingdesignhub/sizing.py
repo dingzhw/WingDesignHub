@@ -104,6 +104,8 @@ def solve_design(project, mass_model, max_iterations=80, dt=30., *, feedback=Non
         if feedback is not None:
             result['method']='FAST-GA native mass + bounded native trim/drag tables + shared point-mass mission and sizing iteration'
             feedback.finalize(result)
+        from .constraint_states import attach
+        attach(result,p)
         return result
     except DesignDomainError as exc:
         return {'status':'out_of_domain','converged':False,'diagnostics':[str(exc)],'error_code':getattr(exc,'status','out_of_domain'),
